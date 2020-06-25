@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Vat_Number_Status__c</fullName>
+        <description>VAT Number Status</description>
+        <externalId>false</externalId>
+        <label>Vat Number Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Invalid</fullName>
+                    <default>false</default>
+                    <label>Invalid</label>
+                </value>
+                <value>
+                    <fullName>Not Validated</fullName>
+                    <default>true</default>
+                    <label>Not Validated</label>
+                </value>
+                <value>
+                    <fullName>Valid</fullName>
+                    <default>false</default>
+                    <label>Valid</label>
+                </value>
+                <value>
+                    <fullName>ValidationNotRequired</fullName>
+                    <default>false</default>
+                    <label>Validation Not Required</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </CustomField>

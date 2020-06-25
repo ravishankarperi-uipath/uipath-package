@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>14 Days Net</fullName>
+        <default>false</default>
+        <label>14 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>21 Days Net</fullName>
+        <default>false</default>
+        <label>21 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>25 Days Net</fullName>
+        <default>false</default>
+        <label>25 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>30 Days Net</fullName>
+        <default>true</default>
+        <label>30 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>40 Days Net</fullName>
+        <default>false</default>
+        <label>40 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>45 Days Net</fullName>
+        <default>false</default>
+        <label>45 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>50 Days Net</fullName>
+        <default>false</default>
+        <label>50 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>52 Days Net</fullName>
+        <default>false</default>
+        <label>52 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>59 Days Net</fullName>
+        <default>false</default>
+        <label>59 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>60 Days Net</fullName>
+        <default>false</default>
+        <label>60 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>65 Days Net</fullName>
+        <default>false</default>
+        <label>65 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>70 Days Net</fullName>
+        <default>false</default>
+        <label>70 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>75 Days Net</fullName>
+        <default>false</default>
+        <label>75 Days Net</label>
+    </customValue>
+    <customValue>
+        <fullName>90 Days Net</fullName>
+        <default>false</default>
+        <label>90 Days Net</label>
+    </customValue>
+    <masterLabel>Payment Term</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

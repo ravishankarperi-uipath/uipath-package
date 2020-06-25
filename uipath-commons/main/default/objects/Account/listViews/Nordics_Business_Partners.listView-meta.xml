@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Nordics_Business_Partners</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>Business_Partner_Type__c</columns>
+        <columns>Business_Partner_Status__c</columns>
+        <columns>Business_Partner_Level__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Business_Partner_Type__c</field>
+            <operation>equals</operation>
+            <value>GSI,VAR</value>
+        </filters>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Nordics</value>
+        </filters>
+        <label>Nordics Business Partners</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Nordics_Partners</group>
+        </sharedTo>
+    </ListView>

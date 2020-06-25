@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Academic_Pre_Sales_Task</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Academic Pre-Sales Task</masterLabel>
+        <openType>noSidebar</openType>
+        <protected>false</protected>
+        <url>/a1g/e?
+&amp;RecordType=0121Q000001Dtdt
+&amp;CF00N3600000T0kPc={!Account.Name}</url>
+    </WebLink>

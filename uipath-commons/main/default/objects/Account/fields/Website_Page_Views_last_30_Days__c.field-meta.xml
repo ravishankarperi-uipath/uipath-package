@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Website_Page_Views_last_30_Days__c</fullName>
+        <description>This is the number of Website Page Views (last 30 Days). The information is pulled by a bot from DemandBase and uploaded to Salesforce once a day</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total web page visits from this account in the last 30 days</inlineHelpText>
+        <label>Website Page Views (last 30 Days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </CustomField>

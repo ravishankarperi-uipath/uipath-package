@@ -1,0 +1,57 @@
+# List files or directories below to ignore them when running force:source:push, force:source:pull, and force:source:status
+# More information: https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_exclude_source.htm
+#
+
+package.xml
+
+# LWC configuration files
+**/jsconfig.json
+**/.eslintrc.json
+
+# LWC Jest
+**/__tests__/**
+
+uipath-commons/main/default/objects/Account/listViews
+uipath-commons/main/default/objects/Account/webLinks
+uipath-commons/main/default/objects/Account/fieldSets
+uipath-commons/main/default/objects/Account/validationRules/Account_Details_Lock_After_Sync.validationRule-meta.xml
+uipath-commons/main/default/objects/Account/validationRules/Account_Details_Lock.validationRule-meta.xml
+
+
+# Exclude Summary Fields
+uipath-commons/main/default/objects/Account/fields/Bombora_Composite_Score_Sum__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Key_Account_Priority_Number__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/latest_product_end_date__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/MIN_Close_Date__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Nb_of_Prod_AR__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Nb_of_Prod_ORCH__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Nb_of_Prod_ST__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Nb_of_Prod_UR__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Total_Licenses_Qty__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Bombora_Topic_Count__c.field-meta.xml
+
+# Exclude formula Fields referencing summaries or relationships
+uipath-commons/main/default/objects/Account/fields/Not_used_ST__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Not_used_UR__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Has_Active_Opportunities__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Active_Customer__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Key_Account_Priority__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Not_Used_AR__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Bombora_Avg_Composite_Score__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Not_used_ORCH__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/PTA_Owner_Text__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Has_Premium_Care__c.field-meta.xml
+
+
+
+uipath-commons/main/default/classes/IntegrationHandlerTest.cls
+uipath-commons/main/default/classes/AccountTriggerHandlerTest.cls
+uipath-commons/main/default/classes/AccountTriggerHandler.cls
+
+uipath-commons/main/default/classes/Utilities_Test
+
+# CPQ
+uipath-commons/main/default/globalValueSets/SBQQ__PaymentTerm.globalValueSet-meta.xml
+uipath-commons/main/default/objects/Account/fields/Default_Payment_Terms__c.field-meta.xml
+uipath-commons/main/default/objects/Account/validationRules/Mandatory_Fields_for_NS_Cust_Creation.validationRule-meta.xml
+# removed  pckliist values for default_payment,SBQQ__CoTerminationEvent__c, SBQQ__ContractCoTermination__c,SBQQ__RenewalModel__c,SBQQ__RenewalPricingMethod__c from all Account record ttyoes

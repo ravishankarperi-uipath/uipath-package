@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Validation_Status__c</fullName>
+        <description>Used by the Data Stewards to flag the Account validation status</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When Data Stewards set the status to &quot;Validated&quot; call to boomi integration will be made</inlineHelpText>
+        <label>Validation Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Data_Steward_Validation_Status</valueSetName>
+        </valueSet>
+    </CustomField>

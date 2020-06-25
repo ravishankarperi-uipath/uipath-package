@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Cannot_change_Partner_record_type</fullName>
+        <active>true</active>
+        <description>No one except Deal reg Admins have access to change an account record type already set as Partner.</description>
+        <errorConditionFormula>PRIORVALUE(RecordTypeId) = &quot;01236000000OGv1&quot; &amp;&amp; Ischanged(RecordTypeId) &amp;&amp; $Profile.Name &lt;&gt; &quot;Deal Registration Admin&quot; &amp;&amp; not($Permission.Edit_Partner_Accounts )</errorConditionFormula>
+        <errorMessage>Partner account record type cannot be changed. If you need assistance please reach out to partnerops@uipath.com</errorMessage>
+    </ValidationRule>

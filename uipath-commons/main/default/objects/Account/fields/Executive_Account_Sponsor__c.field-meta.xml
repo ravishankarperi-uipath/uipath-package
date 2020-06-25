@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Executive_Account_Sponsor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Specifies the UiPath Executive Sponsor for an Account.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Specify a UiPath Executive Sponsor for your Account as appropriate and/or needed.</inlineHelpText>
+        <label>Executive Account Sponsor</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </CustomField>

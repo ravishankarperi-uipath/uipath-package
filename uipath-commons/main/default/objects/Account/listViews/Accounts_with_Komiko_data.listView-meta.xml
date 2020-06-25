@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Accounts_with_Komiko_data</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>KomikoBestContactId__c</columns>
+        <columns>KomikoQKScorePercentile__c</columns>
+        <columns>KomikoQKScoreTrend__c</columns>
+        <columns>KomikoQKScore__c</columns>
+        <columns>KomikoLastOutboundConnection__c</columns>
+        <columns>KomikoLastOutboundDateTime__c</columns>
+        <columns>KomikoLastInboundContactId__c</columns>
+        <columns>KomikoLastInboundDateTime__c</columns>
+        <columns>KomikoLastEventOrganizer__c</columns>
+        <columns>KomikoLastEventDateTime__c</columns>
+        <columns>KomikoNextEventOrganizer__c</columns>
+        <columns>KomikoNextEventDateTime__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Accounts by ZoomInfo InboxAI</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+            <roleAndSubordinatesInternal>CEO</roleAndSubordinatesInternal>
+        </sharedTo>
+    </ListView>

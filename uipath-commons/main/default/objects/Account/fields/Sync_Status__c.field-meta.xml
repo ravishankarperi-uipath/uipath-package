@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Sync_Status__c</fullName>
+        <description>Indicated the status of the product against integration</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Not Valid - default sync status for new records
+Valid - Ready to be synced to NetSuite
+Pending - Updates on record ready to be synced to NetSuite
+Synced - Synced to NetSuite
+Error - Error while syncing
+Do Not Sync - Archive from syncing</inlineHelpText>
+        <label>Sync Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Sync_Status</valueSetName>
+        </valueSet>
+    </CustomField>

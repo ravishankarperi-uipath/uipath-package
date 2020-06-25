@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Meets_CSM_Criteria__c</fullName>
+        <externalId>false</externalId>
+        <label>Meets CSM Criteria</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>No-Approved</fullName>
+                    <default>false</default>
+                    <label>No-Approved</label>
+                </value>
+                <value>
+                    <fullName>Manually qualifies</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Manually qualifies</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </CustomField>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Customer_Reference_Definitions__c</fullName>
+        <externalId>false</externalId>
+        <label>Customer Reference Definitions</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Is Referenceable</fullName>
+                    <default>false</default>
+                    <label>Is Referenceable</label>
+                </value>
+                <value>
+                    <fullName>Willing to do a case study</fullName>
+                    <default>false</default>
+                    <label>Willing to do a case study</label>
+                </value>
+                <value>
+                    <fullName>Willing to provide a quote</fullName>
+                    <default>false</default>
+                    <label>Willing to provide a quote</label>
+                </value>
+                <value>
+                    <fullName>Agreed to using their logo</fullName>
+                    <default>false</default>
+                    <label>Agreed to using their logo</label>
+                </value>
+                <value>
+                    <fullName>Agreed to filming testimonial</fullName>
+                    <default>false</default>
+                    <label>Agreed to filming testimonial</label>
+                </value>
+                <value>
+                    <fullName>Is Press Ready</fullName>
+                    <default>false</default>
+                    <label>Is Press Ready</label>
+                </value>
+                <value>
+                    <fullName>Willing to talk to a customer privately</fullName>
+                    <default>false</default>
+                    <label>Willing to talk to a customer privately</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Account_Name_Cannot_Contain_Illegal_Char</fullName>
+        <active>false</active>
+        <description>Account Name cannot contain illegal characters. The purpose of this validation rule is that Conga does not work if the Account Name contains such characters (i.e. %, &amp;, etc.)</description>
+        <errorConditionFormula>OR(CONTAINS(Name,&quot;$&quot;),CONTAINS(Name,&quot;$&quot;),CONTAINS(Name,&quot;&amp;&quot;),CONTAINS(Name,&quot;%&quot;),CONTAINS(Name,&quot;|&quot;),CONTAINS(Name,&quot;&#39;&quot;))</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>The Account Name contains illegal characters (i.e. &quot;&amp;&quot;, &quot;%&quot;, &quot;,&#39;). Please remove them in order to save the record.</errorMessage>
+    </ValidationRule>

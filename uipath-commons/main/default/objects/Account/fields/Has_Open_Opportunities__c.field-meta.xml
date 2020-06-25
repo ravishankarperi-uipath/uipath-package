@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Has_Open_Opportunities__c</fullName>
+        <description>Counts all opps except from won and lost</description>
+        <externalId>false</externalId>
+        <label>Has Open Opportunities?</label>
+        <summaryFilterItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Deal Registration, Discovery, Demo, POC, Proposal, Negotiation</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Opportunity.AccountId</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Customer_Stage_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(TEXT(Customer_Stage__c) = &quot;Prove&quot;,TEXT(Customer_Stage__c) = &quot;Scale&quot;),8,
+IF(TEXT(Customer_Stage__c) = &quot;Establish&quot;,9,10))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Customer Stage Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </CustomField>

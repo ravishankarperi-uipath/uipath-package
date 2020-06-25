@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>GAM_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(text( Classification__c ) = &quot;Global&quot; &amp;&amp; NOT(ISBLANK(Parent.Parent.Parent.Parent.Parent.Name)), Parent.Parent.Parent.Parent.Parent.Owner.Id,
+IF(text( Classification__c ) = &quot;Global&quot; &amp;&amp;NOT(ISBLANK(Parent.Parent.Parent.Parent.Name)), Parent.Parent.Parent.Parent.Owner.Id,
+IF(text( Classification__c ) = &quot;Global&quot; &amp;&amp;NOT(ISBLANK(Parent.Parent.Parent.Name)), Parent.Parent.Parent.Owner.Id,
+IF(text( Classification__c ) = &quot;Global&quot; &amp;&amp;NOT(ISBLANK(Parent.Parent.Name)), Parent.Parent.Owner.Id,
+IF(text( Classification__c ) = &quot;Global&quot; &amp;&amp;NOT(ISBLANK(Parent.Name)),Parent.Owner.Id,
+IF(text( Classification__c ) = &quot;Global&quot; &amp;&amp;ISBLANK(Parent.Name),Owner.Id,
+null))))))</formula>
+        <label>GAM ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </CustomField>

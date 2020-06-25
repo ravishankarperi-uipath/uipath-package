@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Last_seen_on_website__c</fullName>
+        <description>This is the number of days ago a contact from the customer was seen on the website. This information is pulled from DemandBase by a bot and uploaded to Salesforce once a day</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of days ago someone from this account visited our website</inlineHelpText>
+        <label>Last Seen on Website</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </CustomField>

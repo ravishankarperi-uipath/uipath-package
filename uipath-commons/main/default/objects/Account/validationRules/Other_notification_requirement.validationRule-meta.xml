@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Other_notification_requirement</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Customer_Notifications_requirements__c , &quot;Other&quot;) ,
+ISBLANK(Other_notification_requirement__c)
+)</errorConditionFormula>
+        <errorDisplayField>Other_notification_requirement__c</errorDisplayField>
+        <errorMessage>Please fill in with the notification required by the customer and accepted in the contract</errorMessage>
+    </ValidationRule>

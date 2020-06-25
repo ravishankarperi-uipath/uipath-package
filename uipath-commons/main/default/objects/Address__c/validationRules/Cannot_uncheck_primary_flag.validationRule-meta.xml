@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Cannot_uncheck_primary_flag</fullName>
+        <active>false</active>
+        <description>You cannot uncheck the primary flag. An address can only be marked as not primary by marking a different record as primary.</description>
+        <errorConditionFormula>OR(
+AND(PRIORVALUE(  Primary_Billing__c  ) &lt;&gt; Primary_Billing__c,NOT(Primary_Billing__c)),
+AND(PRIORVALUE(   Primary_Shipping__c   ) &lt;&gt; Primary_Shipping__c,NOT(Primary_Shipping__c))
+)</errorConditionFormula>
+        <errorMessage>You cannot uncheck the primary flag. Please mark another address as primary instead.</errorMessage>
+    </ValidationRule>

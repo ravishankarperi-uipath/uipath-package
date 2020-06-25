@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Parent_Account_Mandatory_on_Global</fullName>
+        <active>true</active>
+        <description>If account is global, parent account is mandatory</description>
+        <errorConditionFormula>isnew()&amp;&amp;
+text(Classification__c) = &quot;Global&quot; &amp;&amp;
+(isnull(ParentId) || isblank(ParentId))</errorConditionFormula>
+        <errorDisplayField>ParentId</errorDisplayField>
+        <errorMessage>For Global Accounts please add a Parent. For assistance reach out to salesforce.dataquality@uipath.com .</errorMessage>
+    </ValidationRule>

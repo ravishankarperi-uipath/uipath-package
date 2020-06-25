@@ -1,0 +1,34 @@
+{
+  "packageDirectories": [
+    {
+      "path": "uipath-core",
+      "package": "uipath-core",
+      "default": true,
+      "versionName": "Version 1.0",
+      "versionNumber": "1.0.0.NEXT"
+    },
+    {
+      "path": "uipath-commons",
+      "package": "uipath-commons",
+      "default": true,
+      "versionName": "Version 1.0",
+      "versionNumber": "1.0.0.NEXT",
+      "dependencies": [
+        {
+          "package": "uipath-core",
+          "versionNumber": "1.0.0.LATEST"
+        }
+      ]
+    }
+  ],
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "48.0",
+  "packageAliases": {
+    "cpq": "04t4N000000N5OyQAK",
+    "uipath-commons": "0Ho1v000000fxZWCAY",
+    "uipath-commons@1.0.0-1": "04t1v000002Gy67AAC",
+    "uipath-core@1.0.0-2": "04t1v000002Gy6MAAS",
+    "uipath-core@1.0.0-1": "04t1v000002Gy62AAC"
+  }
+}

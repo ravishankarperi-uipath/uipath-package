@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Mapping from country to UiPath subsidiary, used to automatically set the subsidiary on creation of account.</description>
+    <label>Country-Subsidiary Mapping</label>
+    <pluralLabel>Country-Subsidiary Mappings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

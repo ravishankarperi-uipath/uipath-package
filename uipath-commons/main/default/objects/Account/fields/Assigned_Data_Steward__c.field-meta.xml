@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Assigned_Data_Steward__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The Data Steward that verified the account</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Data Steward that verified the account</inlineHelpText>
+        <label>Assigned Data Steward</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Accounts6</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </CustomField>

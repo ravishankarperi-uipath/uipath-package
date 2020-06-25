@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Industry_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(TEXT(Industry)=&quot;Banking and Financial Services&quot;,TEXT(Industry)=&quot;Healthcare&quot;, TEXT(Industry)=&quot;Information Technology and Services&quot;,TEXT(Industry)=&quot;Insurance&quot;,TEXT(Industry)=&quot;Manufacturing&quot;,TEXT(Industry)=&quot;Consulting&quot;,TEXT(Industry)=&quot;Telecommunications&quot;,TEXT(Industry)=&quot;Financial Services&quot;,TEXT(Industry)=&quot;Energy&quot;,TEXT(Industry)=&quot;Retail&quot;,TEXT(Industry)=&quot;Technology&quot;,TEXT(Industry)=&quot;Government&quot;,TEXT(Industry)=&quot;Transportation&quot;,TEXT(Industry)=&quot;Utilities&quot;),10,
+IF(OR(TEXT(Industry)=&quot;Food &amp; Beverage&quot;,TEXT(Industry)=&quot;Communications&quot;,TEXT(Industry)=&quot;Media&quot;,TEXT(Industry)=&quot;Machinery&quot;,TEXT(Industry)=&quot;Public Sector&quot;,TEXT(Industry)=&quot;Automotive&quot;,TEXT(Industry)=&quot;Healthcare Payers&quot;,TEXT(Industry)=&quot;Healthcare LS&quot;,TEXT(Industry)=&quot;Engineering&quot;,TEXT(Industry)=&quot;Staffing &amp; Recruiting services&quot;,TEXT(Industry)=&quot;Entertainment&quot;,TEXT(Industry)=&quot;Recreation&quot;,TEXT(Industry)=&quot;Apparel&quot;),7,
+IF(OR(TEXT(Industry)=&quot;Other&quot;,TEXT(Industry)=&quot;Others&quot;,TEXT(Industry)=&quot;Construction&quot;,TEXT(Industry)=&quot;Chemicals&quot;,TEXT(Industry)=&quot;Electronics&quot;,TEXT(Industry)=&quot;Education&quot;,TEXT(Industry)=&quot;Pharmaceuticals&quot;,TEXT(Industry)=&quot;Legal&quot;,TEXT(Industry)=&quot;Biotechnology&quot;,TEXT(Industry)=&quot;Hospitality&quot;,TEXT(Industry)=&quot;Healthcare Providers&quot;,TEXT(Industry)=&quot;Industrial chemicals&quot;,TEXT(Industry)=&quot;Not For Profit&quot;,TEXT(Industry)=&quot;Environmental&quot;,TEXT(Industry)=&quot;Healthcare Gov&quot;, TEXT(Industry)=&quot;Shipping&quot;),4,1)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Industry Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </CustomField>

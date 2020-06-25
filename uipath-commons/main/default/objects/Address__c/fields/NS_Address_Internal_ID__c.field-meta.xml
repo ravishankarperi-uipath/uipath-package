@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>NS_Address_Internal_ID__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <description>NetSuite unique internal record Id for the address record</description>
+        <externalId>true</externalId>
+        <inlineHelpText>NetSuite unique internal record Id for the address record</inlineHelpText>
+        <label>NS Address Internal ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </CustomField>

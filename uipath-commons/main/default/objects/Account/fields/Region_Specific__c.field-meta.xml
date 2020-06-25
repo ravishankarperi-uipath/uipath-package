@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Region_Specific__c</fullName>
+        <externalId>false</externalId>
+        <label>Region Specific</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Enterprise Tier 1</fullName>
+                    <default>false</default>
+                    <label>Enterprise Tier 1</label>
+                </value>
+                <value>
+                    <fullName>Enterprise Tier 2</fullName>
+                    <default>false</default>
+                    <label>Enterprise Tier 2</label>
+                </value>
+                <value>
+                    <fullName>Enterprise Tier 3</fullName>
+                    <default>false</default>
+                    <label>Enterprise Tier 3</label>
+                </value>
+                <value>
+                    <fullName>Velocity Tier 1</fullName>
+                    <default>false</default>
+                    <label>Velocity Tier 1</label>
+                </value>
+                <value>
+                    <fullName>Velocity Tier 2</fullName>
+                    <default>false</default>
+                    <label>Velocity Tier 2</label>
+                </value>
+                <value>
+                    <fullName>Velocity Tier 3</fullName>
+                    <default>false</default>
+                    <label>Velocity Tier 3</label>
+                </value>
+                <value>
+                    <fullName>BPO Accounts</fullName>
+                    <default>false</default>
+                    <label>BPO Accounts</label>
+                </value>
+                <value>
+                    <fullName>India Business</fullName>
+                    <default>false</default>
+                    <label>India Business</label>
+                </value>
+                <value>
+                    <fullName>Government</fullName>
+                    <default>false</default>
+                    <label>Government</label>
+                </value>
+                <value>
+                    <fullName>SOE</fullName>
+                    <default>false</default>
+                    <label>SOE</label>
+                </value>
+                <value>
+                    <fullName>MNC</fullName>
+                    <default>false</default>
+                    <label>MNC</label>
+                </value>
+                <value>
+                    <fullName>Commercial</fullName>
+                    <default>false</default>
+                    <label>Commercial</label>
+                </value>
+                <value>
+                    <fullName>Private</fullName>
+                    <default>false</default>
+                    <label>Private</label>
+                </value>
+                <value>
+                    <fullName>Joint Venture</fullName>
+                    <default>false</default>
+                    <label>Joint Venture</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </CustomField>

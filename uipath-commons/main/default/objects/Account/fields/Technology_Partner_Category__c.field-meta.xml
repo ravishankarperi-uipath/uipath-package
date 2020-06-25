@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Technology_Partner_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Technology Partner Category</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>AI / ML</fullName>
+                    <default>false</default>
+                    <label>AI / ML</label>
+                </value>
+                <value>
+                    <fullName>Analytics</fullName>
+                    <default>false</default>
+                    <label>Analytics</label>
+                </value>
+                <value>
+                    <fullName>ARCHITECTURE / INFRASTRUCTURE / CLOUD/ SAAS</fullName>
+                    <default>false</default>
+                    <label>ARCHITECTURE / INFRASTRUCTURE / CLOUD/ SAAS</label>
+                </value>
+                <value>
+                    <fullName>Banking</fullName>
+                    <default>false</default>
+                    <label>Banking</label>
+                </value>
+                <value>
+                    <fullName>BPM / DCM</fullName>
+                    <default>false</default>
+                    <label>BPM / DCM</label>
+                </value>
+                <value>
+                    <fullName>Contact Center</fullName>
+                    <default>false</default>
+                    <label>Contact Center</label>
+                </value>
+                <value>
+                    <fullName>Customer Success</fullName>
+                    <default>false</default>
+                    <label>Customer Success</label>
+                </value>
+                <value>
+                    <fullName>Document and Text Understanding</fullName>
+                    <default>false</default>
+                    <label>Document and Text Understanding</label>
+                </value>
+                <value>
+                    <fullName>ECM</fullName>
+                    <default>false</default>
+                    <label>ECM</label>
+                </value>
+                <value>
+                    <fullName>Healthcare</fullName>
+                    <default>false</default>
+                    <label>Healthcare</label>
+                </value>
+                <value>
+                    <fullName>Insurance</fullName>
+                    <default>false</default>
+                    <label>Insurance</label>
+                </value>
+                <value>
+                    <fullName>Marketing Automation</fullName>
+                    <default>false</default>
+                    <label>Marketing Automation</label>
+                </value>
+                <value>
+                    <fullName>Natural Language/ Chatbots / Digital Assistant</fullName>
+                    <default>false</default>
+                    <label>Natural Language/ Chatbots / Digital Assistant</label>
+                </value>
+                <value>
+                    <fullName>Platform / Infrastructure / Cloud / SaaS</fullName>
+                    <default>false</default>
+                    <label>Platform / Infrastructure / Cloud / SaaS</label>
+                </value>
+                <value>
+                    <fullName>Process Mining</fullName>
+                    <default>false</default>
+                    <label>Process Mining</label>
+                </value>
+                <value>
+                    <fullName>PUBLIC SECTOR</fullName>
+                    <default>false</default>
+                    <label>PUBLIC SECTOR</label>
+                </value>
+                <value>
+                    <fullName>Security and Compliance</fullName>
+                    <default>false</default>
+                    <label>Security and Compliance</label>
+                </value>
+                <value>
+                    <fullName>Strategic</fullName>
+                    <default>false</default>
+                    <label>Strategic</label>
+                </value>
+                <value>
+                    <fullName>Supply chain</fullName>
+                    <default>false</default>
+                    <label>Supply chain</label>
+                </value>
+                <value>
+                    <fullName>Test Automation</fullName>
+                    <default>false</default>
+                    <label>Test Automation</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </CustomField>

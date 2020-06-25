@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>VAT_Number_Last_Validated_On__c</fullName>
+        <description>Time stamp when VAT number was last validated</description>
+        <externalId>false</externalId>
+        <label>VAT Number Last Validated On</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </CustomField>

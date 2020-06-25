@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>All_EndUser_Account</fullName>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.NAME_LOCAL</columns>
+        <columns>Registered_Address__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.Customer,Account.Customer_Prospect</value>
+        </filters>
+        <filters>
+            <field>Account_Number__c</field>
+            <operation>equals</operation>
+            <value>039203,014797,004769,010049,001171,001125,008577,001710,022830,008343,010097,045100,043440,017647,000669</value>
+        </filters>
+        <label>顧客アカウント一覧</label>
+        <sharedTo>
+            <allPartnerUsers></allPartnerUsers>
+            <group>All_Japan_Partner_User</group>
+        </sharedTo>
+    </ListView>

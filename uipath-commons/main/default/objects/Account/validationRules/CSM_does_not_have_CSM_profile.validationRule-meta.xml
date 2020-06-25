@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>CSM_does_not_have_CSM_profile</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISNULL(CSM__c)) &amp;&amp; NOT(ISBlank(CSM__c))&amp;&amp;   !CONTAINS(CSM__r.Profile.Name,&quot;Customer Success&quot;) 
+&amp;&amp;!CONTAINS( CSM__r.UserRole.Name,&quot;Customer Success&quot;)
+&amp;&amp;  CSM__r.Id  &lt;&gt; &quot;00536000005jUlL&quot;</errorConditionFormula>
+        <errorDisplayField>CSM__c</errorDisplayField>
+        <errorMessage>The user added to CSM does not have a CSM profile.</errorMessage>
+    </ValidationRule>

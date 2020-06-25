@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Customer_Stage__c</fullName>
+        <externalId>false</externalId>
+        <label>Customer Stage</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Prove</fullName>
+                    <default>false</default>
+                    <label>Prove</label>
+                </value>
+                <value>
+                    <fullName>Conversion</fullName>
+                    <default>false</default>
+                    <label>Conversion</label>
+                </value>
+                <value>
+                    <fullName>Establish</fullName>
+                    <default>false</default>
+                    <label>Establish</label>
+                </value>
+                <value>
+                    <fullName>Expand</fullName>
+                    <default>false</default>
+                    <label>Expand</label>
+                </value>
+                <value>
+                    <fullName>Scale</fullName>
+                    <default>false</default>
+                    <label>Scale</label>
+                </value>
+                <value>
+                    <fullName>1Robot for everyone</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>1Robot for everyone</label>
+                </value>
+                <value>
+                    <fullName>Scale Ups</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Scale Ups</label>
+                </value>
+                <value>
+                    <fullName>Stagnating</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Stagnating</label>
+                </value>
+                <value>
+                    <fullName>Struggling to scale</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Struggling to scale</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </CustomField>

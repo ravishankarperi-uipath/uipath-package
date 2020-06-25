@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>D_B_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag is true if address is sourced from D&amp;B</description>
+        <externalId>false</externalId>
+        <label>D&amp;B Address</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </CustomField>

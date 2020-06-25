@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Bombora_Composite_Score_Sum__c</fullName>
+        <description>Sum the Composite Score field on Bombora records that
+have the attribute of ‘Inactive’ = FALSE</description>
+        <externalId>false</externalId>
+        <label>Bombora Composite Score Sum</label>
+        <summarizedField>bombora_app__BomboraCustomObject__c.bombora_app__CompositeScore__c</summarizedField>
+        <summaryFilterItems>
+            <field>bombora_app__BomboraCustomObject__c.bombora_app__inactive__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </summaryFilterItems>
+        <summaryForeignKey>bombora_app__BomboraCustomObject__c.bombora_app__Account__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </CustomField>

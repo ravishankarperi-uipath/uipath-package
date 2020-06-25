@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Lock_Sync_Status_Until_Account_Validated</fullName>
+        <active>true</active>
+        <description>Sync Status should not be changed to &quot;Valid&quot; or &quot;Pending&quot; if the Validation Status on the Account is not set to &quot;Validated&quot;, so that Account info is not synced to NetSuite until Data Stewards performs the Validation</description>
+        <errorConditionFormula>AND (ISCHANGED(Sync_Status__c), 
+     OR(ISPICKVAL(Sync_Status__c,&quot;Valid&quot;),
+        ISPICKVAL(Sync_Status__c,&quot;Pending&quot;)
+     ),
+     NOT(ISPICKVAL(Validation_Status__c,&quot;Validated&quot;))
+)</errorConditionFormula>
+        <errorDisplayField>Sync_Status__c</errorDisplayField>
+        <errorMessage>&quot;Sync Status&quot; cannot be set to &quot;Valid&quot; or &quot;Pending&quot; until Data Steward validates the Account and sets the &quot;Validation Status&quot; to &quot;Validated&quot;</errorMessage>
+    </ValidationRule>

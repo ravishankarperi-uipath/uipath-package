@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>PwC_Your_Tomorrow__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to track accounts authorized in the PwC Your Tomorrow program.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to track accounts authorized in the PwC Your Tomorrow program.</inlineHelpText>
+        <label>PwC Your Tomorrow</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </CustomField>

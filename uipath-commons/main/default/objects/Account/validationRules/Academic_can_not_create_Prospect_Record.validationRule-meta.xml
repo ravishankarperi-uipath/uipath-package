@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Academic_can_not_create_Prospect_Record</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISNEW()  &amp;&amp;  (RecordType.Name = &quot;Customer Prospect&quot; || RecordType.Name = &quot;Partner Prospect&quot;) &amp;&amp;  $User.ProfileId =&quot;00e1Q000001q6h9&quot;</errorConditionFormula>
+        <errorMessage>You can only create Academic accounts</errorMessage>
+    </ValidationRule>

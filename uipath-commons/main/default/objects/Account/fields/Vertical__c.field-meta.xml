@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Vertical__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE( Industry , &quot;Engineering&quot;, &quot;Manufacturing&quot;, 
+&quot;Construction&quot;, &quot;Manufacturing&quot;,
+&quot;Manufacturing&quot;, &quot;Manufacturing&quot;,
+&quot;Automotive&quot;, &quot;Manufacturing&quot;,
+&quot;Technology&quot;, &quot;High Tech&quot;,
+&quot;Machinery&quot;, &quot;Manufacturing&quot;,
+&quot;Civil Engineering&quot;, &quot;Manufacturing&quot;,
+&quot;Financial Services&quot;, &quot;Banking and Financial Services&quot;,
+&quot;Banking and Financial Services&quot;, &quot;Banking and Financial Services&quot;,
+&quot;Chemicals&quot;, &quot;Manufacturing&quot;,
+&quot;Automotive&quot;, &quot;Manufacturing&quot;,
+&quot;Retail&quot;, &quot;Retail&quot;,
+&quot;Biotechnology&quot;, &quot;Healthcare&quot;,
+&quot;Building Materials&quot;, &quot;Manufacturing&quot;,
+&quot;Pharmaceuticals&quot;, &quot;Healthcare&quot;,
+&quot;Entertainment&quot;, &quot;Media &amp; Entertainment&quot;,
+&quot;Others&quot;, &quot;Others&quot;,
+&quot;Hospitality&quot;, &quot;Hospitality&quot;,
+&quot;Media&quot;, &quot;Media &amp; Entertainment&quot;,
+&quot;Not For Profit&quot;, &quot;Others&quot;,
+&quot;Legal&quot;, &quot;Others&quot;,
+&quot;Recreation&quot;, &quot;Others&quot;,
+&quot;Staffing &amp; Recruiting services&quot;, &quot;Others&quot;,
+&quot;Consulting&quot;, &quot;Partnership&quot;,
+&quot;Computer Software&quot;, &quot;High Tech&quot;,
+&quot;Management Consulting&quot;, &quot;Partnership&quot;,
+&quot;Information Technology and Services&quot;, &quot;High Tech&quot;,
+&quot;Education&quot;, &quot;Public Sector&quot;,
+&quot;Government&quot;, &quot;Public Sector&quot;,
+&quot;Public Sector&quot;, &quot;Public Sector&quot;,
+&quot;Higher Education&quot;, &quot;Public Sector&quot;,
+&quot;Insurance&quot;, &quot;Insurance&quot;,
+&quot;Energy&quot;, &quot;Energy and Utilities&quot;,
+&quot;Oil &amp; Energy&quot;, &quot;Energy and Utilities&quot;,
+&quot;Utilities&quot;, &quot;Energy and Utilities&quot;,
+&quot;Transportation&quot;, &quot;Transportation&quot;,
+&quot;Telecommunications&quot;, &quot;Telecommunications&quot;,
+&quot;Communications&quot;, &quot;Telecommunications&quot;,
+&quot;Banking&quot;, &quot;Banking and Financial Services&quot;,
+&quot;Healthcare&quot;, &quot;Healthcare&quot;,
+&quot;Healthcare Payers&quot;, &quot;Healthcare&quot;,
+&quot;Healthcare Providers&quot;, &quot;Healthcare&quot;,
+&quot;Healthcare LS&quot;, &quot;Healthcare&quot;,
+&quot;Healthcare Gov&quot;, &quot;Healthcare&quot;,
+&quot;Household chemicals&quot;, &quot;CPG&quot;,
+&quot;Consumer Goods&quot;, &quot;CPG&quot;,
+&quot;Food &amp; Beverage&quot;, &quot;CPG&quot;,
+&quot;Electronics,&quot;, &quot;CPG&quot;,
+&quot;Apparel,&quot;, &quot;CPG&quot;,
+&quot;Others&quot;)</formula>
+        <label>Vertical</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </CustomField>

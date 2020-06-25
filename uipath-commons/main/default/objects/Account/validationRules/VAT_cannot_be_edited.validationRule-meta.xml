@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>VAT_cannot_be_edited</fullName>
+        <active>true</active>
+        <description>This validation rule makes the field read only after entering a value. It can be changed by users with Super Admin profile.</description>
+        <errorConditionFormula>IF(ISBLANK( PRIORVALUE( VAT_Number__c)),false,
+ISCHANGED( VAT_Number__c))
+&amp;&amp; $Profile.Name &lt;&gt;&quot;Super Admin&quot;
+&amp;&amp; $Profile.Name &lt;&gt;&quot;Data Stewards&quot;</errorConditionFormula>
+        <errorMessage>VAT cannot be edited</errorMessage>
+    </ValidationRule>

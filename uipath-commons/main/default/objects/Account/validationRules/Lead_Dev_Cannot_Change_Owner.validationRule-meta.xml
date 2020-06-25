@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Lead_Dev_Cannot_Change_Owner</fullName>
+        <active>true</active>
+        <description>Lead Development shouldn&#39;t change the Account Owner unless the Account was created today</description>
+        <errorConditionFormula>ISCHANGED(OwnerId) &amp;&amp;  $Profile.Name = &quot;Lead Development&quot; &amp;&amp;  $User.Id &lt;&gt; PRIORVALUE(OwnerId) &amp;&amp; CreatedDate &lt;&gt; Now()</errorConditionFormula>
+        <errorMessage>Account Owner cannot be changed. Please reach out to Sales Ops</errorMessage>
+    </ValidationRule>
