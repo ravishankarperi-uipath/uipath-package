@@ -3,7 +3,7 @@
     {
       "path": "uipath-core",
       "package": "uipath-core",
-      "default": true,
+      "default": false,
       "versionName": "Version 1.0",
       "versionNumber": "1.0.0.NEXT"
     },
@@ -26,9 +26,9 @@
   "sourceApiVersion": "48.0",
   "packageAliases": {
     "cpq": "04t4N000000N5OyQAK",
-    "uipath-commons": "0Ho1v000000fxZWCAY",
-    "uipath-commons@1.0.0-1": "04t1v000002Gy67AAC",
-    "uipath-core@1.0.0-2": "04t1v000002Gy6MAAS",
-    "uipath-core@1.0.0-1": "04t1v000002Gy62AAC"
+    "uipath-core": "0Ho4K000000PB0iSAG",
+    "uipath-commons": "0Ho4K000000PB0nSAG",
+    "uipath-core@1.0.0-1": "04t4K000000CCOPQA4",
+    "uipath-commons@1.0.0-1": "04t4K000000CCWkQAO"
   }
 }
