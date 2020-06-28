@@ -20,10 +20,81 @@ public with sharing class AccountsTest {
                 account
         });
         fflib_SObjectDomain.triggerHandler(Accounts.class);
-        System.assertEquals(account.BillingState, 'Gujarat');
+        System.assertEquals('Gujarat',account.BillingState);
 
     }
 
+
+    @IsTest
+    private static void copiesCountryToBillingCountryOnlyIfNotAlreadySet() {
+        Account accountA = new Account (Name = 'Test', Country__c = 'India', State__c = 'Gujarat');
+        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
+                accountA
+        });
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+        System.assertEquals('India',accountA.BillingCountry);
+
+
+        // If already set, leave it as it is
+        Account accountB = new Account (Name = 'Test', Country__c = 'India', State__c = 'Gujarat',BillingCountry='United Kingdom');
+        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
+                accountB
+        });
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+        System.assertEquals('United Kingdom',accountB.BillingCountry);
+    }
+
+
+
+    @IsTest
+    private static void derivesCountryFromCountryCodeOnlyIfNotAlreadySet() {
+        Account accountA = new Account (Name = 'Test', BillingCountryCode = 'IN');
+        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
+                accountA
+        });
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+        System.assertEquals('India',accountA.BillingCountry);
+
+        // If already set, leave it as it is
+        Account accountB = new Account (Name = 'Test', BillingCountryCode = 'IN',BillingCountry='United Kingdom');
+        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
+                accountB
+        });
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+        System.assertEquals('United Kingdom',accountB.BillingCountry);
+
+    }
+
+    @IsTest
+    private static void copiesCountryFromDandBOn(){
+        Account accountA = new Account (Name = 'Test', DnB_Country__c = 'United Kingdom');
+        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
+                accountA
+        });
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+        System.assertEquals('United Kingdom',accountA.BillingCountry);
+        System.assertEquals('United Kingdom',accountA.Country__c);
+
+
+    }
+
+    @IsTest
+    private static void cannotSelectDandBCompanyFromDifferentCountry() {
+        Id accountId=fflib_IDGenerator.generate(Account.SObjectType);
+        Account oldAccount = new Account (Id = accountId,Name = 'Test',Country__c='United Kingdom'
+        );
+        Account updatedAccount = new Account (Id = accountId,Name = 'Test',
+                DnB_Country__c = 'India'
+        );
+        fflib_SObjectDomain.Test.Database.onUpdate(new Account[]{
+                updatedAccount
+        },new Map<Id, SObject> { oldAccount.Id => oldAccount } );
+
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+        System.assertEquals('You cannot select a D&B Company from a different country.', fflib_SObjectDomain.Errors.getAll()[0].message);
+    }
+
+//
 
     /**
      * Can insert 200 Accounts in Bulk without Limits issues
@@ -54,14 +125,11 @@ public with sharing class AccountsTest {
 
         }
         insert accounts;
-
-        Test.startTest();
         for (Integer i = 0; i < 200; i++) {
             accounts.get(i).Name='Updated Account ' + i;
         }
         //will throw on any limits issues
         List<Database.SaveResult> results=Database.update(accounts,true);
-        Test.stopTest();
         System.assertEquals(results.size()>0, true);
 
 
