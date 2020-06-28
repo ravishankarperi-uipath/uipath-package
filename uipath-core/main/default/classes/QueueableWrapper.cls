@@ -6,14 +6,20 @@
 public abstract class QueueableWrapper implements Queueable {
     private static Integer counter = 0;
     public String name;
+    private static final QueueableChain currentChain = new QueueableChain();
+
     public QueueableWrapper(String name) {
         this.name = name + '.' + ++counter + System.now().format();
     }
     public abstract void work();
 
     public void execute(QueueableContext ctx) {
+        //execute work in the current Queueable.
+        //This may potentially call QueueableWrapper.enqueue many times adding items to theChain List
         this.work();
-        if(!Test.isRunningTest()) {
+
+        //finally the accumulated queueables are all executed in one shot at the end
+        if (!Test.isRunningTest()) {
             currentChain.commitQueue();
         }
     }
@@ -26,7 +32,15 @@ public abstract class QueueableWrapper implements Queueable {
     }
 
     private class QueueableChain implements Queueable {
+
+
         private List<QueueableWrapper> chain = new List<QueueableWrapper>();
+
+        /**
+         * This basically takes items from the chain one by one and schedules them for execution one by one.
+         * It executes the first one by directly calling execute on it and then schedules the remainder via the Wrapper logic again. This is repeated recursively until there is nothing left in the chain
+         * @param ctx
+         */
         public void execute(QueueableContext ctx) {
             if (this.chain.isEmpty()) {
                 return;
@@ -42,13 +56,14 @@ public abstract class QueueableWrapper implements Queueable {
         }
 
         public void add(QueueableWrapper queueable) {
-
             System.debug('Chains in queue: ' + this.chain.size());
             for (QueueableWrapper queueableWrapper : chain) {
                 System.debug(queueableWrapper.name);
             }
-            if(this.chain.size()>10) {
-                throw new QueueableChainException('Chains longer than 10 links are not supported');
+            if (this.chain.size() > 10) {
+                throw new QueueableChainException(
+                        'Chains longer than 10 links are not supported'
+                );
             }
 
             if (queueable == null) {
@@ -57,13 +72,12 @@ public abstract class QueueableWrapper implements Queueable {
             this.chain.add(queueable);
         }
 
+        //Runs the whole chain as one single queueable
         public void commitQueue() {
-                System.enqueueJob(this);
-
+            System.enqueueJob(this);
         }
     }
-    private static final QueueableChain currentChain = new QueueableChain();
 
-    public class QueueableChainException extends Exception{}
+    public class QueueableChainException extends Exception {
+    }
 }
-

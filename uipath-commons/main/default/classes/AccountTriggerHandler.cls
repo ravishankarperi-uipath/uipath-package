@@ -79,14 +79,13 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
 
   /* Trigger Methods */
   public override void beforeInsert() {
-    this.madeStatusRequiredChinaAustralia(Trigger.new);
+//    this.madeStatusRequiredChinaAustralia(Trigger.new);
     this.setAddressRelatedFields(null, Trigger.new);
     this.setRegion(Trigger.new);
     this.setSubsidiary(Trigger.new);
   }
 
   public override void afterInsert() {
-    this.GrantPermissionToParentOwner(Trigger.new, null);
     this.createAddress(Trigger.new);
   }
 
@@ -104,29 +103,28 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
   }
 
   public override void afterUpdate() {
-    this.GrantPermissionToParentOwner(Trigger.new, Trigger.oldMap);
     this.processDNBCompany(Trigger.oldMap, Trigger.new);
     this.setUpContactOwner(Trigger.new, Trigger.oldMap);
   }
 
-  // ============================================================================
-  // added by Mirela Chituc - 05/15/2020 ========================================
-  // If Country is China or Australia State field is required - before insert
-  // if State is not empty set BillingState with the value fron State__c field
-  // ============================================================================
-  public void MadeStatusRequiredChinaAustralia(List<Account> accList) {
-    for (Account acc : accList) {
-      if (
-        (acc.Country__c == 'China' || acc.Country__c == 'Australia') &&
-        acc.State__c == null
-      ) {
-        acc.addError('State is required if Country is ' + acc.Country__c);
-      } else {
-        if (acc.State__c != null)
-          acc.BillingState = acc.State__c;
-      }
-    }
-  }
+  // // ============================================================================
+  // // added by Mirela Chituc - 05/15/2020 ========================================
+  // // If Country is China or Australia State field is required - before insert
+  // // if State is not empty set BillingState with the value fron State__c field
+  // // ============================================================================
+  // public void MadeStatusRequiredChinaAustralia(List<Account> accList) {
+  //   for (Account acc : accList) {
+  //     if (
+  //       (acc.Country__c == 'China' || acc.Country__c == 'Australia') &&
+  //       acc.State__c == null
+  //     ) {
+  //       acc.addError('State is required if Country is ' + acc.Country__c);
+  //     } else {
+  //       if (acc.State__c != null)
+  //         acc.BillingState = acc.State__c;
+  //     }
+  //   }
+  // }
 
   // ============================================================================
   // added by Mirela Chituc - 5/26/2020 ========================================
@@ -166,116 +164,6 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
         update cntToUpdate;
     }
   }
-
-  // ============================================================================
-  // added by Mirela Chituc - 10/23/2019 ========================================
-  // Set up Used Effort - before update
-  // ============================================================================
-
-  /* GILA COMMENTED  private void setUsedEffort(List<Account> accountList) {
-
-        Set<Id> accIds = new Set<Id>();
-        for(Account acc: accountList)
-            if(acc.Used_Effort__c == null)
-                accIds.add(acc.Id);
-
-        if(accIds.size() > 0) {
-            Set<String> allTypes = new Set<String>{'Workshop', 'POC', 'Demo'};
-            List<Pre_Sales_Tasks__c> allCurrentPSTasks = [SELECT Id, Opportunity__c, Opportunity__r.AccountId, Duration_in_hours__c
-                                                   FROM Pre_Sales_Tasks__c WHERE Opportunity__r.AccountId IN: accIds AND Type__c IN: allTypes];
-
-            if(allCurrentPSTasks.size() > 0) {
-                Map<Id, Decimal> preSalesDuretionByAccountMap = new Map<Id, Decimal>();
-                for(Pre_Sales_Tasks__c pSales: allCurrentPSTasks)
-                {
-                    if(pSales.Duration_in_hours__c != null) {
-                        if(!preSalesDuretionByAccountMap.containsKey(pSales.Opportunity__r.AccountId)) {
-                            preSalesDuretionByAccountMap.put(pSales.Opportunity__r.AccountId, pSales.Duration_in_hours__c);
-                        } else {
-
-                            Decimal totalDuration = preSalesDuretionByAccountMap.get(pSales.Opportunity__r.AccountId);
-                            totalDuration += pSales.Duration_in_hours__c;
-                            preSalesDuretionByAccountMap.put(pSales.Opportunity__r.AccountId, totalDuration);
-                        }
-                    }
-                }
-
-                for(Account acc: accountList)
-                    if(preSalesDuretionByAccountMap.containsKey(acc.Id))
-                        acc.Used_Effort__c = preSalesDuretionByAccountMap.get(acc.Id);
-            }
-        }
-    }*/
-
-  // ============================================================================
-  // added by Mirela Chituc - 11/5/2019 ========================================
-  // Set up Recommended Effort - before update
-  // ============================================================================
-  // ============================================================================
-  // added by Mirela Chituc - 11/5/2019 ========================================
-  // Set up Recommended Effort - before update
-  // ============================================================================
-
-  /* GILA COMMENTED private void setRecommendedEffort(List<Account> accountList, Map<Id, SObject> oldAccountMap) {
-
-        for(Account acc: accountList) {
-            Account oldAcc = (Account)oldAccountMap.get(acc.Id);
-            Decimal oldCustomerScore = null;
-            Decimal CustomerScore = null;
-
-            // customer score calculation - should be exactly as Customer Score formula
-            if(oldAcc.Revenue_Score__c != null && oldAcc.Employees_Score__c != null && oldAcc.Industry_Score__c != null && oldAcc.Customer_Stage_Score__c != null)
-                oldCustomerScore = ((oldAcc.Revenue_Score__c + oldAcc.Employees_Score__c)/2 + oldAcc.Industry_Score__c + oldAcc.Customer_Stage_Score__c)/3;
-
-            if(acc.Revenue_Score__c != null && acc.Employees_Score__c != null && acc.Industry_Score__c != null && acc.Customer_Stage_Score__c != null)
-                CustomerScore = ((acc.Revenue_Score__c + acc.Employees_Score__c)/2 + acc.Industry_Score__c + acc.Customer_Stage_Score__c)/3;
-
-            if((acc.Customer_Stage__c != null && acc.Customer_Stage__c != oldAcc.Customer_Stage__c) || (CustomerScore != null && CustomerScore != oldCustomerScore) ) {
-                if(acc.Customer_Stage__c == 'Prove') {
-                    if(CustomerScore >= 1 && CustomerScore <= 4)
-                        acc.Recommended_Effort__c = 26;
-                    if(CustomerScore > 4 && CustomerScore <= 7)
-                        acc.Recommended_Effort__c = 34;
-                    if(CustomerScore > 7 && CustomerScore <= 10)
-                        acc.Recommended_Effort__c = 40;
-                }
-                if(acc.Customer_Stage__c == 'Establish') {
-                    if(CustomerScore >= 1 && CustomerScore <= 4)
-                        acc.Recommended_Effort__c = 28;
-                    if(CustomerScore > 4 && CustomerScore <= 7)
-                        acc.Recommended_Effort__c = 32;
-                    if(CustomerScore > 7 && CustomerScore <= 10)
-                        acc.Recommended_Effort__c = 36;
-                }
-                if(acc.Customer_Stage__c == 'Expand') {
-                    if(CustomerScore >= 1 && CustomerScore <= 4)
-                        acc.Recommended_Effort__c = 26;
-                    if(CustomerScore > 4 && CustomerScore <= 7)
-                        acc.Recommended_Effort__c = 30;
-                    if(CustomerScore > 7 && CustomerScore <= 10)
-                        acc.Recommended_Effort__c = 36;
-                }
-                if(acc.Customer_Stage__c == 'Scale') {
-                    if(CustomerScore >= 1 && CustomerScore <= 4)
-                        acc.Recommended_Effort__c = 34;
-                    if(CustomerScore > 4 && CustomerScore <= 7)
-                        acc.Recommended_Effort__c = 40;
-                    if(CustomerScore > 7 && CustomerScore <= 10)
-                        acc.Recommended_Effort__c = 44;
-                }
-                if(acc.Customer_Stage__c == 'Conversion') {
-                    if(CustomerScore >= 1 && CustomerScore <= 4)
-                        acc.Recommended_Effort__c = 30;
-                    if(CustomerScore > 4 && CustomerScore <= 7)
-                        acc.Recommended_Effort__c = 38;
-                    if(CustomerScore > 7 && CustomerScore <= 10)
-                        acc.Recommended_Effort__c = 44;
-                }
-
-            }
-        }
-    }
-    */
 
   // ============================================================================
   // added by Mirela Chituc - 10/21/2019 ========================================
