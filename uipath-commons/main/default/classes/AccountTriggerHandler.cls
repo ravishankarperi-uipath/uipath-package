@@ -79,8 +79,8 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
 
   /* Trigger Methods */
   public override void beforeInsert() {
-//    this.madeStatusRequiredChinaAustralia(Trigger.new);
-    this.setAddressRelatedFields(null, Trigger.new);
+    //    this.madeStatusRequiredChinaAustralia(Trigger.new);
+//    this.setAddressRelatedFields(null, Trigger.new);
     this.setRegion(Trigger.new);
     this.setSubsidiary(Trigger.new);
   }
@@ -90,7 +90,7 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
   }
 
   public override void beforeUpdate() {
-    this.setAddressRelatedFields(Trigger.oldMap, Trigger.new);
+//    this.setAddressRelatedFields(Trigger.oldMap, Trigger.new);
     this.setRegion(Trigger.new);
     this.setCustomerStage(Trigger.new, Trigger.oldMap);
     //        this.setRecommendedEffort(trigger.new, trigger.oldMap);
@@ -259,120 +259,120 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
    * @DESCRIPTION: This method will populate address fields when an account is created from D&B or when a D&B company is matched with an existing account
    * @AUTHOR: SV - Slalom Consulting
    */
-  private void setAddressRelatedFields(
-    Map<Id, SObject> oldAccountMap,
-    List<Account> accountList
-  ) {
-    Map<String, String> codeAndCountryMap = new Map<String, String>();
-
-    if (oldAccountMap == null) {
-      //Retrieve Country Codes
-      Schema.DescribeFieldResult countryCodeResult = User.Countrycode.getDescribe();
-      List<Schema.PicklistEntry> countryPLE = countryCodeResult.getPicklistValues();
-      for (Schema.PicklistEntry entry : countryPLE) {
-        codeAndCountryMap.put(entry.getValue(), entry.getLabel());
-      }
-    }
-
-    for (Account acc : accountList) {
-      Account oldAcc = null;
-      if (oldAccountMap != null) {
-        oldAcc = (Account) oldAccountMap.get(acc.Id);
-      } else {
-        if (
-          String.IsBlank(acc.BillingCountry) &&
-          String.IsNotBlank(acc.Country__c)
-        ) {
-          acc.BillingCountry = acc.Country__c;
-        }
-
-        //on insert only
-        if (
-          String.IsBlank(acc.BillingCountry) &&
-          String.IsNotBlank(acc.BillingCountryCode)
-        ) {
-          //In case of lead conversion, country code is available on before insert, but country is not available until after insert
-          //Fix that here, so that we can use country for address logic
-          acc.BillingCountry = codeAndCountryMap.get(acc.BillingCountryCode);
-        }
-      }
-
-      //If account is created from D&B or account is matched with address, populate the standard address
-      if (
-        String.IsNotBlank(acc.DnB_Country__c) &&
-        (oldAcc == null || String.IsBlank(oldAcc.DnB_Country__c))
-      ) {
-        //Insert only
-        if (oldAcc == null) {
-          //Account was created through D&B Hoovers insert scenario
-          acc.Country__c = acc.DnB_Country__c;
-          acc.BillingCountry = acc.DnB_Country__c;
-        } else {
-          //Update only
-          //Don't allow D&B matching with company in other country
-          if (acc.DnB_Country__c != acc.Country__c) {
-            throw new DnBMatchException(
-              'You cannot select a D&B Company from a different country.'
-            );
-          }
-        }
-
-        acc.BillingStreet = acc.DnB_Street__c;
-        acc.BillingCity = acc.DnB_City__c;
-
-        if (acc.BillingCountry == 'United States') {
-          acc.DnB_Zip_Postal_Code__c = acc.DnB_Zip_Postal_Code__c.left(5);
-        }
-        acc.BillingPostalCode = acc.DnB_Zip_Postal_Code__c;
-
-        /*
-                    Replicate logic for wf 'Populate State from D&B'
-                    Only populate state for supported states, otherwise clear out the D&B state
-                 */
-        if (
-          AvailableCountryStates.Contains(acc.DnB_State_Province__c) &&
-          (acc.BillingCountry == 'United States' ||
-          acc.BillingCountry == 'China' ||
-          acc.BillingCountry == 'Australia' ||
-          acc.BillingCountry == 'Brazil' ||
-          acc.BillingCountry == 'Canada' ||
-          acc.BillingCountry == 'United Kingdom' ||
-          acc.BillingCountry == 'Ireland' ||
-          acc.BillingCountry == 'India' ||
-          acc.BillingCountry == 'Italy' ||
-          acc.BillingCountry == 'Mexico')
-        ) {
-          acc.BillingState = acc.DnB_State_Province__c;
-        } else {
-          acc.DnB_State_Province__c = '';
-        }
-
-        //Default shipping address to billing address on insert
-        acc.ShippingCountry = acc.BillingCountry;
-        acc.ShippingState = acc.BillingState;
-        acc.ShippingStreet = acc.BillingStreet;
-        acc.ShippingCity = acc.BillingCity;
-        acc.ShippingPostalCode = acc.BillingPostalCode;
-      }
-
-      if (oldAcc == null) {
-        if (
-          String.IsBlank(acc.DnB_Country__c) &&
-          String.IsNotBlank(acc.BillingCountry)
-        ) {
-          //Support for pre-golive scenario
-          acc.Country__c = acc.BillingCountry;
-        }
-
-        //Default shipping address to billing address on insert
-        acc.ShippingCountry = acc.BillingCountry;
-        acc.ShippingState = acc.BillingState;
-        acc.ShippingStreet = acc.BillingStreet;
-        acc.ShippingCity = acc.BillingCity;
-        acc.ShippingPostalCode = acc.BillingPostalCode;
-      }
-    }
-  }
+//  private void setAddressRelatedFields(
+//    Map<Id, SObject> oldAccountMap,
+//    List<Account> accountList
+//  ) {
+//    Map<String, String> codeAndCountryMap = new Map<String, String>();
+//
+//    if (oldAccountMap == null) {
+//      //Retrieve Country Codes
+//      Schema.DescribeFieldResult countryCodeResult = User.Countrycode.getDescribe();
+//      List<Schema.PicklistEntry> countryPLE = countryCodeResult.getPicklistValues();
+//      for (Schema.PicklistEntry entry : countryPLE) {
+//        codeAndCountryMap.put(entry.getValue(), entry.getLabel());
+//      }
+//    }
+//
+//    for (Account acc : accountList) {
+//      Account oldAcc = null;
+//      if (oldAccountMap != null) {
+//        oldAcc = (Account) oldAccountMap.get(acc.Id);
+//      } else {
+//        if (
+//          String.IsBlank(acc.BillingCountry) &&
+//          String.IsNotBlank(acc.Country__c)
+//        ) {
+//          acc.BillingCountry = acc.Country__c;
+//        }
+//
+//        //on insert only
+//        if (
+//          String.IsBlank(acc.BillingCountry) &&
+//          String.IsNotBlank(acc.BillingCountryCode)
+//        ) {
+//          //In case of lead conversion, country code is available on before insert, but country is not available until after insert
+//          //Fix that here, so that we can use country for address logic
+//          acc.BillingCountry = codeAndCountryMap.get(acc.BillingCountryCode);
+//        }
+//      }
+//
+//      //If account is created from D&B or account is matched with address, populate the standard address
+//      if (
+//        String.IsNotBlank(acc.DnB_Country__c) &&
+//        (oldAcc == null || String.IsBlank(oldAcc.DnB_Country__c))
+//      ) {
+//        //Insert only
+//        if (oldAcc == null) {
+//          //Account was created through D&B Hoovers insert scenario
+//          acc.Country__c = acc.DnB_Country__c;
+//          acc.BillingCountry = acc.DnB_Country__c;
+//        } else {
+//          //Update only
+//          //Don't allow D&B matching with company in other country
+//          if (acc.DnB_Country__c != acc.Country__c) {
+//            throw new DnBMatchException(
+//              'You cannot select a D&B Company from a different country.'
+//            );
+//          }
+//        }
+//
+//        acc.BillingStreet = acc.DnB_Street__c;
+//        acc.BillingCity = acc.DnB_City__c;
+//
+//        if (acc.BillingCountry == 'United States') {
+//          acc.DnB_Zip_Postal_Code__c = acc.DnB_Zip_Postal_Code__c.left(5);
+//        }
+//        acc.BillingPostalCode = acc.DnB_Zip_Postal_Code__c;
+//
+//        /*
+//                    Replicate logic for wf 'Populate State from D&B'
+//                    Only populate state for supported states, otherwise clear out the D&B state
+//                 */
+//        if (
+//          AvailableCountryStates.Contains(acc.DnB_State_Province__c) &&
+//          (acc.BillingCountry == 'United States' ||
+//          acc.BillingCountry == 'China' ||
+//          acc.BillingCountry == 'Australia' ||
+//          acc.BillingCountry == 'Brazil' ||
+//          acc.BillingCountry == 'Canada' ||
+//          acc.BillingCountry == 'United Kingdom' ||
+//          acc.BillingCountry == 'Ireland' ||
+//          acc.BillingCountry == 'India' ||
+//          acc.BillingCountry == 'Italy' ||
+//          acc.BillingCountry == 'Mexico')
+//        ) {
+//          acc.BillingState = acc.DnB_State_Province__c;
+//        } else {
+//          acc.DnB_State_Province__c = '';
+//        }
+//
+//        //Default shipping address to billing address on insert
+//        acc.ShippingCountry = acc.BillingCountry;
+//        acc.ShippingState = acc.BillingState;
+//        acc.ShippingStreet = acc.BillingStreet;
+//        acc.ShippingCity = acc.BillingCity;
+//        acc.ShippingPostalCode = acc.BillingPostalCode;
+//      }
+//
+//      if (oldAcc == null) {
+//        if (
+//          String.IsBlank(acc.DnB_Country__c) &&
+//          String.IsNotBlank(acc.BillingCountry)
+//        ) {
+//          //Support for pre-golive scenario
+//          acc.Country__c = acc.BillingCountry;
+//        }
+//
+//        //Default shipping address to billing address on insert
+//        acc.ShippingCountry = acc.BillingCountry;
+//        acc.ShippingState = acc.BillingState;
+//        acc.ShippingStreet = acc.BillingStreet;
+//        acc.ShippingCity = acc.BillingCity;
+//        acc.ShippingPostalCode = acc.BillingPostalCode;
+//      }
+//    }
+//  }
 
   /**
    * @Description: This method checks the Account Validation Status. If the Validation status is changed to "Validated" and Sync Status not equal to "Do Not Sync",

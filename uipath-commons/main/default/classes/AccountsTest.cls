@@ -66,15 +66,32 @@ public with sharing class AccountsTest {
     }
 
     @IsTest
-    private static void copiesCountryFromDandBOn(){
-        Account accountA = new Account (Name = 'Test', DnB_Country__c = 'United Kingdom');
+    private static void copiesAddressFromDnB(){
+        Account accountA = new Account (Name = 'Test',
+                DnB_Country__c = 'United Kingdom',
+                DnB_Street__c='21 Maple Mews',
+                DnB_City__c='London',
+                DnB_Zip_Postal_Code__c='SW16 2AL',
+                DnB_State_Province__c='Surrey'
+        );
         fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
                 accountA
         });
         fflib_SObjectDomain.triggerHandler(Accounts.class);
-        System.assertEquals('United Kingdom',accountA.BillingCountry);
         System.assertEquals('United Kingdom',accountA.Country__c);
+        System.assertEquals('United Kingdom',accountA.BillingCountry);
+        System.assertEquals('21 Maple Mews',accountA.BillingStreet);
+        System.assertEquals('London',accountA.BillingCity);
+        System.assertEquals('SW16 2AL',accountA.BillingPostalCode);
+        System.assertEquals('Surrey',accountA.BillingState);
 
+
+        //Copies billing address into shipping address on insert
+        System.assertEquals('United Kingdom',accountA.ShippingCountry);
+        System.assertEquals('21 Maple Mews',accountA.ShippingStreet);
+        System.assertEquals('London',accountA.ShippingCity);
+        System.assertEquals('SW16 2AL',accountA.ShippingPostalCode);
+        System.assertEquals('Surrey',accountA.ShippingState);
 
     }
 
@@ -94,7 +111,6 @@ public with sharing class AccountsTest {
         System.assertEquals('You cannot select a D&B Company from a different country.', fflib_SObjectDomain.Errors.getAll()[0].message);
     }
 
-//
 
     /**
      * Can insert 200 Accounts in Bulk without Limits issues
