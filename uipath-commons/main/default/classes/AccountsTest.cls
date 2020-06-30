@@ -1,6 +1,6 @@
 
 @IsTest
-public with sharing class AccountsTest {
+public class AccountsTest {
 
     @IsTest
     private static void validatesStateRequiredForChinaAustralia() {
@@ -21,7 +21,6 @@ public with sharing class AccountsTest {
         });
         fflib_SObjectDomain.triggerHandler(Accounts.class);
         System.assertEquals('Gujarat',account.BillingState);
-
     }
 
 
