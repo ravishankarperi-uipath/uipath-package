@@ -26,7 +26,7 @@ public abstract class QueueableWrapper implements Queueable {
 
     public static void enqueue(QueueableWrapper queueable) {
         currentChain.add(queueable);
-        if (!System.isQueueable()) {
+        if (!System.isQueueable() && !Test.isRunningTest()) {
             System.enqueueJob(queueable);
         }
     }
