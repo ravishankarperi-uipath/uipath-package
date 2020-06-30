@@ -21,18 +21,24 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     }
 
     public override void onAfterInsert() {
+
+        //For global accounts, grant Opp and Contact Edit access to Top level account owner
         QueueableWrapper.enqueue(new AccountSharingRollupQueueable(Records, null));
+
+        //Insert address record copying from Account. Also set that as Primary Shipping and Billing for the account
         QueueableWrapper.enqueue(new AccountAddressQueueable(Records, null));
     }
 
     public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
-
         shareAccountWithParentOwner(existingRecords);
         createAddressForDnBCompany(existingRecords);
         setContactOwnerToAccountOwner(existingRecords);
-
     }
 
+    /**
+     * For global accounts, grant Opp and Contact Edit access to Top level account owner
+     * @param existingRecords
+     */
     private void shareAccountWithParentOwner(Map<Id, SObject> existingRecords) {
         List<Account> changedAccounts = (List<Account>) this.getChangedRecords(new Set<SObjectField>{
             Account.ParentId
@@ -44,6 +50,10 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         }
     }
 
+    /**
+     * create an address record for when an account is updated using D&B address
+     * @param existingRecords
+     */
     private void createAddressForDnBCompany(Map<Id, SObject> existingRecords) {
         List<Account> changedAccounts = (List<Account>) this.getChangedRecords(new Set<SObjectField>{
             Account.DnB_Country__c
@@ -55,6 +65,10 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         }
     }
 
+    /**
+     * Loop and set Owner on all contacts to the owner of Account
+     * @param existingRecords
+     */
     private void setContactOwnerToAccountOwner(Map<Id, SObject> existingRecords) {
         List<Account> changedAccounts = (List<Account>) this.getChangedRecords(new Set<SObjectField>{
             Account.OwnerId
