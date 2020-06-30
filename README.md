@@ -1,5 +1,13 @@
 # UiPath Salesforce Unlocked Package
 
+## Prerequisites:
+
+-Your local machine is setup with all necessary tooling like VS Code(or other IDE), Any IDE extensions or plugins, Git, NPM, SFDX CLI
+
+-You have the uipath packaging repository cloned locally
+
+## Steps
+
 1.  Create a scratch org:
 
     ```shell
@@ -21,7 +29,11 @@
 4. Make changes and pull down locally
 5. Run all Local package tests
 6. Create new beta versions of packages
+
    ```shell
-   sfdx force:package:version:create -p uipath-core -d uipath-core --wait 1 -v girish@june2020uipath.com -f config/project-scratch-def.json -x`
-   `shell sfdx force:package:version:create -p uipath-commons -d uipath-commons --wait 1 -v girish@june2020uipath.com -f config/project-scratch-def.json -x
+   sfdx force:package:version:create -p uipath-core -d uipath-core --wait 1 -v girish@june2020uipath.com -f config/project-scratch-def.json -x
+   ```
+
+   ```shell
+   sfdx force:package:version:create -p uipath-commons -d uipath-commons --wait 1 -v girish@june2020uipath.com -f config/project-scratch-def.json -x
    ```
