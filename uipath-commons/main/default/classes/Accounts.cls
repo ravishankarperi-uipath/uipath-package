@@ -16,12 +16,23 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   }
 
   public override void onAfterInsert() {
-    QueueableWrapper.enqueue(new AccountSharingRollupQueueable(Records, null));
+    QueueableWrapper.enqueue(
+      new AccountSharingRollupQueueable(Records, null)
+    );
+    QueueableWrapper.enqueue(
+      new AccountAddressQueueable(Records, null)
+    );
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     QueueableWrapper.enqueue(
       new AccountSharingRollupQueueable(Records, existingRecords)
+    );
+    QueueableWrapper.enqueue(
+      new AccountDNBCompanyQueueable(Records, existingRecords)
+    );
+    QueueableWrapper.enqueue(
+      new AccountSetContactOwnerQueueable(Records, existingRecords)
     );
   }
 
