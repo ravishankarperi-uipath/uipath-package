@@ -13,16 +13,6 @@
             <operation>equals</operation>
             <value>Closed Won Booked</value>
         </summaryFilterItems>
-        <summaryFilterItems>
-            <field>Opportunity.CreatedDate</field>
-            <operation>greaterThan</operation>
-            <value>1/1/2019 2:00 PM</value>
-        </summaryFilterItems>
-        <summaryFilterItems>
-            <field>Opportunity.CloseDate</field>
-            <operation>lessOrEqual</operation>
-            <value>3/31/2019</value>
-        </summaryFilterItems>
         <summaryForeignKey>Opportunity.AccountId</summaryForeignKey>
         <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
