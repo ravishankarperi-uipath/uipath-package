@@ -1,14 +1,27 @@
-# UiPath Salesforce Core
+# UiPath Salesforce Unlocked Package
 
-sfdx force:org:create --definitionfile config/project-scratch-def.json --durationdays 7 --setalias scratch -v girish@bigmantra100.com
+1.  Create a scratch org:
 
-sfdx force:config:set defaultusername=scratch
+    ```shell
+    sfdx force:org:create --definitionfile config/project-scratch-def.json --durationdays 7 --setalias scratch -v <user@yourdomain.com>
+    ```
 
-sfdx force:package:install --package 04t1v000002Gy6MAAS -k test1234 -u scratch
+2)  Set default scratch org
 
-sfdx force:package:create --name uipath-core --description "uipath shared library" --packagetype Unlocked --path uipath-core --nonamespace --targetdevhubusername girish@june2020uipath.com
+    ```shell
+    sfdx force:config:set defaultusername=scratch
+    ```
 
-sfdx force:package:create --name uipath-commons --description "uipath common objects like Accounts Contacts etc" --packagetype Unlocked --path uipath-commons --nonamespace --targetdevhubusername girish@june2020uipath.com
+3. Install packages
 
-sfdx force:package:version:create -p uipath-core -d uipath-core --wait 1 -v girish@june2020uipath.com -f config/project-scratch-def.json -x
-sfdx force:package:version:create -p uipath-commons -d uipath-commons --wait 1 -v girish@june2020uipath.com -f config/project-scratch-def.json -x
+   ```shell
+    sfdx force:package:install --package 04t***** -k test1234 -u scratch
+   ```
+
+4. Make changes and pull down locally
+5. Run all Local package tests
+6. Create new beta versions of packages
+   ```shell
+   sfdx force:package:version:create -p uipath-core -d uipath-core --wait 1 -v girish@june2020uipath.com -f config/project-scratch-def.json -x`
+   `shell sfdx force:package:version:create -p uipath-commons -d uipath-commons --wait 1 -v girish@june2020uipath.com -f config/project-scratch-def.json -x
+   ```
