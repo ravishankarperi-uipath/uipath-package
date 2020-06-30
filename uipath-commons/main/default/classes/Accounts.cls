@@ -26,35 +26,46 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     }
 
     public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
-        QueueableWrapper.enqueue(
-            new AccountSharingRollupQueueable(getAccountsWhereParentChanged(), existingRecords)
-        );
-        QueueableWrapper.enqueue(
-            new AccountDNBCompanyQueueable(getAccountsWhereDnBCountryChanged(), existingRecords)
-        );
-        QueueableWrapper.enqueue(
-            new AccountSetContactOwnerQueueable(getAccountsWhereOwnerChanged(), existingRecords)
-        );
+
+        shareAccountWithParentOwner(existingRecords);
+        createAddressForDnBCompany(existingRecords);
+        setContactOwnerToAccountOwner(existingRecords);
+
     }
 
-
-    private List<Account> getAccountsWhereDnBCountryChanged() {
-        return (List<Account>) this.getChangedRecords(new Set<SObjectField>{
-            Account.DnB_Country__c
-        });
-    }
-
-    private List<Account> getAccountsWhereOwnerChanged() {
-        return (List<Account>) this.getChangedRecords(new Set<SObjectField>{
-            Account.OwnerId
-        });
-    }
-
-    private List<Account> getAccountsWhereParentChanged() {
-        return (List<Account>) this.getChangedRecords(new Set<SObjectField>{
+    private void shareAccountWithParentOwner(Map<Id, SObject> existingRecords) {
+        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(new Set<SObjectField>{
             Account.ParentId
         });
+        if (changedAccounts.size() > 0) {
+            QueueableWrapper.enqueue(
+                new AccountSharingRollupQueueable(changedAccounts, existingRecords)
+            );
+        }
     }
+
+    private void createAddressForDnBCompany(Map<Id, SObject> existingRecords) {
+        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(new Set<SObjectField>{
+            Account.DnB_Country__c
+        });
+        if (changedAccounts.size() > 0) {
+            QueueableWrapper.enqueue(
+                new AccountDNBCompanyQueueable(changedAccounts, existingRecords)
+            );
+        }
+    }
+
+    private void setContactOwnerToAccountOwner(Map<Id, SObject> existingRecords) {
+        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(new Set<SObjectField>{
+            Account.OwnerId
+        });
+        if (changedAccounts.size() > 0) {
+            QueueableWrapper.enqueue(
+                new AccountSetContactOwnerQueueable(changedAccounts, existingRecords)
+            );
+        }
+    }
+
 
     public override void onValidate() {
         for (Account acc : (List<Account>) Records) {
