@@ -1,247 +1,322 @@
-
 @IsTest
 public class AccountsTest {
+  @IsTest
+  private static void validatesStateRequiredForChinaAustralia() {
+    Accounts accounts = new Accounts(
+      new List<Account>{
+        new Account(Name = 'Test', Country__c = 'China', State__c = null)
+      }
+    );
+    accounts.onValidate();
+    System.assertEquals(1, fflib_SObjectDomain.Errors.getAll().size());
+    System.assertEquals(
+      'State is required if Country is China',
+      fflib_SObjectDomain.Errors.getAll()[0].message
+    );
+    System.assertEquals(
+      Account.State__c,
+      ((fflib_SObjectDomain.FieldError) fflib_SObjectDomain.Errors.getAll()[0])
+        .field
+    );
+  }
 
-    @IsTest
-    private static void validatesStateRequiredForChinaAustralia() {
-        Accounts accounts = new Accounts(new Account[]{
-            new Account (Name = 'Test', Country__c = 'China', State__c = null)
-        });
-        accounts.onValidate();
-        System.assertEquals(1, fflib_SObjectDomain.Errors.getAll().size());
-        System.assertEquals('State is required if Country is China', fflib_SObjectDomain.Errors.getAll()[0].message);
-        System.assertEquals(Account.State__c, ((fflib_SObjectDomain.FieldError) fflib_SObjectDomain.Errors.getAll()[0]).field);
+  @IsTest
+  private static void copiesStateToBillingStateIfCountryNotChinaAustralia() {
+    Account account = new Account(
+      Name = 'Test',
+      Country__c = 'India',
+      State__c = 'Gujarat'
+    );
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals('Gujarat', account.BillingState);
+  }
+
+  @IsTest
+  private static void copiesCountryToBillingCountryOnlyIfNotAlreadySet() {
+    Account accountA = new Account(
+      Name = 'Test',
+      Country__c = 'India',
+      State__c = 'Gujarat'
+    );
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ accountA });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals('India', accountA.BillingCountry);
+
+    // If already set, leave it as it is
+    Account accountB = new Account(
+      Name = 'Test',
+      Country__c = 'India',
+      State__c = 'Gujarat',
+      BillingCountry = 'United Kingdom'
+    );
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ accountB });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals('United Kingdom', accountB.BillingCountry);
+  }
+
+  @IsTest
+  private static void derivesCountryFromCountryCodeOnlyIfNotAlreadySet() {
+    Account accountA = new Account(Name = 'Test', BillingCountryCode = 'IN');
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ accountA });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals('India', accountA.BillingCountry);
+
+    // If already set, leave it as it is
+    Account accountB = new Account(
+      Name = 'Test',
+      BillingCountryCode = 'IN',
+      BillingCountry = 'United Kingdom'
+    );
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ accountB });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals('United Kingdom', accountB.BillingCountry);
+  }
+
+  @IsTest
+  private static void copiesAddressFromDnB() {
+    Account accountA = new Account(
+      Name = 'Test',
+      DnB_Country__c = 'United Kingdom',
+      DnB_Street__c = '21 Maple Mews',
+      DnB_City__c = 'London',
+      DnB_Zip_Postal_Code__c = 'SW16 2AL',
+      DnB_State_Province__c = 'Surrey'
+    );
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ accountA });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+    System.assertEquals('United Kingdom', accountA.Country__c);
+    System.assertEquals('United Kingdom', accountA.BillingCountry);
+    System.assertEquals('21 Maple Mews', accountA.BillingStreet);
+    System.assertEquals('London', accountA.BillingCity);
+    System.assertEquals('SW16 2AL', accountA.BillingPostalCode);
+    System.assertEquals('Surrey', accountA.BillingState);
+
+    //Copies billing address into shipping address on insert
+    System.assertEquals('United Kingdom', accountA.ShippingCountry);
+    System.assertEquals('21 Maple Mews', accountA.ShippingStreet);
+    System.assertEquals('London', accountA.ShippingCity);
+    System.assertEquals('SW16 2AL', accountA.ShippingPostalCode);
+    System.assertEquals('Surrey', accountA.ShippingState);
+  }
+
+  @IsTest
+  private static void cannotSelectDandBCompanyFromDifferentCountry() {
+    Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
+    Account oldAccount = new Account(
+      Id = accountId,
+      Name = 'Test',
+      Country__c = 'United Kingdom'
+    );
+    Account updatedAccount = new Account(
+      Id = accountId,
+      Name = 'Test',
+      DnB_Country__c = 'India'
+    );
+    fflib_SObjectDomain.Test.Database.onUpdate(
+      new List<Account>{ updatedAccount },
+      new Map<Id, SObject>{ oldAccount.Id => oldAccount }
+    );
+
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals(
+      'You cannot select a D&B Company from a different country.',
+      fflib_SObjectDomain.Errors.getAll()[0].message
+    );
+  }
+
+  @isTest
+  public static void derivesAccountRegionCorrectly() {
+    //setup data
+    list<Account> accList = new List<Account>();
+
+    Account a0 = new Account(
+      Name = 'TestAcc349640',
+      BillingCountryCode = 'US',
+      Industry = 'Insurance'
+    );
+
+    accList.add(a0);
+
+    Account a1 = new Account(
+      Name = 'TestAcc349641',
+      BillingCountryCode = 'US',
+      BillingState = 'South Dakota',
+      BillingStateCode = 'SD',
+      Industry = 'Others'
+    );
+
+    accList.add(a1);
+
+    Account a2 = new Account(
+      Name = 'TestAcc349642',
+      BillingCountryCode = 'US',
+      BillingPostalCode = '15001',
+      Industry = 'Others'
+    );
+
+    accList.add(a2);
+
+    Account a3 = new Account(
+      Name = 'TestAcc349643',
+      BillingCountryCode = 'US',
+      Industry = 'Others'
+    );
+
+    accList.add(a3);
+
+    Account a4 = new Account(
+      Name = 'TestAcc349644',
+      BillingCountryCode = 'PK',
+      Industry = 'Others'
+    );
+
+    accList.add(a4);
+
+    Account a5 = new Account(
+      Name = 'TestAcc349645',
+      BillingCountryCode = 'PK',
+      Industry = 'Others'
+    );
+
+    accList.add(a5);
+
+    Account a6 = new Account(
+      Name = 'TestAcc349646',
+      BillingCountryCode = 'US',
+      Industry = 'Insurance'
+    );
+
+    accList.add(a6);
+
+    //do the tests
+    test.startTest();
+
+    Database.DMLOptions dml = new Database.DMLOptions();
+    dml.DuplicateRuleHeader.AllowSave = true;
+    List<Database.SaveResult> srList = Database.insert(accList, dml);
+
+    account aTmp = [
+      SELECT id, BillingCountryCode
+      FROM Account
+      WHERE id = :a5.Id
+    ];
+
+    // For some reason, in production, there is a duplicate check that fails here
+    //aTmp.BillingCountryCode = 'US';
+    //aTmp.Industry = 'Insurance';
+    //update aTmp;
+
+    test.stopTest();
+
+    //verify the results
+    list<Account> accListNew = [
+      SELECT id, Geo__c, Region__c, Area__c
+      FROM Account
+      WHERE id IN :accList
+    ];
+    map<Id, Account> accMapNew = new Map<Id, Account>(accListNew);
+
+    System.assertEquals(7, accListNew.size());
+    System.assertEquals('AMER', accMapNew.get(a0.Id).Geo__c);
+    System.assertEquals('NorthWest', accMapNew.get(a1.Id).Region__c);
+    System.assertEquals('NorthCentral', accMapNew.get(a2.Id).Region__c);
+    System.assertEquals(null, accMapNew.get(a3.Id).Region__c);
+    System.assertEquals('EMEA', accMapNew.get(a4.Id).Geo__c);
+    System.assertEquals('EMEA', accMapNew.get(a5.Id).Geo__c);
+    System.assertEquals('AMER North & BFS', accMapNew.get(a6.Id).Area__c);
+  }
+
+  @isTest
+  private static void setRegionSpecificFieldTest() {
+    Account account1 = new Account(
+      Id = fflib_IDGenerator.generate(Account.SObjectType),
+      Name = 'Test1',
+      Geo__c = 'AMER',
+      Region__c = 'North',
+      Country__c = 'United States',
+      BillingCountry = 'United States',
+      NumberOfEmployees = 5000,
+      AnnualRevenue = 500000000.00
+    );
+    Account oldAccount1 = new Account(
+      Id = account1.Id,
+      Name = 'Test1',
+      Country__c = 'United States',
+      BillingCountry = 'United States'
+    );
+
+    Account account2 = new Account(
+      Id = fflib_IDGenerator.generate(Account.SObjectType),
+      Name = 'Test2',
+      Geo__c = 'AMER',
+      Region__c = 'North',
+      Country__c = 'United States',
+      BillingCountry = 'United States',
+      NumberOfEmployees = 3000,
+      AnnualRevenue = 1500000000.00
+    );
+    Account oldAccount2 = new Account(
+      Id = account2.Id,
+      Name = 'Test2',
+      Country__c = 'United States',
+      BillingCountry = 'United States'
+    );
+
+    fflib_SObjectDomain.Test.Database.onUpdate(
+      new List<Account>{ account1, account2 },
+      new Map<Id, SObject>{
+        oldAccount1.Id => oldAccount1,
+        oldAccount2.Id => oldAccount2
+      }
+    );
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+    System.assertEquals(account1.Region_Specific__c, 'Velocity Tier 1');
+    System.assertEquals(account2.Region_Specific__c, 'Enterprise Tier 3');
+  }
+
+  /**
+   * Can insert 200 Accounts in Bulk without Limits issues
+   */
+  @IsTest
+  private static void canInsertAccountsInBulk() {
+    List<Account> accounts = new List<Account>();
+    for (Integer i = 0; i < 200; i++) {
+      accounts.add(
+        new Account(
+          Name = 'Test ' + i,
+          BillingCountry = 'United Kingdom',
+          Industry = 'Others'
+        )
+      );
     }
+    //will throw on any limits issues
+    System.assertEquals(Database.insert(accounts, true).size() > 0, true);
+  }
 
-    @IsTest
-    private static void copiesStateToBillingStateIfCountryNotChinaAustralia() {
-        Account account = new Account (Name = 'Test', Country__c = 'India', State__c = 'Gujarat');
-        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
-            account
-        });
-        fflib_SObjectDomain.triggerHandler(Accounts.class);
-        System.assertEquals('Gujarat', account.BillingState);
+  /**
+   * Can update 200 Accounts in Bulk without Limits issues
+   */
+  @IsTest
+  private static void canUpdateAccountsInBulk() {
+    List<Account> accounts = new List<Account>();
+    for (Integer i = 0; i < 200; i++) {
+      accounts.add(
+        new Account(
+          Name = 'Test ' + i,
+          BillingCountry = 'United Kingdom',
+          Industry = 'Others'
+        )
+      );
     }
-
-    @IsTest
-    private static void copiesCountryToBillingCountryOnlyIfNotAlreadySet() {
-        Account accountA = new Account (Name = 'Test', Country__c = 'India', State__c = 'Gujarat');
-        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
-            accountA
-        });
-        fflib_SObjectDomain.triggerHandler(Accounts.class);
-        System.assertEquals('India', accountA.BillingCountry);
-
-        // If already set, leave it as it is
-        Account accountB = new Account (Name = 'Test', Country__c = 'India', State__c = 'Gujarat', BillingCountry = 'United Kingdom');
-        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
-            accountB
-        });
-        fflib_SObjectDomain.triggerHandler(Accounts.class);
-        System.assertEquals('United Kingdom', accountB.BillingCountry);
+    insert accounts;
+    for (Integer i = 0; i < 200; i++) {
+      accounts.get(i).Name = 'Updated Account ' + i;
     }
-
-    @IsTest
-    private static void derivesCountryFromCountryCodeOnlyIfNotAlreadySet() {
-        Account accountA = new Account (Name = 'Test', BillingCountryCode = 'IN');
-        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
-            accountA
-        });
-        fflib_SObjectDomain.triggerHandler(Accounts.class);
-        System.assertEquals('India', accountA.BillingCountry);
-
-        // If already set, leave it as it is
-        Account accountB = new Account (Name = 'Test', BillingCountryCode = 'IN', BillingCountry = 'United Kingdom');
-        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
-            accountB
-        });
-        fflib_SObjectDomain.triggerHandler(Accounts.class);
-        System.assertEquals('United Kingdom', accountB.BillingCountry);
-
-    }
-
-    @IsTest
-    private static void copiesAddressFromDnB() {
-
-        Account accountA = new Account (Name = 'Test',
-            DnB_Country__c = 'United Kingdom',
-            DnB_Street__c = '21 Maple Mews',
-            DnB_City__c = 'London',
-            DnB_Zip_Postal_Code__c = 'SW16 2AL',
-            DnB_State_Province__c = 'Surrey'
-        );
-        fflib_SObjectDomain.Test.Database.onInsert(new Account[]{
-            accountA
-        });
-        fflib_SObjectDomain.triggerHandler(Accounts.class);
-
-        System.assertEquals('United Kingdom', accountA.Country__c);
-        System.assertEquals('United Kingdom', accountA.BillingCountry);
-        System.assertEquals('21 Maple Mews', accountA.BillingStreet);
-        System.assertEquals('London', accountA.BillingCity);
-        System.assertEquals('SW16 2AL', accountA.BillingPostalCode);
-        System.assertEquals('Surrey', accountA.BillingState);
-
-        //Copies billing address into shipping address on insert
-        System.assertEquals('United Kingdom', accountA.ShippingCountry);
-        System.assertEquals('21 Maple Mews', accountA.ShippingStreet);
-        System.assertEquals('London', accountA.ShippingCity);
-        System.assertEquals('SW16 2AL', accountA.ShippingPostalCode);
-        System.assertEquals('Surrey', accountA.ShippingState);
-
-    }
-
-    @IsTest
-    private static void cannotSelectDandBCompanyFromDifferentCountry() {
-        Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
-        Account oldAccount = new Account (Id = accountId, Name = 'Test', Country__c = 'United Kingdom'
-        );
-        Account updatedAccount = new Account (Id = accountId, Name = 'Test',
-            DnB_Country__c = 'India'
-        );
-        fflib_SObjectDomain.Test.Database.onUpdate(new Account[]{
-            updatedAccount
-        }, new Map<Id, SObject>{
-            oldAccount.Id => oldAccount
-        });
-
-        fflib_SObjectDomain.triggerHandler(Accounts.class);
-        System.assertEquals('You cannot select a D&B Company from a different country.', fflib_SObjectDomain.Errors.getAll()[0].message);
-    }
-
-
-
-
-    @isTest
-    public static void derivesAccountRegionCorrectly()
-    {
-        //setup data
-        list<Account> accList = new list<Account>();
-
-        Account a0 = new Account(
-            Name = 'TestAcc349640',
-            BillingCountryCode = 'US',
-            Industry = 'Insurance');
-
-        accList.add(a0);
-
-        Account a1 = new Account(
-            Name = 'TestAcc349641',
-            BillingCountryCode = 'US',
-            BillingState = 'South Dakota',
-            BillingStateCode = 'SD',
-            Industry = 'Others');
-
-        accList.add(a1);
-
-        Account a2 = new Account(
-            Name = 'TestAcc349642',
-            BillingCountryCode = 'US',
-            BillingPostalCode = '15001',
-            Industry = 'Others');
-
-        accList.add(a2);
-
-        Account a3 = new Account(
-            Name = 'TestAcc349643',
-            BillingCountryCode = 'US',
-            Industry = 'Others');
-
-        accList.add(a3);
-
-        Account a4 = new Account(
-            Name = 'TestAcc349644',
-            BillingCountryCode = 'PK',
-            Industry = 'Others');
-
-        accList.add(a4);
-
-        Account a5 = new Account(
-            Name = 'TestAcc349645',
-            BillingCountryCode = 'PK',
-            Industry = 'Others');
-
-        accList.add(a5);
-
-        Account a6 = new Account(
-            Name = 'TestAcc349646',
-            BillingCountryCode = 'US',
-            Industry = 'Insurance');
-
-        accList.add(a6);
-
-        //do the tests
-        test.startTest();
-
-
-        Database.DMLOptions dml = new Database.DMLOptions();
-        dml.DuplicateRuleHeader.AllowSave = true;
-        List<Database.SaveResult> srList = Database.insert(accList, dml);
-
-
-        account aTmp = [select id, BillingCountryCode from Account where id = :a5.Id];
-
-        // For some reason, in production, there is a duplicate check that fails here
-        //aTmp.BillingCountryCode = 'US';
-        //aTmp.Industry = 'Insurance';
-        //update aTmp;
-
-        test.stopTest();
-
-        //verify the results
-        list<Account> accListNew = [select id, Geo__c, Region__c, Area__c from Account where id in :accList];
-        map<Id, Account> accMapNew = new map<Id, Account>(accListNew);
-
-        System.assertEquals(7, accListNew.size());
-        System.assertEquals('AMER',accMapNew.get(a0.Id).Geo__c);
-        System.assertEquals('NorthWest', accMapNew.get(a1.Id).Region__c);
-        System.assertEquals('NorthCentral', accMapNew.get(a2.Id).Region__c);
-        System.assertEquals(null, accMapNew.get(a3.Id).Region__c);
-        System.assertEquals('EMEA', accMapNew.get(a4.Id).Geo__c);
-        System.assertEquals('EMEA', accMapNew.get(a5.Id).Geo__c);
-        System.assertEquals('AMER North & BFS', accMapNew.get(a6.Id).Area__c);
-    }
-
-
-
-
-
-
-    /**
-     * Can insert 200 Accounts in Bulk without Limits issues
-     */
-    @IsTest
-    private static void canInsertAccountsInBulk() {
-
-        List<Account> accounts = new List<Account>();
-        for (Integer i = 0; i < 200; i++) {
-            accounts.add(new Account (Name = 'Test ' + i, BillingCountry = 'United Kingdom', Industry = 'Others'));
-
-        }
-        //will throw on any limits issues
-        System.assertEquals(Database.insert(accounts, true).size() > 0, true);
-
-    }
-
-    /**
-     * Can update 200 Accounts in Bulk without Limits issues
-     */
-    @IsTest
-    private static void canUpdateAccountsInBulk() {
-
-        List<Account> accounts = new List<Account>();
-        for (Integer i = 0; i < 200; i++) {
-            accounts.add(new Account (Name = 'Test ' + i, BillingCountry = 'United Kingdom', Industry = 'Others'));
-
-        }
-        insert accounts;
-        for (Integer i = 0; i < 200; i++) {
-            accounts.get(i).Name = 'Updated Account ' + i;
-        }
-        //will throw on any limits issues
-        List<Database.SaveResult> results = Database.update(accounts, true);
-        System.assertEquals(results.size() > 0, true);
-
-    }
-
+    //will throw on any limits issues
+    List<Database.SaveResult> results = Database.update(accounts, true);
+    System.assertEquals(results.size() > 0, true);
+  }
 }
