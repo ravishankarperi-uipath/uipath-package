@@ -1,9 +1,7 @@
 {
   "orgName": "UiPathScratchOrg",
-  "country": "GB",
   "edition": "Developer",
   "hasSampleData": false,
-  "language": "en_GB",
   "features": ["StateAndCountryPicklist", "MultiCurrency"],
   "settings": {
     "lightningExperienceSettings": {

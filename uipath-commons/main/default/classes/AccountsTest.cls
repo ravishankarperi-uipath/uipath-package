@@ -109,6 +109,104 @@ public class AccountsTest {
         System.assertEquals('You cannot select a D&B Company from a different country.', fflib_SObjectDomain.Errors.getAll()[0].message);
     }
 
+
+
+
+    @isTest
+    public static void derivesAccountRegionCorrectly()
+    {
+        //setup data
+        list<Account> accList = new list<Account>();
+
+        Account a0 = new Account(
+            Name = 'TestAcc349640',
+            BillingCountryCode = 'US',
+            Industry = 'Insurance');
+
+        accList.add(a0);
+
+        Account a1 = new Account(
+            Name = 'TestAcc349641',
+            BillingCountryCode = 'US',
+            BillingState = 'South Dakota',
+            BillingStateCode = 'SD',
+            Industry = 'Others');
+
+        accList.add(a1);
+
+        Account a2 = new Account(
+            Name = 'TestAcc349642',
+            BillingCountryCode = 'US',
+            BillingPostalCode = '15001',
+            Industry = 'Others');
+
+        accList.add(a2);
+
+        Account a3 = new Account(
+            Name = 'TestAcc349643',
+            BillingCountryCode = 'US',
+            Industry = 'Others');
+
+        accList.add(a3);
+
+        Account a4 = new Account(
+            Name = 'TestAcc349644',
+            BillingCountryCode = 'PK',
+            Industry = 'Others');
+
+        accList.add(a4);
+
+        Account a5 = new Account(
+            Name = 'TestAcc349645',
+            BillingCountryCode = 'PK',
+            Industry = 'Others');
+
+        accList.add(a5);
+
+        Account a6 = new Account(
+            Name = 'TestAcc349646',
+            BillingCountryCode = 'US',
+            Industry = 'Insurance');
+
+        accList.add(a6);
+
+        //do the tests
+        test.startTest();
+
+
+        Database.DMLOptions dml = new Database.DMLOptions();
+        dml.DuplicateRuleHeader.AllowSave = true;
+        List<Database.SaveResult> srList = Database.insert(accList, dml);
+
+
+        account aTmp = [select id, BillingCountryCode from Account where id = :a5.Id];
+
+        // For some reason, in production, there is a duplicate check that fails here
+        //aTmp.BillingCountryCode = 'US';
+        //aTmp.Industry = 'Insurance';
+        //update aTmp;
+
+        test.stopTest();
+
+        //verify the results
+        list<Account> accListNew = [select id, Geo__c, Region__c, Area__c from Account where id in :accList];
+        map<Id, Account> accMapNew = new map<Id, Account>(accListNew);
+
+        System.assertEquals(7, accListNew.size());
+        System.assertEquals('AMER',accMapNew.get(a0.Id).Geo__c);
+        System.assertEquals('NorthWest', accMapNew.get(a1.Id).Region__c);
+        System.assertEquals('NorthCentral', accMapNew.get(a2.Id).Region__c);
+        System.assertEquals(null, accMapNew.get(a3.Id).Region__c);
+        System.assertEquals('EMEA', accMapNew.get(a4.Id).Geo__c);
+        System.assertEquals('EMEA', accMapNew.get(a5.Id).Geo__c);
+        System.assertEquals('AMER North & BFS', accMapNew.get(a6.Id).Area__c);
+    }
+
+
+
+
+
+
     /**
      * Can insert 200 Accounts in Bulk without Limits issues
      */

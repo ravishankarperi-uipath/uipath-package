@@ -14,10 +14,12 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     public override void onBeforeInsert() {
         setBillingStateWhenCountryNotChinaAustralia();
         AccountDnBAddressService.setAddressFieldsOnInsert(Records);
+        AccountTerritoryService.deriveTerritoryFields(Records);
     }
 
     public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
         AccountDnBAddressService.setAddressFieldsOnUpdate(existingRecords, Records);
+        AccountTerritoryService.deriveTerritoryFields(Records);
     }
 
     public override void onAfterInsert() {
@@ -132,6 +134,17 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     private Boolean isCountryChinaOrAustralia(Account acc) {
         return (acc.Country__c == 'China' || acc.Country__c == 'Australia');
     }
+
+
+
+
+
+
+
+
+
+
+
 
     public class Constructor implements fflib_SObjectDomain.IConstructable {
         public fflib_SObjectDomain construct(List<SObject> sObjectList) {
