@@ -3,7 +3,7 @@
  * TODO needs more tests -  but is tricky given he limitations of async testing in Salesforce
  */
 @IsTest
-public with sharing class QueueableWrapperTest {
+public with sharing class AbstractQueueableTest {
 
 
     @isTest
@@ -22,7 +22,7 @@ public with sharing class QueueableWrapperTest {
     }
 
 
-    public class TestQueueable extends QueueableWrapper {
+    public class TestQueueable extends AbstractQueueable {
 
         public String state='initial state';
 
@@ -34,11 +34,11 @@ public with sharing class QueueableWrapperTest {
             System.debug('*******Working on TestQueueable **********' + this.name);
 
             this.state='modified state';
-            QueueableWrapper.enqueue(new TestQueueable2());
+            AbstractQueueable.enqueue(new TestQueueable2());
         }
     }
 
-    public class TestQueueable2 extends QueueableWrapper implements Database.AllowsCallouts {
+    public class TestQueueable2 extends AbstractQueueable implements Database.AllowsCallouts {
 
         public TestQueueable2() {
             super('TestQueueable2');
@@ -50,7 +50,7 @@ public with sharing class QueueableWrapperTest {
     }
 
 
-    public class TestQueueable3 extends QueueableWrapper implements Database.AllowsCallouts {
+    public class TestQueueable3 extends AbstractQueueable implements Database.AllowsCallouts {
 
         TestSupportObject__c coolObject;
 

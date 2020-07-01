@@ -3,12 +3,12 @@
  * We use this to have control over the flow and make sure that System.enqueueJob() is executed on our QueueableChain only once at the end of the transaction
  *
  */
-public abstract class QueueableWrapper implements Queueable {
+public abstract class AbstractQueueable implements Queueable {
     private static Integer counter = 0;
     public String name;
     private static final QueueableChain currentChain = new QueueableChain();
 
-    public QueueableWrapper(String name) {
+    public AbstractQueueable(String name) {
         this.name = name + '.' + ++counter + System.now().format();
     }
     public abstract void work();
@@ -24,7 +24,7 @@ public abstract class QueueableWrapper implements Queueable {
         }
     }
 
-    public static void enqueue(QueueableWrapper queueable) {
+    public static void enqueue(AbstractQueueable queueable) {
         currentChain.add(queueable);
         if (!System.isQueueable() && !Test.isRunningTest()) {
             System.enqueueJob(queueable);
@@ -32,10 +32,23 @@ public abstract class QueueableWrapper implements Queueable {
     }
 
 
+    public static void enqueueIfFieldsChanged(AbstractQueueable queueable,Set<SObjectField> fieldTokens,fflib_SObjectDomain domain) {
+        List<SObject> changedAccounts = domain.getChangedRecords(fieldTokens);
+        if (changedAccounts.size() > 0) {
+            enqueue(
+                queueable
+            );
+        }
+        currentChain.add(queueable);
+        if (!System.isQueueable() && !Test.isRunningTest()) {
+            System.enqueueJob(queueable);
+        }
+    }
+
     private class QueueableChain implements Queueable {
 
 
-        private List<QueueableWrapper> chain = new List<QueueableWrapper>();
+        private List<AbstractQueueable> chain = new List<AbstractQueueable>();
 
         /**
          * This basically takes items from the chain one by one and schedules them for execution one by one.
@@ -46,19 +59,19 @@ public abstract class QueueableWrapper implements Queueable {
             if (this.chain.isEmpty()) {
                 return;
             }
-            QueueableWrapper current = this.chain.remove(0);
+            AbstractQueueable current = this.chain.remove(0);
 
             if (!this.chain.isEmpty()) {
-                for (QueueableWrapper queueable : this.chain) {
+                for (AbstractQueueable queueable : this.chain) {
                     enqueue(queueable);
                 }
             }
             current.execute(ctx);
         }
 
-        public void add(QueueableWrapper queueable) {
+        public void add(AbstractQueueable queueable) {
             System.debug('Chains in queue: ' + this.chain.size());
-            for (QueueableWrapper queueableWrapper : chain) {
+            for (AbstractQueueable queueableWrapper : chain) {
                 System.debug(queueableWrapper.name);
             }
             if (this.chain.size() > 10) {

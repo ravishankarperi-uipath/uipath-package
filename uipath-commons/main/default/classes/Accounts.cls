@@ -21,12 +21,11 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     }
 
     public override void onAfterInsert() {
-
         //For global accounts, grant Opp and Contact Edit access to Top level account owner
-        QueueableWrapper.enqueue(new AccountSharingRollupQueueable(Records, null));
+        AbstractQueueable.enqueue(new AccountSharingRollupQueueable(Records, null));
 
         //Insert address record copying from Account. Also set that as Primary Shipping and Billing for the account
-        QueueableWrapper.enqueue(new AccountAddressQueueable(Records, null));
+        AbstractQueueable.enqueue(new AccountAddressQueueable(Records, null));
     }
 
     public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -44,7 +43,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
             Account.ParentId
         });
         if (changedAccounts.size() > 0) {
-            QueueableWrapper.enqueue(
+            AbstractQueueable.enqueue(
                 new AccountSharingRollupQueueable(changedAccounts, existingRecords)
             );
         }
@@ -59,7 +58,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
             Account.DnB_Country__c
         });
         if (changedAccounts.size() > 0) {
-            QueueableWrapper.enqueue(
+            AbstractQueueable.enqueue(
                 new AccountDNBCompanyQueueable(changedAccounts, existingRecords)
             );
         }
@@ -74,7 +73,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
             Account.OwnerId
         });
         if (changedAccounts.size() > 0) {
-            QueueableWrapper.enqueue(
+            AbstractQueueable.enqueue(
                 new AccountSetContactOwnerQueueable(changedAccounts, existingRecords)
             );
         }

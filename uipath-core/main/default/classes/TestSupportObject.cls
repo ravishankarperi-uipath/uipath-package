@@ -22,7 +22,7 @@ public with sharing class TestSupportObject extends fflib_SObjectDomain implemen
 
 
   public override void onAfterInsert() {
-    QueueableWrapper.enqueue(new QueueableWrapperTest.TestQueueable());
+    AbstractQueueable.enqueue(new AbstractQueueableTest.TestQueueable());
 
   }
 }

@@ -5,7 +5,7 @@
  * Needs to be rewritten entirely
  * Rolls up sharing to owner of top level account
  */
-public with sharing class AccountSharingRollupQueueable extends QueueableWrapper {
+public with sharing class AccountSharingRollupQueueable extends AbstractQueueable {
     private final List<SObject> accountsLst;
     private final Map<Id, SObject> oldAccountsMap;
 

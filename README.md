@@ -2,9 +2,8 @@
 
 ## Prerequisites:
 
--Your local machine is setup with all necessary tooling like VS Code(or other IDE), Any IDE extensions or plugins, Git, NPM, SFDX CLI
-
--You have the uipath packaging repository cloned locally
+- Your local machine is setup with all necessary tooling like VS Code(or other IDE), Any IDE extensions or plugins, Git, NPM, SFDX CLI
+- You have the uipath packaging repository cloned locally
 
 ## Steps
 
