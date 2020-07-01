@@ -14,13 +14,25 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     public override void onBeforeInsert() {
         setBillingStateWhenCountryNotChinaAustralia();
         AccountDnBAddressService.setAddressFieldsOnInsert(Records);
+        AccountRegionSpecificTierService.setRegionSpecificField(Records);
     }
 
     public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
         AccountDnBAddressService.setAddressFieldsOnUpdate(existingRecords, Records);
+
+        List<Account> regionSpecificAccounts = (List<Account>) this.getChangedRecords(new Set<SObjectField>{
+            Account.Geo__c,
+            Account.Region__c,
+            Account.AnnualRevenue,
+            Account.NumberOfEmployees
+        }) ;
+        if(!regionSpecificAccounts.isEmpty()){
+            AccountRegionSpecificTierService.setRegionSpecificField(regionSpecificAccounts);
+        }
     }
 
     public override void onAfterInsert() {
+
         //For global accounts, grant Opp and Contact Edit access to Top level account owner
         AbstractQueueable.enqueue(new AccountSharingRollupQueueable(Records, null));
 

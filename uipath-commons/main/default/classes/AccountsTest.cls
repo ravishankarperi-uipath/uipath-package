@@ -94,8 +94,7 @@ public class AccountsTest {
     @IsTest
     private static void cannotSelectDandBCompanyFromDifferentCountry() {
         Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
-        Account oldAccount = new Account (Id = accountId, Name = 'Test', Country__c = 'United Kingdom'
-        );
+        Account oldAccount = new Account (Id = accountId, Name = 'Test', Country__c = 'United Kingdom');
         Account updatedAccount = new Account (Id = accountId, Name = 'Test',
             DnB_Country__c = 'India'
         );
@@ -107,6 +106,43 @@ public class AccountsTest {
 
         fflib_SObjectDomain.triggerHandler(Accounts.class);
         System.assertEquals('You cannot select a D&B Company from a different country.', fflib_SObjectDomain.Errors.getAll()[0].message);
+    }
+
+    @isTest
+    private static void setRegionSpecificFieldTest(){
+        Account account1 = new Account (
+            Id = fflib_IDGenerator.generate(Account.SObjectType),
+            Name = 'Test1', Geo__c = 'AMER', Region__c = 'North', Country__c='United States', BillingCountry='United States',
+            NumberOfEmployees = 5000,
+            AnnualRevenue = 500000000.00
+        );
+        Account oldAccount1 = new Account (
+            Id = account1.Id,
+            Name = 'Test1', Country__c='United States', BillingCountry='United States'
+        );
+
+        Account account2 = new Account (
+            Id = fflib_IDGenerator.generate(Account.SObjectType),
+            Name = 'Test2', Geo__c = 'AMER', Region__c = 'North', Country__c='United States', BillingCountry='United States',
+            NumberOfEmployees = 3000,
+            AnnualRevenue = 1500000000.00
+        );
+        Account oldAccount2 = new Account (
+            Id = account2.Id,
+            Name = 'Test2', Country__c='United States', BillingCountry='United States'
+        );
+
+        fflib_SObjectDomain.Test.Database.onUpdate(new Account[]{
+                account1, account2
+            }, new Map<Id, SObject>{
+                oldAccount1.Id => oldAccount1,
+                oldAccount2.Id => oldAccount2
+            }
+        );
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+        System.assertEquals(account1.Region_Specific__c, 'Velocity Tier 1');
+        System.assertEquals(account2.Region_Specific__c, 'Enterprise Tier 3');
     }
 
     /**
