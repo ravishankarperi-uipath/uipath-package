@@ -144,7 +144,7 @@ public class AccountsTest {
 
     @isTest
     public static void derivesAccountRegionCorrectly() {
-        List<Account> accList = new List<Account>();
+        List<Account> accounts = new List<Account>();
 
         Account a0 = new Account(
             Name = 'TestAcc349640',
@@ -152,7 +152,7 @@ public class AccountsTest {
             Industry = 'Insurance'
         );
 
-        accList.add(a0);
+        accounts.add(a0);
 
         Account a1 = new Account(
             Name = 'TestAcc349641',
@@ -162,7 +162,7 @@ public class AccountsTest {
             Industry = 'Others'
         );
 
-        accList.add(a1);
+        accounts.add(a1);
 
         Account a2 = new Account(
             Name = 'TestAcc349642',
@@ -171,7 +171,7 @@ public class AccountsTest {
             Industry = 'Others'
         );
 
-        accList.add(a2);
+        accounts.add(a2);
 
         Account a3 = new Account(
             Name = 'TestAcc349643',
@@ -179,7 +179,7 @@ public class AccountsTest {
             Industry = 'Others'
         );
 
-        accList.add(a3);
+        accounts.add(a3);
 
         Account a4 = new Account(
             Name = 'TestAcc349644',
@@ -187,7 +187,7 @@ public class AccountsTest {
             Industry = 'Others'
         );
 
-        accList.add(a4);
+        accounts.add(a4);
 
         Account a5 = new Account(
             Name = 'TestAcc349645',
@@ -195,7 +195,7 @@ public class AccountsTest {
             Industry = 'Others'
         );
 
-        accList.add(a5);
+        accounts.add(a5);
 
         Account a6 = new Account(
             Name = 'TestAcc349646',
@@ -203,7 +203,7 @@ public class AccountsTest {
             Industry = 'Insurance'
         );
 
-        accList.add(a6);
+        accounts.add(a6);
 
         Account a7 = new Account(
             Name = 'TestAcc323232',
@@ -211,9 +211,9 @@ public class AccountsTest {
             Industry = 'Insurance'
         );
 
-        accList.add(a7);
+        accounts.add(a7);
 
-        fflib_SObjectDomain.Test.Database.onInsert(accList);
+        fflib_SObjectDomain.Test.Database.onInsert(accounts);
         fflib_SObjectDomain.triggerHandler(Accounts.class);
 
         System.assertEquals('AMER', a0.Geo__c);

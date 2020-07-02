@@ -7,7 +7,7 @@ public without sharing class AccountTerritoryService {
         SObjectIndex countriesByCountryCode = getCountriesByCountryCode();
 
         for (Account acc : accounts) {
-            
+
             if (!acc.Ignore_Territory_Assignment__c) {
                 acc.Geo__c = null;
                 acc.Region__c = null;
