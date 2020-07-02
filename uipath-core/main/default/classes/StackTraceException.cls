@@ -1,7 +1,18 @@
 /**
- * Created by girish on 02/07/2020.
- */
+ * @description Custom exceptions do not include stack traces (https://success.salesforce.com/issues_view?id=a1p300000008dVIAAY)
+ * This works around that
+*/
+global abstract class StackTraceException extends Exception {
 
-public with sharing class StackTraceException {
+    private String stackTrackString = createStackTraceString();
 
+    private String createStackTraceString() {
+        stackTrackString = new DmlException().getStackTraceString();
+        // The first thee lines are this method, the Exception constructor, and the subclass. So, discard them
+        return stackTrackString.replaceFirst('(?m)(.*\\n){3}?', '');
+    }
+
+    public override String getStackTraceString() {
+        return stackTrackString;
+    }
 }
