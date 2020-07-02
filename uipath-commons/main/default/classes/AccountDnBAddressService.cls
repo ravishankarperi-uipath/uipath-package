@@ -3,10 +3,9 @@
  * Service to delegate address processing from Domain
  * Tests for this are embedded within the domain tests
  */
-public without sharing class AccountDnBAddressService  {
+public without sharing class AccountDnBAddressService {
 
-
-    public static void setAddressFieldsOnInsert(List<Account> accounts) {
+    public static void deriveAddressFieldsOnInsert(List<Account> accounts) {
 
         for (Account account : accounts) {
 
@@ -44,15 +43,11 @@ public without sharing class AccountDnBAddressService  {
         }
     }
 
-    public static void setAddressFieldsOnUpdate(Map<Id, SObject> oldAccountMap,
+    public static void deriveAddressFieldsOnUpdate(
         List<Account> accounts) {
 
         for (Account account : accounts) {
-            Account oldAcc = (Account) oldAccountMap.get(account.Id);
-            if (String.isNotBlank(account.DnB_Country__c) && String.isBlank(oldAcc.DnB_Country__c)) {
-                copyDnBAddressToStandardAddress(account);
-            }
-
+            copyDnBAddressToStandardAddress(account);
         }
     }
 

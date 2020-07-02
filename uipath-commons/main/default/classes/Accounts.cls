@@ -13,28 +13,42 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
   public override void onBeforeInsert() {
     setBillingStateWhenCountryNotChinaAustralia();
-    AccountDnBAddressService.setAddressFieldsOnInsert(Records);
+    AccountDnBAddressService.deriveAddressFieldsOnInsert(Records);
     AccountTerritoryService.deriveTerritoryFields(Records);
     AccountRegionSpecificTierService.setRegionSpecificField(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
-    AccountDnBAddressService.setAddressFieldsOnUpdate(existingRecords, Records);
-    AccountTerritoryService.deriveTerritoryFields(Records);
 
+    deriveAddressFieldsOnUpdate();
+    deriveRegionSpecificFields();
+    AccountTerritoryService.deriveTerritoryFields(Records);
+  }
+
+  private void deriveRegionSpecificFields() {
     List<Account> regionSpecificAccounts = (List<Account>) this.getChangedRecords(
-      new Set<SObjectField>{
-        Account.Geo__c,
-        Account.Region__c,
-        Account.AnnualRevenue,
-        Account.NumberOfEmployees
-      }
+        new Set<SObjectField>{
+            Account.Geo__c,
+            Account.Region__c,
+            Account.AnnualRevenue,
+            Account.NumberOfEmployees
+        }
     );
     if (!regionSpecificAccounts.isEmpty()) {
       AccountRegionSpecificTierService.setRegionSpecificField(
-        regionSpecificAccounts
+          regionSpecificAccounts
       );
     }
+  }
+
+  private void deriveAddressFieldsOnUpdate() {
+    List<Account> dnbCountryModifiedAccounts = (List<Account>) this.getChangedRecords(
+        new Set<SObjectField>{
+            Account.DnB_Country__c
+        }
+    );
+
+    AccountDnBAddressService.deriveAddressFieldsOnUpdate(dnbCountryModifiedAccounts);
   }
 
   public override void onAfterInsert() {
@@ -59,7 +73,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
       new Set<SObjectField>{ Account.ParentId }
     );
-    if (changedAccounts.size() > 0) {
+    if (changedAccounts.isEmpty()) {
       AbstractQueueable.enqueue(
         new AccountSharingRollupQueueable(changedAccounts, existingRecords)
       );
@@ -74,7 +88,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
       new Set<SObjectField>{ Account.DnB_Country__c }
     );
-    if (changedAccounts.size() > 0) {
+    if (changedAccounts.isEmpty()) {
       AbstractQueueable.enqueue(
         new AccountDNBCompanyQueueable(changedAccounts, existingRecords)
       );

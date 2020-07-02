@@ -11,6 +11,11 @@ public without sharing class AccountTerritoryService {
             uimMap.put(uimTmp.Industry__c, uimTmp);
         }
 
+        SObjectIndex usaIndustryIndex = new SObjectIndex(
+            new List<String>{ 'Industry__c' }
+        )
+            .putAll(AccountMetadata.Industries);
+
         list<USA_States__mdt> usmList = AccountMetadata.States;
         map<string, USA_States__mdt> usmMap = new map<string, USA_States__mdt>();
 
