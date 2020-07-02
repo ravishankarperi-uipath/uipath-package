@@ -4,86 +4,96 @@ public without sharing class AccountTerritoryService {
         SObjectIndex usaIndustriesByName = getUsaIndustriesByName();
         SObjectIndex usaStatesByCodeAndCountry = getUsaStatesByCodeAndCountry();
         SObjectIndex usaZipCodesIndex=getUsaZipCodesIndex(accounts);
+        SObjectIndex countriesByCountryCode = getCountriesByCountryCode();
 
-        List<ROW_Country__mdt> rcmList = AccountMetadata.Countries;
-        Map<string, ROW_Country__mdt> rcmMap = new Map<string, ROW_Country__mdt>();
-
-        for (ROW_Country__mdt rcmTmp : rcmList) {
-            rcmMap.put(rcmTmp.Country_Code__c, rcmTmp);
-        }
-
-        //set account fields
-        for (Account accTmp : accounts) {
-            if (!accTmp.Ignore_Territory_Assignment__c) {
-                accTmp.Geo__c = null;
-                accTmp.Region__c = null;
-                accTmp.Area__c = null;
+        for (Account acc : accounts) {
+            
+            if (!acc.Ignore_Territory_Assignment__c) {
+                acc.Geo__c = null;
+                acc.Region__c = null;
+                acc.Area__c = null;
 
                 USA_Industry__mdt accountIndustry = (USA_Industry__mdt) (usaIndustriesByName.get(
-                    accTmp.Industry
+                    acc.Industry
                 ));
 
-                if (accTmp.BillingCountryCode != null) {
+                if (acc.BillingCountryCode != null) {
                     USA_States__mdt accountState = (USA_States__mdt) usaStatesByCodeAndCountry.get(
                         new USA_States__mdt(
-                            Billing_State_Code__c = accTmp.BillingStateCode,
-                            Country__c = accTmp.BillingCountryCode
+                            Billing_State_Code__c = acc.BillingStateCode,
+                            Country__c = acc.BillingCountryCode
                         )
                     );
 
                     UsaZipCodes__mdt accountZipcode = (UsaZipCodes__mdt) usaZipCodesIndex.get(
                         new UsaZipCodes__mdt(
-                            Postal_Code__c = accTmp.BillingPostalCode
+                            Postal_Code__c = acc.BillingPostalCode
                         )
                     );
 
-                    if (accTmp.BillingCountryCode == 'US') {
-                        accTmp.Geo__c = 'AMER';
+                    ROW_Country__mdt accountCountry = (ROW_Country__mdt) countriesByCountryCode.get(
+                        new ROW_Country__mdt(
+                            Country_Code__c = acc.BillingCountryCode
+                        )
+                    );
+
+                    if (acc.BillingCountryCode == 'US') {
+                        acc.Geo__c = 'AMER';
 
                         if (accountIndustry != null) {
-                            accTmp.Geo__c = accountIndustry.Region__c;
-                            accTmp.Region__c = accountIndustry.Territory__c;
-                            accTmp.Area__c = accountIndustry.Area__c;
+                            acc.Geo__c = accountIndustry.Region__c;
+                            acc.Region__c = accountIndustry.Territory__c;
+                            acc.Area__c = accountIndustry.Area__c;
                         } else if (accountState != null) {
-                            accTmp.Geo__c = accountState.Region__c;
-                            accTmp.Region__c = accountState.Territory__c;
-                            accTmp.Area__c = accountState.Area__c;
+                            acc.Geo__c = accountState.Region__c;
+                            acc.Region__c = accountState.Territory__c;
+                            acc.Area__c = accountState.Area__c;
                         } else if (accountZipcode != null) {
-                            accTmp.Geo__c = accountZipcode.Region__c;
-                            accTmp.Region__c = accountZipcode
+                            acc.Geo__c = accountZipcode.Region__c;
+                            acc.Region__c = accountZipcode
                                 .Territory__c;
-                            accTmp.Area__c = accountZipcode.Area__c;
+                            acc.Area__c = accountZipcode.Area__c;
                         }
                     } else {
                         if (
-                            accTmp.BillingCountryCode == 'JP' ||
-                                accTmp.BillingCountryCode == 'IN'
+                            acc.BillingCountryCode == 'JP' ||
+                                acc.BillingCountryCode == 'IN'
                             ) {
                             if (accountState != null) {
-                                accTmp.Geo__c = accountState.Region__c;
-                                accTmp.Region__c = accountState.Territory__c;
+                                acc.Geo__c = accountState.Region__c;
+                                acc.Region__c = accountState.Territory__c;
                             } else {
-                                if (rcmMap.containsKey(accTmp.BillingCountryCode)) {
-                                    accTmp.Geo__c = rcmMap.get(accTmp.BillingCountryCode)
+                                if (accountCountry!=null) {
+                                    acc.Geo__c = accountCountry
                                         .Region__c;
-                                    accTmp.Region__c = rcmMap.get(accTmp.BillingCountryCode)
+                                    acc.Region__c = accountCountry
                                         .Territory__c;
-                                    accTmp.Area__c = rcmMap.get(accTmp.BillingCountryCode)
+                                    acc.Area__c = accountCountry
                                         .Area__c;
                                 }
                             }
                         } else {
-                            if (rcmMap.containsKey(accTmp.BillingCountryCode)) {
-                                accTmp.Geo__c = rcmMap.get(accTmp.BillingCountryCode).Region__c;
-                                accTmp.Region__c = rcmMap.get(accTmp.BillingCountryCode)
+                            if (accountCountry!=null) {
+                                acc.Geo__c = accountCountry.Region__c;
+                                acc.Region__c = accountCountry
                                     .Territory__c;
-                                accTmp.Area__c = rcmMap.get(accTmp.BillingCountryCode).Area__c;
+                                acc.Area__c = accountCountry.Area__c;
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    private static SObjectIndex getCountriesByCountryCode() {
+        SObjectIndex countriesByCountryCode = new SObjectIndex(
+            new List<String>{
+                'Country_Code__c'
+            }
+        )
+            .putAll(AccountMetadata.Countries);
+        return countriesByCountryCode;
     }
 
     private static SObjectIndex getUsaZipCodesIndex(List<Account> accounts) {
