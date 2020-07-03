@@ -14,41 +14,16 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   public override void onBeforeInsert() {
     setBillingStateWhenCountryNotChinaAustralia();
     AccountDnBAddressService.deriveAddressFieldsOnInsert(Records);
+    deriveRegionSpecificFieldsOnInsert();
+    deriveClassificationFieldsOnInsert();
     AccountTerritoryService.deriveTerritoryFields(Records);
-    AccountRegionSpecificTierService.setRegionSpecificField(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
-
     deriveAddressFieldsOnUpdate();
-    deriveRegionSpecificFields();
+    deriveRegionSpecificFieldsOnUpdate();
+    deriveClassificationFieldsOnUpdate();
     AccountTerritoryService.deriveTerritoryFields(Records);
-  }
-
-  private void deriveRegionSpecificFields() {
-    List<Account> regionSpecificAccounts = (List<Account>) this.getChangedRecords(
-        new Set<SObjectField>{
-            Account.Geo__c,
-            Account.Region__c,
-            Account.AnnualRevenue,
-            Account.NumberOfEmployees
-        }
-    );
-    if (!regionSpecificAccounts.isEmpty()) {
-      AccountRegionSpecificTierService.setRegionSpecificField(
-          regionSpecificAccounts
-      );
-    }
-  }
-
-  private void deriveAddressFieldsOnUpdate() {
-    List<Account> dnbCountryModifiedAccounts = (List<Account>) this.getChangedRecords(
-        new Set<SObjectField>{
-            Account.DnB_Country__c
-        }
-    );
-
-    AccountDnBAddressService.deriveAddressFieldsOnUpdate(dnbCountryModifiedAccounts);
   }
 
   public override void onAfterInsert() {
@@ -63,6 +38,50 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     shareAccountWithParentOwner(existingRecords);
     createAddressForDnBCompany(existingRecords);
     setContactOwnerToAccountOwner(existingRecords);
+  }
+
+
+  private void deriveRegionSpecificFieldsOnInsert() {
+    AccountRegionSpecificTierService.setRegionSpecificField(Records);
+  }
+  
+  private void deriveRegionSpecificFieldsOnUpdate() {
+    List<Account> regionSpecificAccounts = (List<Account>) this.getChangedRecords(
+        new Set<SObjectField>{
+            Account.Geo__c,
+            Account.Region__c,
+            Account.AnnualRevenue,
+            Account.NumberOfEmployees
+        }
+    );
+    AccountRegionSpecificTierService.setRegionSpecificField(regionSpecificAccounts);
+  }
+
+  private void deriveClassificationFieldsOnInsert() {
+    AccountClassificationService.setClassificationField(Records);
+  }
+
+  private void deriveClassificationFieldsOnUpdate() {
+    List<Account> classifyAccounts = (List<Account>) this.getChangedRecords(new Set<SObjectField>{
+        Account.Geo__c,
+        Account.Region__c,
+        Account.AnnualRevenue,
+        Account.Overwrite_Classification__c,
+        Account.Parent_Account_Classification__c,
+        Account.RecordTypeId,
+        Account.Classification__c
+    });
+    AccountClassificationService.setClassificationField(classifyAccounts);
+  }
+
+  private void deriveAddressFieldsOnUpdate() {
+    List<Account> dnbCountryModifiedAccounts = (List<Account>) this.getChangedRecords(
+        new Set<SObjectField>{
+            Account.DnB_Country__c
+        }
+    );
+
+    AccountDnBAddressService.deriveAddressFieldsOnUpdate(dnbCountryModifiedAccounts);
   }
 
   /**
