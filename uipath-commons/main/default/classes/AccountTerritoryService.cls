@@ -16,7 +16,7 @@ public without sharing class AccountTerritoryService {
             .mapSome(isAccountCountryUnitedStates(), new AssignTerritoryForUnitedStates(usaIndustriesByName, statesByCodeAndCountry, usaZipCodesIndex))
             .mapSome(isAccountCountryJapanIndia(), new AssignTerritoryForIndiaJapan(statesByCodeAndCountry, countriesByCountryCode))
             .mapSome(isAccountCountryRestOfWorld(), new AssignTerritoryForRestOfWorld(countriesByCountryCode));
-        
+
     }
 
     private static FieldsMatch isAccountCountryJapanIndia() {
@@ -56,8 +56,8 @@ public without sharing class AccountTerritoryService {
         acc.Area__c = (String) sobj.get('Area__c');
 
     }
-    
-    
+
+
 
     private class AssignTerritoryForUnitedStates implements SObjectToSObjectFunction {
 

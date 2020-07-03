@@ -278,6 +278,23 @@ public class AccountsTest {
         System.assertEquals(account2.Region_Specific__c, 'Enterprise Tier 3');
     }
 
+    @isTest
+    public static void setsAccountSubsidiaryOnInsert() {
+
+        Account ukAccount = new Account(
+            Name = 'TestAccountUK',
+            Country__c = 'United Kingdom',
+            BillingCountry = 'United Kingdom',
+            Industry = 'Others');
+
+        fflib_SObjectDomain.Test.Database.onInsert( new List<Account>{
+            ukAccount
+        });
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+        System.assertEquals('UiPath SRL', ukAccount.Primary_Subsidiary__c);
+    }
+
     /**
      * Can insert 200 Accounts in Bulk without Limits issues
      */

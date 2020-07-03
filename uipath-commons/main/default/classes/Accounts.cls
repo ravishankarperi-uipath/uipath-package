@@ -17,6 +17,15 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         deriveRegionSpecificFieldsOnInsert();
         deriveClassificationFieldsOnInsert();
         AccountTerritoryService.deriveTerritoryFields(Records);
+        deriveSubsidiary(Records);
+    }
+
+    private void deriveSubsidiary(List<Account> accounts) {
+
+        Map<String, String> countrySubsidiaryMap = AccountMetadata.getCountrySubsidiaryMap();
+        Collection.of(accounts)
+            .mapSome(Match.field(Account.Country__c).hasValue(), new AccountSetSubsidiaryFunction(countrySubsidiaryMap));
+
     }
 
     public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
@@ -25,7 +34,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         deriveClassificationFieldsOnUpdate();
         deriveTerritoryFieldsOnUpdate();
     }
-    
+
     private void deriveTerritoryFieldsOnUpdate() {
         List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
             new Set<SObjectField>{
@@ -206,4 +215,6 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
             return new Accounts(sObjectList);
         }
     }
+
+
 }
