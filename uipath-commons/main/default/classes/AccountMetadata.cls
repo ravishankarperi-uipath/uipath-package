@@ -69,4 +69,85 @@ public without sharing class AccountMetadata {
         }
     }
 
+    public static SObjectIndex getCountriesByCountryCode() {
+        SObjectIndex countriesByCountryCode = new SObjectIndex(
+            new List<String>{
+                'Country_Code__c'
+            }
+        )
+            .putAll(AccountMetadata.Countries);
+        return countriesByCountryCode;
+    }
+
+    public static SObjectIndex getUsaZipCodesForAccounts(List<Account> accounts) {
+        List<String> zipCodes = Collection.of(accounts)
+            .pluckStrings(Account.BillingPostalCode);
+
+        List<UsaZipCodes__mdt> usaZipCodes = [
+            SELECT Postal_Code__c, Region__c, Area__c, Territory__c
+            FROM UsaZipCodes__mdt
+            WHERE Postal_Code__c IN :zipCodes
+        ];
+        SObjectIndex usaZipCodesIndex = new SObjectIndex(
+            new List<String>{
+                'Postal_Code__c'
+            }
+        )
+            .putAll(usaZipCodes);
+        return usaZipCodesIndex;
+    }
+
+    public static SObjectIndex getStatesByCodeAndCountry() {
+        SObjectIndex statesByCodeAndCountry = new SObjectIndex(
+            new List<String>{
+                'Billing_State_Code__c', 'Country__c'
+            }
+        )
+            .putAll(AccountMetadata.States);
+        return statesByCodeAndCountry;
+    }
+
+    public static SObjectIndex getUsaIndustriesByName() {
+        SObjectIndex usaIndustriesByName = new SObjectIndex(
+            new List<String>{
+                'Industry__c'
+            }
+        )
+            .putAll(AccountMetadata.Industries);
+        return usaIndustriesByName;
+    }
+
+
+    public static ROW_Country__mdt getAccountCountry(SObjectIndex countriesByCountryCode, Account acc) {
+        ROW_Country__mdt accountCountry = (ROW_Country__mdt) countriesByCountryCode.get(
+            new ROW_Country__mdt(Country_Code__c = acc.BillingCountryCode)
+        );
+        return accountCountry;
+    }
+
+    public static UsaZipCodes__mdt getAccountZipcode(SObjectIndex usaZipCodesIndex, Account acc) {
+        UsaZipCodes__mdt accountZipcode = (UsaZipCodes__mdt) usaZipCodesIndex.get(
+            new UsaZipCodes__mdt(Postal_Code__c = acc.BillingPostalCode)
+        );
+        return accountZipcode;
+    }
+
+    public static USA_States__mdt getAccountState(SObjectIndex usaStatesByCodeAndCountry, Account acc) {
+        USA_States__mdt accountState = (USA_States__mdt) usaStatesByCodeAndCountry.get(
+            new USA_States__mdt(
+                Billing_State_Code__c = acc.BillingStateCode,
+                Country__c = acc.BillingCountryCode
+            )
+        );
+        return accountState;
+    }
+
+    public static USA_Industry__mdt getAccountIndustry(SObjectIndex usaIndustriesByName, Account acc) {
+        USA_Industry__mdt accountIndustry = (USA_Industry__mdt) (usaIndustriesByName.get(
+            acc.Industry
+        ));
+        return accountIndustry;
+    }
+
+
 }
