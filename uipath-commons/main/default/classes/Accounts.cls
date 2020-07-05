@@ -33,20 +33,8 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         deriveRegionSpecificFieldsOnUpdate();
         deriveClassificationFieldsOnUpdate();
         deriveTerritoryFieldsOnUpdate();
-    }
+        deriveSyncStatusForValidatedAccount(existingRecords);
 
-    private void deriveTerritoryFieldsOnUpdate() {
-        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-            new Set<SObjectField>{
-                Account.BillingCountryCode,
-                Account.BillingStateCode,
-                Account.BillingPostalCode,
-                Account.Industry
-            }
-        );
-        if (changedAccounts.isEmpty()) {
-            AccountTerritoryService.deriveTerritoryFields(changedAccounts);
-        }
     }
 
     public override void onAfterInsert() {
@@ -61,6 +49,33 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         shareAccountWithParentOwner(existingRecords);
         createAddressForDnBCompany(existingRecords);
         setContactOwnerToAccountOwner(existingRecords);
+    }
+
+    private void deriveSyncStatusForValidatedAccount(Map<Id, SObject> existingRecords) {
+        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
+            new Set<SObjectField>{
+                Account.Sync_Status__c,
+                Account.Validation_Status__c
+            }
+        );
+
+        Collection.of(changedAccounts).mapAll(new AccountSetSyncStatusFunction(existingRecords));
+
+    }
+
+
+    private void deriveTerritoryFieldsOnUpdate() {
+        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
+            new Set<SObjectField>{
+                Account.BillingCountryCode,
+                Account.BillingStateCode,
+                Account.BillingPostalCode,
+                Account.Industry
+            }
+        );
+        if (!changedAccounts.isEmpty()) {
+            AccountTerritoryService.deriveTerritoryFields(changedAccounts);
+        }
     }
 
     private void deriveRegionSpecificFieldsOnInsert() {
@@ -93,7 +108,9 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
             Account.RecordTypeId,
             Account.Classification__c
         });
-        AccountClassificationService.setClassificationField(classifyAccounts);
+        if (!classifyAccounts.isEmpty()) {
+            AccountClassificationService.setClassificationField(classifyAccounts);
+        }
     }
 
     private void deriveAddressFieldsOnUpdate() {
@@ -102,8 +119,9 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
                 Account.DnB_Country__c
             }
         );
-
-        AccountDnBAddressService.deriveAddressFieldsOnUpdate(dnbCountryModifiedAccounts);
+        if (!dnbCountryModifiedAccounts.isEmpty()) {
+            AccountDnBAddressService.deriveAddressFieldsOnUpdate(dnbCountryModifiedAccounts);
+        }
     }
 
     /**
@@ -116,7 +134,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
                 Account.ParentId
             }
         );
-        if (changedAccounts.isEmpty()) {
+        if (!changedAccounts.isEmpty()) {
             AbstractQueueable.enqueue(
                 new AccountSharingRollupQueueable(changedAccounts, existingRecords)
             );
@@ -133,7 +151,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
                 Account.DnB_Country__c
             }
         );
-        if (changedAccounts.isEmpty()) {
+        if (!changedAccounts.isEmpty()) {
             AbstractQueueable.enqueue(
                 new AccountDNBCompanyQueueable(changedAccounts, existingRecords)
             );
@@ -215,6 +233,5 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
             return new Accounts(sObjectList);
         }
     }
-
 
 }

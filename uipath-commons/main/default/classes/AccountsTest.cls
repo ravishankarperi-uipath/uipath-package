@@ -295,6 +295,37 @@ public class AccountsTest {
         System.assertEquals('UiPath SRL', ukAccount.Primary_Subsidiary__c);
     }
 
+
+    /* Method to test the Sync Status change when Account Validation Status is set to Validated*/
+    @isTest
+    static void setsSyncStatusForValidatedAccount() {
+
+        Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
+        Account oldAccount = new Account(
+            Id = accountId,
+            Name = 'AccTestSetSyncStatusForValidatedAccount',
+            Country__c = 'United Kingdom'
+        );
+        Account updatedAccount = new Account(
+            Id = accountId,
+            Name = 'AccTestSetSyncStatusForValidatedAccount',
+            Country__c = 'United Kingdom',
+            Validation_Status__c = Constants.ACC_VALIDATION_STATUS_VALIDATED
+        );
+        fflib_SObjectDomain.Test.Database.onUpdate(
+            new List<Account>{
+                updatedAccount
+            },
+            new Map<Id, SObject>{
+                oldAccount.Id => oldAccount
+            }
+        );
+
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+        System.assertEquals(Constants.ACC_SYNC_STATUS_VALID,updatedAccount.Sync_Status__c,'if Validation Status is set to Validated, then Sync Status should be set to Valid');
+    }
+
     /**
      * Can insert 200 Accounts in Bulk without Limits issues
      */
@@ -337,4 +368,6 @@ public class AccountsTest {
         List<Database.SaveResult> results = Database.update(accounts, true);
         System.assertEquals(results.size() > 0, true);
     }
+
+
 }
