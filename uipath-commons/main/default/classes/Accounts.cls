@@ -12,6 +12,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     }
 
     public override void onBeforeInsert() {
+        setFieldsForJapanConvertedLead();
         setBillingStateWhenCountryNotChinaAustralia();
         AccountDnBAddressService.deriveAddressFieldsOnInsert(Records);
         deriveRegionSpecificFieldsOnInsert();
@@ -38,6 +39,9 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     }
 
     public override void onAfterInsert() {
+        //Update contact LeadSource for all Japan converted Leads
+        AbstractQueueable.enqueue(new AccountUpdateJapanContactQueueable(Records));
+
         //For global accounts, grant Opp and Contact Edit access to Top level account owner
         AbstractQueueable.enqueue(new AccountSharingRollupQueueable(Records, null));
 
@@ -226,6 +230,19 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
     private Boolean isCountryChinaOrAustralia(Account acc) {
         return (acc.Country__c == 'China' || acc.Country__c == 'Australia');
+    }
+
+    /**
+     * Set Geo and Region for Japan converted Leads
+     * *Org-cleanup : Process Builder - Conversion aid, Geo and Region
+     */
+    private void setFieldsForJapanConvertedLead(){
+        for(Account acc : (List<Account>) Records){
+            if(acc.Country__c == 'Japan' && acc.Created_by_lead_convert__c){
+                acc.Geo__c = 'Japan';
+                acc.Region__c = 'Japan';
+            }
+        }
     }
 
     public class Constructor implements fflib_SObjectDomain.IConstructable {
