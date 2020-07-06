@@ -295,6 +295,64 @@ public class AccountsTest {
         System.assertEquals('UiPath SRL', ukAccount.Primary_Subsidiary__c);
     }
 
+    /* Method to test recordType assignment at creation by Account_Business_Type__c*/
+    @isTest
+    public static void setsAccountRecordTypeOnInsert() {
+
+        Id partnerProspectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Prospect').getRecordTypeId();
+        Id customerProspectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer_Prospect').getRecordTypeId();
+
+        Account partnerAccount = new Account(
+            Name = 'TestPartnerAccount',
+            BillingCountry = 'United Kingdom',
+            Industry = 'Others',
+            Account_Business_Type__c = 'Partner');
+
+        Account customerAccount = new Account(
+            Name = 'TestCustomerAccount',
+            BillingCountry = 'United Kingdom',
+            Industry = 'Others',
+            Account_Business_Type__c = 'Customer');
+
+        fflib_SObjectDomain.Test.Database.onInsert( new List<Account>{
+            partnerAccount, customerAccount
+        });
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+        System.assertEquals(partnerProspectRT, partnerAccount.RecordTypeId);
+        System.assertEquals(customerProspectRT, customerAccount.RecordTypeId);
+    }
+
+    /* Method to test recordType assignment when changing Account_Business_Type__c*/
+    @isTest
+    static void setsAccountRecordTypeForExistingAccount() {
+
+        Id partnerProspectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Prospect').getRecordTypeId();
+        
+        Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
+        Account oldAccount = new Account(
+            Id = accountId,
+            Name = 'AccTestSetRecordTypeForExistingAccount',
+            Country__c = 'United Kingdom'
+        );
+        Account updatedAccount = new Account(
+            Id = accountId,
+            Name = 'AccTestSetRecordTypeForExistingAccount',
+            Country__c = 'United Kingdom'
+        );
+        fflib_SObjectDomain.Test.Database.onUpdate(
+            new List<Account>{
+                updatedAccount
+            },
+            new Map<Id, SObject>{
+                oldAccount.Id => oldAccount
+            }
+        );
+
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+        System.assertEquals(partnerProspectRT, oldAccount.RecordTypeId);
+    }
 
     /* Method to test the Sync Status change when Account Validation Status is set to Validated*/
     @isTest

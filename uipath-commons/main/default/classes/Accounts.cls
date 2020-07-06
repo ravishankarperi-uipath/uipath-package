@@ -19,6 +19,14 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         deriveClassificationFieldsOnInsert();
         AccountTerritoryService.deriveTerritoryFields(Records);
         deriveSubsidiary(Records);
+        deriveRecordType(Records);
+    }
+
+    private void deriveRecordType(List<Account> accounts) {
+
+        Collection.of(accounts)
+            .mapSome(Match.field(Account.Account_Business_Type__c).hasValue(), new AccountSetRecordTypeFunction());
+
     }
 
     private void deriveSubsidiary(List<Account> accounts) {
@@ -35,7 +43,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         deriveClassificationFieldsOnUpdate();
         deriveTerritoryFieldsOnUpdate();
         deriveSyncStatusForValidatedAccount(existingRecords);
-
+        deriveRecordTypeForExistingAccount(existingRecords);
     }
 
     public override void onAfterInsert() {
@@ -67,6 +75,16 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
     }
 
+    private void deriveRecordTypeForExistingAccount(Map<Id, SObject> existingRecords) {
+        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
+            new Set<SObjectField>{
+                Account.Account_Business_Type__c
+            }
+        );
+
+        Collection.of(changedAccounts).mapAll(new AccountSetRecordTypeFunction());
+
+    }
 
     private void deriveTerritoryFieldsOnUpdate() {
         List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
