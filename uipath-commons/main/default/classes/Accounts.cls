@@ -20,6 +20,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         AccountTerritoryService.deriveTerritoryFields(Records);
         deriveSubsidiary(Records);
         deriveRecordType(Records);
+        convertAcademicAccount(Records);
         deriveChannelTier(Records);
     }
 
@@ -52,6 +53,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         deriveTerritoryFieldsOnUpdate();
         deriveSyncStatusForValidatedAccount(existingRecords);
         deriveRecordTypeForExistingAccount(existingRecords);
+        convertAcademicAccountOnUpdate();
     }
 
     public override void onAfterInsert() {
@@ -269,6 +271,40 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
                 acc.Region__c = 'Japan';
             }
         }
+    }
+
+    private void convertAcademicAccountOnUpdate(){
+        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
+            new Set<SObjectField>{
+                Account.RecordTypeId
+            }
+        );
+        if(!changedAccounts.isEmpty()){
+            convertAcademicAccount(changedAccounts);
+        }
+    }
+
+    /**
+     * Convert Academic RT to Customer Prospect if has open opportunities
+     * *Org-cleanup : Process Builder - Academic Alliance Account - Update Record Type
+     *  TODO : Send push notification : Academic Alliance
+     */
+    private void convertAcademicAccount(List<Account> accList){
+        Id academicRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Academic').getRecordTypeId();
+        Id customerProspectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer_Prospect').getRecordTypeId();
+
+        Collection.of(accList)
+                    .filter(
+                        Match.field(Account.RecordTypeId)
+                                .equals(academicRT)
+                                .also(Account.Has_Open_Opportunities__c)
+                                .greaterThan(0)
+                    )
+                    .mapAll(
+                        CopyFields.fromRecord(
+                            new Account(RecordTypeId = customerProspectRT)
+                        )
+                    );
     }
 
     public class Constructor implements fflib_SObjectDomain.IConstructable {

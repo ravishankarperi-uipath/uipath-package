@@ -295,6 +295,39 @@ public class AccountsTest {
         System.assertEquals('UiPath SRL', ukAccount.Primary_Subsidiary__c);
     }
 
+    @isTest
+    private static void convertAcademicToCustomProspectTest(){
+        Id academicRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Academic').getRecordTypeId();
+        Id customerProspectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer_Prospect').getRecordTypeId();
+        Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
+
+        Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
+        Account updatedAccount = new Account(
+            Id = accountId,
+            Name = 'convertAcademicToCustomProspectTest',
+            Country__c = 'United Kingdom',
+            RecordTypeId = academicRT
+        );
+        Account oldAccount = new Account(
+            Id = accountId,
+            Name = 'convertAcademicToCustomProspectTest',
+            Country__c = 'United Kingdom',
+            RecordTypeId = customerRT
+        );
+        fflib_SObjectDomain.Test.Database.onUpdate(
+            new List<Account>{
+                updatedAccount
+            },
+            new Map<Id, SObject>{
+                oldAccount.Id => oldAccount
+            }
+        );
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+        
+        // TODO: Depends on Has_Open_Opportunities__c roll up field
+        //System.assertEquals(customerProspectRT, updatedAccount.RecordTypeId);
+    }
+    
     /* Method to test setting the Channel Tier during insert using the RecordType */
     @isTest
     public static void setsAccountChannelTierOnInsert() {
