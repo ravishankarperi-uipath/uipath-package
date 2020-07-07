@@ -20,12 +20,20 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         AccountTerritoryService.deriveTerritoryFields(Records);
         deriveSubsidiary(Records);
         deriveRecordType(Records);
+        deriveChannelTier(Records);
     }
 
     private void deriveRecordType(List<Account> accounts) {
 
         Collection.of(accounts)
             .mapSome(Match.field(Account.Account_Business_Type__c).hasValue(), new AccountSetRecordTypeFunction());
+
+    }
+
+    private void deriveChannelTier(List<Account> accounts) {
+
+        Collection.of(accounts)
+            .mapSome(Match.field(Account.RecordTypeId).hasValue(), new AccountSetChannelTierFunction());
 
     }
 

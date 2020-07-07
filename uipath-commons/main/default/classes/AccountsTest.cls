@@ -295,6 +295,26 @@ public class AccountsTest {
         System.assertEquals('UiPath SRL', ukAccount.Primary_Subsidiary__c);
     }
 
+    /* Method to test setting the Channel Tier during insert using the RecordType */
+    @isTest
+    public static void setsAccountChannelTierOnInsert() {
+
+        Id partnerProspectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Prospect').getRecordTypeId();
+
+        Account partnerAccount = new Account(
+            Name = 'TestAccountChannelTier',
+            BillingCountry = 'United Kingdom',
+            Industry = 'Others',
+            RecordTypeId = partnerProspectRT);
+
+        fflib_SObjectDomain.Test.Database.onInsert( new List<Account>{
+            partnerAccount
+        });
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+        System.assertEquals('Reseller', partnerAccount.Channel_Tier__c);
+    }
+
     /* Method to test recordType assignment at creation by Account_Business_Type__c*/
     @isTest
     public static void setsAccountRecordTypeOnInsert() {
