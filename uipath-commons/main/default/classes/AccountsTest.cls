@@ -21,17 +21,17 @@ public class AccountsTest {
     }
 
     @IsTest
-    private static void copiesStateToBillingStateIfCountryNotChinaAustralia() {
+    private static void copiesStateToBillingState() {
         Account account = new Account(
             Name = 'Test',
             Country__c = 'India',
-            State__c = 'Gujarat'
+            State__c = 'Kerala'
         );
         fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{
             account
         });
         fflib_SObjectDomain.triggerHandler(Accounts.class);
-        System.assertEquals('Gujarat', account.BillingState);
+        System.assertEquals('Kerala', account.BillingState);
     }
 
     @IsTest
@@ -391,7 +391,8 @@ public class AccountsTest {
         Account updatedAccount = new Account(
             Id = accountId,
             Name = 'AccTestSetRecordTypeForExistingAccount',
-            Country__c = 'United Kingdom'
+            Country__c = 'United Kingdom',
+            Account_Business_Type__c='Partner'
         );
         fflib_SObjectDomain.Test.Database.onUpdate(
             new List<Account>{
@@ -404,7 +405,7 @@ public class AccountsTest {
 
         fflib_SObjectDomain.triggerHandler(Accounts.class);
 
-        System.assertEquals(partnerProspectRT, oldAccount.RecordTypeId);
+        System.assertEquals(partnerProspectRT, updatedAccount.RecordTypeId);
     }
 
     /* Method to test the Sync Status change when Account Validation Status is set to Validated*/

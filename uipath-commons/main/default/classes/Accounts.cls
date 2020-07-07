@@ -13,7 +13,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
     public override void onBeforeInsert() {
         setFieldsForJapanConvertedLead();
-        setBillingStateWhenCountryNotChinaAustralia();
+        setBillingStateFromState();
         AccountDnBAddressService.deriveAddressFieldsOnInsert(Records);
         deriveRegionSpecificFieldsOnInsert();
         deriveClassificationFieldsOnInsert();
@@ -236,16 +236,16 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         }
     }
 
-    private void setBillingStateWhenCountryNotChinaAustralia() {
+    private void setBillingStateFromState() {
         for (Account account : (List<Account>) Records) {
-            if (!isCountryChinaOrAustralia(account) && (account.State__c != null)) {
+            if ((account.State__c != null)) {
                 account.BillingState = account.State__c;
             }
         }
     }
 
     private void validateStatePopulatedForChinaAustralia(Account acc) {
-        if (isCountryChinaOrAustralia(acc) && acc.State__c == null) {
+        if (isCountryChinaOrAustraliaOrIndia(acc) && acc.State__c == null) {
             acc.State__c.addError(
                 error(
                     'State is required if Country is ' + acc.Country__c,
@@ -256,8 +256,8 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         }
     }
 
-    private Boolean isCountryChinaOrAustralia(Account acc) {
-        return (acc.Country__c == 'China' || acc.Country__c == 'Australia');
+    private Boolean isCountryChinaOrAustraliaOrIndia(Account acc) {
+        return (acc.Country__c == 'China' || acc.Country__c == 'Australia' || acc.Country__c == 'India' );
     }
 
     /**
