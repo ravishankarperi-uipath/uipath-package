@@ -348,6 +348,24 @@ public class AccountsTest {
         System.assertEquals('Reseller', partnerAccount.Channel_Tier__c);
     }
 
+    @isTest
+    public static void setDataStewardTest() {
+
+        Account account = new Account(
+            Name = 'setDataStewardTest',
+            BillingCountry = 'United Kingdom',
+            Industry = 'Others',
+            Verified_by_Data_Steward__c = 'Owner\'s input requested'
+        );
+
+        fflib_SObjectDomain.Test.Database.onInsert( new List<Account>{
+            account
+        });
+        fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+        System.assertEquals(UserInfo.getUserId(), account.Assigned_Data_Steward__c);
+    }
+
     /* Method to test recordType assignment at creation by Account_Business_Type__c*/
     @isTest
     public static void setsAccountRecordTypeOnInsert() {

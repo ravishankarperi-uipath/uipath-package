@@ -22,6 +22,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         deriveRecordType(Records);
         convertAcademicAccount(Records);
         deriveChannelTier(Records);
+        deriveDataStewardUserOnInsert(Records);
     }
 
     private void deriveRecordType(List<Account> accounts) {
@@ -54,6 +55,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         deriveSyncStatusForValidatedAccount(existingRecords);
         deriveRecordTypeForExistingAccount(existingRecords);
         convertAcademicAccountOnUpdate();
+        deriveDataStewardUserOnUpdate();
     }
 
     public override void onAfterInsert() {
@@ -306,6 +308,23 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
                         )
                     );
     }
+
+    private void deriveDataStewardUserOnInsert(List<Account> accList){
+        Collection.of(accList).mapAll(new AccountSetDataStewardFunction());
+    }
+
+    private void deriveDataStewardUserOnUpdate(){
+        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
+            new Set<SObjectField>{
+                Account.Verified_by_Data_Steward__c
+            }
+        );
+        
+        if(!changedAccounts.isEmpty()){
+            Collection.of(changedAccounts).mapAll(new AccountSetDataStewardFunction());
+        }
+    }
+    
 
     public class Constructor implements fflib_SObjectDomain.IConstructable {
         public fflib_SObjectDomain construct(List<SObject> sObjectList) {
