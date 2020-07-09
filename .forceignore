@@ -44,7 +44,7 @@ uipath-commons/main/default/objects/Account/fields/Has_Premium_Care__c.field-met
 
 
 
-uipath-commons/main/default/classes/IntegrationHandlerTest.cls
+# FIXED uipath-commons/main/default/classes/IntegrationHandlerTest.cls
 uipath-commons/main/default/classes/AccountTriggerHandlerTest.cls
 uipath-commons/main/default/classes/AccountTriggerHandler.cls
 
