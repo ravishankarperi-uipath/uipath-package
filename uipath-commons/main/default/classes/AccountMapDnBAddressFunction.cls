@@ -3,23 +3,36 @@
  * Service to delegate address processing from Domain
  * Tests for this are embedded within the domain tests
  */
-public without sharing class AccountDnBAddressService {
+public without sharing class AccountMapDnBAddressFunction implements SObjectToSObjectFunction {
 
-    public static void deriveAddressFieldsOnInsert(List<Account> accounts) {
+    private Boolean isUpdateMode = false;
 
-        for (Account account : accounts) {
+    public AccountMapDnBAddressFunction(Boolean isUpdateMode) {
+        this.isUpdateMode = isUpdateMode;
+    }
 
-            copyCountryToBillingCountry(account);
-            deriveBillingCountryFromCode(account);
+    public SObject apply(Account acc) {
 
-            if (String.isNotBlank(account.DnB_Country__c)) {
+        if (isUpdateMode) {
+            copyDnBAddressToStandardAddress(acc);
+
+        } else {
+            copyCountryToBillingCountry(acc);
+            deriveBillingCountryFromCode(acc);
+
+            if (String.isNotBlank(acc.DnB_Country__c)) {
                 //These 2 fields are only set on insert
-                account.Country__c = account.DnB_Country__c;
-                account.BillingCountry = account.DnB_Country__c;
+                acc.Country__c = acc.DnB_Country__c;
+                acc.BillingCountry = acc.DnB_Country__c;
 
-                copyDnBAddressToStandardAddress(account);
+                copyDnBAddressToStandardAddress(acc);
             }
         }
+        return acc;
+    }
+
+    public SObject apply(SObject record) {
+        return apply((Account) record);
     }
 
     public static void deriveBillingCountryFromCode(Account account) {
@@ -40,14 +53,6 @@ public without sharing class AccountDnBAddressService {
                 String.isNotBlank(account.Country__c)
             ) {
             account.BillingCountry = account.Country__c;
-        }
-    }
-
-    public static void deriveAddressFieldsOnUpdate(
-        List<Account> accounts) {
-
-        for (Account account : accounts) {
-            copyDnBAddressToStandardAddress(account);
         }
     }
 

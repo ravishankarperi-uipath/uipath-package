@@ -1,10 +1,18 @@
 
 /**
  * Responsibility: Populate Territory fields Geo, Region, Area on Account
+ *
  */
 public without sharing class AccountTerritoryService {
 
-
+    /**
+     * Populate Territory fields Geo, Region, Area.
+     * Uses Custom Metadata types to derive Territory based on Account Industry and Address fields.
+     * For USA => Industry, State and Zipcode are used to map  Territory
+     * For India and Japan => State and Country are used to map  Territory
+     * For Rest of the world => only country is used to map Territory
+     * @param accounts
+     */
     public static void deriveTerritoryFields(List<Account> accounts) {
         SObjectIndex usaIndustriesByName = AccountMetadata.getUsaIndustriesByName();
         SObjectIndex statesByCodeAndCountry = AccountMetadata.getStatesByCodeAndCountry();

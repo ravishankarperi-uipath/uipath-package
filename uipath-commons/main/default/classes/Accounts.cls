@@ -12,39 +12,17 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     }
 
     public override void onBeforeInsert() {
-        setFieldsForJapanConvertedLead();
-        setBillingStateFromState();
-        AccountDnBAddressService.deriveAddressFieldsOnInsert(Records);
+        setFieldsForJapanConvertedLeadOnInsert();
+        setBillingStateFromStateOnInsert();
+        deriveAddressFieldsOnInsert();
         deriveRegionSpecificFieldsOnInsert();
         deriveClassificationFieldsOnInsert();
         AccountTerritoryService.deriveTerritoryFields(Records);
-        deriveSubsidiary(Records);
-        deriveRecordType(Records);
+        deriveSubsidiaryOnInsert();
+        deriveRecordTypeOnInsert();
         convertAcademicAccount(Records);
-        deriveChannelTier(Records);
-        deriveDataStewardUserOnInsert(Records);
-    }
-
-    private void deriveRecordType(List<Account> accounts) {
-
-        Collection.of(accounts)
-            .mapSome(Match.field(Account.Account_Business_Type__c).hasValue(), new AccountSetRecordTypeFunction());
-
-    }
-
-    private void deriveChannelTier(List<Account> accounts) {
-
-        Collection.of(accounts)
-            .mapSome(Match.field(Account.RecordTypeId).hasValue(), new AccountSetChannelTierFunction());
-
-    }
-
-    private void deriveSubsidiary(List<Account> accounts) {
-
-        Map<String, String> countrySubsidiaryMap = AccountMetadata.getCountrySubsidiaryMap();
-        Collection.of(accounts)
-            .mapSome(Match.field(Account.Country__c).hasValue(), new AccountSetSubsidiaryFunction(countrySubsidiaryMap));
-
+        deriveChannelTierOnInsert();
+        deriveDataStewardUserOnInsert();
     }
 
     public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
@@ -52,8 +30,8 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         deriveRegionSpecificFieldsOnUpdate();
         deriveClassificationFieldsOnUpdate();
         deriveTerritoryFieldsOnUpdate();
-        deriveSyncStatusForValidatedAccount(existingRecords);
-        deriveRecordTypeForExistingAccount(existingRecords);
+        deriveSyncStatusForValidatedAccount();
+        deriveRecordTypeForExistingAccount();
         convertAcademicAccountOnUpdate();
         deriveDataStewardUserOnUpdate();
     }
@@ -75,29 +53,89 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         setContactOwnerToAccountOwner(existingRecords);
     }
 
-    private void deriveSyncStatusForValidatedAccount(Map<Id, SObject> existingRecords) {
-        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-            new Set<SObjectField>{
-                Account.Sync_Status__c,
-                Account.Validation_Status__c
-            }
-        );
 
-        Collection.of(changedAccounts).mapAll(new AccountSetSyncStatusFunction(existingRecords));
+    /**
+     * Copies D&B Address Fields into Standard Address Fields (Billing and Shipping).
+     * For US, only first 5 characters of Postal code is derived Only some countries are allowed to have BillingState set
+     */
+    private void deriveAddressFieldsOnInsert() {
 
-    }
-
-    private void deriveRecordTypeForExistingAccount(Map<Id, SObject> existingRecords) {
-        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-            new Set<SObjectField>{
-                Account.Account_Business_Type__c
-            }
-        );
-
-        Collection.of(changedAccounts).mapAll(new AccountSetRecordTypeFunction());
+        Collection.of(Records)
+            .mapAll(new AccountMapDnBAddressFunction(false));
 
     }
 
+    /**
+     * Sets Record Type based on Account Business Type
+     * If Partner, sets record type to Partner Prospect
+     * If Customer, setts record Type to Customer Prospect
+     */
+    private void deriveRecordTypeOnInsert() {
+
+        Collection.of(Records)
+            .mapSome(Match.field(Account.Account_Business_Type__c).hasValue(), new AccountSetRecordTypeFunction());
+
+    }
+
+    /**
+     * On Account Insert, Derives Channel tier based on Account Record Type
+     */
+    private void deriveChannelTierOnInsert() {
+
+        Collection.of(Records)
+            .mapSome(Match.field(Account.RecordTypeId).hasValue(), new AccountSetChannelTierFunction());
+
+    }
+
+    /**
+     * On Account Insert, Uses Custom Metadata to map from Country to Subsidiary
+     */
+    private void deriveSubsidiaryOnInsert() {
+
+        Map<String, String> countrySubsidiaryMap = AccountMetadata.getCountrySubsidiaryMap();
+        Collection.of(Records)
+            .mapSome(Match.field(Account.Country__c).hasValue(), new AccountSetSubsidiaryFunction(countrySubsidiaryMap));
+
+    }
+
+    /**
+     * On Account Update, Uses Custom Metadata to map from Country to Subsidiary
+     */
+    private void deriveSyncStatusForValidatedAccount() {
+
+        SObjectPredicate haveStatusesChanged = new HasRecordChanged(new Set<SObjectField>{
+            Account.Sync_Status__c,
+            Account.Validation_Status__c
+        }, this.Records, this.ExistingRecords);
+
+        Collection.of(Records)
+            .filter(haveStatusesChanged)
+            .mapAll(new AccountSetSyncStatusFunction(this.ExistingRecords));
+
+    }
+
+    /**
+     * Updates record type based on Account Business Type
+     */
+    private void deriveRecordTypeForExistingAccount() {
+
+        SObjectPredicate hasBusinessTypeChanged = new HasRecordChanged(new Set<SObjectField>{
+            Account.Account_Business_Type__c
+        }, this.Records, this.ExistingRecords);
+
+        Collection.of(this.Records)
+            .filter(hasBusinessTypeChanged)
+            .mapAll(new AccountSetRecordTypeFunction());
+
+    }
+
+    /**
+     * Update Account Territory fields Geo, Region, Area.
+     * Uses Custom Metadata types to derive Territory based on Account Industry and Address fields.
+     * For USA => Industry, State and Zipcode are used to map  Territory
+     * For India and Japan => State and Country are used to map  Territory
+     * For Rest of the world => only country is used to map Territory
+     */
     private void deriveTerritoryFieldsOnUpdate() {
         List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
             new Set<SObjectField>{
@@ -112,28 +150,52 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         }
     }
 
+    /**
+     * When Geo is AMER(excluding regions Canada and LATAM), Sets an Account Tier based on the Account’s Revenue and Number of Employees.
+     * Enterprise Tier 1/2/3
+     * Velocity Tier 1/2/3
+     */
     private void deriveRegionSpecificFieldsOnInsert() {
-        AccountRegionSpecificTierService.setRegionSpecificField(Records);
+
+        Collection.of(this.Records)
+            .mapAll(new AccountSetRegionSpecificTierFunction());
+
     }
 
+    /**
+     * When Geo is AMER(excluding regions Canada and LATAM), Sets an Account Tier based on the Account’s Revenue and Number of Employees.
+     * Enterprise Tier 1/2/3
+     * Velocity Tier 1/2/3
+     */
     private void deriveRegionSpecificFieldsOnUpdate() {
-        List<Account> regionSpecificAccounts = (List<Account>) this.getChangedRecords(
-            new Set<SObjectField>{
-                Account.Geo__c,
-                Account.Region__c,
-                Account.AnnualRevenue,
-                Account.NumberOfEmployees
-            }
-        );
-        AccountRegionSpecificTierService.setRegionSpecificField(regionSpecificAccounts);
+
+        SObjectPredicate haveRegionSensitiveFieldsChanged = new HasRecordChanged(new Set<SObjectField>{
+            Account.Geo__c,
+            Account.Region__c,
+            Account.AnnualRevenue,
+            Account.NumberOfEmployees
+        }, this.Records, this.ExistingRecords);
+
+        Collection.of(this.Records)
+            .filter(haveRegionSensitiveFieldsChanged)
+            .mapAll(new AccountSetRegionSpecificTierFunction());
+
     }
 
+    /**
+     * On Account Insert, Sets Classification to “Velocity” or “Enterprise” or “Commercial“ or “SMB“ based on Account Revenue, Region and Parent Account Classification
+     */
     private void deriveClassificationFieldsOnInsert() {
-        AccountClassificationService.setClassificationField(Records);
+        Collection.of(this.Records)
+            .mapAll(new AccountSetClassificationFunction());
     }
 
+    /**
+     * On Account Update, Sets Classification to “Velocity” or “Enterprise” or “Commercial“ or “SMB“ based on Account Revenue, Region and Parent Account Classification
+     */
     private void deriveClassificationFieldsOnUpdate() {
-        List<Account> classifyAccounts = (List<Account>) this.getChangedRecords(new Set<SObjectField>{
+
+        SObjectPredicate haveClassificationSensitiveFieldsChanged = new HasRecordChanged(new Set<SObjectField>{
             Account.Geo__c,
             Account.Region__c,
             Account.AnnualRevenue,
@@ -141,21 +203,28 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
             Account.Parent_Account_Classification__c,
             Account.RecordTypeId,
             Account.Classification__c
-        });
-        if (!classifyAccounts.isEmpty()) {
-            AccountClassificationService.setClassificationField(classifyAccounts);
-        }
+        }, this.Records, this.ExistingRecords);
+
+        Collection.of(this.Records)
+            .filter(haveClassificationSensitiveFieldsChanged)
+            .mapAll(new AccountSetClassificationFunction());
+
     }
 
+    /**
+     * On Account Update, Copies D&B Address Fields into Standard Address Fields (Billing and Shipping).
+     * For US, only first 5 characters of Postal code is derived Only some countries are allowed to have BillingState set
+     */
     private void deriveAddressFieldsOnUpdate() {
-        List<Account> dnbCountryModifiedAccounts = (List<Account>) this.getChangedRecords(
-            new Set<SObjectField>{
-                Account.DnB_Country__c
-            }
-        );
-        if (!dnbCountryModifiedAccounts.isEmpty()) {
-            AccountDnBAddressService.deriveAddressFieldsOnUpdate(dnbCountryModifiedAccounts);
-        }
+
+        SObjectPredicate hasCountryChanged = new HasRecordChanged(new Set<SObjectField>{
+            Account.DnB_Country__c
+        }, this.Records, this.ExistingRecords);
+
+        Collection.of(this.Records)
+            .filter(hasCountryChanged)
+            .mapAll(new AccountMapDnBAddressFunction(true));
+
     }
 
     /**
@@ -209,36 +278,29 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         }
     }
 
+    /**
+     * Validates accounts inserted or Updated
+     */
     public override void onValidate() {
-        for (Account acc : (List<Account>) Records) {
-            validateStatePopulatedForChinaAustralia(acc);
-        }
+        Collection.of(Records)
+            .mapAll(new AccountValidationFunction(null,this));
     }
 
-    public override void onValidate(Map<Id, SObject> existingRecords) {
-        for (Account account : (List<Account>) Records) {
-            Account oldAccount = (Account) existingRecords.get(account.Id);
-            validateIfDnBCountryChanged(account, oldAccount);
-        }
+    /**
+     * Validates accounts that are updated
+     * @param existingRecords updated Records
+     */
+    public override void onValidate(Map<Id,SObject> existingRecords) {
+
+        Collection.of(Records)
+            .mapAll(new AccountValidationFunction(existingRecords,this));
+
     }
 
-    private void validateIfDnBCountryChanged(Account account, Account oldAcc) {
-        if (
-            String.isNotBlank(account.DnB_Country__c) &&
-                String.isBlank(oldAcc.DnB_Country__c)
-            ) {
-            if (account.DnB_Country__c != account.Country__c) {
-                account.addError(
-                    error(
-                        'You cannot select a D&B Company from a different country.',
-                        account
-                    )
-                );
-            }
-        }
-    }
-
-    private void setBillingStateFromState() {
+    /**
+     * Set Billing State to the same value as the Custom State field when new Accounts are created
+     */
+    private void setBillingStateFromStateOnInsert() {
         for (Account account : (List<Account>) Records) {
             if ((account.State__c != null)) {
                 account.BillingState = account.State__c;
@@ -246,42 +308,32 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         }
     }
 
-    private void validateStatePopulatedForChinaAustralia(Account acc) {
-        if (isCountryChinaOrAustraliaOrIndia(acc) && acc.State__c == null) {
-            acc.State__c.addError(
-                error(
-                    'State is required if Country is ' + acc.Country__c,
-                    acc,
-                    Account.State__c
-                )
-            );
-        }
-    }
-
-    private Boolean isCountryChinaOrAustraliaOrIndia(Account acc) {
-        return (acc.Country__c == 'China' || acc.Country__c == 'Australia' || acc.Country__c == 'India' );
-    }
 
     /**
-     * Set Geo and Region for Japan converted Leads
-     * *Org-cleanup : Process Builder - Conversion aid, Geo and Region
+     * Sets fields Geo and Region to ‘Japan’ for Japanese Accounts created via Lead conversion.
+     * “Japanese accounts” are when  Country=Japan
      */
-    private void setFieldsForJapanConvertedLead(){
-        for(Account acc : (List<Account>) Records){
-            if(acc.Country__c == 'Japan' && acc.Created_by_lead_convert__c){
+    private void setFieldsForJapanConvertedLeadOnInsert() {
+        for (Account acc : (List<Account>) Records) {
+            if (acc.Country__c == 'Japan' && acc.Created_by_lead_convert__c) {
                 acc.Geo__c = 'Japan';
                 acc.Region__c = 'Japan';
             }
         }
     }
 
-    private void convertAcademicAccountOnUpdate(){
+    /**
+     * On Account Update, Converts Academic RT to Customer Prospect RT if Account has open opportunities
+     * TODO move this to Opty closed logic instead of reprocessing on Account
+     */
+    private void convertAcademicAccountOnUpdate() {
         List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
             new Set<SObjectField>{
-                Account.RecordTypeId
+                Account.RecordTypeId,
+                Account.Has_Open_Opportunities__c
             }
         );
-        if(!changedAccounts.isEmpty()){
+        if (!changedAccounts.isEmpty()) {
             convertAcademicAccount(changedAccounts);
         }
     }
@@ -291,40 +343,45 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
      * *Org-cleanup : Process Builder - Academic Alliance Account - Update Record Type
      *  TODO : Send push notification : Academic Alliance
      */
-    private void convertAcademicAccount(List<Account> accList){
+    private void convertAcademicAccount(List<Account> accList) {
         Id academicRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Academic').getRecordTypeId();
         Id customerProspectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer_Prospect').getRecordTypeId();
 
         Collection.of(accList)
-                    .filter(
-                        Match.field(Account.RecordTypeId)
-                                .equals(academicRT)
-                                .also(Account.Has_Open_Opportunities__c)
-                                .greaterThan(0)
-                    )
-                    .mapAll(
-                        CopyFields.fromRecord(
-                            new Account(RecordTypeId = customerProspectRT)
-                        )
-                    );
-    }
-
-    private void deriveDataStewardUserOnInsert(List<Account> accList){
-        Collection.of(accList).mapAll(new AccountSetDataStewardFunction());
-    }
-
-    private void deriveDataStewardUserOnUpdate(){
-        List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-            new Set<SObjectField>{
-                Account.Verified_by_Data_Steward__c
-            }
+            .filter(
+            Match.field(Account.RecordTypeId)
+                .equals(academicRT)
+                .also(Account.Has_Open_Opportunities__c)
+                .greaterThan(0)
+        )
+            .mapAll(
+            CopyFields.fromRecord(
+                new Account(RecordTypeId = customerProspectRT)
+            )
         );
-        
-        if(!changedAccounts.isEmpty()){
-            Collection.of(changedAccounts).mapAll(new AccountSetDataStewardFunction());
-        }
     }
-    
+
+    /**
+     * On Account Insert, Populate Assigned Data Steward field with current user when Data Steward is checked
+     */
+    private void deriveDataStewardUserOnInsert() {
+        Collection.of(Records).mapAll(new AccountSetDataStewardFunction());
+    }
+
+    /**
+     * On Account Update, Populate Assigned Data Steward field with current user when Data Steward is checked
+     */
+    private void deriveDataStewardUserOnUpdate() {
+
+        SObjectPredicate hasStewardshipFlagChanged = new HasRecordChanged(new Set<SObjectField>{
+            Account.Verified_by_Data_Steward__c
+        }, this.Records, this.ExistingRecords);
+
+        Collection.of(Records)
+            .filter(hasStewardshipFlagChanged)
+            .mapAll(new AccountSetDataStewardFunction());
+
+    }
 
     public class Constructor implements fflib_SObjectDomain.IConstructable {
         public fflib_SObjectDomain construct(List<SObject> sObjectList) {

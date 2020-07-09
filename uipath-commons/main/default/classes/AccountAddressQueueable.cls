@@ -64,10 +64,8 @@ public with sharing class AccountAddressQueueable extends AbstractQueueable {
                     address.State__c = acc.DnB_State_Province__c;
                 }
 
-                address.RecordTypeId = Utilities.getRecordTypeId(
-                    CommonsConstants.ADDRESS_RECORD_TYPE_LOCKDOWN,
-                    'Address__c'
-                );
+                address.RecordTypeId = Schema.SObjectType.Address__c.getRecordTypeInfosByDeveloperName().get(CommonsConstants.ADDRESS_RECORD_TYPE_LOCKDOWN).getRecordTypeId();
+
             } else {
                 //Not created through D&B Hoovers
 

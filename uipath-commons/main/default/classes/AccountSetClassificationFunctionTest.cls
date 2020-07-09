@@ -1,5 +1,5 @@
 @isTest
-private class AccountClassificationServiceTest {
+private class AccountSetClassificationFunctionTest {
     
     @isTest
     private static void setClassificationFieldTest(){
