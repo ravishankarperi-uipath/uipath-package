@@ -26,32 +26,29 @@ public with sharing class AccountSetContactOwnerQueueable extends AbstractQueuea
   // ============================================================================
   private void setUpContactOwner(List<Account> accountList, Map<Id, SObject> oldAccountMap) {
 
-    Set<Id> accIds = new Set<Id>();
-    for (Account acc : accountList) {
-      Account oldAcc = (Account) oldAccountMap.get(acc.Id);
-      if (acc.OwnerId != oldAcc.OwnerId && acc.PG_Legacy__c == false)
-        accIds.add(acc.Id);
-    }
-
-    if (accIds.size() > 0) {
-      List<Account> allAccounts = [
-        SELECT Id, OwnerId, GAM_Id__c, (SELECT Id, OwnerId FROM Contacts)
-        FROM Account
-        WHERE Id IN :accIds
-      ];
-
-      List<Contact> cntToUpdate = new List<Contact>();
-      for (Account acc : allAccounts) {
-        for (contact cnt : acc.Contacts) {
-          if (String.valueOf(cnt.OwnerId).substring(0, 15) != acc.GAM_Id__c && cnt.OwnerId != acc.OwnerId) {
-            cnt.OwnerId = acc.OwnerId;
-            cntToUpdate.add(cnt);
-          }
-        }
+      Set<Id> accIds = new Set<Id>();
+      for(Account acc: accountList) {
+          Account oldAcc = (Account)oldAccountMap.get(acc.Id);
+          if(acc.OwnerId != oldAcc.OwnerId && acc.PG_Legacy__c == false)
+              accIds.add(acc.Id);
       }
 
-      if (cntToUpdate.size() > 0)
-        update cntToUpdate;
-    }
+      if(accIds.size() > 0) {
+          List<Account> allAccounts = [SELECT Id, OwnerId, GAM_Id__c, EDR__c, (SELECT Id, OwnerId FROM Contacts) FROM Account WHERE Id IN: accIds AND PG_Legacy__c = false AND Country__c != 'Japan'];
+
+          List<Contact> cntToUpdate = new List<Contact>();
+          for(Account acc: allAccounts) {
+              for(contact cnt: acc.Contacts) {
+                  String cntOwner = String.valueOf(cnt.OwnerId);
+                  cntOwner  = cntOwner.substring(0,15);
+                  if(cntOwner != acc.GAM_Id__c && cnt.OwnerId != acc.EDR__c && cnt.OwnerId != acc.OwnerId) {
+                      cnt.OwnerId = acc.OwnerId;
+                      cntToUpdate.add(cnt);
+                  }
+              }
+          }
+          if(cntToUpdate.size() > 0)
+              update cntToUpdate;
+      }
   }
 }
