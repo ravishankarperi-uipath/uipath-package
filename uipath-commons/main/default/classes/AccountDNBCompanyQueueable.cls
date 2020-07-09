@@ -82,7 +82,7 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
         }
 
         address.RecordTypeId = Utilities.getRecordTypeId(
-          Constants.ADDRESS_RECORD_TYPE_LOCKDOWN,
+          CommonsConstants.ADDRESS_RECORD_TYPE_LOCKDOWN,
           'Address__c'
         );
 

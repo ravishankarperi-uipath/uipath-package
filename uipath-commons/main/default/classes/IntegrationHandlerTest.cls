@@ -40,7 +40,7 @@ private class IntegrationHandlerTest {
 
         if(assignIntegrationPermSet){
             System.runAs(new User(Id = Userinfo.getUserId())) {
-                PermissionSet permSet = [SELECT Id from PermissionSet where name = :Constants.BOOMI_INTEGRATION_PERMISSION_SET_NAME limit 1];
+                PermissionSet permSet = [SELECT Id from PermissionSet where name = :CommonsConstants.BOOMI_INTEGRATION_PERMISSION_SET_NAME limit 1];
                 PermissionSetAssignment psa = new PermissionSetAssignment();
                 psa.AssigneeId = u.Id;
                 psa.PermissionSetId = permSet.Id;
@@ -162,9 +162,9 @@ private class IntegrationHandlerTest {
 
         for(Account acct :[SELECT id, Validation_Status__c, (SELECT id, Validation_Status__c FROM Addresses__r) FROM Account WHERE Id  in :accountIds]) {
 
-            System.assertEquals(Constants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW, acct.Validation_Status__c, 'Opportunity stage has changed to configured value, so the validation status of the account should be ready for review.');
+            System.assertEquals(CommonsConstants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW, acct.Validation_Status__c, 'Opportunity stage has changed to configured value, so the validation status of the account should be ready for review.');
             for (Address__c a : acct.Addresses__r) {
-                System.assertEquals(Constants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW, a.Validation_Status__c, 'Opportunity stage has changed to configured value, so the validation status of the address should be ready for review.');
+                System.assertEquals(CommonsConstants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW, a.Validation_Status__c, 'Opportunity stage has changed to configured value, so the validation status of the address should be ready for review.');
             }
         }
     }

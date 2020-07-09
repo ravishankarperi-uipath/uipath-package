@@ -14,9 +14,9 @@ public class AccountSetSyncStatusFunction implements SObjectToSObjectFunction {
         Account oldAcc = (Account) oldAccounts.get(acc.Id);
         if ((accountStatusNotDoNotSync(oldAcc)) && (validationStatusChanged(oldAcc, acc)) && (ValidationStatusSetToValidated(acc))) {
             if (accountAlreadyExistsInNetsuite(acc)) {
-                acc.Sync_Status__c = Constants.ACC_SYNC_STATUS_PENDING;
+                acc.Sync_Status__c = CommonsConstants.ACC_SYNC_STATUS_PENDING;
             } else {
-                acc.Sync_Status__c = Constants.ACC_SYNC_STATUS_VALID;
+                acc.Sync_Status__c = CommonsConstants.ACC_SYNC_STATUS_VALID;
             }
         }
         return acc;
@@ -27,7 +27,7 @@ public class AccountSetSyncStatusFunction implements SObjectToSObjectFunction {
     }
 
     private Boolean ValidationStatusSetToValidated(Account acc) {
-        return acc.Validation_Status__c == Constants.ACC_VALIDATION_STATUS_VALIDATED;
+        return acc.Validation_Status__c == CommonsConstants.ACC_VALIDATION_STATUS_VALIDATED;
     }
 
     private Boolean validationStatusChanged(Account oldAcc, Account acc) {
@@ -35,7 +35,7 @@ public class AccountSetSyncStatusFunction implements SObjectToSObjectFunction {
     }
 
     private Boolean accountStatusNotDoNotSync(Account oldAcc) {
-        return oldAcc.Sync_Status__c != Constants.ACC_SYNC_STATUS_DO_NOT_SYNC;
+        return oldAcc.Sync_Status__c != CommonsConstants.ACC_SYNC_STATUS_DO_NOT_SYNC;
     }
 
     public SObject apply(SObject record) {

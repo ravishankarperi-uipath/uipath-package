@@ -25,13 +25,13 @@ public without sharing class IntegrationHandler {
       //Get a list of fields to check for changes.
       String sObjectName = newObjects[0].getSObjectType().getDescribe().name;
       List<Schema.FieldSetMember> fields = readFieldSet(
-        Constants.INTEGRATION_FIELDSET_NAME,
+        CommonsConstants.INTEGRATION_FIELDSET_NAME,
         sObjectName
       );
 
       for (SObject newObj : newObjects) {
         String newObjectStatus = (String) newObj.get(
-          Constants.INTEGRATION_SYNC_STATUS_FIELD
+          CommonsConstants.INTEGRATION_SYNC_STATUS_FIELD
         );
 
         if (
@@ -43,8 +43,8 @@ public without sharing class IntegrationHandler {
           for (Schema.FieldSetMember field : fields) {
             if (oldObj.get(field.fieldPath) != newObj.get(field.fieldPath)) {
               newObj.put(
-                Constants.INTEGRATION_SYNC_STATUS_FIELD,
-                Constants.ACC_SYNC_STATUS_PENDING
+                CommonsConstants.INTEGRATION_SYNC_STATUS_FIELD,
+                CommonsConstants.ACC_SYNC_STATUS_PENDING
               );
               // No point carrying on, as a field has changed and we've already marked this object for Integration to pick up
               break;
@@ -101,7 +101,7 @@ public without sharing class IntegrationHandler {
     ];
     if (
       currentUserProfile != null &&
-      currentUserProfile.Name == Constants.INTEGRATION_PROFILE_NAME
+      currentUserProfile.Name == CommonsConstants.INTEGRATION_PROFILE_NAME
     ) {
       isIntegrationProfilePresent = true;
     }
@@ -115,7 +115,7 @@ public without sharing class IntegrationHandler {
     for (PermissionSetAssignment psa : currentUserPermSetLst) {
       if (
         psa.PermissionSet.Name ==
-        Constants.BOOMI_INTEGRATION_PERMISSION_SET_NAME
+        CommonsConstants.BOOMI_INTEGRATION_PERMISSION_SET_NAME
       ) {
         isIntegrationPermSetPresent = true;
       }
@@ -137,11 +137,11 @@ public without sharing class IntegrationHandler {
       FROM Account
       WHERE
         Id IN :idsToRetrieve
-        AND Validation_Status__c = :Constants.ACC_SYNC_STATUS_PENDING
+        AND Validation_Status__c = :CommonsConstants.ACC_SYNC_STATUS_PENDING
     ];
 
     for (Account acct : lstAccounts) {
-      acct.Validation_Status__c = Constants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW;
+      acct.Validation_Status__c = CommonsConstants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW;
     }
 
     List<Address__c> addressesToUpdate = [
@@ -149,11 +149,11 @@ public without sharing class IntegrationHandler {
       FROM Address__c
       WHERE
         Account__c IN :idsToRetrieve
-        AND Validation_Status__c = :Constants.ACC_SYNC_STATUS_PENDING
+        AND Validation_Status__c = :CommonsConstants.ACC_SYNC_STATUS_PENDING
     ];
 
     for (Address__c a : addressesToUpdate) {
-      a.Validation_Status__c = Constants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW;
+      a.Validation_Status__c = CommonsConstants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW;
     }
 
     update lstAccounts;

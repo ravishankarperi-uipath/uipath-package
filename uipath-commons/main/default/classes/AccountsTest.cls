@@ -440,7 +440,7 @@ public class AccountsTest {
             Id = accountId,
             Name = 'AccTestSetSyncStatusForValidatedAccount',
             Country__c = 'United Kingdom',
-            Validation_Status__c = Constants.ACC_VALIDATION_STATUS_VALIDATED
+            Validation_Status__c = CommonsConstants.ACC_VALIDATION_STATUS_VALIDATED
         );
         fflib_SObjectDomain.Test.Database.onUpdate(
             new List<Account>{
@@ -453,7 +453,7 @@ public class AccountsTest {
 
         fflib_SObjectDomain.triggerHandler(Accounts.class);
 
-        System.assertEquals(Constants.ACC_SYNC_STATUS_VALID,updatedAccount.Sync_Status__c,'if Validation Status is set to Validated, then Sync Status should be set to Valid');
+        System.assertEquals(CommonsConstants.ACC_SYNC_STATUS_VALID,updatedAccount.Sync_Status__c,'if Validation Status is set to Validated, then Sync Status should be set to Valid');
     }
 
     /**
