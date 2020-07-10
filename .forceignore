@@ -18,6 +18,9 @@ uipath-commons/main/default/objects/Account/validationRules/Account_Details_Lock
 uipath-commons/main/default/objects/Account/validationRules/Account_Details_Lock.validationRule-meta.xml
 
 
+# Global Valuesets
+uipath-commons/main/default/globalValueSets/Country.globalValueSet-meta.xml
+
 # Exclude Summary Fields
 uipath-commons/main/default/objects/Account/fields/Bombora_Composite_Score_Sum__c.field-meta.xml
 uipath-commons/main/default/objects/Account/fields/Key_Account_Priority_Number__c.field-meta.xml
