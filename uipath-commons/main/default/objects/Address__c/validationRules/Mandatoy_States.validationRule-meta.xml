@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+        <fullName>Mandatoy_States</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISNEW(),
+OR(ISPICKVAL(Country__c, &quot;China&quot;),
+ISPICKVAL(Country__c, &quot;Australia&quot;), ISPICKVAL(Country__c, &quot;India&quot;)), 
+ISPICKVAL(State__c,&quot;&quot;))</errorConditionFormula>
+        <errorMessage>State is required for this country.</errorMessage>
+    </ValidationRule>
