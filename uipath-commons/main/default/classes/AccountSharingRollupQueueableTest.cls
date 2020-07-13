@@ -30,7 +30,7 @@ public with sharing class AccountSharingRollupQueueableTest {
     insert ukAccountParent;
 
     Account ukAccountChild = ukAccountParent.clone();
-
+	  ukAccountChild.Name = 'ChildTestAccountUK';
     ukAccountChild.ParentId = ukAccountParent.Id;
     ukAccountChild.Classification__c = 'Global';
     ukAccountChild.OwnerId = UserInfo.getUserId();
