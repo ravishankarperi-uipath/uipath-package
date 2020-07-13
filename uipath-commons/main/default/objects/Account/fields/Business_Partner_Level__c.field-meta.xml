@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
         <fullName>Business_Partner_Level__c</fullName>
         <externalId>false</externalId>
         <label>Business Partner Level</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
         <valueSet>
             <restricted>true</restricted>
@@ -17,9 +17,19 @@
                     <label>Registered</label>
                 </value>
                 <value>
+                    <fullName>Disty - Japan Only</fullName>
+                    <default>false</default>
+                    <label>Disty - Japan Only</label>
+                </value>
+                <value>
                     <fullName>Silver</fullName>
                     <default>false</default>
                     <label>Silver</label>
+                </value>
+                <value>
+                    <fullName>Silver (Tier 2) - Japan Only</fullName>
+                    <default>false</default>
+                    <label>Silver (Tier 2) - Japan Only</label>
                 </value>
                 <value>
                     <fullName>Gold</fullName>

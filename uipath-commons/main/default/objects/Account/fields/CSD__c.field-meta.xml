@@ -10,7 +10,7 @@
             <filterItems>
                 <field>User.UserRole.Name</field>
                 <operation>equals</operation>
-                <value>Customer Success, Japan Customer Success</value>
+                <value>Operations, Customer Success, Japan Customer Success</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>

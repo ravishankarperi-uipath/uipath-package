@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Partner_Locator_Logo__c</fullName>
+        <fullName>Strategic_URL__c</fullName>
+        <description>SLTCHIN-515</description>
         <externalId>false</externalId>
-        <label>Partner Locator Logo</label>
-        <length>32768</length>
+        <label>Strategic URL</label>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
-        <type>LongTextArea</type>
-        <visibleLines>25</visibleLines>
+        <type>Url</type>
     </CustomField>
