@@ -21,8 +21,16 @@
 
 3. Install packages (get list of Ids from sfdx-project.json and run one by one)
 
+   - uipath-core
+
    ```shell
-    sfdx force:package:install --package 0Ho4K000000PB0iSAG -k test1234 -u scratch
+    sfdx force:package:install --package 04t4K000000CqWGQA0 -k test1234 -u scratch
+   ```
+
+   - uipath-commons
+
+   ```shell
+   sfdx force:package:install --package 04t4K000001AInuQAG -k test1234 -u scratch
    ```
 
 4. Open scratch org

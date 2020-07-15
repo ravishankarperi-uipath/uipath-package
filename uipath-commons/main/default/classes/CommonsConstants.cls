@@ -47,6 +47,7 @@ public class CommonsConstants {
 
     //Integration Constants
     public static final String INTEGRATION_FIELDSET_NAME = 'Boomi_Integration_Field_Set';
+    public static final String INTEGRATION_FIELDSET_NAME_TEST = 'Boomi_Integration_Field_Set_No_Deps';
     public static final String INTEGRATION_SYNC_STATUS_FIELD = 'Sync_Status__c';
     public static final String INTEGRATION_PROFILE_NAME = 'Integration User';
 

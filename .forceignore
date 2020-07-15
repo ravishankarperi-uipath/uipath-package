@@ -13,10 +13,8 @@ package.xml
 
 uipath-commons/main/default/objects/Account/listViews
 uipath-commons/main/default/objects/Account/webLinks
-uipath-commons/main/default/objects/Account/fieldSets
 uipath-commons/main/default/objects/Account/validationRules/Account_Details_Lock_After_Sync.validationRule-meta.xml
 uipath-commons/main/default/objects/Account/validationRules/Account_Details_Lock.validationRule-meta.xml
-
 
 # Global Valuesets
 uipath-commons/main/default/globalValueSets/Country.globalValueSet-meta.xml
