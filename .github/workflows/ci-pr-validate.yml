@@ -32,16 +32,15 @@ jobs:
         run: npm ci
 
       # Prettier formatting
-      - name: "Code formatting verification with Prettier"
-        run: npm run prettier:verify
+      - name: "UiPath Commons : Code formatting verification with Prettier"
+        run: npm run prettier:verify:commons
 
       # Lint LWC
-      - name: "Lint Lightning Web Components"
-        run: npm run lint:lwc
-
+      #- name: "Lint Lightning Web Components"
+      # run: npm run lint:lwc
       # Unit tests
-      - name: "Unit test Lightning Web Components"
-        run: npm run test:unit
+      #- name: "Unit test Lightning Web Components"
+      #  run: npm run test:unit
 
   scratch-org-test:
     runs-on: ubuntu-latest

@@ -1,5 +1,3 @@
-
-public interface IAccounts extends fflib_ISObjectDomain
-{
-//    void updateOpportunityActivity(fflib_SObjectUnitOfWork uow);
+public interface IAccounts extends fflib_ISObjectDomain {
+  //    void updateOpportunityActivity(fflib_SObjectUnitOfWork uow);
 }

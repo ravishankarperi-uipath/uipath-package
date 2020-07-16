@@ -123,9 +123,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
       );
   }
 
-
   private void deriveSyncStatusForValidatedAccount() {
-
     SObjectPredicate haveStatusesChanged = new HasRecordChanged(
       new Set<SObjectField>{
         Account.Sync_Status__c,
