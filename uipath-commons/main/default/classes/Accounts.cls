@@ -48,12 +48,15 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
     //Insert address record copying from Account. Also set that as Primary Shipping and Billing for the account
     AbstractQueueable.enqueue(new AccountAddressQueueable(Records, null));
+
+    AbstractQueueable.enqueue(new AccountSetGAMEmailQueueable(Records, null));
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     shareAccountWithParentOwner(existingRecords);
     createAddressForDnBCompany(existingRecords);
     setContactOwnerToAccountOwner(existingRecords);
+    setGAMEmailOnGlobalAccounts(existingRecords);
   }
 
   /**
@@ -398,6 +401,25 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     Collection.of(Records)
       .filter(hasStewardshipFlagChanged)
       .mapAll(new AccountSetDataStewardFunction());
+  }
+
+  /**
+   * For global accounts, set up GAM Email Account to Ultimate Parent Account Owner.Email
+   * @param existingRecords
+   */
+  private void setGAMEmailOnGlobalAccounts(Map<Id, SObject> existingRecords) {
+    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
+      new Set<SObjectField>{
+        Account.Classification__c,
+        Account.OwnerId,
+        Account.ParentId
+      }
+    );
+    if (!changedAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(
+        new AccountSetGAMEmailQueueable(changedAccounts, existingRecords)
+      );
+    }
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {

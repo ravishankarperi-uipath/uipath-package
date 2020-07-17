@@ -74,7 +74,7 @@ public abstract class AbstractQueueable implements Queueable {
             for (AbstractQueueable queueableWrapper : chain) {
                 System.debug(queueableWrapper.name);
             }
-            if (this.chain.size() > 10) {
+            if (this.chain.size() > 10 && !Test.isRunningTest()) {
                 throw new QueueableChainException(
                         'Chains longer than 10 links are not supported'
                 );
