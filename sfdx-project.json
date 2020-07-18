@@ -1,42 +1,34 @@
 {
-    "packageDirectories": [
+  "packageDirectories": [
+    {
+      "path": "uipath-core",
+      "package": "uipath-core",
+      "default": false,
+      "versionName": "Version 1.0",
+      "versionNumber": "1.0.0.NEXT"
+    },
+    {
+      "path": "uipath-commons",
+      "package": "uipath-commons",
+      "default": true,
+      "versionName": "Version 1.0",
+      "versionNumber": "1.0.0.NEXT",
+      "dependencies": [
         {
-            "path": "uipath-core",
-            "package": "uipath-core",
-            "default": false,
-            "versionName": "Version 1.0",
-            "versionNumber": "1.0.0.NEXT"
-        },
-        {
-            "path": "uipath-commons",
-            "package": "uipath-commons",
-            "default": true,
-            "versionName": "Version 1.0",
-            "versionNumber": "1.0.0.NEXT",
-            "dependencies": [
-                {
-                    "package": "uipath-core",
-                    "versionNumber": "1.0.0.LATEST"
-                }
-            ]
+          "package": "uipath-core",
+          "versionNumber": "1.0.0.LATEST"
         }
-    ],
-    "namespace": "",
-    "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "48.0",
-    "packageAliases": {
-        "cpq": "04t4N000000N5OyQAK",
-        "uipath-core": "0Ho4K000000PB0iSAG",
-        "uipath-commons": "0Ho4K000000PB0nSAG",
-        "uipath-core@1.0.0-1": "04t4K000000CCOPQA4",
-        "uipath-commons@1.0.0-1": "04t4K000000CCWkQAO",
-        "uipath-commons@1.0.0-2": "04t4K000000CDrPQAW",
-        "uipath-commons@1.0.0-3": "04t4K000000CDrUQAW",
-        "uipath-commons@1.0.0-4": "04t4K000000CQarQAG",
-        "uipath-core@1.0.0-2": "04t4K000000CZG2QAO",
-        "uipath-core@1.0.0-3": "04t4K000000CqWGQA0",
-        "uipath-commons@1.0.0-5": "04t4K000000CqaTQAS",
-        "uipath-commons@1.0.0-7": "04t4K000001A4srQAC",
-        "uipath-commons@1.0.0-8": "04t4K000001AInuQAG"
+      ]
     }
+  ],
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "48.0",
+  "packageAliases": {
+    "cpq": "04t4N000000N5OyQAK",
+    "uipath-core": "0Ho4K000000PB0iSAG",
+    "uipath-commons": "0Ho4K000000PB0nSAG",
+    "uipath-core@1.0.0-4": "04t4K000001Af86QAC",
+    "uipath-commons@1.0.0-9": "04t4K000001Af8BQAS"
+  }
 }
