@@ -178,7 +178,7 @@ jobs:
 
       # Run Apex tests in CI Sandbox
       - name: "Run Apex tests"
-        run: "sfdx force:apex:test:run -u ci -c -r human -d ./tests/apex -w 120"
+        run: "sfdx force:apex:test:run -u ci -c -r human -d ./tests/apex -w 120 --codecoverage"
 
       # Store test results in var
       - name: "Store test results in var"
