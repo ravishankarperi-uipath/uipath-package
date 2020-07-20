@@ -183,7 +183,7 @@ jobs:
 
       # Store test results in var
       - name: "Store test results in var"
-        run: "testOutput=$(cat ./tests/apex/test-result.txt)"
+        run: echo ::set-env name=APEX_TEST_OUTPUT::$(cat ./tests/apex/test-result.txt)
 
       # Write test results as PR comment
       - name: "Write test results as PR comment"
@@ -191,5 +191,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: ${{ env.testOutput }}
+          msg: "${{ env.APEX_TEST_OUTPUT }}"
           check_for_duplicate_msg: false
