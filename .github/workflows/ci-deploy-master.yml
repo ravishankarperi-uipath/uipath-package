@@ -4,8 +4,9 @@ name: Merge into Master
 # Definition when the workflow should run
 on:
   push:
-    branches:
-      - master
+    # *******DISABLED TEMPORARILY*******
+    branches-ignore:
+      - "**"
 
 # Jobs to be executed
 jobs:

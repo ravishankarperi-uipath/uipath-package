@@ -25,11 +25,9 @@
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "48.0",
     "packageAliases": {
-        "cpq": "04t4N000000N5OyQAK",
-        "uipath-core": "0Ho4K000000PB0iSAG",
-        "uipath-commons": "0Ho4K000000PB0nSAG",
-        "uipath-core@1.0.0-4": "04t4K000001Af86QAC",
-        "uipath-commons@1.0.0-9": "04t4K000001Af8BQAS",
-        "uipath-commons@1.0.0-10": "04t4K000001AhSmQAK"
+        "uipath-core": "0Ho1Q000000CaTDSA0",
+        "uipath-commons": "0Ho1Q000000CaTISA0",
+        "uipath-core@1.0.0-1": "04t1Q0000010KHnQAM",
+        "uipath-commons@1.0.0-1": "04t1Q0000010KHsQAM"
     }
 }
