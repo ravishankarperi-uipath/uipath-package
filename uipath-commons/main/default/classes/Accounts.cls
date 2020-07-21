@@ -51,6 +51,8 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AbstractQueueable.enqueue(new AccountAddressQueueable(Records, null));
 
     AbstractQueueable.enqueue(new AccountSetGAMEmailQueueable(Records, null));
+
+    setRevenueSourceAfterInsert();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -58,6 +60,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     createAddressForDnBCompany(existingRecords);
     setContactOwnerToAccountOwner(existingRecords);
     setGAMEmailOnGlobalAccounts(existingRecords);
+    setRevenueSourceOnUpdate(existingRecords);
   }
 
   /**
@@ -114,6 +117,18 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
       .mapSome(
         Match.field(Account.RecordTypeId).hasValue(),
         new AccountSetLegalEntityNameFunction()
+      );
+  }
+
+/**
+   * On Account Insert, check is AnnualRevenue & DNBoptimizer__DnBCompanyRecord__c has values then
+   * start Queueable to check if AnnualRevenue & DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c have the same values
+   */
+  private void setRevenueSourceAfterInsert() {
+    Collection.of(Records)
+      .mapSome(
+        Match.field(Account.AnnualRevenue).hasValue() && Match.field(Account.DNBoptimizer__DnBCompanyRecord__c).hasValue(),
+        AbstractQueueable.enqueue(new AccountSetRevenueSourceQueueable(Records, null));
       );
   }
 
@@ -423,7 +438,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
    * @param existingRecords
    */
-  private void setRevenueSource(Map<Id, SObject> existingRecords) {
+  private void setRevenueSourceOnUpdate(Map<Id, SObject> existingRecords) {
     List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
       new Set<SObjectField>{
         Account.AnnualRevenue
