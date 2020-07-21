@@ -448,7 +448,8 @@ public class AccountsTest {
         new Account(
           Name = 'Test ' + i,
           BillingCountry = 'United Kingdom',
-          Industry = 'Others'
+          Industry = 'Others',
+          LD_USE_DnB_Optimize__c = false
         )
       );
     }
@@ -467,16 +468,22 @@ public class AccountsTest {
         new Account(
           Name = 'Test ' + i,
           BillingCountry = 'United Kingdom',
-          Industry = 'Others'
+          Industry = 'Others',
+          LD_USE_DnB_Optimize__c = false
         )
       );
     }
     insert accounts;
+
+    Test.startTest();
+
     for (Integer i = 0; i < 200; i++) {
-      accounts.get(i).Name = 'Updated Account ' + i;
+      accounts.get(i).Industry = 'Automotive';
     }
     //will throw on any limits issues
     List<Database.SaveResult> results = Database.update(accounts, true);
     System.assertEquals(results.size() > 0, true);
+
+    Test.stopTest();
   }
 }
