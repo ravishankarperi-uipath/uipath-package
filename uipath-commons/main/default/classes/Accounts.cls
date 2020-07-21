@@ -418,6 +418,25 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   }
 
   /**
+   * When Annual Revenue is changed, verify if it's equal with DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c, 
+   * if yes, change Revenue Source to Dun & Bradstreet
+
+   * @param existingRecords
+   */
+  private void setRevenueSource(Map<Id, SObject> existingRecords) {
+    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
+      new Set<SObjectField>{
+        Account.AnnualRevenue
+      }
+    );
+    if (!changedAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(
+        new AccountSetRevenueSourceQueueable(changedAccounts, existingRecords)
+      );
+    }
+  }
+
+  /**
    * For global accounts, set up GAM Email Account to Ultimate Parent Account Owner.Email
    * @param existingRecords
    */
