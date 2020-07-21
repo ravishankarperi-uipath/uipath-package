@@ -331,6 +331,52 @@ public class AccountsTest {
     System.assertEquals('Reseller', partnerAccount.Channel_Tier__c);
   }
 
+  /* Method to test setting the Legal Entity Name during insert*/
+  @isTest
+  public static void setsAccountLegalEntityNameOnInsert() {
+    Account partnerAccount = new Account(
+      Name = 'TestPartnerAccountLegalEntityName',
+      BillingCountry = 'United Kingdom',
+      Industry = 'Others',
+      Legal__c = null,
+      RecordTypeId = AccountMetadata.getAccountRecordTypeId('Partner')
+    );
+
+    Account customerAccount = new Account(
+      Name = 'TestCustomerAccountLegalEntityName',
+      BillingCountry = 'United Kingdom',
+      Industry = 'Others',
+      Legal__c = null,
+      RecordTypeId = AccountMetadata.getAccountRecordTypeId('Customer')
+    );
+
+    Account academicAccount = new Account(
+      Name = 'TestAcademicAccountLegalEntityName',
+      BillingCountry = 'United Kingdom',
+      Industry = 'Others',
+      Legal__c = null,
+      RecordTypeId = AccountMetadata.getAccountRecordTypeId('Academic')
+    );
+
+    fflib_SObjectDomain.Test.Database.onInsert(
+      new List<Account>{ partnerAccount, customerAccount, academicAccount }
+    );
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+    System.assertEquals(
+      'TestPartnerAccountLegalEntityName',
+      partnerAccount.Legal__c
+    );
+    System.assertEquals(
+      'TestCustomerAccountLegalEntityName',
+      customerAccount.Legal__c
+    );
+    System.assertEquals(
+      'TestAcademicAccountLegalEntityName',
+      academicAccount.Legal__c
+    );
+  }
+
   @isTest
   public static void setDataStewardTest() {
     Account account = new Account(

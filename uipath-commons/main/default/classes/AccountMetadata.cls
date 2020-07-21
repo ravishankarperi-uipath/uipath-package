@@ -95,6 +95,13 @@ public without sharing class AccountMetadata {
     set;
   }
 
+  public static Id getAccountRecordTypeId(String recordTypeName) {
+    Id RTId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
+      .get(recordTypeName)
+      .getRecordTypeId();
+    return RTId;
+  }
+
   public static SObjectIndex getCountriesByCountryCode() {
     SObjectIndex countriesByCountryCode = new SObjectIndex(
         new List<String>{ 'Country_Code__c' }

@@ -23,6 +23,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     convertAcademicAccount(Records);
     deriveChannelTierOnInsert();
     deriveDataStewardUserOnInsert();
+    deriveLegalEntityNameOnInsert();
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
@@ -100,6 +101,19 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
       .mapSome(
         Match.field(Account.Account_Business_Type__c).hasValue(),
         new AccountSetRecordTypeFunction()
+      );
+  }
+
+  /**
+   * Sets Legal Entity Name on Account
+   * If Legal Entity Name is empty AND
+   * Record Type is Academic, Partner, Customer, Customer Prospect OR Partner Prospect
+   */
+  private void deriveLegalEntityNameOnInsert() {
+    Collection.of(Records)
+      .mapSome(
+        Match.field(Account.RecordTypeId).hasValue(),
+        new AccountSetLegalEntityNameFunction()
       );
   }
 
