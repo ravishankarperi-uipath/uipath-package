@@ -5,49 +5,79 @@
 - Your local machine is setup with all necessary tooling like VS Code(or other IDE), Any IDE extensions or plugins, Git, NPM, SFDX CLI
 - You have the uipath packaging repository cloned locally
 
-## Steps
+## For Mac
 
-1. Authenticate to Production DevHub if you haven't already
+Authenticate to Production DevHub if you haven't already
 
-   ```shell
-   sfdx force:auth:web:login -d -a DevHub
-   ```
+```shell
+sfdx force:auth:web:login -d -a DevHub
+```
 
-2. Create a scratch org:
+Run Scratch org create script (only on Mac)
 
-   ```shell
-   sfdx force:org:create -s -f config/project-scratch-def.json --durationdays 7 --setalias scratch -v DevHub
-   ```
+```bash
+./scripts/scripts/createAndPrepareScratch.sh
+```
 
-3. Install packages (get list of Ids from sfdx-project.json and run one by one)
+## For Windows
 
-   - uipath-core
+Authenticate to Production DevHub if you haven't already
 
-   ```shell
-    sfdx force:package:install --package 04t4K000000CqWGQA0 -k test1234 -u scratch
-   ```
+```shell
+sfdx force:auth:web:login -d -a DevHub
+```
 
-   - uipath-commons
+### Create a scratch org:
 
-   ```shell
-   sfdx force:package:install --package 04t4K000001AInuQAG -k test1234 -u scratch
-   ```
+```bash
+sfdx force:org:create -s -f config/project-scratch-def.json --durationdays 30 --setalias scratch -v DevHub
+```
 
-4. Open scratch org
+### Install packages using the 04t ids
 
-   ```
-   sfdx force:org:open
-   ```
+#### Obtain the 04t Ids for unlocked packages by running:
 
-5. Create a new feature branch
-6. Make changes and pull down locally
-7. Run all Local package tests
-8. Commit changes into Git, Push and raise Pull Request
-9. wait for CI job to run all package tests
-10. Get approver to approve PR
-11. Merge PR
-12. CI job creates new build version and installs to SIT
-    (CI job also runs all tests in Org to see if any non-package tests are broken)
-13. RM installs package to UAT when appropriate
-14. When UAT passes. RM creates a Release version of package(s)
-15. RM installs package in Production
+```bash
+sfdx force:package:version:list -v UIPATH_PROD
+```
+
+#### Obtain the 04t Ids for managed packages by running:
+
+```bash
+sfdx force:package:installed:list -u UIPATH_PROD
+```
+
+#### Install packages:
+
+- uipath-core
+
+```bash
+ sfdx force:package:install --package 04t... -k test1234 -u scratch
+```
+
+- dnbOptimizer
+
+```bash
+sfdx force:package:install --package 04t... -u scratch1 --noprompt
+```
+
+- uipath-commons
+
+```bash
+sfdx force:package:install --package 04t.... -k test1234 -u scratch
+```
+
+## Work on Feature and Release
+
+1. Create a new feature branch
+2. Make changes and pull down locally
+3. Run all Local package tests
+4. Commit changes into Git, Push and raise Pull Request
+5. wait for CI job to run all package tests
+6. Get approver to approve PR
+7. Merge PR
+8. CI job creates new build version and installs to SIT
+   (CI job also runs all tests in Org to see if any non-package tests are broken)
+9. RM installs package to UAT when appropriate
+10. When UAT passes. RM creates a Release version of package(s)
+11. RM installs package in Production

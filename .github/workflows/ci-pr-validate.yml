@@ -85,7 +85,11 @@ jobs:
       - name: "Wait for 10 secs for Feature activation"
         uses: maddox/actions/sleep@master
         with:
-          args: 10
+          args: "10"
+
+      # Install DnBOptimizer
+      - name: " Install DnBOptimizer"
+        run: "sfdx force:package:install --package 04t1I000003FJbZQAW -u scratch-org --noprompt -w 15"
 
       # Deploy source to scratch org
       - name: "Push source to scratch org"

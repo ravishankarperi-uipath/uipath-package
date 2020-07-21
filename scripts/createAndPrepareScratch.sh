@@ -23,12 +23,15 @@ echo Installing uipath-core package
 coreLatestVersion=$(sfdx force:package:version:list -p 0Ho4K000000PB0iSAG -v $devHub -o CreatedDate --concise | tail -1 | awk '{print $3}')
 sfdx force:package:install --package $coreLatestVersion -u $scratchOrgName -w 10 -k unlockedclear
 
+echo Installing dnbOptimizer package
+sfdx force:package:install --package 04t1I000003FJbZQAW -u scratch1 --noprompt
+
 echo Installing uipath-commons package
 commonsLatestVersion=$(sfdx force:package:version:list -p 0Ho4K000000PB0nSAG -v $devHub -o CreatedDate --concise | tail -1 | awk '{print $3}')
 sfdx force:package:install --package $commonsLatestVersion -u $scratchOrgName -w 15 -k unlockedclear
 
-echo Installing uipath-commons package
+echo Reseting tracking
 sfdx force:source:tracking:reset
 
-echo Run a dummy to new scratch org to start tracking again
+echo Run a dummy push to new scratch org to start tracking again
 sfdx force:source:push -u $scratchOrgName
