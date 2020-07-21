@@ -168,25 +168,28 @@ jobs:
 
       #  Install latest uipath-core version if contents changed
       - name: "Install Core Package in Sandbox"
+        if: steps.filter.outputs.core == 'true'
         run: "sfdx force:package:install --package $(sfdx force:package:version:list -p 0Ho1Q000000CaTDSA0 -v devhub -o CreatedDate --concise | tail -1 | awk '{print $3}') -u ci -w 60 -k unlockedclear --apexcompile package"
 
       #  Install latest uipath-commons version if contents changed
       - name: "Install Commons Package in Sandbox"
+        if: steps.filter.outputs.commons == 'true'
         run: "sfdx force:package:install --package $(sfdx force:package:version:list -p 0Ho1Q000000CaTISA0 -v devhub -o CreatedDate --concise | tail -1 | awk '{print $3}') -u ci -w 60 -k unlockedclear --apexcompile package"
 
       # Run Apex tests in CI Sandbox
       - name: "Run Apex tests"
+        continue-on-error: true
         run: "sfdx force:apex:test:run -u ci -c -r human -d ./tests/apex -w 120 --codecoverage"
 
       # Store test results in var
       - name: "Store test results in var"
-        run: "testOutput=$(cat ./tests/apex/test-result.txt)"
+        run: echo ::set-env name=APEX_TEST_OUTPUT::$(cat ./tests/apex/test-result.txt)
 
-        # Write test results as PR comment
+      # Write test results as PR comment
       - name: "Write test results as PR comment"
         uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: ${{ env.testOutput }}
+          msg: "${{ env.APEX_TEST_OUTPUT }}"
           check_for_duplicate_msg: false
