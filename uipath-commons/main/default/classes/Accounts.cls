@@ -125,11 +125,22 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
    * start Queueable to check if AnnualRevenue & DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c have the same values
    */
   private void setRevenueSourceAfterInsert() {
-    Collection.of(Records)
-      .mapSome(
-        Match.field(Account.AnnualRevenue).hasValue() && Match.field(Account.DNBoptimizer__DnBCompanyRecord__c).hasValue(),
-        AbstractQueueable.enqueue(new AccountSetRevenueSourceQueueable(Records, null));
-      );
+
+    List<Account> validatedAccounts = Collection.of(Records)
+    .filter(
+      Match.field(Account.AnnualRevenue)
+      .hasValue()
+      .also(Account.DNBoptimizer__DnBCompanyRecord__c)
+      .hasValue()
+      .also(Account.Revenue_Source__c)
+      .notEquals('Dun & Bradstreet')
+    )
+    .asList();
+
+    // Call the SyncStatusAutomation Process to check if the Account Updates can be flagged ready to sync to NetSuite
+    if (!validatedAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(new AccountSetRevenueSourceQueueable(validatedAccounts));
+    }
   }
 
   /**
@@ -153,7 +164,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         Match.field(Account.Country__c).hasValue(),
         new AccountSetSubsidiaryFunction(countrySubsidiaryMap)
       );
-  }
+  } 
 
   private void deriveSyncStatusForValidatedAccount() {
     SObjectPredicate haveStatusesChanged = new HasRecordChanged(
@@ -441,12 +452,14 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   private void setRevenueSourceOnUpdate(Map<Id, SObject> existingRecords) {
     List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
       new Set<SObjectField>{
-        Account.AnnualRevenue
+        Account.AnnualRevenue,
+        Account.DNBoptimizer__DnBCompanyRecord__c,
+        Account.Revenue_Source__c
       }
     );
     if (!changedAccounts.isEmpty()) {
       AbstractQueueable.enqueue(
-        new AccountSetRevenueSourceQueueable(changedAccounts, existingRecords)
+        new AccountSetRevenueSourceQueueable(changedAccounts)
       );
     }
   }
