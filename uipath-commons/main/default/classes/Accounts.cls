@@ -52,7 +52,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
     AbstractQueueable.enqueue(new AccountSetGAMEmailQueueable(Records, null));
 
-    setRevenueSourceAfterInsert();
+    setAnnualRevenue();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -60,7 +60,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     createAddressForDnBCompany(existingRecords);
     setContactOwnerToAccountOwner(existingRecords);
     setGAMEmailOnGlobalAccounts(existingRecords);
-    setRevenueSourceOnUpdate(existingRecords);
+    setAnnualRevenue();
   }
 
   /**
@@ -124,22 +124,22 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
    * On Account Insert, check is AnnualRevenue & DNBoptimizer__DnBCompanyRecord__c has values then
    * start Queueable to check if AnnualRevenue & DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c have the same values
    */
-  private void setRevenueSourceAfterInsert() {
+  private void setAnnualRevenue() {
 
     List<Account> validatedAccounts = Collection.of(Records)
     .filter(
       Match.field(Account.AnnualRevenue)
-      .hasValue()
+      .equals(null)
       .also(Account.DNBoptimizer__DnBCompanyRecord__c)
       .hasValue()
-      .also(Account.Revenue_Source__c)
-      .notEquals('Dun & Bradstreet')
+      .also(Account.Overwrite_Annual_Revenue__c)
+      .equals(false)
     )
     .asList();
 
     // Call the SyncStatusAutomation Process to check if the Account Updates can be flagged ready to sync to NetSuite
     if (!validatedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(new AccountSetRevenueSourceQueueable(validatedAccounts));
+      AbstractQueueable.enqueue(new AccountSetAnnualRevenueQueueable(validatedAccounts));
     }
   }
 
@@ -441,27 +441,6 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     Collection.of(Records)
       .filter(hasStewardshipFlagChanged)
       .mapAll(new AccountSetDataStewardFunction());
-  }
-
-  /**
-   * When Annual Revenue is changed, verify if it's equal with DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c, 
-   * if yes, change Revenue Source to Dun & Bradstreet
-
-   * @param existingRecords
-   */
-  private void setRevenueSourceOnUpdate(Map<Id, SObject> existingRecords) {
-    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-      new Set<SObjectField>{
-        Account.AnnualRevenue,
-        Account.DNBoptimizer__DnBCompanyRecord__c,
-        Account.Revenue_Source__c
-      }
-    );
-    if (!changedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountSetRevenueSourceQueueable(changedAccounts)
-      );
-    }
   }
 
   /**
