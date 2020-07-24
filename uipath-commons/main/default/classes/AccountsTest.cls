@@ -21,6 +21,26 @@ public class AccountsTest {
   }
 
   @IsTest
+  private static void setAnnualRevenueOnInsertTest() {
+    Accounts accounts = new Accounts(
+      new List<Account>{
+        new Account(Name = 'Test', Country__c = 'China', State__c = null)
+      }
+    );
+    accounts.onValidate();
+    System.assertEquals(1, fflib_SObjectDomain.Errors.getAll().size());
+    System.assertEquals(
+      'State is required if Country is China',
+      fflib_SObjectDomain.Errors.getAll()[0].message
+    );
+    System.assertEquals(
+      Account.State__c,
+      ((fflib_SObjectDomain.FieldError) fflib_SObjectDomain.Errors.getAll()[0])
+        .field
+    );
+  }
+
+  @IsTest
   private static void copiesStateToBillingState() {
     Account account = new Account(
       Name = 'Test',
