@@ -72,19 +72,16 @@ jobs:
         run: "sfdx force:package:install --package $(sfdx force:package:version:list -p 0Ho1Q000000CaTISA0 -v devhub -o CreatedDate --concise | tail -1 | awk '{print $3}') -u ci -w 60 -k unlockedclear --apexcompile package"
 
       # Run Apex tests in CI Sandbox
-      - name: "Run Apex tests"
-        continue-on-error: true
+      - name: "Run All Sandbox Apex tests"
         run: "sfdx force:apex:test:run -u ci -c -r human -d ./tests/apex -w 120 --codecoverage"
-
       # Store test results in var
-      - name: "Store test results in var"
-        run: echo ::set-env name=APEX_TEST_OUTPUT::$(cat ./tests/apex/test-result.txt)
-
+      #- name: "Store test results in var"
+      #  run: echo ::set-env name=APEX_TEST_OUTPUT::$(cat ./tests/apex/test-result.txt)
       # Write test results as PR comment
-      - name: "Write test results as PR comment"
-        uses: unsplash/comment-on-pr@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          msg: "${{ env.APEX_TEST_OUTPUT }}"
-          check_for_duplicate_msg: false
+      #- name: "Write test results as PR comment"
+      #  uses: unsplash/comment-on-pr@master
+      #  env:
+      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #   msg: "${{ env.APEX_TEST_OUTPUT }}"
+      #   check_for_duplicate_msg: false
