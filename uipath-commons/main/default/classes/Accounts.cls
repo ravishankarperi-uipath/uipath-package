@@ -137,7 +137,6 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     )
     .asList();
 
-    // Call the SyncStatusAutomation Process to check if the Account Updates can be flagged ready to sync to NetSuite
     if (!validatedAccounts.isEmpty()) {
       AbstractQueueable.enqueue(new AccountSetAnnualRevenueQueueable(validatedAccounts));
     }

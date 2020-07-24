@@ -2,9 +2,9 @@
  * TODO REWRITE with fflib Mocking
  */
 @isTest
-private class AccountSetAnnualRevenueTest {
+private class AccountSetAnnualRevenueQueueableTest {
   @isTest
-  private static void setAnnualRevenueTest() {
+  private static void setAnnualRevenueQueueableTest() {
 
     DNBoptimizer__DnBCompanyRecord__c DnBCompanyRecord = new DNBoptimizer__DnBCompanyRecord__c(
       DNBoptimizer__BusinessName__c = 'DnBTest1',
