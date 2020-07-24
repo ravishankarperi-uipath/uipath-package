@@ -5,7 +5,6 @@
 private class AccountSetAnnualRevenueQueueableTest {
   @isTest
   private static void setAnnualRevenueQueueableTest() {
-
     DNBoptimizer__DnBCompanyRecord__c DnBCompanyRecord = new DNBoptimizer__DnBCompanyRecord__c(
       DNBoptimizer__BusinessName__c = 'DnBTest1',
       Name = '1234',
@@ -32,7 +31,7 @@ private class AccountSetAnnualRevenueQueueableTest {
     List<Account> updatedAccount = [
       SELECT Id, AnnualRevenue
       FROM Account
-      WHERE Id =: account1.Id
+      WHERE Id = :account1.Id
       LIMIT 1
     ];
 

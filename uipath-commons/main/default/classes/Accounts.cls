@@ -120,25 +120,26 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
       );
   }
 
-/**
+  /**
    * On Account Insert, check is AnnualRevenue & DNBoptimizer__DnBCompanyRecord__c has values then
    * start Queueable to check if AnnualRevenue & DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c have the same values
    */
   private void setAnnualRevenue() {
-
     List<Account> validatedAccounts = Collection.of(Records)
-    .filter(
-      Match.field(Account.AnnualRevenue)
-      .equals(null)
-      .also(Account.DNBoptimizer__DnBCompanyRecord__c)
-      .hasValue()
-      .also(Account.Overwrite_Annual_Revenue__c)
-      .equals(false)
-    )
-    .asList();
+      .filter(
+        Match.field(Account.AnnualRevenue)
+          .equals(null)
+          .also(Account.DNBoptimizer__DnBCompanyRecord__c)
+          .hasValue()
+          .also(Account.Overwrite_Annual_Revenue__c)
+          .equals(false)
+      )
+      .asList();
 
     if (!validatedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(new AccountSetAnnualRevenueQueueable(validatedAccounts));
+      AbstractQueueable.enqueue(
+        new AccountSetAnnualRevenueQueueable(validatedAccounts)
+      );
     }
   }
 
@@ -163,7 +164,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
         Match.field(Account.Country__c).hasValue(),
         new AccountSetSubsidiaryFunction(countrySubsidiaryMap)
       );
-  } 
+  }
 
   private void deriveSyncStatusForValidatedAccount() {
     SObjectPredicate haveStatusesChanged = new HasRecordChanged(

@@ -23,14 +23,15 @@ public with sharing class AccountSetAnnualRevenueQueueable extends AbstractQueue
         AnnualRevenue,
         DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c
       FROM Account
-      WHERE Id IN :accounts 
-      AND DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c != NULL
+      WHERE
+        Id IN :accounts
+        AND DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c != null
     ];
 
     if (!accounts.isEmpty()) {
       for (Account acc : accounts) {
-          acc.AnnualRevenue = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
-          acc.Revenue_Source__c = 'Dun & Bradstreet';
+        acc.AnnualRevenue = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
+        acc.Revenue_Source__c = 'Dun & Bradstreet';
       }
       update accounts;
     }
