@@ -52,7 +52,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
     AbstractQueueable.enqueue(new AccountSetGAMEmailQueueable(Records, null));
 
-    setAnnualRevenue();
+    setDnBFields();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -60,7 +60,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     createAddressForDnBCompany(existingRecords);
     setContactOwnerToAccountOwner(existingRecords);
     setGAMEmailOnGlobalAccounts(existingRecords);
-    setAnnualRevenue();
+    setDnBFields();
   }
 
   /**
@@ -124,22 +124,17 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
    * On Account Insert, check is AnnualRevenue & DNBoptimizer__DnBCompanyRecord__c has values then
    * start Queueable to check if AnnualRevenue & DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c have the same values
    */
-  private void setAnnualRevenue() {
+  private void setDnBFields() {
+    SObjectPredicate hasCriteriaBeenMet = new HasMetDnBQueueableCriteria(
+      this.Records
+    );
+
     List<Account> validatedAccounts = Collection.of(Records)
-      .filter(
-        Match.field(Account.AnnualRevenue)
-          .equals(null)
-          .also(Account.DNBoptimizer__DnBCompanyRecord__c)
-          .hasValue()
-          .also(Account.Overwrite_Annual_Revenue__c)
-          .equals(false)
-      )
+      .filter(hasCriteriaBeenMet)
       .asList();
 
     if (!validatedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountSetAnnualRevenueQueueable(validatedAccounts)
-      );
+      AbstractQueueable.enqueue(new AccountDnBSyncQueueable(validatedAccounts));
     }
   }
 

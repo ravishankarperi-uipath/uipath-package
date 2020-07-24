@@ -19,7 +19,7 @@ public class AccountsTest {
         .field
     );
   }
-
+  /*
   @IsTest
   private static void setAnnualRevenueOnInsertTest() {
     Accounts accounts = new Accounts(
@@ -39,7 +39,7 @@ public class AccountsTest {
         .field
     );
   }
-
+*/
   @IsTest
   private static void copiesStateToBillingState() {
     Account account = new Account(
