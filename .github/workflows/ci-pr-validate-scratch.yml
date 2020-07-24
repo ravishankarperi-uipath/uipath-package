@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: krukmat/setup-pmd@v0.4
       - name: code-analysis-commons
-        run: pmd -d uipath-commons/main/default/classes -R category/apex/design.xml -l apex -f text
+        run: pmd -d ./uipath-commons/main/default/classes -R category/apex/design.xml -l apex -f text
 
   scratch-org-test:
     runs-on: ubuntu-latest
