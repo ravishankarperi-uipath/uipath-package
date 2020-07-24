@@ -44,11 +44,16 @@ jobs:
 
   apex-analysis-pmd:
     runs-on: ubuntu-latest
+    needs: formatting-and-linting
 
     steps:
+      # Checkout the code in the pull request
+      - name: "Checkout source code"
+        uses: actions/checkout@v2
+
       - uses: krukmat/setup-pmd@v0.4
       - name: code-analysis-commons
-        run: pmd -d ./uipath-commons/main/default/classes -R category/apex/design.xml -l apex -f text
+        run: pmd -d $GITHUB_WORKSPACE/uipath-commons/main/default/classes/ -R category/apex/design.xml -l apex -f text
 
   scratch-org-test:
     runs-on: ubuntu-latest
