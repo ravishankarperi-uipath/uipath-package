@@ -52,7 +52,7 @@ sfdx force:package:installed:list -u DevHub
 - uipath-core
 
 ```bash
- sfdx force:package:install --package 04t... -k unlockedclear -u scratch -w 15
+ sfdx force:package:install --package 04t1Q0000010KHxQAM -k unlockedclear -u scratch -w 15
 ```
 
 - dnbOptimizer
@@ -64,7 +64,7 @@ sfdx force:package:install --package 04t... -u scratch --noprompt  -w 15
 - uipath-commons
 
 ```bash
-sfdx force:package:install --package 04t.... -k unlockedclear -u scratch  -w 15
+sfdx force:package:install --package 04t1Q0000010KJeQAM -k unlockedclear -u scratch  -w 15
 ```
 
 ## Work on Feature and Release

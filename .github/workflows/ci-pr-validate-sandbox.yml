@@ -71,6 +71,22 @@ jobs:
         if: steps.filter.outputs.commons == 'true'
         run: "sfdx force:package:install --package $(sfdx force:package:version:list -p 0Ho1Q000000CaTISA0 -v devhub -o CreatedDate --concise | tail -1 | awk '{print $3}') -u ci -w 60 -k unlockedclear --apexcompile package"
 
+      # Update sfdx-project.json and README to use only latest package version
+      - name: "Update sfdx-project.json and README"
+        if: (steps.filter.outputs.commons == 'true' ||  steps.filter.outputs.core == 'true') && steps.packaging-updater.outputs.isSuccess
+        id: packaging-updater
+        uses: muenzpraeger/github-action-sfdx-packaging-updater@master
+
+      # Re-add changes back to source
+      - name: "Add new package version, updated sfdx-project.json and README to source"
+        if: steps.packaging-updater.outputs.isSuccess
+        uses: Automattic/action-commit-to-branch@master
+        with:
+          branch: ${{ github.head_ref }}
+          commit_message: "Added new package version ID"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # Run Apex tests in CI Sandbox
       - name: "Run Apex tests"
         continue-on-error: true
