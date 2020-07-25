@@ -1,3 +1,8 @@
+/**
+ * Responsibility: Account Domain Class.
+ * Mostly just delegates work to Mapped Functions or to Async Queueables
+ * Also contains change detection and filtering logic for various domain actions - prior to delegation
+ */
 public with sharing class Accounts extends fflib_SObjectDomain implements IAccounts {
   public static IAccounts newInstance(List<Account> recordList) {
     return (IAccounts) Application.Domain.newInstance(recordList);
