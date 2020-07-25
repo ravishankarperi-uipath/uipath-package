@@ -88,8 +88,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Run Apex tests in CI Sandbox
-      - name: "Run All Sandbox Apex tests"
-        run: "sfdx force:apex:test:run -u ci -c -r human -d ./tests/apex -w 120 --codecoverage"
+      - name: "Run Apex tests"
+        run: "sfdx force:apex:test:run -l RunLocalTests -u ci -c -r human -d ./tests/apex -w 120 --codecoverage"
       # Store test results in var
       #- name: "Store test results in var"
       #  run: echo ::set-env name=APEX_TEST_OUTPUT::$(cat ./tests/apex/test-result.txt)
@@ -97,7 +97,7 @@ jobs:
       #- name: "Write test results as PR comment"
       #  uses: unsplash/comment-on-pr@master
       #  env:
-      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #  with:
-      #   msg: "${{ env.APEX_TEST_OUTPUT }}"
-      #   check_for_duplicate_msg: false
+      #    msg: "${{ env.APEX_TEST_OUTPUT }}"
+      #    check_for_duplicate_msg: false
