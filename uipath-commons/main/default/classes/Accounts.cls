@@ -1,5 +1,5 @@
 /**
- * Responsibility: Account Domain Class.
+ * Responsibility: Account Domain Class
  * Mostly just delegates work to Mapped Functions or to Async Queueables
  * Also contains change detection and filtering logic for various domain actions - prior to delegation
  */
