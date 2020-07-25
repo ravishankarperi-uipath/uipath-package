@@ -2,3 +2,6 @@ engines:
   pmd:
     enabled: true
     config: config/appexRuleset.xml
+exclude_patterns:
+  - "**"
+  - "!uipath-commons/main/default/classes"
