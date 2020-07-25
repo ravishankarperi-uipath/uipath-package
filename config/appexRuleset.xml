@@ -79,12 +79,6 @@
          <property name="problemDepth" value="4" />
       </properties>
    </rule>
-   <rule ref="category/apex/design.xml/CognitiveComplexity">
-    <properties>
-        <property name="classReportLevel" value="50" />
-        <property name="methodReportLevel" value="15" />
-    </properties>
-   </rule>
 
    <!-- PERFORMANCE -->
    <rule
