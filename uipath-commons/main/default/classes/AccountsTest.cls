@@ -19,14 +19,10 @@ public class AccountsTest {
         .field
     );
   }
-  
+
   @IsTest
   private static void setDnBFieldsAfterInsertTest() {
-
-    Account account = new Account(
-      Name = 'Test',
-      Country__c = 'Romania'
-    );
+    Account account = new Account(Name = 'Test', Country__c = 'Romania');
     fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
     System.assertEquals('Romania', account.BillingCountry);
@@ -34,7 +30,6 @@ public class AccountsTest {
 
   @IsTest
   private static void setDnBFieldsAfterUpdateTest() {
-
     Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
     Account oldAccount = new Account(
       Id = accountId,

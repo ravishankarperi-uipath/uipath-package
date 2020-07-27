@@ -19,7 +19,9 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
     List<Account> accounts = (List<Account>) accountsLst;
     accounts = [
       SELECT
-        Id, Overwrite_Annual_Revenue__c, Overwrite_Legal_Entity_Name__c,
+        Id,
+        Overwrite_Annual_Revenue__c,
+        Overwrite_Legal_Entity_Name__c,
         Revenue_Source__c,
         AnnualRevenue,
         Legal__c,
