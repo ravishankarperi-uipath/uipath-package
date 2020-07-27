@@ -31,6 +31,7 @@ public class HasBillingInfoChanged implements SObjectPredicate {
                     break; // prevents the records from being added multiple times
                 }
               }
+        continue;
         }
         SObject oldRecord = existingRecords.get(recordId);
         for (Schema.SObjectField fieldToken : fieldTokens) {
