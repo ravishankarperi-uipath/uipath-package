@@ -171,6 +171,17 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
       );
   }
 
+  /**
+   * On Account Insert, verify BillingCountry and Billing_State_Text_D_B__c to fill up BillingState
+   */
+  private void deriveStateOnInsert() {
+    Collection.of(Records)
+      .mapSome(
+        Match.field(Account.Country__c).hasValue(),
+        new AccountSetSubsidiaryFunction(countrySubsidiaryMap)
+      );
+  }
+
   private void deriveSyncStatusForValidatedAccount() {
     SObjectPredicate haveStatusesChanged = new HasRecordChanged(
       new Set<SObjectField>{
@@ -220,6 +231,25 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     if (!changedAccounts.isEmpty()) {
       AccountTerritoryService.deriveTerritoryFields(changedAccounts);
     }
+  }
+
+  /** 
+  * Updates BillingState if Billing_State_Text_D_B__cis changed 
+  * or if Country is changed and is one of the following: United States, China, Australia, Brazil, Canada, United Kingdom, Ireland, India, Italy, Mexico 
+  */
+  private void deriveStateOnUpdate() {
+    SObjectPredicate hasTheBillingInfoChanged = new HasBillingInfoChanged(
+      new Set<SObjectField>{
+        Account.Billing_State_Text_D_B__c,
+        Account.BillingCountry
+      },
+      this.Records,
+      this.ExistingRecords
+    );
+
+    Collection.of(this.Records)
+      .filter(hasTheBillingInfoChanged)
+      .mapAll(new AccountSetStateFunction());
   }
 
   /**
