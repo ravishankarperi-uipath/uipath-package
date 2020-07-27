@@ -53,6 +53,41 @@ public class AccountsTest {
   }
 
   @IsTest
+  private static void testSetStateOnInsert() {
+    Account account = new Account(
+      Name = 'Test',
+      BillingCountry = 'United States',
+      Billing_State_Text_D_B__c = 'New York'
+    );
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals('New York', account.BillingState);
+  }
+
+  @IsTest
+  private static void testSetStateOnUpdate() {
+    Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
+    Account oldAccount = new Account(
+      Id = accountId,
+      Name = 'Test',
+      BillingCountry = 'United States'
+    );
+    Account updatedAccount = new Account(
+      Id = accountId,
+      Name = 'Test',
+      BillingCountry = 'United States',
+      Billing_State_Text_D_B__c = 'New York'
+    );
+    fflib_SObjectDomain.Test.Database.onUpdate(
+      new List<Account>{ updatedAccount },
+      new Map<Id, SObject>{ oldAccount.Id => oldAccount }
+    );
+
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals('New York', updatedAccount.BillingState);
+  }
+
+  @IsTest
   private static void copiesCountryToBillingCountryOnlyIfNotAlreadySet() {
     Account accountA = new Account(
       Name = 'Test',
