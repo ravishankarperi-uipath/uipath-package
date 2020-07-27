@@ -1,0 +1,133 @@
+# Unique name for this workflow
+name: Pull Request Validate Scratch
+
+# Definition when the workflow should run
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+#    paths:
+#      - uipath-commons/main/default/*/**
+#      - uipath-core/main/default/*/**
+
+# Jobs to be executed
+jobs:
+  formatting-and-linting:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code in the pull request
+      - name: "Checkout source code"
+        uses: actions/checkout@v2
+
+      # Cache node_modules to speed up the process
+      - name: Restore node_modules cache
+        id: cache-npm
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ env.cache-name }}-
+            npm-
+
+      # Install npm dependencies for Prettier and Jest
+      - name: "Install npm dependencies"
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm ci
+
+      # Prettier formatting
+      - name: "UiPath Commons : Code formatting verification with Prettier"
+        run: npm run prettier:verify:commons
+
+      #- name: "Lint Lightning Web Components"
+      # run: npm run lint:lwc
+      # Unit tests
+      #- name: "Unit test Lightning Web Components"
+      #  run: npm run test:unit
+
+  apex-analysis-pmd:
+    runs-on: ubuntu-latest
+    needs: formatting-and-linting
+
+    steps:
+      # Checkout the code in the pull request
+      - name: "Checkout source code"
+        uses: actions/checkout@v2
+
+      # PMD analysis
+      - uses: krukmat/setup-pmd@v0.4
+      - name: code-analysis-commons
+        run: pmd -d $GITHUB_WORKSPACE/uipath-commons/main/default/classes/ -R config/appexRuleset.xml -l apex -f text
+
+  scratch-org-test:
+    runs-on: ubuntu-latest
+    needs: formatting-and-linting
+    steps:
+      # This 3rdparty filter is used so that some steps can be run only on the relevant changed package
+      - uses: dorny/paths-filter@v2.2.0
+        id: filter
+        with:
+          filters: |
+            core:
+              - 'uipath-core/main/default/**/*'
+            commons:
+              - 'uipath-commons/main/default/**/*'
+
+      # Install Salesforce CLI
+      - name: Install Salesforce CLI
+        run: |
+          wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+          mkdir sfdx-cli
+          tar xJf sfdx-linux-amd64.tar.xz -C sfdx-cli --strip-components 1
+          ./sfdx-cli/install
+
+      # Checkout the code in the pull request
+      - name: "Checkout source code"
+        uses: actions/checkout@v2
+
+      # Store secret for dev hub
+      - name: "Populate auth file with DEVHUB_AUTH_URL secret"
+        shell: bash
+        run: "echo ${{ secrets.DEVHUB_AUTH_URL}} > ./DEVHUB_AUTH_URL.txt"
+
+      # Authenticate dev hub
+      - name: "Authenticate Dev Hub"
+        run: "sfdx force:auth:sfdxurl:store -f ./DEVHUB_AUTH_URL.txt -a devhub -d"
+
+      # Create scratch org
+      - name: "Create scratch org"
+        run: "sfdx force:org:create -f config/project-scratch-def.json -a scratch-org -s -d 1"
+
+      # Wait for package replication
+      - name: "Wait for 10 secs for Feature activation"
+        uses: maddox/actions/sleep@master
+        with:
+          args: "10"
+
+      # Install DnBOptimizer
+      - name: " Install DnBOptimizer"
+        run: "sfdx force:package:install --package 04t1I000003FJbZQAW -u scratch-org --noprompt -w 15"
+
+      # Deploy source to scratch org
+      - name: "Push source to scratch org"
+        run: "sfdx force:source:push"
+
+      # Assign permissionset
+      - name: "Assign permissionset to default user"
+        run: "sfdx force:user:permset:assign -n UiPath_Admin_Core"
+
+      # Import  data
+      #- name: "Import data"
+      #  run: "sfdx force:data:tree:import -p ./data/sample-data-plan.json"
+
+      # Deploy any Overriides with Old metadata format
+      #- name: "Deploy Overrides"
+      # run: "sfdx force:mdapi:deploy --deploydir mdapiDeploy/unpackaged -w 5"
+
+      # Run Apex tests in scratch org
+      - name: "Run Apex tests"
+        run: "sfdx force:apex:test:run -c -r human -d ./tests/apex -w 20"
+
+      # Housekeeping
+      - name: "Delete scratch org"
+        if: always()
+        run: "sfdx force:org:delete -p -u scratch-org"

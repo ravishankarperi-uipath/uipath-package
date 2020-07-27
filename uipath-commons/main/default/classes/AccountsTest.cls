@@ -20,7 +20,6 @@ public class AccountsTest {
     );
   }
 
-  @IsTest
   private static void setDnBFieldsAfterInsertTest() {
     Account account = new Account(Name = 'Test', Country__c = 'Romania');
     fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });

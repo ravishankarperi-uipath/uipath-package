@@ -5,49 +5,69 @@
 - Your local machine is setup with all necessary tooling like VS Code(or other IDE), Any IDE extensions or plugins, Git, NPM, SFDX CLI
 - You have the uipath packaging repository cloned locally
 
-## Steps
+## For Mac
 
-1. Authenticate to Production DevHub if you haven't already
+Authenticate to Production DevHub if you haven't already
 
-   ```shell
-   sfdx force:auth:web:login -d -a DevHub
-   ```
+```shell
+sfdx force:auth:web:login -d -a DevHub
+```
 
-2. Create a scratch org:
+Run Scratch org create script (only on Mac)
 
-   ```shell
-   sfdx force:org:create -s -f config/project-scratch-def.json --durationdays 7 --setalias scratch -v DevHub
-   ```
+```bash
+./scripts/scripts/createAndPrepareScratch.sh
+```
 
-3. Install packages (get list of Ids from sfdx-project.json and run one by one)
+## For Windows
 
-   - uipath-core
+Authenticate to Production DevHub if you haven't already
 
-   ```shell
-    sfdx force:package:install --package 04t4K000000CqWGQA0 -k test1234 -u scratch
-   ```
+```shell
+sfdx force:auth:web:login -d -a DevHub
+```
 
-   - uipath-commons
+### Create a scratch org:
 
-   ```shell
-   sfdx force:package:install --package 04t4K000001AInuQAG -k test1234 -u scratch
-   ```
+```bash
+sfdx force:org:create -s -f config/project-scratch-def.json --durationdays 30 --setalias scratch -v DevHub
+```
 
-4. Open scratch org
+### Install packages using the 04t ids
 
-   ```
-   sfdx force:org:open
-   ```
+#### Note:_The 04t Ids for the unlocked packages in this readme are automatically maintained by the CI pipeline._
 
-5. Create a new feature branch
-6. Make changes and pull down locally
-7. Run all Local package tests
-8. Commit changes into Git, Push and raise Pull Request
-9. wait for CI job to run all package tests
-10. Get approver to approve PR
-11. Merge PR
-12. CI job creates new build version and installs to SIT
-    (CI job also runs all tests in Org to see if any non-package tests are broken)
-13. RM installs package to UAT when appropriate
-14. When UAT passes. RM creates a Release version of package(s)
-15. RM installs package in Production
+#### Install packages:
+
+- uipath-core
+
+```bash
+ sfdx force:package:install --package 04t1Q0000010KHxQAM -k unlockedclear -u scratch -w 15
+```
+
+- dnbOptimizer
+
+```bash
+sfdx force:package:install --package 04t1I000003FJbZQAW -u scratch --noprompt  -w 15
+```
+
+- uipath-commons
+
+```bash
+sfdx force:package:install --package 04t1Q0000010KJeQAM -k unlockedclear -u scratch  -w 15
+```
+
+## Work on Feature and Release
+
+1. Create a new feature branch
+2. Make changes and pull down locally
+3. Run all Local package tests
+4. Commit changes into Git, Push and raise Pull Request
+5. wait for CI job to run all package tests
+6. Get approver to approve PR
+7. Merge PR
+8. CI job creates new build version and installs to SIT
+   (CI job also runs all tests in Org to see if any non-package tests are broken)
+9. RM installs package to UAT when appropriate
+10. When UAT passes. RM creates a Release version of package(s)
+11. RM installs package in Production
