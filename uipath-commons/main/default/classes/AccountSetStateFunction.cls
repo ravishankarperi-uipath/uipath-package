@@ -7,7 +7,7 @@ public class AccountSetStateFunction implements SObjectToSObjectFunction {
     }
   
     public SObject apply(Account acc) {
-      acc.BillingState = Billing_State_Text_D_B__c;
+      acc.BillingState = acc.Billing_State_Text_D_B__c;
       return acc;
     }
   

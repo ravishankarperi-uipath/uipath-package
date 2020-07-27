@@ -40,6 +40,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     convertAcademicAccountOnUpdate();
     deriveDataStewardUserOnUpdate();
     deriveSyncStatusForValidatedAccount();
+    deriveStateOnUpdate();
 
     //Leave this as the last method in the execution of onBeforeUpdate
     callSyncStatusIntegrationProcess();
@@ -178,7 +179,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     Collection.of(Records)
       .mapSome(
         Match.field(Account.Country__c).hasValue(),
-        new AccountSetSubsidiaryFunction(countrySubsidiaryMap)
+        new AccountSetStateFunction()
       );
   }
 

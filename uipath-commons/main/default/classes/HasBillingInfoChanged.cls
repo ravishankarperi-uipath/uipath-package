@@ -10,7 +10,7 @@ public class HasBillingInfoChanged implements SObjectPredicate {
         Id recordId = (Id) newRecord.get('Id');
         if (existingRecords == null || !existingRecords.containsKey(recordId)) {
             for (Schema.SObjectField fieldToken : fieldTokens) {
-                if (fieldToken == 'BillingCountry'){
+                if (fieldToken == Account.BillingCountry){
                     if(newRecord.get(fieldToken) == 'United States' ||
                     newRecord.get(fieldToken) == 'China' ||
                     newRecord.get(fieldToken) == 'Australia' ||
@@ -25,17 +25,16 @@ public class HasBillingInfoChanged implements SObjectPredicate {
                       break; // prevents the records from being added multiple times
                     }
                 } 
-                else if (fieldToken == Billing_State_Text_D_B__c){
+                else if (fieldToken == Account.Billing_State_Text_D_B__c){
                     if (newRecord.get(fieldToken) != null)
                     changedRecords.put(newRecord.Id, newRecord);
                     break; // prevents the records from being added multiple times
                 }
               }
-            continue;
         }
         SObject oldRecord = existingRecords.get(recordId);
         for (Schema.SObjectField fieldToken : fieldTokens) {
-          if (fieldToken == 'BillingCountry' && oldRecord.get(fieldToken) != newRecord.get(fieldToken)){
+          if (fieldToken == Account.BillingCountry && oldRecord.get(fieldToken) != newRecord.get(fieldToken)){
               if(newRecord.get(fieldToken) == 'United States' ||
               newRecord.get(fieldToken) == 'China' ||
               newRecord.get(fieldToken) == 'Australia' ||
