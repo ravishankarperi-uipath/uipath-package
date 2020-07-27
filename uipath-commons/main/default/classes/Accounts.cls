@@ -66,6 +66,11 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     setContactOwnerToAccountOwner(existingRecords);
     setGAMEmailOnGlobalAccounts(existingRecords);
     setAnnualRevenue();
+    zinfiSyncAccountOnUpdate(existingRecords);
+  }
+
+  public override void onAfterDelete() {
+    zinfiSyncAccountOnDelete();
   }
 
   /**
@@ -464,6 +469,31 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
       AbstractQueueable.enqueue(
         new AccountSetGAMEmailQueueable(changedAccounts, existingRecords)
       );
+    }
+  }
+
+  /**
+   * TODO refactor code into Queueable
+   * Sync data with Zinfi system
+   */
+  private void zinfiSyncAccountOnUpdate(Map<Id, SObject> existingRecords) {
+    ZinfiConfiguration__c zinfiSetting = ZinfiConfiguration__c.getInstance();
+    if (zinfiSetting != null && zinfiSetting.IsSyncAccount__c) {
+      ZinfiSyncContactWithAccount.sendContactFutureCall(
+        existingRecords.keySet()
+      );
+    }
+  }
+
+  /**
+   * TODO refactor code into Queueable
+   * Sync data with Zinfi system
+   */
+  private void zinfiSyncAccountOnDelete() {
+    ZinfiConfiguration__c zinfiSetting = ZinfiConfiguration__c.getInstance();
+    if (zinfiSetting != null && zinfiSetting.IsSyncAccount__c) {
+      Set<Id> accIds = (new Map<Id, SObject>(Records)).keySet();
+      ZinfiSyncOnline.sendAccountFutureCall(accIds);
     }
   }
 
