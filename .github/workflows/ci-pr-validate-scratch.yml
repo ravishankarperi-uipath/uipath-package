@@ -5,9 +5,9 @@ name: Pull Request Validate Scratch
 on:
   pull_request:
     types: [opened, edited, synchronize, reopened]
-    paths:
-      - uipath-commons/main/default/*/**
-      - uipath-core/main/default/*/**
+#    paths:
+#      - uipath-commons/main/default/*/**
+#      - uipath-core/main/default/*/**
 
 # Jobs to be executed
 jobs:
@@ -43,6 +43,20 @@ jobs:
       # Unit tests
       #- name: "Unit test Lightning Web Components"
       #  run: npm run test:unit
+
+  apex-analysis-pmd:
+    runs-on: ubuntu-latest
+    needs: formatting-and-linting
+
+    steps:
+      # Checkout the code in the pull request
+      - name: "Checkout source code"
+        uses: actions/checkout@v2
+
+      # PMD analysis
+      - uses: krukmat/setup-pmd@v0.4
+      - name: code-analysis-commons
+        run: pmd -d $GITHUB_WORKSPACE/uipath-commons/main/default/classes/ -R config/appexRuleset.xml -l apex -f text
 
   scratch-org-test:
     runs-on: ubuntu-latest
