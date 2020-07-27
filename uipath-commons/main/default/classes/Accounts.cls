@@ -130,7 +130,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
    * start Queueable to check if AnnualRevenue & DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c have the same values
    */
   private void setDnBFields() {
-    SObjectPredicate hasCriteriaBeenMet = new HasMetDnBQueueableCriteria(
+    SObjectPredicate hasCriteriaBeenMet = new AccountDnBSyncQueueable.HasMetDnBQueueableCriteria(
       this.Records
     );
 
