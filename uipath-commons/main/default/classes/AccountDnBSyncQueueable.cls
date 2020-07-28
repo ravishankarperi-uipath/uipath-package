@@ -9,7 +9,6 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
 
     public HasMetDnBQueueableCriteria(List<SObject> records) {
       for (SObject newRecord : Records) {
-        Id recordId = (Id) newRecord.get('Id');
         if (
           newRecord.get(Account.AnnualRevenue) == null &&
           newRecord.get(Account.DNBoptimizer__DnBCompanyRecord__c) != null &&

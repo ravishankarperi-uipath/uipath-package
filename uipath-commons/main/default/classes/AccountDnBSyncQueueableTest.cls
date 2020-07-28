@@ -5,13 +5,13 @@
 private class AccountDnBSyncQueueableTest {
   @isTest
   private static void setDnBSyncQueueableTest() {
-    DNBoptimizer__DnBCompanyRecord__c DnBCompanyRecord = new DNBoptimizer__DnBCompanyRecord__c(
+    DNBoptimizer__DnBCompanyRecord__c dnbCompanyRecord = new DNBoptimizer__DnBCompanyRecord__c(
       DNBoptimizer__BusinessName__c = 'DnBTest1',
       Name = '1234',
       DNBoptimizer__SalesVolumeUSDollars__c = 150000000.00
     );
 
-    insert DnBCompanyRecord;
+    insert dnbCompanyRecord;
 
     Account account1 = new Account(
       Name = 'Test1',
@@ -19,7 +19,7 @@ private class AccountDnBSyncQueueableTest {
       Industry = 'Apparel',
       Revenue_Source__c = null,
       Legal__c = null,
-      DNBoptimizer__DnBCompanyRecord__c = DnBCompanyRecord.Id,
+      DNBoptimizer__DnBCompanyRecord__c = dnbCompanyRecord.Id,
       AnnualRevenue = null,
       Overwrite_Annual_Revenue__c = false
     );
