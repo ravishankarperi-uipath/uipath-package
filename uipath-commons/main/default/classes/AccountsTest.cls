@@ -21,23 +21,33 @@ public class AccountsTest {
   }
 
   @IsTest
-  private static void setAnnualRevenueOnInsertTest() {
-    Accounts accounts = new Accounts(
-      new List<Account>{
-        new Account(Name = 'Test', Country__c = 'China', State__c = null)
-      }
+  private static void setDnBFieldsAfterInsertTest() {
+    Account account = new Account(Name = 'Test', Country__c = 'Romania');
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals('Romania', account.BillingCountry);
+  }
+
+  @IsTest
+  private static void setDnBFieldsAfterUpdateTest() {
+    Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
+    Account oldAccount = new Account(
+      Id = accountId,
+      Name = 'Test',
+      Country__c = 'Romania'
     );
-    accounts.onValidate();
-    System.assertEquals(1, fflib_SObjectDomain.Errors.getAll().size());
-    System.assertEquals(
-      'State is required if Country is China',
-      fflib_SObjectDomain.Errors.getAll()[0].message
+    Account updatedAccount = new Account(
+      Id = accountId,
+      Name = 'Test',
+      Country__c = 'Bulgaria'
     );
-    System.assertEquals(
-      Account.State__c,
-      ((fflib_SObjectDomain.FieldError) fflib_SObjectDomain.Errors.getAll()[0])
-        .field
+    fflib_SObjectDomain.Test.Database.onUpdate(
+      new List<Account>{ updatedAccount },
+      new Map<Id, SObject>{ oldAccount.Id => oldAccount }
     );
+
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals('Bulgaria', updatedAccount.Country__c);
   }
 
   @IsTest

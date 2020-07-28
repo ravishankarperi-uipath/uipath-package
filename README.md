@@ -1,6 +1,16 @@
-# UiPath Salesforce Unlocked Package
+# UiPath Salesforce Unlocked Packages
 
-## Prerequisites:
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=uipathdevops_uipath-package&token=c036e8931663806b31c430623309298e88974a9a)](https://sonarcloud.io/dashboard?id=uipathdevops_uipath-package)
+
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=uipathdevops_uipath-package&metric=code_smells&token=c036e8931663806b31c430623309298e88974a9a)](https://sonarcloud.io/dashboard?id=uipathdevops_uipath-package)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=uipathdevops_uipath-package&metric=ncloc&token=c036e8931663806b31c430623309298e88974a9a)](https://sonarcloud.io/dashboard?id=uipathdevops_uipath-package)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=uipathdevops_uipath-package&metric=duplicated_lines_density&token=c036e8931663806b31c430623309298e88974a9a)](https://sonarcloud.io/dashboard?id=uipathdevops_uipath-package)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=uipathdevops_uipath-package&metric=reliability_rating&token=c036e8931663806b31c430623309298e88974a9a)](https://sonarcloud.io/dashboard?id=uipathdevops_uipath-package)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=uipathdevops_uipath-package&metric=security_rating&token=c036e8931663806b31c430623309298e88974a9a)](https://sonarcloud.io/dashboard?id=uipathdevops_uipath-package)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=uipathdevops_uipath-package&metric=sqale_index&token=c036e8931663806b31c430623309298e88974a9a)](https://sonarcloud.io/dashboard?id=uipathdevops_uipath-package)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=uipathdevops_uipath-package&metric=vulnerabilities&token=c036e8931663806b31c430623309298e88974a9a)](https://sonarcloud.io/dashboard?id=uipathdevops_uipath-package)
+
+## Setup Prerequisites:
 
 - Your local machine is setup with all necessary tooling like VS Code(or other IDE), Any IDE extensions or plugins, Git, NPM, SFDX CLI
 - You have the uipath packaging repository cloned locally
