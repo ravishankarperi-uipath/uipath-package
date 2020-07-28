@@ -69,7 +69,7 @@ public class AccountsTest {
   private static void testSetStateOnInsert() {
     Account account = new Account(
       Name = 'Test',
-      BillingCountry = USA,
+      BillingCountryCode = 'US',
       Billing_State_Text_D_B__c = NY
     );
     fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
@@ -83,12 +83,12 @@ public class AccountsTest {
     Account oldAccount = new Account(
       Id = accountId,
       Name = 'Test',
-      BillingCountry = USA
+      BillingCountryCode = 'US'
     );
     Account updatedAccount = new Account(
       Id = accountId,
       Name = 'Test',
-      BillingCountry = USA,
+      BillingCountryCode = 'US',
       Billing_State_Text_D_B__c = NY
     );
     fflib_SObjectDomain.Test.Database.onUpdate(
