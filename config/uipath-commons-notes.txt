@@ -1,0 +1,5 @@
+# After installing uipath-commons package into PROD
+
+- disable old account triggers except
+- disable account process builders
+- populate ZinfiConfiguration custom setting (use WebHook, WebHookContact, WebToken, WebhookEndPoint CustomLabels)

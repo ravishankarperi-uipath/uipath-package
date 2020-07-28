@@ -10,6 +10,7 @@ on:
 jobs:
   validate-package-against-sandbox:
     runs-on: ubuntu-latest
+
     steps:
       # This 3rdparty filter is used so that some steps can be run only on the relevant changed package
       - uses: dorny/paths-filter@v2.2.0
@@ -20,6 +21,11 @@ jobs:
               - 'uipath-core/main/default/**/*'
             commons:
               - 'uipath-commons/main/default/**/*'
+
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.4.1
+        with:
+          access_token: ${{ github.token }}
 
       # Install Salesforce CLI
       - name: Install Salesforce CLI
