@@ -5,49 +5,27 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
    */
 
   public virtual class HasMetDnBQueueableCriteria implements SObjectPredicate {
-    List<SObject> validatedAccounts = new List<SObject>();
+    Map<Id, SObject> validatedAccounts = new Map<Id, SObject>();
   
     public HasMetDnBQueueableCriteria(List<SObject> records) {
-      validatedAccounts.addAll(
-        Collection.of(records)
-          .filter(
-            Match.field(Account.AnnualRevenue)
-              .equals(null)
-              .also(Account.DNBoptimizer__DnBCompanyRecord__c)
-              .hasValue()
-              .also(Account.Overwrite_Annual_Revenue__c)
-              .equals(false)
-          )
-          .asList()
-      );
-  
-      validatedAccounts.addAll(
-        Collection.of(records)
-          .filter(
-            Match.field(Account.Revenue_Source__c)
-              .equals(null)
-              .also(Account.DNBoptimizer__DnBCompanyRecord__c)
-              .hasValue()
-          )
-          .asList()
-      );
-  
-      validatedAccounts.addAll(
-        Collection.of(records)
-          .filter(
-            Match.field(Account.Legal__c)
-              .equals(null)
-              .also(Account.DNBoptimizer__DnBCompanyRecord__c)
-              .hasValue()
-              .also(Account.Overwrite_Legal_Entity_Name__c)
-              .equals(false)
-          )
-          .asList()
-      );
+
+      for (SObject newRecord : Records) {
+
+        Id recordId = (Id) newRecord.get('Id');
+        if (newRecord.AnnualRevenue == null && newRecord.DNBoptimizer__DnBCompanyRecord__c != null && newRecord.Overwrite_Annual_Revenue__c == false){
+          validatedAccounts.put(newRecord.Id, newRecord);
+        }
+        else if (newRecord.Revenue_Source__c == null && newRecord.DNBoptimizer__DnBCompanyRecord__c != null){
+          validatedAccounts.put(newRecord.Id, newRecord);
+        }
+        else if (newRecord.Legal__c == null && newRecord.DNBoptimizer__DnBCompanyRecord__c != null && newRecord.Overwrite_Legal_Entity_Name__c == false){
+          validatedAccounts.put(newRecord.Id, newRecord);
+        }
+      }
     }
   
     public Boolean apply(SObject record) {
-      return !validatedAccounts.isEmpty();
+      return validatedAccounts.containsKey(record.Id);
     }
   }  
 
