@@ -6,28 +6,35 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
 
   public virtual class HasMetDnBQueueableCriteria implements SObjectPredicate {
     Map<Id, SObject> validatedAccounts = new Map<Id, SObject>();
-  
+
     public HasMetDnBQueueableCriteria(List<SObject> records) {
-
       for (SObject newRecord : Records) {
-
         Id recordId = (Id) newRecord.get('Id');
-        if (newRecord.get(Account.AnnualRevenue) == null && newRecord.get(Account.DNBoptimizer__DnBCompanyRecord__c) != null && newRecord.get(Account.Overwrite_Annual_Revenue__c) == false){
+        if (
+          newRecord.get(Account.AnnualRevenue) == null &&
+          newRecord.get(Account.DNBoptimizer__DnBCompanyRecord__c) != null &&
+          newRecord.get(Account.Overwrite_Annual_Revenue__c) == false
+        ) {
           validatedAccounts.put(newRecord.Id, newRecord);
-        }
-        else if (newRecord.get(Account.Revenue_Source__c) == null && newRecord.get(Account.DNBoptimizer__DnBCompanyRecord__c) != null){
+        } else if (
+          newRecord.get(Account.Revenue_Source__c) == null &&
+          newRecord.get(Account.DNBoptimizer__DnBCompanyRecord__c) != null
+        ) {
           validatedAccounts.put(newRecord.Id, newRecord);
-        }
-        else if (newRecord.get(Account.Legal__c) == null && newRecord.get(Account.DNBoptimizer__DnBCompanyRecord__c) != null && newRecord.get(Account.Overwrite_Legal_Entity_Name__c) == false){
+        } else if (
+          newRecord.get(Account.Legal__c) == null &&
+          newRecord.get(Account.DNBoptimizer__DnBCompanyRecord__c) != null &&
+          newRecord.get(Account.Overwrite_Legal_Entity_Name__c) == false
+        ) {
           validatedAccounts.put(newRecord.Id, newRecord);
         }
       }
     }
-  
+
     public Boolean apply(SObject record) {
       return validatedAccounts.containsKey(record.Id);
     }
-  }  
+  }
 
   private final List<SObject> accountsLst;
 
