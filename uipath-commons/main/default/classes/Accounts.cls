@@ -29,7 +29,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     deriveChannelTierOnInsert();
     deriveDataStewardUserOnInsert();
     deriveLegalEntityNameOnInsert();
-    deriveState();
+    deriveStateOnInsert();
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
@@ -41,7 +41,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     convertAcademicAccountOnUpdate();
     deriveDataStewardUserOnUpdate();
     deriveSyncStatusForValidatedAccount();
-    deriveState();
+    deriveStateOnUpdate();
 
     //Leave this as the last method in the execution of onBeforeUpdate
     callSyncStatusIntegrationProcess();
@@ -224,12 +224,29 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     }
   }
 
-  /** 
-  * Updates BillingState if Billing_State_Text_D_B__cis changed 
-  * or if Country is changed and is one of the following: United States, China, Australia, Brazil, Canada, United Kingdom, Ireland, India, Italy, Mexico 
-  */
-  private void deriveState() {
-    SObjectPredicate hasTheBillingInfoChanged = new HasBillingInfoChanged(
+  /**
+   * Inserts BillingState if Billing_State_Text_D_B__cis changed
+   * or if Country is changed and is one of the following: United States, China, Australia, Brazil, Canada, United Kingdom, Ireland, India, Italy, Mexico
+   */
+  private void deriveStateOnInsert() {
+    Collection.of(Records)
+      .mapSome(
+        Match.field(Account.BillingState)
+          .equals(null)
+          .also(Account.Billing_State_Text_D_B__c)
+          .hasValue()
+          .also(Account.BillingCountry)
+          .hasValue(),
+        new AccountSetStateFunction()
+      );
+  }
+
+  /**
+   * Updates BillingState if Billing_State_Text_D_B__cis changed
+   * or if Country is changed and is one of the following: United States, China, Australia, Brazil, Canada, United Kingdom, Ireland, India, Italy, Mexico
+   */
+  private void deriveStateOnUpdate() {
+    SObjectPredicate hasTheRecordChanged = new HasRecordChanged(
       new Set<SObjectField>{
         Account.Billing_State_Text_D_B__c,
         Account.BillingCountry
@@ -239,7 +256,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     );
 
     Collection.of(this.Records)
-      .filter(hasTheBillingInfoChanged)
+      .filter(hasTheRecordChanged)
       .mapAll(new AccountSetStateFunction());
   }
 
