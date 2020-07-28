@@ -20,15 +20,15 @@ sfdx force:org:delete -p -v $devHub -u $scratchOrgName;
 sfdx force:org:create -f config/project-scratch-def.json -d 7 -s -a $scratchOrgName -v $devHub
 
 echo Installing uipath-core package
-coreLatestVersion=$(sfdx force:package:version:list -p 0Ho4K000000PB0iSAG -v $devHub -o CreatedDate --concise | tail -1 | awk '{print $3}')
-sfdx force:package:install --package $coreLatestVersion -u $scratchOrgName -w 10 -k unlockedclear
+coreLatestVersion=$(sfdx force:package:version:list -p 0Ho1Q000000CaTDSA0 -v $devHub -o CreatedDate --concise | tail -1 | awk '{print $3}')
+sfdx force:package:install --package $coreLatestVersion -u $scratchOrgName -w 10 -k unlockedclear --noprompt
 
 echo Installing dnbOptimizer package
-sfdx force:package:install --package 04t1I000003FJbZQAW -u scratch1 --noprompt
+sfdx force:package:install --package 04t1I000003FJbZQAW -u scratch1 --noprompt -w 10
 
 echo Installing uipath-commons package
-commonsLatestVersion=$(sfdx force:package:version:list -p 0Ho4K000000PB0nSAG -v $devHub -o CreatedDate --concise | tail -1 | awk '{print $3}')
-sfdx force:package:install --package $commonsLatestVersion -u $scratchOrgName -w 15 -k unlockedclear
+commonsLatestVersion=$(sfdx force:package:version:list -p 0Ho1Q000000CaTISA0 -v $devHub -o CreatedDate --concise | tail -1 | awk '{print $3}')
+sfdx force:package:install --package $commonsLatestVersion -u $scratchOrgName -w 15 -k unlockedclear --noprompt
 
 echo Reseting tracking
 sfdx force:source:tracking:reset

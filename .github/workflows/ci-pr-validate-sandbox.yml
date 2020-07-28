@@ -4,11 +4,7 @@ name: Pull Request Validate Sandbox
 # Definition when the workflow should run
 on:
   pull_request:
-    types:
-      [opened, edited, synchronize, reopened]
-      # *******DISABLED TEMPORARILY*******
-    branches-ignore:
-      - "**"
+    types: [opened, edited, synchronize, reopened]
 
 # Jobs to be executed
 jobs:
@@ -96,10 +92,9 @@ jobs:
           commit_message: "Added new package version ID"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       # Run Apex tests in CI Sandbox
-      - name: "Run Apex tests"
-        run: "sfdx force:apex:test:run -l RunLocalTests -u ci -c -r human -d ./tests/apex -w 120 --codecoverage"
+      #- name: "Run Apex tests"
+      #  run: "sfdx force:apex:test:run -l RunLocalTests -u ci -c -r human -d ./tests/apex -w 120 --codecoverage"
       # Store test results in var
       #- name: "Store test results in var"
       #  run: echo ::set-env name=APEX_TEST_OUTPUT::$(cat ./tests/apex/test-result.txt)

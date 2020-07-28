@@ -49,32 +49,32 @@ jobs:
       #- name: "Unit test Lightning Web Components"
       #  run: npm run test:unit
 
-  sonarcloud:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # sonarcloud:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         # Disabling shallow clone is recommended for improving relevancy of reporting
+  #         fetch-depth: 0
+  #     - name: SonarCloud Scan
+  #       uses: sonarsource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  apex-analysis-pmd:
-    runs-on: ubuntu-latest
-    needs: formatting-and-linting
+  # apex-analysis-pmd:
+  #   runs-on: ubuntu-latest
+  #   needs: formatting-and-linting
 
-    steps:
-      # Checkout the code in the pull request
-      - name: "Checkout source code"
-        uses: actions/checkout@v2
+  #   steps:
+  #     # Checkout the code in the pull request
+  #     - name: "Checkout source code"
+  #       uses: actions/checkout@v2
 
-      # PMD analysis
-      - uses: krukmat/setup-pmd@v0.4
-      - name: code-analysis-commons
-        run: pmd -d $GITHUB_WORKSPACE/uipath-commons/main/default/classes/ -R config/appexRuleset.xml -l apex -f text
+  #     # PMD analysis
+  #     - uses: krukmat/setup-pmd@v0.4
+  #     - name: code-analysis-commons
+  #       run: pmd -d $GITHUB_WORKSPACE/uipath-commons/main/default/classes/ -R config/appexRuleset.xml -l apex -f text
 
   scratch-org-test:
     runs-on: ubuntu-latest
