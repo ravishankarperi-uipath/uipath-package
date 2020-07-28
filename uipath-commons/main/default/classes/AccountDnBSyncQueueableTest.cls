@@ -2,29 +2,31 @@
  * TODO REWRITE with fflib Mocking
  */
 @isTest
-private class AccountSetAnnualRevenueQueueableTest {
+private class AccountDnBSyncQueueableTest {
   @isTest
-  private static void setAnnualRevenueQueueableTest() {
-    DNBoptimizer__DnBCompanyRecord__c DnBCompanyRecord = new DNBoptimizer__DnBCompanyRecord__c(
+  private static void setDnBSyncQueueableTest() {
+    DNBoptimizer__DnBCompanyRecord__c dnbCompanyRecord = new DNBoptimizer__DnBCompanyRecord__c(
       DNBoptimizer__BusinessName__c = 'DnBTest1',
       Name = '1234',
       DNBoptimizer__SalesVolumeUSDollars__c = 150000000.00
     );
 
-    insert DnBCompanyRecord;
+    insert dnbCompanyRecord;
 
     Account account1 = new Account(
       Name = 'Test1',
       BillingCountry = 'China',
       Industry = 'Apparel',
-      DNBoptimizer__DnBCompanyRecord__c = DnBCompanyRecord.Id,
+      Revenue_Source__c = null,
+      Legal__c = null,
+      DNBoptimizer__DnBCompanyRecord__c = dnbCompanyRecord.Id,
       AnnualRevenue = null,
       Overwrite_Annual_Revenue__c = false
     );
     insert account1;
 
-    AccountSetAnnualRevenueQueueable accSetAnnualRevenueQueueable = new AccountSetAnnualRevenueQueueable(
-      new List<Account>{ account1 }
+    AccountDnBSyncQueueable accSetAnnualRevenueQueueable = new AccountDnBSyncQueueable(
+      new List<SObject>{ account1 }
     );
     accSetAnnualRevenueQueueable.execute(null);
 
