@@ -1,5 +1,8 @@
 @IsTest
 public class AccountsTest {
+  private String usa = 'United States';
+  private String ny = 'New York';
+
   @IsTest
   private static void validatesStateRequiredForChinaAustralia() {
     Accounts accounts = new Accounts(
@@ -66,12 +69,12 @@ public class AccountsTest {
   private static void testSetStateOnInsert() {
     Account account = new Account(
       Name = 'Test',
-      BillingCountry = 'United States',
-      Billing_State_Text_D_B__c = 'New York'
+      BillingCountry = usa,
+      Billing_State_Text_D_B__c = ny
     );
     fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
-    System.assertEquals('New York', account.BillingState);
+    System.assertEquals(ny, account.BillingState);
   }
 
   @IsTest
@@ -80,13 +83,13 @@ public class AccountsTest {
     Account oldAccount = new Account(
       Id = accountId,
       Name = 'Test',
-      BillingCountry = 'United States'
+      BillingCountry = usa
     );
     Account updatedAccount = new Account(
       Id = accountId,
       Name = 'Test',
-      BillingCountry = 'United States',
-      Billing_State_Text_D_B__c = 'New York'
+      BillingCountry = usa,
+      Billing_State_Text_D_B__c = ny
     );
     fflib_SObjectDomain.Test.Database.onUpdate(
       new List<Account>{ updatedAccount },
@@ -94,7 +97,7 @@ public class AccountsTest {
     );
 
     fflib_SObjectDomain.triggerHandler(Accounts.class);
-    System.assertEquals('New York', updatedAccount.BillingState);
+    System.assertEquals(ny, updatedAccount.BillingState);
   }
 
   @IsTest
@@ -282,16 +285,16 @@ public class AccountsTest {
       Name = 'Test1',
       Geo__c = 'AMER',
       Region__c = 'North',
-      Country__c = 'United States',
-      BillingCountry = 'United States',
+      Country__c = usa,
+      BillingCountry = usa,
       NumberOfEmployees = 5000,
       AnnualRevenue = 500000000.00
     );
     Account oldAccount1 = new Account(
       Id = account1.Id,
       Name = 'Test1',
-      Country__c = 'United States',
-      BillingCountry = 'United States'
+      Country__c = usa,
+      BillingCountry = usa
     );
 
     Account account2 = new Account(
@@ -299,16 +302,16 @@ public class AccountsTest {
       Name = 'Test2',
       Geo__c = 'AMER',
       Region__c = 'North',
-      Country__c = 'United States',
-      BillingCountry = 'United States',
+      Country__c = usa,
+      BillingCountry = usa,
       NumberOfEmployees = 3000,
       AnnualRevenue = 1500000000.00
     );
     Account oldAccount2 = new Account(
       Id = account2.Id,
       Name = 'Test2',
-      Country__c = 'United States',
-      BillingCountry = 'United States'
+      Country__c = usa,
+      BillingCountry = usa
     );
 
     fflib_SObjectDomain.Test.Database.onUpdate(
