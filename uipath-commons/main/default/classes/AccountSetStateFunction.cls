@@ -7,16 +7,17 @@ public class AccountSetStateFunction implements SObjectToSObjectFunction {
 
   public SObject apply(Account acc) {
     if (
-      acc.BillingCountry == 'United States' ||
-      acc.BillingCountry == 'China' ||
-      acc.BillingCountry == 'Australia' ||
-      acc.BillingCountry == 'Brazil' ||
-      acc.BillingCountry == 'Canada' ||
-      acc.BillingCountry == 'United Kingdom' ||
-      acc.BillingCountry == 'Ireland' ||
-      acc.BillingCountry == 'India' ||
-      acc.BillingCountry == 'Italy' ||
-      acc.BillingCountry == 'Mexico'
+      (acc.BillingCountryCode == 'US' ||
+      acc.BillingCountryCode == 'CN' ||
+      acc.BillingCountryCode == 'AU' ||
+      acc.BillingCountryCode == 'BR' ||
+      acc.BillingCountryCode == 'CA' ||
+      acc.BillingCountryCode == 'GB' ||
+      acc.BillingCountryCode == 'IE' ||
+      acc.BillingCountryCode == 'IN' ||
+      acc.BillingCountryCode == 'IT' ||
+      acc.BillingCountryCode == 'MX') &&
+      String.isNotBlank(acc.Billing_State_Text_D_B__c)
     ) {
       acc.BillingState = acc.Billing_State_Text_D_B__c;
     }

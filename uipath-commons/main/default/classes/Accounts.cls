@@ -242,21 +242,17 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   }
 
   /**
-   * Updates BillingState if Billing_State_Text_D_B__cis changed
-   * or if Country is changed and is one of the following: United States, China, Australia, Brazil, Canada, United Kingdom, Ireland, India, Italy, Mexico
+   * Updates BillingState if Billing_State_Text_D_B__c is changed
    */
   private void deriveStateOnUpdate() {
-    SObjectPredicate hasTheRecordChanged = new HasRecordChanged(
-      new Set<SObjectField>{
-        Account.Billing_State_Text_D_B__c,
-        Account.BillingCountry
-      },
+    SObjectPredicate hasDBStateChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Account.Billing_State_Text_D_B__c },
       this.Records,
       this.ExistingRecords
     );
 
-    Collection.of(this.Records)
-      .filter(hasTheRecordChanged)
+    Collection.of(Records)
+      .filter(hasDBStateChanged)
       .mapAll(new AccountSetStateFunction());
   }
 
