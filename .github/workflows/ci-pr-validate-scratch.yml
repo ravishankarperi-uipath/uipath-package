@@ -131,7 +131,7 @@ jobs:
 
       # Assign permissionset
       - name: "Assign permissionset to default user"
-        run: "sfdx force:user:permset:assign -n UiPath_Admin_Core"
+        run: "sfdx force:user:permset:assign -n UiPathAccountAdmin"
 
       # Import  data
       #- name: "Import data"
