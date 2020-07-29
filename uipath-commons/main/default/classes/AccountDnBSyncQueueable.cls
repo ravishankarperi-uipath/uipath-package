@@ -39,58 +39,86 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
 
     if (!accounts.isEmpty()) {
       for (Account acc : accounts) {
-        changeAccount(acc);
+        if (
+          checkFieldChange(
+            acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c,
+            acc.AnnualRevenue,
+            acc.Overwrite_Annual_Revenue__c
+          )
+        ) {
+          acc.AnnualRevenue = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
+          acc.Revenue_Source__c = DNB;
+        }
+
+        if (
+          acc.Revenue_Source__c <> DNB &&
+          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c ==
+          acc.AnnualRevenue
+        ) {
+          acc.Revenue_Source__c = DNB;
+        }
+
+        if (
+          checkFieldChange(
+            acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c,
+            acc.Legal__c,
+            acc.Overwrite_Legal_Entity_Name__c
+          )
+        ) {
+          acc.Legal__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c;
+        }
+
+        if (
+          checkFieldChange(
+            acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c,
+            acc.SIC4_Code_1__c
+          )
+        ) {
+          acc.SIC4_Code_1__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c;
+        }
+
+        if (
+          checkFieldChange(
+            acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c,
+            acc.SIC4_Code_1_Description__c
+          )
+        ) {
+          acc.SIC4_Code_1_Description__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c;
+        }
       }
       update accounts;
     }
   }
 
-  private void changeAccount(SObject record) {
-    if (
-      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c) !=
-      null &&
-      record.get(Account.AnnualRevenue) <>
-      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c) &&
-      record.get(Account.Overwrite_Annual_Revenue__c) == false
-    ) {
-      record.get(Account.AnnualRevenue) = account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
-      record.get(Account.Revenue_Source__c) = DNB;
+  private boolean checkFieldChange(
+    String field1,
+    String field2,
+    Boolean field3
+  ) {
+    if (field1 != null && field2 <> field1 && field3 == false) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    if (
-      record.get(Account.Revenue_Source__c) <> DNB &&
-      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c) ==
-      record.get(Account.AnnualRevenue)
-    ) {
-      record.get(Account.Revenue_Source__c) = DNB;
+  private boolean checkFieldChange(String field1, String field2) {
+    if (field1 != null && field2 <> field1) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    if (
-      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c) !=
-      null &&
-      record.get(Account.Legal__c) <>
-      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c) &&
-      record.get(Account.Overwrite_Legal_Entity_Name__c) == false
-    ) {
-      record.get(Account.Legal__c) = record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c);
-    }
-
-    if (
-      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c) !=
-      null &&
-      record.get(Account.SIC4_Code_1__c) <>
-      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c)
-    ) {
-      record.get(Account.SIC4_Code_1__c) = record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c);
-    }
-
-    if (
-      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c) !=
-      null &&
-      record.get(Account.SIC4_Code_1_Description__c) <>
-      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c)
-    ) {
-      record.get(Account.SIC4_Code_1_Description__c) = record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c);
+  private boolean checkFieldChange(
+    Decimal field1,
+    Decimal field2,
+    Boolean field3
+  ) {
+    if (field1 != null && field2 <> field1 && field3 == false) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
