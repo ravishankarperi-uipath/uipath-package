@@ -3,3 +3,4 @@
 - disable old account triggers except
 - disable account process builders
 - populate ZinfiConfiguration custom setting (use WebHook, WebHookContact, WebToken, WebhookEndPoint CustomLabels)
+- verify Licensing_Sync.namedCredential and its auth provider if needed authentication
