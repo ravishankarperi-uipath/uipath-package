@@ -76,13 +76,15 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
   public String checkFieldChange(String field1, String field2, Boolean field3) {
     if (field1 != null && field2 <> field1 && field3 == false) {
       return field1;
-    } return field2;
+    }
+    return field2;
   }
 
   public String checkFieldChange(String field1, String field2) {
     if (field1 != null && field2 <> field1) {
       return field1;
-    } return field2;
+    }
+    return field2;
   }
 
   public Decimal checkFieldChange(
@@ -92,6 +94,7 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
   ) {
     if (field1 != null && field2 <> field1 && field3 == false) {
       return field1;
-    } else return field2;
+    } else
+      return field2;
   }
 }
