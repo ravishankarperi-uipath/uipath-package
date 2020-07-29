@@ -189,7 +189,7 @@ public class AccountsTest {
 
     fflib_SObjectDomain.triggerHandler(Accounts.class);
     System.assertEquals(
-      'You cannot select a D&B CompaNY from a different country.',
+      'You cannot select a D&B Company from a different country.',
       fflib_SObjectDomain.Errors.getAll()[0].message
     );
   }
