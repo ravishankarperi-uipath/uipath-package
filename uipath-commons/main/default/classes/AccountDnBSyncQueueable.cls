@@ -85,7 +85,7 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
     }
   }
 
-  private boolean checkFieldChange(
+  private void checkFieldChange(
     Decimal field1,
     Decimal field2,
     Boolean field3
