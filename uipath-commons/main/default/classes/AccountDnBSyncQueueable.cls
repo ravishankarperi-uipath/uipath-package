@@ -39,7 +39,7 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
 
     if (!accounts.isEmpty()) {
       for (Account acc : accounts) {
-        checkFieldChange(
+        acc.AnnualRevenue = checkFieldChange(
           acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c,
           acc.AnnualRevenue,
           acc.Overwrite_Annual_Revenue__c
@@ -53,18 +53,18 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
           acc.Revenue_Source__c = DNB;
         }
 
-        checkFieldChange(
+        acc.Legal__c = checkFieldChange(
           acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c,
           acc.Legal__c,
           acc.Overwrite_Legal_Entity_Name__c
         );
 
-        checkFieldChange(
+        acc.SIC4_Code_1__c = checkFieldChange(
           acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c,
           acc.SIC4_Code_1__c
         );
 
-        checkFieldChange(
+        acc.SIC4_Code_1_Description__c = checkFieldChange(
           acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c,
           acc.SIC4_Code_1_Description__c
         );
@@ -73,25 +73,25 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
     }
   }
 
-  private void checkFieldChange(String field1, String field2, Boolean field3) {
+  public String checkFieldChange(String field1, String field2, Boolean field3) {
     if (field1 != null && field2 <> field1 && field3 == false) {
-      field2 = field1;
-    }
+      return field1;
+    } return field2;
   }
 
-  private void checkFieldChange(String field1, String field2) {
+  public String checkFieldChange(String field1, String field2) {
     if (field1 != null && field2 <> field1) {
-      field2 = field1;
-    }
+      return field1;
+    } return field2;
   }
 
-  private void checkFieldChange(
+  public Decimal checkFieldChange(
     Decimal field1,
     Decimal field2,
     Boolean field3
   ) {
     if (field1 != null && field2 <> field1 && field3 == false) {
-      field2 = field1;
-    }
+      return field1;
+    } else return field2;
   }
 }

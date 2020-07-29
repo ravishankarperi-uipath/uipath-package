@@ -23,7 +23,8 @@ private class AccountDnBSyncQueueableTest {
       Legal__c = null,
       DNBoptimizer__DnBCompanyRecord__c = dnbCompanyRecord.Id,
       AnnualRevenue = null,
-      Overwrite_Annual_Revenue__c = false
+      Overwrite_Annual_Revenue__c = false,
+      Overwrite_Legal_Entity_Name__c = false
     );
     insert account1;
 
