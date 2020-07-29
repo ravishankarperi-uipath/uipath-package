@@ -39,16 +39,11 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
 
     if (!accounts.isEmpty()) {
       for (Account acc : accounts) {
-        if (
-          checkFieldChange(
-            acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c,
-            acc.AnnualRevenue,
-            acc.Overwrite_Annual_Revenue__c
-          )
-        ) {
-          acc.AnnualRevenue = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
-          acc.Revenue_Source__c = DNB;
-        }
+        checkFieldChange(
+          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c,
+          acc.AnnualRevenue,
+          acc.Overwrite_Annual_Revenue__c
+        );
 
         if (
           acc.Revenue_Source__c <> DNB &&
@@ -58,55 +53,35 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
           acc.Revenue_Source__c = DNB;
         }
 
-        if (
-          checkFieldChange(
-            acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c,
-            acc.Legal__c,
-            acc.Overwrite_Legal_Entity_Name__c
-          )
-        ) {
-          acc.Legal__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c;
-        }
+        checkFieldChange(
+          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c,
+          acc.Legal__c,
+          acc.Overwrite_Legal_Entity_Name__c
+        );
 
-        if (
-          checkFieldChange(
-            acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c,
-            acc.SIC4_Code_1__c
-          )
-        ) {
-          acc.SIC4_Code_1__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c;
-        }
+        checkFieldChange(
+          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c,
+          acc.SIC4_Code_1__c
+        );
 
-        if (
-          checkFieldChange(
-            acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c,
-            acc.SIC4_Code_1_Description__c
-          )
-        ) {
-          acc.SIC4_Code_1_Description__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c;
-        }
+        checkFieldChange(
+          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c,
+          acc.SIC4_Code_1_Description__c
+        );
       }
       update accounts;
     }
   }
 
-  private boolean checkFieldChange(
-    String field1,
-    String field2,
-    Boolean field3
-  ) {
+  private void checkFieldChange(String field1, String field2, Boolean field3) {
     if (field1 != null && field2 <> field1 && field3 == false) {
-      return true;
-    } else {
-      return false;
+      field2 = field1;
     }
   }
 
-  private boolean checkFieldChange(String field1, String field2) {
+  private void checkFieldChange(String field1, String field2) {
     if (field1 != null && field2 <> field1) {
-      return true;
-    } else {
-      return false;
+      field2 = field1;
     }
   }
 
@@ -116,9 +91,7 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
     Boolean field3
   ) {
     if (field1 != null && field2 <> field1 && field3 == false) {
-      return true;
-    } else {
-      return false;
+      field2 = field1;
     }
   }
 }
