@@ -42,8 +42,6 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
         if (
           acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c !=
           null &&
-          acc.AnnualRevenue <>
-          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c &&
           acc.Overwrite_Annual_Revenue__c == false
         ) {
           acc.AnnualRevenue = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
@@ -53,8 +51,6 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
         if (
           acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c !=
           null &&
-          acc.Legal__c <>
-          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c &&
           acc.Overwrite_Legal_Entity_Name__c == false
         ) {
           acc.Legal__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c;
