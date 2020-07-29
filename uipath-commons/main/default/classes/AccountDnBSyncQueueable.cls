@@ -1,100 +1,112 @@
 public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
-  /**
-   * Set Revenue Source field on Account
-   * If Account AnnualRevenue is equal to DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c populates Revenue Source with Dun & Bradstreet
-   */
+    /**
+     * Set Revenue Source field on Account
+     * If Account AnnualRevenue is equal to DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c populates Revenue Source with Dun & Bradstreet
+     */
 
-  private final List<SObject> accountsLst;
-  static final String DNB = 'Dun & Bradstreet';
+    private final List<SObject> accountsLst;
+    static final String DNB = 'Dun & Bradstreet';
 
-  public AccountDnBSyncQueueable(List<SObject> accountsLst) {
-    super('AccountDnBSyncQueueable');
-    this.accountsLst = accountsLst;
-  }
+    public AccountDnBSyncQueueable(List<SObject> accountsLst) {
+        super('AccountDnBSyncQueueable');
+        this.accountsLst = accountsLst;
+    }
 
-  public override void work() {
-    this.setDnBFields(this.accountsLst);
-  }
+    public override void work() {
+        this.setDnBFields(this.accountsLst);
+    }
 
-  private void setDnBFields(List<SObject> accountsLst) {
-    List<Account> accounts = (List<Account>) accountsLst;
-    accounts = [
-      SELECT
-        Id,
-        Overwrite_Annual_Revenue__c,
-        Overwrite_Legal_Entity_Name__c,
-        Revenue_Source__c,
-        AnnualRevenue,
-        SIC4_Code_1__c,
-        SIC4_Code_1_Description__c,
-        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c,
-        DNBoptimizer__DnBCompanyRecord__c,
-        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c,
-        Legal__c,
-        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c,
-        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c
-      FROM Account
-      WHERE Id IN :accounts AND DNBoptimizer__DnBCompanyRecord__c != null
-    ];
+    /**
+     * Copies fields from DNBoptimizer__DnBCompanyRecord__c when the lookup on account is updated
+     * @param accountsLst
+     */
+    private void setDnBFields(List<SObject> accountsLst) {
 
-    if (!accounts.isEmpty()) {
-      for (Account acc : accounts) {
-        acc.AnnualRevenue = checkFieldChange(
-          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c,
-          acc.AnnualRevenue,
-          acc.Overwrite_Annual_Revenue__c
-        );
+        List<Account> accounts = reQueryAccountsWithRelevantFields(accountsLst);
 
-        if (
-          acc.Revenue_Source__c <> DNB &&
-          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c ==
-          acc.AnnualRevenue
-        ) {
-          acc.Revenue_Source__c = DNB;
+        if (!accounts.isEmpty()) {
+            for (Account acc : accounts) {
+
+
+                acc.AnnualRevenue = checkFieldChange(
+                    acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c,
+                    acc.AnnualRevenue,
+                    acc.Overwrite_Annual_Revenue__c
+                );
+
+                if (
+                    acc.Revenue_Source__c <> DNB &&
+                        acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c ==
+                            acc.AnnualRevenue
+                    ) {
+                    acc.Revenue_Source__c = DNB;
+                }
+
+                acc.Legal__c = checkFieldChange(
+                    acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c,
+                    acc.Legal__c,
+                    acc.Overwrite_Legal_Entity_Name__c
+                );
+
+                acc.SIC4_Code_1__c = checkFieldChange(
+                    acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c,
+                    acc.SIC4_Code_1__c
+                );
+
+                acc.SIC4_Code_1_Description__c = checkFieldChange(
+                    acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c,
+                    acc.SIC4_Code_1_Description__c
+                );
+            }
+            update accounts;
         }
-
-        acc.Legal__c = checkFieldChange(
-          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c,
-          acc.Legal__c,
-          acc.Overwrite_Legal_Entity_Name__c
-        );
-
-        acc.SIC4_Code_1__c = checkFieldChange(
-          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c,
-          acc.SIC4_Code_1__c
-        );
-
-        acc.SIC4_Code_1_Description__c = checkFieldChange(
-          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c,
-          acc.SIC4_Code_1_Description__c
-        );
-      }
-      update accounts;
     }
-  }
 
-  public String checkFieldChange(String field1, String field2, Boolean field3) {
-    if (field1 != null && field2 <> field1 && field3 == false) {
-      return field1;
+    private List<Account> reQueryAccountsWithRelevantFields(List<SObject> accountsLst) {
+        List<Account> accounts = (List<Account>) accountsLst;
+        accounts = [
+            SELECT
+                Id,
+                Overwrite_Annual_Revenue__c,
+                Overwrite_Legal_Entity_Name__c,
+                Revenue_Source__c,
+                AnnualRevenue,
+                SIC4_Code_1__c,
+                SIC4_Code_1_Description__c,
+                DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c,
+                DNBoptimizer__DnBCompanyRecord__c,
+                DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c,
+                Legal__c,
+                DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c,
+                DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c
+            FROM Account
+            WHERE Id IN :accounts AND DNBoptimizer__DnBCompanyRecord__c != null
+        ];
+        return accounts;
     }
-    return field2;
-  }
 
-  public String checkFieldChange(String field1, String field2) {
-    if (field1 != null && field2 <> field1) {
-      return field1;
+    public String checkFieldChange(String field1, String field2, Boolean field3) {
+        if (field1 != null && field2 <> field1 && field3 == false) {
+            return field1;
+        }
+        return field2;
     }
-    return field2;
-  }
 
-  public Decimal checkFieldChange(
-    Decimal field1,
-    Decimal field2,
-    Boolean field3
-  ) {
-    if (field1 != null && field2 <> field1 && field3 == false) {
-      return field1;
-    } else
-      return field2;
-  }
+    public String checkFieldChange(String field1, String field2) {
+        if (field1 != null && field2 <> field1) {
+            return field1;
+        }
+        return field2;
+    }
+
+    public Decimal checkFieldChange(
+        Decimal field1,
+        Decimal field2,
+        Boolean field3
+    ) {
+        if (field1 != null && field2 <> field1 && field3 == false) {
+            return field1;
+        } else
+            return field2;
+    }
 }
