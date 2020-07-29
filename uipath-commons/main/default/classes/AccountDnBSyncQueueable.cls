@@ -5,6 +5,7 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
    */
 
   private final List<SObject> accountsLst;
+  static final String DNB = 'Dun & Bradstreet';
 
   public AccountDnBSyncQueueable(List<SObject> accountsLst) {
     super('AccountDnBSyncQueueable');
@@ -46,15 +47,15 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
           acc.Overwrite_Annual_Revenue__c == false
         ) {
           acc.AnnualRevenue = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
-          acc.Revenue_Source__c = 'Dun & Bradstreet';
+          acc.Revenue_Source__c = DNB;
         }
 
         if (
-          acc.Revenue_Source__c <> 'Dun & Bradstreet' &&
+          acc.Revenue_Source__c <> DNB &&
           acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c ==
           acc.AnnualRevenue
         ) {
-          acc.Revenue_Source__c = 'Dun & Bradstreet';
+          acc.Revenue_Source__c = DNB;
         }
 
         if (
