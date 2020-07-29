@@ -45,52 +45,52 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
     }
   }
 
-  private void changeAccount(SObject account) {
+  private void changeAccount(SObject record) {
     if (
-      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c !=
+      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c) !=
       null &&
-      account.AnnualRevenue <>
-      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c &&
-      account.Overwrite_Annual_Revenue__c == false
+      record.get(Account.AnnualRevenue) <>
+      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c) &&
+      record.get(Account.Overwrite_Annual_Revenue__c) == false
     ) {
-      account.AnnualRevenue = account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
-      account.Revenue_Source__c = DNB;
+      record.get(Account.AnnualRevenue) = account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
+      record.get(Account.Revenue_Source__c) = DNB;
     }
 
     if (
-      account.Revenue_Source__c <> DNB &&
-      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c ==
-      account.AnnualRevenue
+      record.get(Account.Revenue_Source__c) <> DNB &&
+      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c) ==
+      record.get(Account.AnnualRevenue)
     ) {
-      account.Revenue_Source__c = DNB;
+      record.get(Account.Revenue_Source__c) = DNB;
     }
 
     if (
-      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c !=
+      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c) !=
       null &&
-      account.Legal__c <>
-      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c &&
-      account.Overwrite_Legal_Entity_Name__c == false
+      record.get(Account.Legal__c) <>
+      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c) &&
+      record.get(Account.Overwrite_Legal_Entity_Name__c) == false
     ) {
-      account.Legal__c = account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c;
+      record.get(Account.Legal__c) = record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c);
     }
 
     if (
-      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c !=
+      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c) !=
       null &&
-      account.SIC4_Code_1__c <>
-      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c
+      record.get(Account.SIC4_Code_1__c) <>
+      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c)
     ) {
-      account.SIC4_Code_1__c = account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c;
+      record.get(Account.SIC4_Code_1__c) = record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c);
     }
 
     if (
-      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c !=
+      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c) !=
       null &&
-      account.SIC4_Code_1_Description__c <>
-      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c
+      record.get(Account.SIC4_Code_1_Description__c) <>
+      record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c)
     ) {
-      account.SIC4_Code_1_Description__c = account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c;
+      record.get(Account.SIC4_Code_1_Description__c) = record.get(Account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c);
     }
   }
 }
