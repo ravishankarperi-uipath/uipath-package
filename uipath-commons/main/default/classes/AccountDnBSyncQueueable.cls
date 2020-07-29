@@ -51,14 +51,6 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
         }
 
         if (
-          acc.Revenue_Source__c <> DNB &&
-          acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c ==
-          acc.AnnualRevenue
-        ) {
-          acc.Revenue_Source__c = DNB;
-        }
-
-        if (
           acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c !=
           null &&
           acc.Legal__c <>
