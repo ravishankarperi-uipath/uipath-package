@@ -60,7 +60,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
     AbstractQueueable.enqueue(new AccountSetGAMEmailQueueable(Records, null));
 
-    setDnBFields();
+    deriveDnBFieldsOnInsert();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -68,7 +68,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     createAddressForDnBCompany(existingRecords);
     setContactOwnerToAccountOwner(existingRecords);
     setGAMEmailOnGlobalAccounts(existingRecords);
-    setDnBFields();
+    deriveDnBFieldsOnUpdate();
     zinfiSyncAccountOnUpdate(existingRecords);
   }
 
@@ -134,16 +134,30 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   }
 
   /**
-   * On Account Insert, check is AnnualRevenue & DNBoptimizer__DnBCompanyRecord__c has values then
-   * start Queueable to check if AnnualRevenue & DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c have the same values
+   * On Account Insert, sync Account fields with DnB fields
    */
-  private void setDnBFields() {
-    SObjectPredicate hasCriteriaBeenMet = new AccountDnBSyncQueueable.HasMetDnBQueueableCriteria(
-      this.Records
+  private void deriveDnBFieldsOnInsert() {
+    List<Account> validatedAccounts = Collection.of(Records)
+      .filter(Match.field(Account.DNBoptimizer__DnBCompanyRecord__c).hasValue())
+      .asList();
+
+    if (!validatedAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(new AccountDnBSyncQueueable(validatedAccounts));
+    }
+  }
+
+  /**
+   * On Account Update, sync Account with DnB
+   **/
+  private void deriveDnBFieldsOnUpdate() {
+    SObjectPredicate hasDnBObjectChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Account.DNBoptimizer__DnBCompanyRecord__c },
+      this.Records,
+      this.ExistingRecords
     );
 
     List<Account> validatedAccounts = Collection.of(Records)
-      .filter(hasCriteriaBeenMet)
+      .filter(hasDnBObjectChanged)
       .asList();
 
     if (!validatedAccounts.isEmpty()) {
