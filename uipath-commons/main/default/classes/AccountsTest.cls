@@ -1,5 +1,8 @@
 @IsTest
 public class AccountsTest {
+  static final String USA = 'United States';
+  static final String NY = 'New York';
+
   @IsTest
   private static void validatesStateRequiredForChinaAustralia() {
     Accounts accounts = new Accounts(
@@ -60,6 +63,41 @@ public class AccountsTest {
     fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
     System.assertEquals('Kerala', account.BillingState);
+  }
+
+  @IsTest
+  private static void testSetStateOnInsert() {
+    Account account = new Account(
+      Name = 'Test',
+      BillingCountryCode = 'US',
+      Billing_State_Text_D_B__c = NY
+    );
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals(NY, account.BillingState);
+  }
+
+  @IsTest
+  private static void testSetStateOnUpdate() {
+    Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
+    Account oldAccount = new Account(
+      Id = accountId,
+      Name = 'Test',
+      BillingCountryCode = 'US'
+    );
+    Account updatedAccount = new Account(
+      Id = accountId,
+      Name = 'Test',
+      BillingCountryCode = 'US',
+      Billing_State_Text_D_B__c = NY
+    );
+    fflib_SObjectDomain.Test.Database.onUpdate(
+      new List<Account>{ updatedAccount },
+      new Map<Id, SObject>{ oldAccount.Id => oldAccount }
+    );
+
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals(NY, updatedAccount.BillingState);
   }
 
   @IsTest
@@ -132,7 +170,7 @@ public class AccountsTest {
   }
 
   @IsTest
-  private static void cannotSelectDandBCompanyFromDifferentCountry() {
+  private static void cannotSelectDandBCompaNYFromDifferentCountry() {
     Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
     Account oldAccount = new Account(
       Id = accountId,
@@ -247,16 +285,16 @@ public class AccountsTest {
       Name = 'Test1',
       Geo__c = 'AMER',
       Region__c = 'North',
-      Country__c = 'United States',
-      BillingCountry = 'United States',
+      Country__c = USA,
+      BillingCountry = USA,
       NumberOfEmployees = 5000,
       AnnualRevenue = 500000000.00
     );
     Account oldAccount1 = new Account(
       Id = account1.Id,
       Name = 'Test1',
-      Country__c = 'United States',
-      BillingCountry = 'United States'
+      Country__c = USA,
+      BillingCountry = USA
     );
 
     Account account2 = new Account(
@@ -264,16 +302,16 @@ public class AccountsTest {
       Name = 'Test2',
       Geo__c = 'AMER',
       Region__c = 'North',
-      Country__c = 'United States',
-      BillingCountry = 'United States',
+      Country__c = USA,
+      BillingCountry = USA,
       NumberOfEmployees = 3000,
       AnnualRevenue = 1500000000.00
     );
     Account oldAccount2 = new Account(
       Id = account2.Id,
       Name = 'Test2',
-      Country__c = 'United States',
-      BillingCountry = 'United States'
+      Country__c = USA,
+      BillingCountry = USA
     );
 
     fflib_SObjectDomain.Test.Database.onUpdate(
@@ -529,7 +567,7 @@ public class AccountsTest {
         )
       );
     }
-    //will throw on any limits issues
+    //will throw on aNY limits issues
     System.assertEquals(Database.insert(accounts, true).size() > 0, true);
   }
 
@@ -556,7 +594,7 @@ public class AccountsTest {
     for (Integer i = 0; i < 200; i++) {
       accounts.get(i).Industry = 'Automotive';
     }
-    //will throw on any limits issues
+    //will throw on aNY limits issues
     List<Database.SaveResult> results = Database.update(accounts, true);
     System.assertEquals(results.size() > 0, true);
 
