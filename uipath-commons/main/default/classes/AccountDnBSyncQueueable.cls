@@ -47,50 +47,50 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
 
   private void changeAccount(SObject account) {
     if (
-      acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c !=
+      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c !=
       null &&
-      acc.AnnualRevenue <>
-      acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c &&
-      acc.Overwrite_Annual_Revenue__c == false
+      account.AnnualRevenue <>
+      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c &&
+      account.Overwrite_Annual_Revenue__c == false
     ) {
-      acc.AnnualRevenue = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
-      acc.Revenue_Source__c = DNB;
+      account.AnnualRevenue = account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
+      account.Revenue_Source__c = DNB;
     }
 
     if (
-      acc.Revenue_Source__c <> DNB &&
-      acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c ==
-      acc.AnnualRevenue
+      account.Revenue_Source__c <> DNB &&
+      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c ==
+      account.AnnualRevenue
     ) {
-      acc.Revenue_Source__c = DNB;
+      account.Revenue_Source__c = DNB;
     }
 
     if (
-      acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c !=
+      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c !=
       null &&
-      acc.Legal__c <>
-      acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c &&
-      acc.Overwrite_Legal_Entity_Name__c == false
+      account.Legal__c <>
+      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c &&
+      account.Overwrite_Legal_Entity_Name__c == false
     ) {
-      acc.Legal__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c;
+      account.Legal__c = account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c;
     }
 
     if (
-      acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c !=
+      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c !=
       null &&
-      acc.SIC4_Code_1__c <>
-      acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c
+      account.SIC4_Code_1__c <>
+      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c
     ) {
-      acc.SIC4_Code_1__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c;
+      account.SIC4_Code_1__c = account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c;
     }
 
     if (
-      acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c !=
+      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c !=
       null &&
-      acc.SIC4_Code_1_Description__c <>
-      acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c
+      account.SIC4_Code_1_Description__c <>
+      account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c
     ) {
-      acc.SIC4_Code_1_Description__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c;
+      account.SIC4_Code_1_Description__c = account.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c;
     }
   }
 }
