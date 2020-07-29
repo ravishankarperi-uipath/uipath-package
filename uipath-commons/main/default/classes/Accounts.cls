@@ -70,10 +70,12 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     setGAMEmailOnGlobalAccounts(existingRecords);
     deriveDnBFieldsOnUpdate();
     zinfiSyncAccountOnUpdate(existingRecords);
+    licensingApiSyncAccountOnUpdate();
   }
 
   public override void onAfterDelete() {
     zinfiSyncAccountOnDelete();
+    licensingApiSyncAccountOnDelete();
   }
 
   /**
@@ -538,6 +540,43 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     if (zinfiSetting != null && zinfiSetting.IsSyncAccount__c) {
       Set<Id> accIds = (new Map<Id, SObject>(Records)).keySet();
       ZinfiSyncOnline.sendAccountFutureCall(accIds);
+    }
+  }
+
+  /**
+   * TODO refactor code into Queueable
+   * Sync data using licensing Api
+   */
+  private void licensingApiSyncAccountOnUpdate() {
+    for (Account acc : (List<Account>) Records) {
+      if ((Limits.getLimitFutureCalls() - Limits.getFutureCalls()) > 0) {
+        LicensingApiDispatch.onAccountUpdate(acc.Account_ID_Long__c);
+      }
+    }
+  }
+
+  /**
+   * TODO refactor code into Queueable
+   * Sync data using licensing Api
+   */
+  private void licensingApiSyncAccountOnDelete() {
+    Map<String, List<String>> masterRecordIdAccMap = new Map<String, List<String>>();
+    for (Account acc : (List<Account>) Records) {
+      if (acc.MasterRecordId != null) {
+        if (!masterRecordIdAccMap.containsKey(acc.MasterRecordId)) {
+          masterRecordIdAccMap.put(acc.MasterRecordId, new List<String>());
+        }
+        masterRecordIdAccMap.get(acc.MasterRecordId)
+          .add(acc.Account_ID_Long__c);
+      }
+    }
+    for (String masterRecordId : masterRecordIdAccMap.keySet()) {
+      if ((Limits.getLimitFutureCalls() - Limits.getFutureCalls()) > 0) {
+        LicensingApiDispatch.onAccountsMerged(
+          masterRecordId,
+          masterRecordIdAccMap.get(masterRecordId)
+        );
+      }
     }
   }
 
