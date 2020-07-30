@@ -61,6 +61,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AbstractQueueable.enqueue(new AccountSetGAMEmailQueueable(Records, null));
 
     deriveDnBFieldsOnInsert();
+    shareAccountWithLeadOwner();
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -71,6 +72,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     deriveDnBFieldsOnUpdate();
     zinfiSyncAccountOnUpdate(existingRecords);
     licensingApiSyncAccountOnUpdate();
+    shareAccountWithLeadOwner();
   }
 
   public override void onAfterDelete() {
@@ -577,6 +579,18 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
           masterRecordIdAccMap.get(masterRecordId)
         );
       }
+    }
+  }
+
+  /**
+   * Share account using OwnerFromLead field
+   */
+  private void shareAccountWithLeadOwner() {
+    List<Account> eligibleAccounts = (List<Account>) Collection.of(Records)
+      .filter(Match.field(Account.OwnerFromLead__c).hasValue())
+      .asList();
+    if (!eligibleAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(new AccountSharingLeadOwnerQueueable(Records));
     }
   }
 
