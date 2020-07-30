@@ -72,6 +72,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     deriveDnBFieldsOnUpdate();
     zinfiSyncAccountOnUpdate(existingRecords);
     licensingApiSyncAccountOnUpdate();
+    setClassificationToGlobal();
     shareAccountWithLeadOwner();
   }
 
@@ -591,6 +592,37 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
       .asList();
     if (!eligibleAccounts.isEmpty()) {
       AbstractQueueable.enqueue(new AccountSharingLeadOwnerQueueable(Records));
+    }
+  }
+
+  /**
+   * For global accounts, when an Account Classification changes to 'Global' set all children accounts to Global
+   * @param existingRecords
+   */
+  private void setClassificationToGlobal() {
+    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
+      new Set<SObjectField>{ Account.Classification__c }
+    );
+
+    changedAccounts = Collection.of(changedAccounts)
+      .filter(
+        Match.field(Account.RecordTypeId)
+          .isIn(
+            new Set<String>{
+              AccountMetadata.customerRecordType,
+              AccountMetadata.customerProspectRecordType,
+              AccountMetadata.ProspectRecordType
+            }
+          )
+          .also(Account.Classification__c)
+          .equals('Global')
+      )
+      .asList();
+
+    if (!changedAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(
+        new AccountClassificationGlobalQueueable(changedAccounts)
+      );
     }
   }
 

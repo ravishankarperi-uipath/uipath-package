@@ -45,26 +45,32 @@ sfdx force:org:create -s -f config/project-scratch-def.json --durationdays 30 --
 
 ### Install packages using the 04t ids
 
-#### Note:_The 04t Ids for the unlocked packages in this readme are automatically maintained by the CI pipeline._
-
 #### Install packages:
+
+#### Obtain the 04t Ids for unlocked packages by running:
+
+sfdx force:package:version:list -v DevHub
+
+#### Obtain the 04t Ids for managed packages by running:
+
+sfdx force:package:installed:list -u DevHub
 
 - uipath-core
 
 ```bash
- sfdx force:package:install --package 04t1Q0000010KHxQAM -k unlockedclear -u scratch -w 15
+ sfdx force:package:install --package 04t**** -k unlockedclear -u scratch -w 15
 ```
 
 - dnbOptimizer
 
 ```bash
-sfdx force:package:install --package 04t1I000003FJbZQAW -u scratch --noprompt  -w 15
+sfdx force:package:install --package 04t***** -u scratch --noprompt  -w 15
 ```
 
 - uipath-commons
 
 ```bash
-sfdx force:package:install --package 04t1Q0000010KJeQAM -k unlockedclear -u scratch  -w 15
+sfdx force:package:install --package 04t**** -k unlockedclear -u scratch  -w 15
 ```
 
 ## Work on Feature and Release

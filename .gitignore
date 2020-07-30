@@ -36,3 +36,6 @@ $RECYCLE.BIN/
 
 .idea
 IlluminatedCloud/
+
+CI_AUTH_URL.txt
+DEVHUB_AUTH_URL.txt

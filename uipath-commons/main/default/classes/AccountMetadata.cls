@@ -202,4 +202,31 @@ public without sharing class AccountMetadata {
     }
     return countrySubsidiaryMap;
   }
+
+  public static Id customerRecordType {
+    get {
+      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
+        .get('Customer')
+        .getRecordTypeId();
+    }
+    set;
+  }
+
+  public static Id customerProspectRecordType {
+    get {
+      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
+        .get('Customer_Prospect')
+        .getRecordTypeId();
+    }
+    set;
+  }
+
+  public static Id ProspectRecordType {
+    get {
+      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
+        .get('Prospect')
+        .getRecordTypeId();
+    }
+    set;
+  }
 }
