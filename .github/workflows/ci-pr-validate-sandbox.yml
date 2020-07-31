@@ -5,9 +5,6 @@ name: Pull Request Validate Sandbox
 on:
   pull_request:
     types: [opened, edited, synchronize, reopened]
-    paths:
-      - uipath-commons/main/default/*/**
-      - uipath-core/main/default/*/**
 
 # Jobs to be executed
 jobs:
