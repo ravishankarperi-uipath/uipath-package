@@ -2,7 +2,7 @@
  * TODO REWRITE with Mocking as too much DML involved
  */
 @isTest
-public with sharing class AccountSharingRollupQueueableTest {
+public class AccountSharingRollupQueueableTest {
   @isTest
   public static void canRunAccountSharingJob() {
     User u = new User();

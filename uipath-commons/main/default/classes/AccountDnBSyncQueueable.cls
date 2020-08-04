@@ -66,4 +66,39 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
     ];
     return accounts;
   }
+
+  /**
+   * On Account Insert, sync Account fields with DnB fields
+   */
+  public static void deriveDnBFieldsOnInsert(List<Account> records) {
+    List<Account> validatedAccounts = Collection.of(records)
+      .filter(Match.field(Account.DNBoptimizer__DnBCompanyRecord__c).hasValue())
+      .asList();
+
+    if (!validatedAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(new AccountDnBSyncQueueable(validatedAccounts));
+    }
+  }
+
+  /**
+   * On Account Update, sync Account with DnB
+   **/
+  public static void deriveDnBFieldsOnUpdate(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate hasDnBObjectChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Account.DNBoptimizer__DnBCompanyRecord__c },
+      accounts,
+      existingAccounts
+    );
+
+    List<Account> validatedAccounts = Collection.of(accounts)
+      .filter(hasDnBObjectChanged)
+      .asList();
+
+    if (!validatedAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(new AccountDnBSyncQueueable(validatedAccounts));
+    }
+  }
 }

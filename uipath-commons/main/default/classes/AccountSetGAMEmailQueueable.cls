@@ -137,4 +137,33 @@ public with sharing class AccountSetGAMEmailQueueable extends AbstractQueueable 
         topParentMap.put(((String) acc.Id).substring(0, 15), acc.Owner.Email);
     return topParentMap;
   }
+
+  /**
+   * For global accounts, set up GAM Email Account to Ultimate Parent Account Owner.Email
+   * @param accounts
+   * @param existingAccounts
+   */
+  public static void setGAMEmailOnGlobalAccounts(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate hasChanged = new HasRecordChanged(
+      new Set<SObjectField>{
+        Account.Classification__c,
+        Account.OwnerId,
+        Account.ParentId
+      },
+      accounts,
+      existingAccounts
+    );
+    List<Account> eligibleAccounts = (List<Account>) Collection.of(accounts)
+      .filter(hasChanged)
+      .asList();
+
+    if (!eligibleAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(
+        new AccountSetGAMEmailQueueable(eligibleAccounts, existingAccounts)
+      );
+    }
+  }
 }

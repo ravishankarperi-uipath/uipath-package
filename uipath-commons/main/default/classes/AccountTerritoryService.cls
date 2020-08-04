@@ -186,4 +186,34 @@ public without sharing class AccountTerritoryService {
       return apply((Account) record);
     }
   }
+
+  /**
+   * Update Account Territory fields Geo, Region, Area.
+   * Uses Custom Metadata types to derive Territory based on Account Industry and Address fields.
+   * For USA => Industry, State and Zipcode are used to map  Territory
+   * For India and Japan => State and Country are used to map  Territory
+   * For Rest of the world => only country is used to map Territory
+   */
+  public static void deriveTerritoryFieldsOnUpdate(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate hasChanged = new HasRecordChanged(
+      new Set<SObjectField>{
+        Account.BillingCountryCode,
+        Account.BillingStateCode,
+        Account.BillingPostalCode,
+        Account.Industry
+      },
+      accounts,
+      existingAccounts
+    );
+    List<Account> changedAccounts = Collection.of(accounts)
+      .filter(hasChanged)
+      .asList();
+
+    if (!changedAccounts.isEmpty()) {
+      AccountTerritoryService.deriveTerritoryFields(changedAccounts);
+    }
+  }
 }

@@ -25,4 +25,15 @@ public class AccountSetChannelTierFunction implements SObjectToSObjectFunction {
   public SObject apply(SObject record) {
     return apply((Account) record);
   }
+
+  /**
+   * On Account Insert, Derives Channel tier based on Account Record Type
+   */
+  public static void deriveChannelTierOnInsert(List<Account> records) {
+    Collection.of(records)
+      .mapSome(
+        Match.field(Account.RecordTypeId).hasValue(),
+        new AccountSetChannelTierFunction()
+      );
+  }
 }

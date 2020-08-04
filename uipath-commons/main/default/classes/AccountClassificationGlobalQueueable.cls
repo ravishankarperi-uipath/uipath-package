@@ -36,4 +36,42 @@ public with sharing class AccountClassificationGlobalQueueable extends AbstractQ
     }
     update children;
   }
+
+  /**
+   * For global accounts, when an Account Classification changes to 'Global' set all children accounts to Global
+   * @param accounts
+   * @param existingAccounts
+   */
+  public static void setClassificationToGlobal(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate hasChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Account.Classification__c },
+      accounts,
+      existingAccounts
+    );
+
+    List<Account> changedAccounts = Collection.of(accounts)
+      .filter(hasChanged)
+      .filter(
+        Match.field(Account.RecordTypeId)
+          .isIn(
+            new Set<String>{
+              AccountMetadata.customerRecordType,
+              AccountMetadata.customerProspectRecordType,
+              AccountMetadata.ProspectRecordType
+            }
+          )
+          .also(Account.Classification__c)
+          .equals('Global')
+      )
+      .asList();
+
+    if (!changedAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(
+        new AccountClassificationGlobalQueueable(changedAccounts)
+      );
+    }
+  }
 }

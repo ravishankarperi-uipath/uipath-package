@@ -45,4 +45,22 @@ public class AccountSetSyncStatusFunction implements SObjectToSObjectFunction {
   public SObject apply(SObject record) {
     return apply((Account) record);
   }
+
+  public static void deriveSyncStatusForValidatedAccount(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate haveStatusesChanged = new HasRecordChanged(
+      new Set<SObjectField>{
+        Account.Sync_Status__c,
+        Account.Validation_Status__c
+      },
+      accounts,
+      existingAccounts
+    );
+
+    Collection.of(accounts)
+      .filter(haveStatusesChanged)
+      .mapAll(new AccountSetSyncStatusFunction(existingAccounts));
+  }
 }

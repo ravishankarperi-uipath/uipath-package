@@ -25,4 +25,16 @@ public class AccountSetSubsidiaryFunction implements SObjectToSObjectFunction {
   public SObject apply(SObject record) {
     return apply((Account) record);
   }
+
+  /**
+   * On Account Insert, Uses Custom Metadata to map from Country to Subsidiary
+   */
+  public static void deriveSubsidiaryOnInsert(List<Account> records) {
+    Map<String, String> countrySubsidiaryMap = AccountMetadata.getCountrySubsidiaryMap();
+    Collection.of(records)
+      .mapSome(
+        Match.field(Account.Country__c).hasValue(),
+        new AccountSetSubsidiaryFunction(countrySubsidiaryMap)
+      );
+  }
 }

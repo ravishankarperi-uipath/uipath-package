@@ -4,20 +4,16 @@
 @SuppressWarnings('PMD')
 public class ZinfiSyncOnline {
   @future(callout=true)
-  public static void sendAccountFutureCall(Set<Id> IdList) {
+  public static void sendAccountFutureCall(Set<Id> idList) {
     ZinfiConfiguration__c zinfiSetting = ZinfiConfiguration__c.getInstance();
-    List<AccountWrapper> WList = new List<AccountWrapper>();
-    /* List<Account> SoList = [SELECT Id,Name 
-        FROM Account
-        Where ID in:IdList];
-        */
-    for (string n : IdList) {
+    List<AccountWrapper> wList = new List<AccountWrapper>();
+    for (string n : idList) {
       AccountWrapper nw = new AccountWrapper();
       nw.Id = n;
       nw.Name = 'Name';
-      WList.add(nw);
+      wList.add(nw);
     }
-    String strbdy = JSON.serialize(WList);
+    String strbdy = JSON.serialize(wList);
     System.debug(':::strbdy=' + strbdy);
     Http htp = new Http();
     HttpRequest hr = new HttpRequest();
@@ -43,5 +39,17 @@ public class ZinfiSyncOnline {
   public class AccountWrapper {
     public string Id;
     public string Name;
+  }
+
+  /**
+   * TODO refactor code into Queueable
+   * Sync data with Zinfi system
+   */
+  public static void zinfiSyncAccountOnDelete(List<Account> records) {
+    ZinfiConfiguration__c zinfiSetting = ZinfiConfiguration__c.getInstance();
+    if (zinfiSetting != null && zinfiSetting.IsSyncAccount__c) {
+      Set<Id> accIds = (new Map<Id, SObject>(records)).keySet();
+      ZinfiSyncOnline.sendAccountFutureCall(accIds);
+    }
   }
 }

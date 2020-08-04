@@ -165,4 +165,37 @@ public with sharing class AccountSetClassificationFunction implements SObjectToS
       acc.Classification__c = 'SMB';
     }
   }
+
+  /**
+   * On Account Insert, Sets Classification to “Velocity” or “Enterprise” or “Commercial“ or “SMB“ based on Account Revenue, Region and Parent Account Classification
+   */
+  public static void deriveClassificationFieldsOnInsert(List<Account> records) {
+    Collection.of(records).mapAll(new AccountSetClassificationFunction());
+  }
+
+  /**
+   * On Account Update, Sets Classification to “Velocity” or “Enterprise” or “Commercial“ or “SMB“ based on Account Revenue, Region and Parent Account Classification
+   */
+  public static void deriveClassificationFieldsOnUpdate(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate haveClassificationSensitiveFieldsChanged = new HasRecordChanged(
+      new Set<SObjectField>{
+        Account.Geo__c,
+        Account.Region__c,
+        Account.AnnualRevenue,
+        Account.Overwrite_Classification__c,
+        Account.Parent_Account_Classification__c,
+        Account.RecordTypeId,
+        Account.Classification__c
+      },
+      accounts,
+      existingAccounts
+    );
+
+    Collection.of(accounts)
+      .filter(haveClassificationSensitiveFieldsChanged)
+      .mapAll(new AccountSetClassificationFunction());
+  }
 }

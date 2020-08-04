@@ -91,4 +91,29 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
     }
     insert addressList;
   }
+
+  /**
+   * create an address record for when an account is updated using D&B address
+   * @param existingRecords
+   */
+  public static void createAddressForDnBCompany(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate hasChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Account.DnB_Country__c },
+      accounts,
+      existingAccounts
+    );
+    List<Account> eligibleAccounts = (List<Account>) Collection.of(accounts)
+      .filter(Match.field(Account.DnB_Country__c).hasValue())
+      .filter(hasChanged)
+      .asList();
+
+    if (!eligibleAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(
+        new AccountDNBCompanyQueueable(eligibleAccounts, existingAccounts)
+      );
+    }
+  }
 }

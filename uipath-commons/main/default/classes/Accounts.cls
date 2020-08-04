@@ -2,7 +2,6 @@
  * Responsibility: Account Domain Class
  * Mostly just delegates work to Mapped Functions or to Async Queueables
  * Also contains change detection and filtering logic for various domain actions - prior to delegation
- * TODO simplify this class - move all logic into map classes
  */
 public with sharing class Accounts extends fflib_SObjectDomain implements IAccounts {
   public static IAccounts newInstance(List<Account> recordList) {
@@ -18,385 +17,111 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   }
 
   public override void onBeforeInsert() {
-    setFieldsForJapanConvertedLeadOnInsert();
-    setBillingStateFromStateOnInsert();
-    deriveAddressFieldsOnInsert();
-    deriveRegionSpecificFieldsOnInsert();
-    deriveClassificationFieldsOnInsert();
+    AccountJapanConvertedLeadFunction.setGeoFields(Records);
+    AccountBillingStateFromStateFunction.copyStateToBillingState(Records);
+    AccountMapDnBAddressFunction.deriveAddressFieldsOnInsert(Records);
+    AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnInsert(
+      Records
+    );
+    AccountSetClassificationFunction.deriveClassificationFieldsOnInsert(
+      Records
+    );
     AccountTerritoryService.deriveTerritoryFields(Records);
-    deriveSubsidiaryOnInsert();
-    deriveRecordTypeOnInsert();
-    convertAcademicAccount(Records);
-    deriveChannelTierOnInsert();
-    deriveDataStewardUserOnInsert();
-    deriveLegalEntityNameOnInsert();
-    deriveStateOnInsert();
+    AccountSetSubsidiaryFunction.deriveSubsidiaryOnInsert(Records);
+    AccountSetRecordTypeFunction.deriveRecordTypeOnInsert(Records);
+    AccountConvertAcademic.convertAcademicAccount(Records);
+    AccountSetChannelTierFunction.deriveChannelTierOnInsert(Records);
+    AccountSetDataStewardFunction.deriveDataStewardUserOnInsert(Records);
+    AccountSetLegalEntityNameFunction.deriveLegalEntityNameOnInsert(Records);
+    AccountSetStateFunction.deriveStateOnInsert(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
-    deriveAddressFieldsOnUpdate();
-    deriveRegionSpecificFieldsOnUpdate();
-    deriveClassificationFieldsOnUpdate();
-    deriveTerritoryFieldsOnUpdate();
-    deriveRecordTypeForExistingAccount();
-    convertAcademicAccountOnUpdate();
-    deriveDataStewardUserOnUpdate();
-    deriveSyncStatusForValidatedAccount();
-    deriveStateOnUpdate();
-
+    AccountMapDnBAddressFunction.deriveAddressFieldsOnUpdate(
+      Records,
+      existingRecords
+    );
+    AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnUpdate(
+      Records,
+      existingRecords
+    );
+    AccountSetClassificationFunction.deriveClassificationFieldsOnUpdate(
+      Records,
+      existingRecords
+    );
+    AccountTerritoryService.deriveTerritoryFieldsOnUpdate(
+      Records,
+      existingRecords
+    );
+    AccountSetRecordTypeFunction.deriveRecordTypeForExistingAccount(
+      Records,
+      existingRecords
+    );
+    AccountConvertAcademic.convertAcademicAccountOnUpdate(
+      Records,
+      existingRecords
+    );
+    AccountSetDataStewardFunction.deriveDataStewardUserOnUpdate(
+      Records,
+      existingRecords
+    );
+    AccountSetSyncStatusFunction.deriveSyncStatusForValidatedAccount(
+      Records,
+      existingRecords
+    );
+    AccountSetStateFunction.deriveStateOnUpdate(Records, existingRecords);
     //Leave this as the last method in the execution of onBeforeUpdate
-    callSyncStatusIntegrationProcess();
+    IntegrationHandler.callAccountSyncStatusIntegrationProcess(
+      Records,
+      existingRecords
+    );
   }
 
   public override void onAfterInsert() {
     //Update contact LeadSource for all Japan converted Leads
     AbstractQueueable.enqueue(new AccountUpdateJapanContactQueueable(Records));
-
     //For global accounts, grant Opp and Contact Edit access to Top level account owner
     AbstractQueueable.enqueue(new AccountSharingRollupQueueable(Records, null));
-
     //Insert address record copying from Account. Also set that as Primary Shipping and Billing for the account
     AbstractQueueable.enqueue(new AccountAddressQueueable(Records, null));
-
     AbstractQueueable.enqueue(new AccountSetGAMEmailQueueable(Records, null));
-
-    deriveDnBFieldsOnInsert();
-    shareAccountWithLeadOwner();
+    AccountDnBSyncQueueable.deriveDnBFieldsOnInsert(Records);
+    AccountSharingLeadOwnerQueueable.shareAccount(Records);
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
-    shareAccountWithParentOwner(existingRecords);
-    createAddressForDnBCompany(existingRecords);
-    setContactOwnerToAccountOwner(existingRecords);
-    setGAMEmailOnGlobalAccounts(existingRecords);
-    deriveDnBFieldsOnUpdate();
-    zinfiSyncAccountOnUpdate(existingRecords);
-    licensingApiSyncAccountOnUpdate();
-    setClassificationToGlobal();
-    shareAccountWithLeadOwner();
+    AccountSharingRollupQueueable.shareAccountWithParentOwner(
+      Records,
+      existingRecords
+    );
+    AccountDNBCompanyQueueable.createAddressForDnBCompany(
+      Records,
+      existingRecords
+    );
+    AccountSetContactOwnerQueueable.setContactOwnerToAccountOwner(
+      Records,
+      existingRecords
+    );
+    AccountSetGAMEmailQueueable.setGAMEmailOnGlobalAccounts(
+      Records,
+      existingRecords
+    );
+    AccountDnBSyncQueueable.deriveDnBFieldsOnUpdate(Records, existingRecords);
+    ZinfiSyncContactWithAccount.zinfiSyncAccountOnUpdate(existingRecords);
+    LicensingApiDispatch.licensingApiSyncAccountOnUpdate(Records);
+    AccountClassificationGlobalQueueable.setClassificationToGlobal(
+      Records,
+      existingRecords
+    );
+    AccountSharingLeadOwnerQueueable.shareAccountOnUpdate(
+      Records,
+      existingRecords
+    );
   }
 
   public override void onAfterDelete() {
-    zinfiSyncAccountOnDelete();
-    licensingApiSyncAccountOnDelete();
-  }
-
-  /**
-   * TODO - this will need additional Test Coverage as the Boomi Fieldset is not in the Package
-   * The Boomi Fieldset is dependant on DUNS fields that aren't in the unlocked package
-   * This is call to Sync Status Automation process only for the Account where Validation Status = "Validated",
-   *               i.e they are Validated by Data Stewards and synced to NetSuite
-   */
-  private void callSyncStatusIntegrationProcess() {
-    List<Account> validatedAccounts = Collection.of(Records)
-      .filter(
-        Match.field(Account.Validation_Status__c)
-          .equals(CommonsConstants.ACC_VALIDATION_STATUS_VALIDATED)
-      )
-      .asList();
-
-    // Call the SyncStatusAutomation Process to check if the Account Updates can be flagged ready to sync to NetSuite
-    if (!validatedAccounts.isEmpty()) {
-      IntegrationHandler.syncStatusAutomationProcess(
-        ExistingRecords,
-        validatedAccounts
-      );
-    }
-  }
-
-  /**
-   * Copies D&B Address Fields into Standard Address Fields (Billing and Shipping).
-   * For US, only first 5 characters of Postal code is derived Only some countries are allowed to have BillingState set
-   */
-  private void deriveAddressFieldsOnInsert() {
-    Collection.of(Records).mapAll(new AccountMapDnBAddressFunction(false));
-  }
-
-  /**
-   * Sets Record Type based on Account Business Type
-   * If Partner, sets record type to Partner Prospect
-   * If Customer, setts record Type to Customer Prospect
-   */
-  private void deriveRecordTypeOnInsert() {
-    Collection.of(Records)
-      .mapSome(
-        Match.field(Account.Account_Business_Type__c).hasValue(),
-        new AccountSetRecordTypeFunction()
-      );
-  }
-
-  /**
-   * Sets Legal Entity Name on Account
-   * If Legal Entity Name is empty AND
-   * Record Type is Academic, Partner, Customer, Customer Prospect OR Partner Prospect
-   */
-  private void deriveLegalEntityNameOnInsert() {
-    Collection.of(Records)
-      .mapSome(
-        Match.field(Account.RecordTypeId).hasValue(),
-        new AccountSetLegalEntityNameFunction()
-      );
-  }
-
-  /**
-   * On Account Insert, sync Account fields with DnB fields
-   */
-  private void deriveDnBFieldsOnInsert() {
-    List<Account> validatedAccounts = Collection.of(Records)
-      .filter(Match.field(Account.DNBoptimizer__DnBCompanyRecord__c).hasValue())
-      .asList();
-
-    if (!validatedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(new AccountDnBSyncQueueable(validatedAccounts));
-    }
-  }
-
-  /**
-   * On Account Update, sync Account with DnB
-   **/
-  private void deriveDnBFieldsOnUpdate() {
-    SObjectPredicate hasDnBObjectChanged = new HasRecordChanged(
-      new Set<SObjectField>{ Account.DNBoptimizer__DnBCompanyRecord__c },
-      this.Records,
-      this.ExistingRecords
-    );
-
-    List<Account> validatedAccounts = Collection.of(Records)
-      .filter(hasDnBObjectChanged)
-      .asList();
-
-    if (!validatedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(new AccountDnBSyncQueueable(validatedAccounts));
-    }
-  }
-
-  /**
-   * On Account Insert, Derives Channel tier based on Account Record Type
-   */
-  private void deriveChannelTierOnInsert() {
-    Collection.of(Records)
-      .mapSome(
-        Match.field(Account.RecordTypeId).hasValue(),
-        new AccountSetChannelTierFunction()
-      );
-  }
-
-  /**
-   * On Account Insert, Uses Custom Metadata to map from Country to Subsidiary
-   */
-  private void deriveSubsidiaryOnInsert() {
-    Map<String, String> countrySubsidiaryMap = AccountMetadata.getCountrySubsidiaryMap();
-    Collection.of(Records)
-      .mapSome(
-        Match.field(Account.Country__c).hasValue(),
-        new AccountSetSubsidiaryFunction(countrySubsidiaryMap)
-      );
-  }
-
-  private void deriveSyncStatusForValidatedAccount() {
-    SObjectPredicate haveStatusesChanged = new HasRecordChanged(
-      new Set<SObjectField>{
-        Account.Sync_Status__c,
-        Account.Validation_Status__c
-      },
-      this.Records,
-      this.ExistingRecords
-    );
-
-    Collection.of(Records)
-      .filter(haveStatusesChanged)
-      .mapAll(new AccountSetSyncStatusFunction(this.ExistingRecords));
-  }
-
-  /**
-   * Updates record type based on Account Business Type
-   */
-  private void deriveRecordTypeForExistingAccount() {
-    SObjectPredicate hasBusinessTypeChanged = new HasRecordChanged(
-      new Set<SObjectField>{ Account.Account_Business_Type__c },
-      this.Records,
-      this.ExistingRecords
-    );
-
-    Collection.of(this.Records)
-      .filter(hasBusinessTypeChanged)
-      .mapAll(new AccountSetRecordTypeFunction());
-  }
-
-  /**
-   * Update Account Territory fields Geo, Region, Area.
-   * Uses Custom Metadata types to derive Territory based on Account Industry and Address fields.
-   * For USA => Industry, State and Zipcode are used to map  Territory
-   * For India and Japan => State and Country are used to map  Territory
-   * For Rest of the world => only country is used to map Territory
-   */
-  private void deriveTerritoryFieldsOnUpdate() {
-    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-      new Set<SObjectField>{
-        Account.BillingCountryCode,
-        Account.BillingStateCode,
-        Account.BillingPostalCode,
-        Account.Industry
-      }
-    );
-    if (!changedAccounts.isEmpty()) {
-      AccountTerritoryService.deriveTerritoryFields(changedAccounts);
-    }
-  }
-
-  /**
-   * Inserts BillingState if Billing_State_Text_D_B__cis changed
-   * or if Country is changed and is one of the following: United States, China, Australia, Brazil, Canada, United Kingdom, Ireland, India, Italy, Mexico
-   */
-  private void deriveStateOnInsert() {
-    Collection.of(Records)
-      .mapSome(
-        Match.field(Account.BillingState)
-          .equals(null)
-          .also(Account.Billing_State_Text_D_B__c)
-          .hasValue()
-          .also(Account.BillingCountry)
-          .hasValue(),
-        new AccountSetStateFunction()
-      );
-  }
-
-  /**
-   * Updates BillingState if Billing_State_Text_D_B__c is changed
-   */
-  private void deriveStateOnUpdate() {
-    SObjectPredicate hasDBStateChanged = new HasRecordChanged(
-      new Set<SObjectField>{ Account.Billing_State_Text_D_B__c },
-      this.Records,
-      this.ExistingRecords
-    );
-
-    Collection.of(Records)
-      .filter(hasDBStateChanged)
-      .mapAll(new AccountSetStateFunction());
-  }
-
-  /**
-   * When Geo is AMER(excluding regions Canada and LATAM), Sets an Account Tier based on the Account’s Revenue and Number of Employees.
-   * Enterprise Tier 1/2/3
-   * Velocity Tier 1/2/3
-   */
-  private void deriveRegionSpecificFieldsOnInsert() {
-    Collection.of(this.Records)
-      .mapAll(new AccountSetRegionSpecificTierFunction());
-  }
-
-  /**
-   * When Geo is AMER(excluding regions Canada and LATAM), Sets an Account Tier based on the Account’s Revenue and Number of Employees.
-   * Enterprise Tier 1/2/3
-   * Velocity Tier 1/2/3
-   */
-  private void deriveRegionSpecificFieldsOnUpdate() {
-    SObjectPredicate haveRegionSensitiveFieldsChanged = new HasRecordChanged(
-      new Set<SObjectField>{
-        Account.Geo__c,
-        Account.Region__c,
-        Account.AnnualRevenue,
-        Account.NumberOfEmployees
-      },
-      this.Records,
-      this.ExistingRecords
-    );
-
-    Collection.of(this.Records)
-      .filter(haveRegionSensitiveFieldsChanged)
-      .mapAll(new AccountSetRegionSpecificTierFunction());
-  }
-
-  /**
-   * On Account Insert, Sets Classification to “Velocity” or “Enterprise” or “Commercial“ or “SMB“ based on Account Revenue, Region and Parent Account Classification
-   */
-  private void deriveClassificationFieldsOnInsert() {
-    Collection.of(this.Records).mapAll(new AccountSetClassificationFunction());
-  }
-
-  /**
-   * On Account Update, Sets Classification to “Velocity” or “Enterprise” or “Commercial“ or “SMB“ based on Account Revenue, Region and Parent Account Classification
-   */
-  private void deriveClassificationFieldsOnUpdate() {
-    SObjectPredicate haveClassificationSensitiveFieldsChanged = new HasRecordChanged(
-      new Set<SObjectField>{
-        Account.Geo__c,
-        Account.Region__c,
-        Account.AnnualRevenue,
-        Account.Overwrite_Classification__c,
-        Account.Parent_Account_Classification__c,
-        Account.RecordTypeId,
-        Account.Classification__c
-      },
-      this.Records,
-      this.ExistingRecords
-    );
-
-    Collection.of(this.Records)
-      .filter(haveClassificationSensitiveFieldsChanged)
-      .mapAll(new AccountSetClassificationFunction());
-  }
-
-  /**
-   * On Account Update, Copies D&B Address Fields into Standard Address Fields (Billing and Shipping).
-   * For US, only first 5 characters of Postal code is derived Only some countries are allowed to have BillingState set
-   */
-  private void deriveAddressFieldsOnUpdate() {
-    SObjectPredicate hasCountryChanged = new HasRecordChanged(
-      new Set<SObjectField>{ Account.DnB_Country__c },
-      this.Records,
-      this.ExistingRecords
-    );
-
-    Collection.of(this.Records)
-      .filter(hasCountryChanged)
-      .mapAll(new AccountMapDnBAddressFunction(true));
-  }
-
-  /**
-   * For global accounts, grant Opp and Contact Edit access to Top level account owner
-   * @param existingRecords
-   */
-  private void shareAccountWithParentOwner(Map<Id, SObject> existingRecords) {
-    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-      new Set<SObjectField>{ Account.ParentId }
-    );
-    if (!changedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountSharingRollupQueueable(changedAccounts, existingRecords)
-      );
-    }
-  }
-
-  /**
-   * create an address record for when an account is updated using D&B address
-   * @param existingRecords
-   */
-  private void createAddressForDnBCompany(Map<Id, SObject> existingRecords) {
-    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-      new Set<SObjectField>{ Account.DnB_Country__c }
-    );
-    if (!changedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountDNBCompanyQueueable(changedAccounts, existingRecords)
-      );
-    }
-  }
-
-  /**
-   * Loop and set Owner on all contacts to the owner of Account
-   * @param existingRecords
-   */
-  private void setContactOwnerToAccountOwner(Map<Id, SObject> existingRecords) {
-    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-      new Set<SObjectField>{ Account.OwnerId }
-    );
-    if (changedAccounts.size() > 0) {
-      AbstractQueueable.enqueue(
-        new AccountSetContactOwnerQueueable(changedAccounts, existingRecords)
-      );
-    }
+    ZinfiSyncOnline.zinfiSyncAccountOnDelete(Records);
+    LicensingApiDispatch.licensingApiSyncAccountOnDelete(Records);
   }
 
   /**
@@ -413,217 +138,6 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   public override void onValidate(Map<Id, SObject> existingRecords) {
     Collection.of(Records)
       .mapAll(new AccountValidationFunction(existingRecords, this));
-  }
-
-  /**
-   * Set Billing State to the same value as the Custom State field when new Accounts are created
-   */
-  private void setBillingStateFromStateOnInsert() {
-    for (Account account : (List<Account>) Records) {
-      if ((account.State__c != null)) {
-        account.BillingState = account.State__c;
-      }
-    }
-  }
-
-  /**
-   * Sets fields Geo and Region to ‘Japan’ for Japanese Accounts created via Lead conversion.
-   * “Japanese accounts” are when  Country=Japan
-   */
-  private void setFieldsForJapanConvertedLeadOnInsert() {
-    for (Account acc : (List<Account>) Records) {
-      if (acc.Country__c == 'Japan' && acc.Created_by_lead_convert__c) {
-        acc.Geo__c = 'Japan';
-        acc.Region__c = 'Japan';
-      }
-    }
-  }
-
-  /**
-   * On Account Update, Converts Academic RT to Customer Prospect RT if Account has open opportunities
-   * TODO move this to Opty closed logic instead of reprocessing on Account
-   */
-  private void convertAcademicAccountOnUpdate() {
-    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-      new Set<SObjectField>{
-        Account.RecordTypeId,
-        Account.Has_Open_Opportunities__c
-      }
-    );
-    if (!changedAccounts.isEmpty()) {
-      convertAcademicAccount(changedAccounts);
-    }
-  }
-
-  /**
-   * Convert Academic RT to Customer Prospect if has open opportunities
-   * *Org-cleanup : Process Builder - Academic Alliance Account - Update Record Type
-   *  TODO : Send push notification : Academic Alliance
-   */
-  private void convertAcademicAccount(List<Account> accList) {
-    Id academicRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Academic')
-      .getRecordTypeId();
-    Id customerProspectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Customer_Prospect')
-      .getRecordTypeId();
-
-    Collection.of(accList)
-      .filter(
-        Match.field(Account.RecordTypeId)
-          .equals(academicRT)
-          .also(Account.Has_Open_Opportunities__c)
-          .greaterThan(0)
-      )
-      .mapAll(
-        CopyFields.fromRecord(new Account(RecordTypeId = customerProspectRT))
-      );
-  }
-
-  /**
-   * On Account Insert, Populate Assigned Data Steward field with current user when Data Steward is checked
-   */
-  private void deriveDataStewardUserOnInsert() {
-    Collection.of(Records).mapAll(new AccountSetDataStewardFunction());
-  }
-
-  /**
-   * On Account Update, Populate Assigned Data Steward field with current user when Data Steward is checked
-   */
-  private void deriveDataStewardUserOnUpdate() {
-    SObjectPredicate hasStewardshipFlagChanged = new HasRecordChanged(
-      new Set<SObjectField>{ Account.Verified_by_Data_Steward__c },
-      this.Records,
-      this.ExistingRecords
-    );
-
-    Collection.of(Records)
-      .filter(hasStewardshipFlagChanged)
-      .mapAll(new AccountSetDataStewardFunction());
-  }
-
-  /**
-   * For global accounts, set up GAM Email Account to Ultimate Parent Account Owner.Email
-   * @param existingRecords
-   */
-  private void setGAMEmailOnGlobalAccounts(Map<Id, SObject> existingRecords) {
-    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-      new Set<SObjectField>{
-        Account.Classification__c,
-        Account.OwnerId,
-        Account.ParentId
-      }
-    );
-    if (!changedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountSetGAMEmailQueueable(changedAccounts, existingRecords)
-      );
-    }
-  }
-
-  /**
-   * TODO refactor code into Queueable
-   * Sync data with Zinfi system
-   */
-  private void zinfiSyncAccountOnUpdate(Map<Id, SObject> existingRecords) {
-    ZinfiConfiguration__c zinfiSetting = ZinfiConfiguration__c.getInstance();
-    if (zinfiSetting != null && zinfiSetting.IsSyncAccount__c) {
-      ZinfiSyncContactWithAccount.sendContactFutureCall(
-        existingRecords.keySet()
-      );
-    }
-  }
-
-  /**
-   * TODO refactor code into Queueable
-   * Sync data with Zinfi system
-   */
-  private void zinfiSyncAccountOnDelete() {
-    ZinfiConfiguration__c zinfiSetting = ZinfiConfiguration__c.getInstance();
-    if (zinfiSetting != null && zinfiSetting.IsSyncAccount__c) {
-      Set<Id> accIds = (new Map<Id, SObject>(Records)).keySet();
-      ZinfiSyncOnline.sendAccountFutureCall(accIds);
-    }
-  }
-
-  /**
-   * TODO refactor code into Queueable
-   * Sync data using licensing Api
-   */
-  private void licensingApiSyncAccountOnUpdate() {
-    for (Account acc : (List<Account>) Records) {
-      if ((Limits.getLimitFutureCalls() - Limits.getFutureCalls()) > 0) {
-        LicensingApiDispatch.onAccountUpdate(acc.Account_ID_Long__c);
-      }
-    }
-  }
-
-  /**
-   * TODO refactor code into Queueable
-   * Sync data using licensing Api
-   */
-  private void licensingApiSyncAccountOnDelete() {
-    Map<String, List<String>> masterRecordIdAccMap = new Map<String, List<String>>();
-    for (Account acc : (List<Account>) Records) {
-      if (acc.MasterRecordId != null) {
-        if (!masterRecordIdAccMap.containsKey(acc.MasterRecordId)) {
-          masterRecordIdAccMap.put(acc.MasterRecordId, new List<String>());
-        }
-        masterRecordIdAccMap.get(acc.MasterRecordId)
-          .add(acc.Account_ID_Long__c);
-      }
-    }
-    for (String masterRecordId : masterRecordIdAccMap.keySet()) {
-      if ((Limits.getLimitFutureCalls() - Limits.getFutureCalls()) > 0) {
-        LicensingApiDispatch.onAccountsMerged(
-          masterRecordId,
-          masterRecordIdAccMap.get(masterRecordId)
-        );
-      }
-    }
-  }
-
-  /**
-   * Share account using OwnerFromLead field
-   */
-  private void shareAccountWithLeadOwner() {
-    List<Account> eligibleAccounts = (List<Account>) Collection.of(Records)
-      .filter(Match.field(Account.OwnerFromLead__c).hasValue())
-      .asList();
-    if (!eligibleAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(new AccountSharingLeadOwnerQueueable(Records));
-    }
-  }
-
-  /**
-   * For global accounts, when an Account Classification changes to 'Global' set all children accounts to Global
-   * @param existingRecords
-   */
-  private void setClassificationToGlobal() {
-    List<Account> changedAccounts = (List<Account>) this.getChangedRecords(
-      new Set<SObjectField>{ Account.Classification__c }
-    );
-
-    changedAccounts = Collection.of(changedAccounts)
-      .filter(
-        Match.field(Account.RecordTypeId)
-          .isIn(
-            new Set<String>{
-              AccountMetadata.customerRecordType,
-              AccountMetadata.customerProspectRecordType,
-              AccountMetadata.ProspectRecordType
-            }
-          )
-          .also(Account.Classification__c)
-          .equals('Global')
-      )
-      .asList();
-
-    if (!changedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountClassificationGlobalQueueable(changedAccounts)
-      );
-    }
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {

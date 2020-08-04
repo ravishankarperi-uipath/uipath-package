@@ -138,4 +138,30 @@ public with sharing class AccountSharingRollupQueueable extends AbstractQueueabl
       System.debug('accShareToInsert' + accShareToInsert);
     }
   }
+
+  /**
+   * For global accounts, grant Opp and Contact Edit access to Top level account owner
+   * @param existingRecords
+   */
+  public static void shareAccountWithParentOwner(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate hasChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Account.ParentId },
+      accounts,
+      existingAccounts
+    );
+
+    List<Account> eligibleAccounts = (List<Account>) Collection.of(accounts)
+      .filter(Match.field(Account.ParentId).hasValue())
+      .filter(hasChanged)
+      .asList();
+
+    if (!eligibleAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(
+        new AccountSharingRollupQueueable(eligibleAccounts, existingAccounts)
+      );
+    }
+  }
 }

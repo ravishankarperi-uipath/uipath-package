@@ -97,4 +97,19 @@ public class ZinfiSyncContactWithAccount {
       return '';
     }
   }
+
+  /**
+   * TODO refactor code into Queueable
+   * Sync data with Zinfi system
+   */
+  public static void zinfiSyncAccountOnUpdate(
+    Map<Id, SObject> existingRecords
+  ) {
+    ZinfiConfiguration__c zinfiSetting = ZinfiConfiguration__c.getInstance();
+    if (zinfiSetting != null && zinfiSetting.IsSyncAccount__c) {
+      ZinfiSyncContactWithAccount.sendContactFutureCall(
+        existingRecords.keySet()
+      );
+    }
+  }
 }

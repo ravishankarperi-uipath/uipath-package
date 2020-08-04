@@ -66,4 +66,29 @@ public with sharing class AccountSetContactOwnerQueueable extends AbstractQueuea
         update cntToUpdate;
     }
   }
+
+  /**
+   * Loop and set Owner on all contacts to the owner of Account
+   * @param existingRecords
+   */
+  public static void setContactOwnerToAccountOwner(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate hasChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Account.OwnerId },
+      accounts,
+      existingAccounts
+    );
+    List<Account> eligibleAccounts = (List<Account>) Collection.of(accounts)
+      .filter(Match.field(Account.OwnerId).hasValue())
+      .filter(hasChanged)
+      .asList();
+
+    if (eligibleAccounts.size() > 0) {
+      AbstractQueueable.enqueue(
+        new AccountSetContactOwnerQueueable(eligibleAccounts, existingAccounts)
+      );
+    }
+  }
 }

@@ -24,4 +24,17 @@ public class AccountSetLegalEntityNameFunction implements SObjectToSObjectFuncti
   public SObject apply(SObject record) {
     return apply((Account) record);
   }
+
+  /**
+   * Sets Legal Entity Name on Account
+   * If Legal Entity Name is empty AND
+   * Record Type is Academic, Partner, Customer, Customer Prospect OR Partner Prospect
+   */
+  public static void deriveLegalEntityNameOnInsert(List<Account> records) {
+    Collection.of(records)
+      .mapSome(
+        Match.field(Account.RecordTypeId).hasValue(),
+        new AccountSetLegalEntityNameFunction()
+      );
+  }
 }

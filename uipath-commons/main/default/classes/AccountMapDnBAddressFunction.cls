@@ -93,4 +93,31 @@ public without sharing class AccountMapDnBAddressFunction implements SObjectToSO
       country == 'Italy' ||
       country == 'Mexico';
   }
+
+  /**
+   * Copies D&B Address Fields into Standard Address Fields (Billing and Shipping).
+   * For US, only first 5 characters of Postal code is derived Only some countries are allowed to have BillingState set
+   */
+  public static void deriveAddressFieldsOnInsert(List<Account> records) {
+    Collection.of(records).mapAll(new AccountMapDnBAddressFunction(false));
+  }
+
+  /**
+   * On Account Update, Copies D&B Address Fields into Standard Address Fields (Billing and Shipping).
+   * For US, only first 5 characters of Postal code is derived Only some countries are allowed to have BillingState set
+   */
+  public static void deriveAddressFieldsOnUpdate(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate hasCountryChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Account.DnB_Country__c },
+      accounts,
+      existingAccounts
+    );
+
+    Collection.of(accounts)
+      .filter(hasCountryChanged)
+      .mapAll(new AccountMapDnBAddressFunction(true));
+  }
 }

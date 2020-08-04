@@ -170,4 +170,24 @@ public without sharing class IntegrationHandler {
     update lstAccounts;
     update addressesToUpdate;
   }
+
+  public static void callAccountSyncStatusIntegrationProcess(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    List<Account> validatedAccounts = Collection.of(accounts)
+      .filter(
+        Match.field(Account.Validation_Status__c)
+          .equals(CommonsConstants.ACC_VALIDATION_STATUS_VALIDATED)
+      )
+      .asList();
+
+    // Call the SyncStatusAutomation Process to check if the Account Updates can be flagged ready to sync to NetSuite
+    if (!validatedAccounts.isEmpty()) {
+      IntegrationHandler.syncStatusAutomationProcess(
+        existingAccounts,
+        validatedAccounts
+      );
+    }
+  }
 }

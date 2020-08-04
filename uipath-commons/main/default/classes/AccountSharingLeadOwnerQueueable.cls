@@ -1,5 +1,6 @@
 /**
  * TODO - more code refactoring in 2 pass
+ * Share account using OwnerFromLead field
  * Code moved from CommunityAccountTrigger into Queueable
  */
 @SuppressWarnings('PMD')
@@ -89,6 +90,44 @@ public with sharing class AccountSharingLeadOwnerQueueable extends AbstractQueue
 
     if (!updAccList.isEmpty()) {
       update updAccList;
+    }
+  }
+
+  /**
+   * Share account using OwnerFromLead field
+   */
+  public static void shareAccount(List<Account> records) {
+    List<Account> eligibleAccounts = (List<Account>) Collection.of(records)
+      .filter(Match.field(Account.OwnerFromLead__c).hasValue())
+      .asList();
+    if (!eligibleAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(
+        new AccountSharingLeadOwnerQueueable(eligibleAccounts)
+      );
+    }
+  }
+
+  /**
+   * Share account using OwnerFromLead field
+   */
+  public static void shareAccountOnUpdate(
+    List<Account> accounts,
+    Map<Id, SObject> existingAccounts
+  ) {
+    SObjectPredicate hasChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Account.OwnerFromLead__c },
+      accounts,
+      existingAccounts
+    );
+
+    List<Account> eligibleAccounts = (List<Account>) Collection.of(accounts)
+      .filter(Match.field(Account.OwnerFromLead__c).hasValue())
+      .filter(hasChanged)
+      .asList();
+    if (!eligibleAccounts.isEmpty()) {
+      AbstractQueueable.enqueue(
+        new AccountSharingLeadOwnerQueueable(eligibleAccounts)
+      );
     }
   }
 }
