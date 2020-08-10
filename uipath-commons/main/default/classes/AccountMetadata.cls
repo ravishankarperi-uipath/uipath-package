@@ -95,6 +95,23 @@ public without sharing class AccountMetadata {
     set;
   }
 
+  public static Map<String, String> CountryNameAndCodes {
+    get {
+      if (CountryNameAndCodes == null) {
+        CountryNameAndCodes = new Map<String, String>();
+
+        //Retrieve Country Codes
+        Schema.DescribeFieldResult countryCodeResult = User.Countrycode.getDescribe();
+        List<Schema.PicklistEntry> countryPLE = countryCodeResult.getPicklistValues();
+        for (Schema.PicklistEntry entry : countryPLE) {
+          CountryNameAndCodes.put(entry.getLabel(), entry.getValue());
+        }
+      }
+      return CountryNameAndCodes;
+    }
+    set;
+  }
+
   public static Id getAccountRecordTypeId(String recordTypeName) {
     Id RTId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
       .get(recordTypeName)
