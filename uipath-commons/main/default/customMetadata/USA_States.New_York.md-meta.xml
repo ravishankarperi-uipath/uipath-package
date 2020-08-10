@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Area__c</field>
-        <value xsi:type="xsd:string">AMER North &amp; BFS</value>
+        <value xsi:type="xsd:string">East</value>
     </values>
     <values>
         <field>Billing_State_Code__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Territory__c</field>
-        <value xsi:type="xsd:string">Northeast</value>
+        <value xsi:type="xsd:string">New York</value>
     </values>
     <values>
         <field>US_State__c</field>

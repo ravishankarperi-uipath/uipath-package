@@ -130,7 +130,7 @@ public class AccountsTest {
     fflib_SObjectDomain.triggerHandler(Accounts.class);
     System.assertEquals('India', accountA.BillingCountry);
 
-    // If already set, leave it as it is
+    // If already set, leave it as is
     Account accountB = new Account(
       Name = 'Test',
       BillingCountryCode = 'IN',
@@ -269,12 +269,12 @@ public class AccountsTest {
     fflib_SObjectDomain.triggerHandler(Accounts.class);
 
     System.assertEquals('AMER', a0.Geo__c);
-    System.assertEquals('Northwest', a1.Region__c);
-    System.assertEquals('NorthCentral', a2.Region__c);
+    System.assertEquals('Pacific Northwest', a1.Region__c);
+    System.assertEquals('NorthCentral East', a2.Region__c);
     System.assertEquals(null, a3.Region__c);
     System.assertEquals('EMEA', a4.Geo__c);
     System.assertEquals('EMEA', a5.Geo__c);
-    System.assertEquals('AMER North & BFS', a6.Area__c);
+    System.assertEquals('East', a6.Area__c);
     System.assertEquals('Japan', a7.Geo__c);
   }
 
