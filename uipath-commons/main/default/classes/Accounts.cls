@@ -34,6 +34,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountSetDataStewardFunction.deriveDataStewardUserOnInsert(Records);
     AccountSetLegalEntityNameFunction.deriveLegalEntityNameOnInsert(Records);
     AccountSetStateFunction.deriveStateOnInsert(Records);
+    AccountSetClassificationGlobalFunction.deriveRecordTypeOnInsert(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {

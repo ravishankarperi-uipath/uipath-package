@@ -3,6 +3,48 @@ public with sharing class AccountClassificationGlobalQueueableTest {
   private static final string USA = 'United States';
 
   @isTest
+  public static void setupClassification_InsertTest() {
+    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
+      .get('Customer')
+      .getRecordTypeId();
+
+    Account topParentAcc = new Account(
+      Name = 'TopParentAccount',
+      Geo__c = 'APAC',
+      RecordTypeId = customerRT,
+      Classification__c = 'General Business',
+      Country__c = USA,
+      Industry = 'Communications'
+    );
+    insert topParentAcc;
+
+    Account parentAccount = new Account(
+      Name = 'Parent Account',
+      ParentId = topParentAcc.Id,
+      RecordTypeId = customerRT,
+      Classification__c = 'Global',
+      Country__c = 'France',
+      Industry = 'Communications'
+    );
+    insert parentAccount;
+
+    Account childparentAccount = new Account(
+      Name = 'ChildrenAccount11',
+      ParentId = parentAccount.Id,
+      RecordTypeId = customerRT,
+      Country__c = USA,
+      Industry = 'Communications'
+      //Overwrite_Classification__c = false
+    );
+    List<Account> insertAccounts = new List<Account>();
+    insertAccounts.add(childparentAccount);
+    fflib_SObjectDomain.Test.Database.onInsert(insertAccounts);
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+
+    System.assertEquals('Global', childparentAccount.Classification__c);
+  }
+
+  @isTest
   public static void setupClassification_UpdateTest() {
     Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
       .get('Customer')
