@@ -51,7 +51,6 @@ public without sharing class AccountMapDnBAddressFunction implements SObjectToSO
       String.isBlank(account.BillingCountry) &&
       String.isNotBlank(account.Country__c)
     ) {
-      account.BillingCountry = account.Country__c;
       account.BillingCountryCode = countryNameAndCodeMap.get(
         account.Country__c
       );

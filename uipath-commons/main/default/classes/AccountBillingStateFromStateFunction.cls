@@ -5,7 +5,6 @@ public with sharing class AccountBillingStateFromStateFunction implements SObjec
   public SObject apply(Account acc) {
     Map<String, String> stateNameAndCodeMap = AccountMetadata.StateNameAndCodes;
     if ((acc.State__c != null)) {
-      acc.BillingState = acc.State__c;
       acc.BillingStateCode = StateNameAndCodeMap.get(acc.State__c);
     }
     return acc;

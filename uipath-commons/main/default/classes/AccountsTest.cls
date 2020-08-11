@@ -62,7 +62,7 @@ public class AccountsTest {
     );
     fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
-    System.assertEquals('Kerala', account.BillingState);
+    System.assertEquals('KL', account.BillingStateCode);
   }
 
   @IsTest
