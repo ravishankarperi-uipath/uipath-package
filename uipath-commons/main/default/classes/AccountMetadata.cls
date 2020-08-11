@@ -112,6 +112,23 @@ public without sharing class AccountMetadata {
     set;
   }
 
+  public static Map<String, String> StateNameAndCodes {
+    get {
+      if (StateNameAndCodes == null) {
+        StateNameAndCodes = new Map<String, String>();
+
+        //Retrieve State Codes
+        Schema.DescribeFieldResult stateCodeResult = User.statecode.getDescribe();
+        List<Schema.PicklistEntry> statePLE = stateCodeResult.getPicklistValues();
+        for (Schema.PicklistEntry entry : statePLE) {
+          StateNameAndCodes.put(entry.getLabel(), entry.getValue());
+        }
+      }
+      return StateNameAndCodes;
+    }
+    set;
+  }
+
   public static Id getAccountRecordTypeId(String recordTypeName) {
     Id RTId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
       .get(recordTypeName)
