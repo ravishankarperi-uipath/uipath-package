@@ -51,12 +51,12 @@ jobs:
       #  new uipath-core version if contents changed
       - name: "create uipath-core beta version"
         if: steps.filter.outputs.core == 'true'
-        run: "sfdx force:package:version:create -p uipath-core -d uipath-core --wait 10 -f config/project-scratch-def.json -k unlockedclear"
+        run: "sfdx force:package:version:create -p uipath-core -d uipath-core --wait 30 -f config/project-scratch-def.json -k unlockedclear"
 
       #  new uipath-commons version if contents changed
       - name: "create uipath-commons beta version"
         if: steps.filter.outputs.commons == 'true'
-        run: "sfdx force:package:version:create -p uipath-commons -d uipath-commons --wait 15 -f config/project-scratch-def.json -k unlockedclear"
+        run: "sfdx force:package:version:create -p uipath-commons -d uipath-commons --wait 30 -f config/project-scratch-def.json -k unlockedclear"
 
       # Store secret for CI
       - name: "Populate auth file with CI_AUTH_URL secret"
