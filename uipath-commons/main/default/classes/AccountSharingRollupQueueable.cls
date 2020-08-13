@@ -148,13 +148,12 @@ public with sharing class AccountSharingRollupQueueable extends AbstractQueueabl
     Map<Id, SObject> existingAccounts
   ) {
     SObjectPredicate hasChanged = new HasRecordChanged(
-      new Set<SObjectField>{ Account.ParentId },
+      new Set<SObjectField>{ Account.ParentId, Account.OwnerId },
       accounts,
       existingAccounts
     );
 
     List<Account> eligibleAccounts = (List<Account>) Collection.of(accounts)
-      .filter(Match.field(Account.ParentId).hasValue())
       .filter(hasChanged)
       .asList();
 
