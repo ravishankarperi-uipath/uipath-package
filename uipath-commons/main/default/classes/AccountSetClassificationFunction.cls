@@ -52,80 +52,69 @@ public with sharing class AccountSetClassificationFunction implements SObjectToS
   private static void processAMERAccount(Account acc) {
     // AMER (wo Canada & LATAM) - ENTERPRISE
     if (
-      acc.Region__c != 'Canada' &&
-      acc.Region__c != 'LATAM' &&
-      acc.AnnualRevenue >= 1000000000.00 &&
       acc.Overwrite_Classification__c == false &&
+      acc.Classification__c != 'Global' &&
       acc.Parent_Account_Classification__c != 'Global'
     ) {
-      acc.Classification__c = 'Enterprise';
-    } else if (
-      acc.Region__c != 'Canada' &&
-      acc.Region__c != 'LATAM' &&
-      acc.AnnualRevenue < 1000000000.00 &&
-      acc.Overwrite_Classification__c == false &&
-      acc.Parent_Account_Classification__c != 'Global'
-    ) {
-      // AMER (wo Canada & LATAM) - Velocity
-      acc.Classification__c = 'Velocity';
-    } else if (
-      acc.Region__c == 'Canada' &&
-      acc.AnnualRevenue >= 200000000.00 &&
-      acc.Overwrite_Classification__c == false &&
-      acc.Parent_Account_Classification__c != 'Global'
-    ) {
-      // AMER (Canada) - Enterprise
-      acc.Classification__c = 'Enterprise';
-    } else if (
-      acc.Region__c == 'Canada' &&
-      acc.AnnualRevenue < 200000000.00 &&
-      acc.Overwrite_Classification__c == false &&
-      acc.Parent_Account_Classification__c != 'Global'
-    ) {
-      // AMER (Canada) - Velocity
-      acc.Classification__c = 'Velocity';
-    } else if (
-      acc.Region__c == 'LATAM' &&
-      acc.AnnualRevenue >= 150000000.00 &&
-      acc.Overwrite_Classification__c == false &&
-      acc.Parent_Account_Classification__c != 'Global'
-    ) {
-      // AMER (LATAM) - Enterprise
-      acc.Classification__c = 'Enterprise';
-    } else if (
-      acc.Region__c == 'LATAM' &&
-      acc.AnnualRevenue < 150000000.00 &&
-      acc.Overwrite_Classification__c == false &&
-      acc.Parent_Account_Classification__c != 'Global'
-    ) {
-      // AMER (LATAM) - Velocity
-      acc.Classification__c = 'Velocity';
+      if (
+        acc.Region__c != 'Canada' &&
+        acc.Region__c != 'LATAM' &&
+        acc.AnnualRevenue >= 1000000000.00
+      ) {
+        acc.Classification__c = 'Enterprise';
+      } else if (
+        acc.Region__c != 'Canada' &&
+        acc.Region__c != 'LATAM' &&
+        acc.AnnualRevenue < 1000000000.00
+      ) {
+        // AMER (wo Canada & LATAM) - Velocity
+        acc.Classification__c = 'Velocity';
+      } else if (
+        acc.Region__c == 'Canada' &&
+        acc.AnnualRevenue >= 200000000.00
+      ) {
+        // AMER (Canada) - Enterprise
+        acc.Classification__c = 'Enterprise';
+      } else if (
+        acc.Region__c == 'Canada' &&
+        acc.AnnualRevenue < 200000000.00
+      ) {
+        // AMER (Canada) - Velocity
+        acc.Classification__c = 'Velocity';
+      } else if (
+        acc.Region__c == 'LATAM' &&
+        acc.AnnualRevenue >= 150000000.00
+      ) {
+        // AMER (LATAM) - Enterprise
+        acc.Classification__c = 'Enterprise';
+      } else if (acc.Region__c == 'LATAM' && acc.AnnualRevenue < 150000000.00) {
+        // AMER (LATAM) - Velocity
+        acc.Classification__c = 'Velocity';
+      } else if (acc.AnnualRevenue == null) {
+        acc.Classification__c = '';
+      }
     }
   }
 
   private static void processEMEAAccount(Account acc) {
     // EMEA - Enterprise
     if (
-      acc.AnnualRevenue >= 1000000000.00 &&
       acc.Overwrite_Classification__c == false &&
+      acc.Classification__c != 'Global' &&
       acc.Parent_Account_Classification__c != 'Global'
     ) {
-      acc.Classification__c = 'Enterprise';
-    } else if (
-      acc.AnnualRevenue >= 250000000.00 &&
-      acc.AnnualRevenue < 1000000000.00 &&
-      acc.Overwrite_Classification__c == false &&
-      acc.Parent_Account_Classification__c != 'Global'
-    ) {
-      // EMEA - Commercial
-      acc.Classification__c = 'Commercial';
-    } else if (
-      acc.AnnualRevenue < 250000000.00 &&
-      acc.Overwrite_Classification__c == false &&
-      acc.Parent_Account_Classification__c != 'Global'
-    ) {
-      // EMEA - SMB
-      acc.Classification__c = 'SMB';
+      if (acc.AnnualRevenue >= 1000000000.00) {
+        acc.Classification__c = 'Enterprise';
+      } else if (
+        acc.AnnualRevenue >= 250000000.00 &&
+        acc.AnnualRevenue < 1000000000.00
+      ) {
+        acc.Classification__c = 'Commercial';
+      } else if (acc.AnnualRevenue < 250000000.00) {
+        acc.Classification__c = 'SMB';
+      } else if (acc.AnnualRevenue == null) {
+        acc.Classification__c = '';
+      }
     }
   }
 
@@ -143,26 +132,22 @@ public with sharing class AccountSetClassificationFunction implements SObjectToS
   private static void processAPACAccount(Account acc) {
     // APAC - Enterprise
     if (
-      acc.AnnualRevenue >= 1000000000.00 &&
       acc.Overwrite_Classification__c == false &&
+      acc.Classification__c != 'Global' &&
       acc.Parent_Account_Classification__c != 'Global'
     ) {
-      acc.Classification__c = 'Enterprise';
-    } else if (
-      acc.AnnualRevenue >= 250000000.00 &&
-      acc.AnnualRevenue < 1000000000.00 &&
-      acc.Overwrite_Classification__c == false &&
-      acc.Parent_Account_Classification__c != 'Global'
-    ) {
-      // APAC - Commercial
-      acc.Classification__c = 'Commercial';
-    } else if (
-      acc.AnnualRevenue < 250000000.00 &&
-      acc.Overwrite_Classification__c == false &&
-      acc.Parent_Account_Classification__c != 'Global'
-    ) {
-      // APAC - SMB
-      acc.Classification__c = 'SMB';
+      if (acc.AnnualRevenue == null) {
+        acc.Classification__c = '';
+      } else if (acc.AnnualRevenue >= 1000000000.00) {
+        acc.Classification__c = 'Enterprise';
+      } else if (
+        acc.AnnualRevenue >= 250000000.00 &&
+        acc.AnnualRevenue < 1000000000.00
+      ) {
+        acc.Classification__c = 'Commercial';
+      } else if (acc.AnnualRevenue < 250000000.00) {
+        acc.Classification__c = 'SMB';
+      }
     }
   }
 

@@ -1,59 +1,57 @@
-/**
- * Responsibility: If account Classification is Global change all children to global
- */
-public with sharing class AccountClassificationGlobalQueueable extends AbstractQueueable {
+public with sharing class AccountSetClassificationQueueable extends AbstractQueueable {
   private final List<SObject> accounts;
 
-  public AccountClassificationGlobalQueueable(List<SObject> accounts) {
-    super('AccountClassificationGlobalQueueable');
+  public AccountSetClassificationQueueable(List<SObject> accounts) {
+    super('AccountSetClassificationQueueable');
     this.accounts = accounts;
   }
 
   public override void work() {
-    this.setGlobalClassificationOnChildren(this.accounts);
+    this.setFormulaClassificationOnChildren(this.accounts);
   }
-
-  private void setGlobalClassificationOnChildren(List<SObject> accounts) {
+  private void setFormulaClassificationOnChildren(List<SObject> accounts) {
     List<Id> recordTypesOfInterest = new List<Id>{
       AccountMetadata.customerRecordType,
       AccountMetadata.customerProspectRecordType,
       AccountMetadata.ProspectRecordType
     };
-
     List<Account> children = [
-      SELECT Id, Name
+      SELECT
+        Id,
+        Name,
+        Parent.Overwrite_Classification__c,
+        Parent.Parent.Overwrite_Classification__c
       FROM Account
       WHERE
         (Parent.Parent.Parent.Id IN :accounts
         OR Parent.Parent.Id IN :accounts
         OR Parent.Id IN :accounts)
         AND RecordTypeId IN :recordTypesOfInterest
-        AND Classification__c != 'Global'
+        AND Classification__c = 'Global'
         AND Overwrite_Classification__c = false
-      /*OR (Id IN :accounts AND Parent.Classification__c = 'Global' AND Classification__c != 'Global' AND RecordTypeId IN :recordTypesOfInterest AND Overwrite_Classification__c = false)*/
     ];
 
     for (Account acc : children) {
-      acc.Classification__c = 'Global';
+      if (
+        acc.Parent.Overwrite_Classification__c == false &&
+        acc.Parent.Parent.Overwrite_Classification__c == false
+      )
+        acc.Classification__c = '';
     }
     update children;
   }
 
   /**
-   * For global accounts, when an Account Classification changes to 'Global' set all children accounts to Global
+   * For non-global accounts, when an Account Classification changes from 'Global' to the formula based on AnnualRevenue, Geo and Region set all children accounts to follow the
    * @param accounts
    * @param existingAccounts
    */
-  public static void setClassificationToGlobal(
+  public static void setClassificationByGeoAndRevenue(
     List<Account> accounts,
     Map<Id, SObject> existingAccounts
   ) {
     SObjectPredicate hasChanged = new HasRecordChanged(
-      new Set<SObjectField>{
-        Account.Classification__c,
-        Account.ParentId,
-        Account.Overwrite_Classification__c
-      },
+      new Set<SObjectField>{ Account.Classification__c },
       accounts,
       existingAccounts
     );
@@ -70,16 +68,18 @@ public with sharing class AccountClassificationGlobalQueueable extends AbstractQ
               null
             }
           )
+          .also(Account.Classification__c)
+          .notEquals('Global')
           .also(Account.Overwrite_Classification__c)
           .equals(false)
-          .also(Account.Classification__c)
-          .equals('Global')
+          .also(Account.AnnualRevenue)
+          .notEquals(null)
       )
       .asList();
 
     if (!changedAccounts.isEmpty()) {
       AbstractQueueable.enqueue(
-        new AccountClassificationGlobalQueueable(changedAccounts)
+        new AccountSetClassificationQueueable(changedAccounts)
       );
     }
   }

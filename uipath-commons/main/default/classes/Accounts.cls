@@ -117,6 +117,10 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
       Records,
       existingRecords
     );
+    AccountSetClassificationQueueable.setClassificationByGeoAndRevenue(
+      Records,
+      existingRecords
+    );
   }
 
   public override void onAfterDelete() {
