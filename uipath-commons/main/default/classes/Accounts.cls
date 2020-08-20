@@ -19,9 +19,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountJapanConvertedLeadFunction.setGeoFields(Records);
     AccountBillingStateFromStateFunction.copyStateToBillingState(Records);
     AccountMapDnBAddressFunction.deriveAddressFieldsOnInsert(Records);
-    AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnInsert(Records);
     AccountSetClassificationFunction.deriveClassificationFieldsOnInsert(Records);
-    AccountTerritoryService.deriveTerritoryFields(Records);
     AccountSetSubsidiaryFunction.deriveSubsidiaryOnInsert(Records);
     AccountSetRecordTypeFunction.deriveRecordTypeOnInsert(Records);
     AccountConvertAcademic.convertAcademicAccount(Records);
@@ -29,19 +27,22 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountSetDataStewardFunction.deriveDataStewardUserOnInsert(Records);
     AccountSetLegalEntityNameFunction.deriveLegalEntityNameOnInsert(Records);
     AccountSetStateFunction.deriveStateOnInsert(Records);
+    AccountTerritoryService.deriveTerritoryFields(Records);
+    AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnInsert(Records);
     AccountSetClassificationGlobalFunction.deriveRecordTypeOnInsert(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     AccountMapDnBAddressFunction.deriveAddressFieldsOnUpdate(Records, existingRecords);
-    AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnUpdate(Records, existingRecords);
     AccountSetClassificationFunction.deriveClassificationFieldsOnUpdate(Records, existingRecords);
-    AccountTerritoryService.deriveTerritoryFieldsOnUpdate(Records, existingRecords);
     AccountSetRecordTypeFunction.deriveRecordTypeForExistingAccount(Records, existingRecords);
     AccountConvertAcademic.convertAcademicAccountOnUpdate(Records, existingRecords);
     AccountSetDataStewardFunction.deriveDataStewardUserOnUpdate(Records, existingRecords);
     AccountSetSyncStatusFunction.deriveSyncStatusForValidatedAccount(Records, existingRecords);
     AccountSetStateFunction.deriveStateOnUpdate(Records, existingRecords);
+    AccountTerritoryService.deriveTerritoryFieldsOnUpdate(Records, existingRecords);
+    AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnUpdate(Records, existingRecords);
+
     //Leave this as the last method in the execution of onBeforeUpdate
     IntegrationHandler.callAccountSyncStatusIntegrationProcess(Records, existingRecords);
   }
