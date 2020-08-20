@@ -17,7 +17,8 @@ public with sharing class AccountClassificationGlobalQueueable extends AbstractQ
     List<Id> recordTypesOfInterest = new List<Id>{
       AccountMetadata.customerRecordType,
       AccountMetadata.customerProspectRecordType,
-      AccountMetadata.ProspectRecordType
+      AccountMetadata.ProspectRecordType,
+      null
     };
 
     List<Account> children = [
@@ -29,11 +30,11 @@ public with sharing class AccountClassificationGlobalQueueable extends AbstractQ
         OR Parent.Id IN :accounts)
         AND RecordTypeId IN :recordTypesOfInterest
         AND Classification__c != 'Global'
-        AND Overwrite_Classification__c = true
     ];
 
     for (Account acc : children) {
       acc.Classification__c = 'Global';
+      acc.Overwrite_Classification__c = true;
     }
     update children;
   }
@@ -45,7 +46,7 @@ public with sharing class AccountClassificationGlobalQueueable extends AbstractQ
    */
   public static void setClassificationToGlobal(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasChanged = new HasRecordChanged(
-      new Set<SObjectField>{ Account.Classification__c, Account.ParentId, Account.Overwrite_Classification__c },
+      new Set<SObjectField>{ Account.Classification__c, Account.ParentId },
       accounts,
       existingAccounts
     );
@@ -58,11 +59,10 @@ public with sharing class AccountClassificationGlobalQueueable extends AbstractQ
             new Set<String>{
               AccountMetadata.customerRecordType,
               AccountMetadata.customerProspectRecordType,
-              AccountMetadata.ProspectRecordType
+              AccountMetadata.ProspectRecordType,
+              null
             }
           )
-          .also(Account.Overwrite_Classification__c)
-          .equals(true)
           .also(Account.Classification__c)
           .equals('Global')
       )

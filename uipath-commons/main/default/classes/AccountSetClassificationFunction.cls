@@ -25,7 +25,8 @@ public with sharing class AccountSetClassificationFunction implements SObjectToS
       acc.RecordTypeId == customerProspectRT ||
       acc.RecordTypeId == partnerRT ||
       acc.RecordTypeId == partnerProspectRT ||
-      acc.RecordTypeId == prospectRT
+      acc.RecordTypeId == prospectRT ||
+      acc.RecordTypeId == null
     ) {
       if (acc.Overwrite_Classification__c == false) {
         // AMER
@@ -114,6 +115,7 @@ public with sharing class AccountSetClassificationFunction implements SObjectToS
   private static void processGlobalAccount(Account acc) {
     // Global by Parent
     acc.Classification__c = 'Global';
+    acc.Overwrite_Classification__c = true;
   }
 
   /**
