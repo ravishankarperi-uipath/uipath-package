@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Licensing_Server_Callout__c</field>
-        <value xsi:type="xsd:string">Licensing Sync STB</value>
+        <value xsi:type="xsd:string">Licensing_Sync_STB</value>
     </values>
 </CustomMetadata>
