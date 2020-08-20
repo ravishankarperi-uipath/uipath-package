@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
+    <authorizeUrl>https://uipath-licensing-dev.eu.auth0.com/authorize?audience=https%3A%2F%2Flicense.uipath.com%2Fapi%2Fsalesforce</authorizeUrl>
+    <consumerKey>fVuqwmLYMWFJb9yJR8eRRtJ9jU2dVYQ7</consumerKey>
+    <consumerSecret>iSLpUkWmXkgnPe7Cel07D89PKE+kB2rj5jvywVpSoaljuQ2tnrJ2ev54DV5/nSCOIqP8DK4BSiSko3KTZkUFpXBBGPdiC2rX</consumerSecret>
+    <friendlyName>Licensing_Sync_DEV</friendlyName>
+    <includeOrgIdInIdentifier>false</includeOrgIdInIdentifier>
+    <providerType>OpenIdConnect</providerType>
+    <sendAccessTokenInHeader>false</sendAccessTokenInHeader>
+    <sendClientCredentialsInHeader>false</sendClientCredentialsInHeader>
+    <sendSecretInApis>true</sendSecretInApis>
+    <tokenUrl>https://uipath-licensing-dev.eu.auth0.com/oauth/token</tokenUrl>
+    <userInfoUrl>https://uipath-licensing-dev.eu.auth0.com/userinfo</userInfoUrl>
+</AuthProvider>

@@ -21,7 +21,18 @@ public with sharing class LicensingApiDispatch {
     }
   }
 
+  private static Organization orgInfo {
+    get {
+      if (orgInfo == null) {
+        orgInfo = [SELECT IsSandbox FROM Organization LIMIT 1];
+      }
+      return orgInfo;
+    }
+    set;
+  }
+
   private static Licensing_Environment__mdt[] getEnvironments() {
+    //test setting
     if (Test.isRunningTest()) {
       return new List<Licensing_Environment__mdt>{
         new Licensing_Environment__mdt(
@@ -30,10 +41,21 @@ public with sharing class LicensingApiDispatch {
         )
       };
     }
+
+    //production setting
+    if (orgInfo.IsSandbox == false) {
+      return [
+        SELECT Licensing_Server_Callout__c, Enabled__c
+        FROM Licensing_Environment__mdt
+        WHERE Enabled__c = true AND DeveloperName = 'Production'
+      ];
+    }
+
+    //sandbox setting
     return [
       SELECT Licensing_Server_Callout__c, Enabled__c
       FROM Licensing_Environment__mdt
-      WHERE Enabled__c = true
+      WHERE Enabled__c = true AND DeveloperName = 'Sandbox'
     ];
   }
 
