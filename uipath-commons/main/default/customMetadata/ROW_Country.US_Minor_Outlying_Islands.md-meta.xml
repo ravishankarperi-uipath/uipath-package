@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+  xmlns="http://soap.sforce.com/2006/04/metadata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
     <label>US Minor Outlying Islands</label>
     <protected>false</protected>
     <values>
@@ -7,7 +11,7 @@
         <value xsi:type="xsd:string">West</value>
     </values>
     <values>
-        <field>Billing_State_Code__c</field>
+        <field>Country_Code__c</field>
         <value xsi:type="xsd:string">UM</value>
     </values>
     <values>
@@ -21,9 +25,5 @@
     <values>
         <field>Territory__c</field>
         <value xsi:type="xsd:string">Southwest</value>
-    </values>
-    <values>
-        <field>US_State__c</field>
-        <value xsi:type="xsd:string">US Minor Outlying Islands</value>
     </values>
 </CustomMetadata>
