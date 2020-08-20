@@ -28,11 +28,7 @@ public with sharing class AccountSharingLeadOwnerQueueable extends AbstractQueue
     if (!leadOwnerIdSet.isEmpty()) {
       // リード所有者の取引先ID取得
       Map<ID, User> leadOwnerMap = new Map<ID, User>(
-        [
-          SELECT Id, Contact.AccountId
-          FROM User
-          WHERE IsActive = true AND Id IN :leadOwnerIdSet
-        ]
+        [SELECT Id, Contact.AccountId FROM User WHERE IsActive = true AND Id IN :leadOwnerIdSet]
       );
 
       if (!leadOwnerMap.isEmpty()) {
@@ -53,8 +49,7 @@ public with sharing class AccountSharingLeadOwnerQueueable extends AbstractQueue
         for (Account acc : accountList) {
           if (String.isNotEmpty(acc.OwnerFromLead__c)) {
             // 所有者の所属取引先
-            ID ownerAccId = leadOwnerMap.get(acc.OwnerFromLead__c)
-              .Contact.AccountId;
+            ID ownerAccId = leadOwnerMap.get(acc.OwnerFromLead__c).Contact.AccountId;
 
             // 同一取引先所属のユーザに共有設定
             for (User u : communityUserAccList) {
@@ -101,19 +96,14 @@ public with sharing class AccountSharingLeadOwnerQueueable extends AbstractQueue
       .filter(Match.field(Account.OwnerFromLead__c).hasValue())
       .asList();
     if (!eligibleAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountSharingLeadOwnerQueueable(eligibleAccounts)
-      );
+      AbstractQueueable.enqueue(new AccountSharingLeadOwnerQueueable(eligibleAccounts));
     }
   }
 
   /**
    * Share account using OwnerFromLead field
    */
-  public static void shareAccountOnUpdate(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void shareAccountOnUpdate(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasChanged = new HasRecordChanged(
       new Set<SObjectField>{ Account.OwnerFromLead__c },
       accounts,
@@ -125,9 +115,7 @@ public with sharing class AccountSharingLeadOwnerQueueable extends AbstractQueue
       .filter(hasChanged)
       .asList();
     if (!eligibleAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountSharingLeadOwnerQueueable(eligibleAccounts)
-      );
+      AbstractQueueable.enqueue(new AccountSharingLeadOwnerQueueable(eligibleAccounts));
     }
   }
 }

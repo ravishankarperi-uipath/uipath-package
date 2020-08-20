@@ -32,27 +32,19 @@ public class AccountSetRecordTypeFunction implements SObjectToSObjectFunction {
    */
   public static void deriveRecordTypeOnInsert(List<Account> records) {
     Collection.of(records)
-      .mapSome(
-        Match.field(Account.Account_Business_Type__c).hasValue(),
-        new AccountSetRecordTypeFunction()
-      );
+      .mapSome(Match.field(Account.Account_Business_Type__c).hasValue(), new AccountSetRecordTypeFunction());
   }
 
   /**
    * Updates record type based on Account Business Type
    */
-  public static void deriveRecordTypeForExistingAccount(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void deriveRecordTypeForExistingAccount(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasBusinessTypeChanged = new HasRecordChanged(
       new Set<SObjectField>{ Account.Account_Business_Type__c },
       accounts,
       existingAccounts
     );
 
-    Collection.of(accounts)
-      .filter(hasBusinessTypeChanged)
-      .mapAll(new AccountSetRecordTypeFunction());
+    Collection.of(accounts).filter(hasBusinessTypeChanged).mapAll(new AccountSetRecordTypeFunction());
   }
 }

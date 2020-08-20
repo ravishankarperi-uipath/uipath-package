@@ -13,10 +13,7 @@ public class AccountSetChannelTierFunction implements SObjectToSObjectFunction {
   }
 
   public SObject apply(Account acc) {
-    if (
-      acc.RecordTypeId == partnerProspectRT ||
-      acc.RecordTypeId == partnerRT
-    ) {
+    if (acc.RecordTypeId == partnerProspectRT || acc.RecordTypeId == partnerRT) {
       acc.Channel_Tier__c = 'Reseller';
     }
     return acc;
@@ -30,10 +27,6 @@ public class AccountSetChannelTierFunction implements SObjectToSObjectFunction {
    * On Account Insert, Derives Channel tier based on Account Record Type
    */
   public static void deriveChannelTierOnInsert(List<Account> records) {
-    Collection.of(records)
-      .mapSome(
-        Match.field(Account.RecordTypeId).hasValue(),
-        new AccountSetChannelTierFunction()
-      );
+    Collection.of(records).mapSome(Match.field(Account.RecordTypeId).hasValue(), new AccountSetChannelTierFunction());
   }
 }

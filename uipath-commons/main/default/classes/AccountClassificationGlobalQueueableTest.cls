@@ -4,9 +4,7 @@ public with sharing class AccountClassificationGlobalQueueableTest {
 
   @isTest
   public static void setupClassification_InsertTest() {
-    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Customer')
-      .getRecordTypeId();
+    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
 
     Account topParentAcc = new Account(
       Name = 'TopParentAccount',
@@ -14,6 +12,7 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       RecordTypeId = customerRT,
       Classification__c = 'General Business',
       Country__c = USA,
+      BillingCountry = USA,
       Industry = 'Communications'
     );
     insert topParentAcc;
@@ -24,7 +23,9 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       RecordTypeId = customerRT,
       Classification__c = 'Global',
       Country__c = 'France',
-      Industry = 'Communications'
+      BillingCountry = USA,
+      Industry = 'Communications',
+      Overwrite_Classification__c = true
     );
     insert parentAccount;
 
@@ -33,8 +34,9 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       ParentId = parentAccount.Id,
       RecordTypeId = customerRT,
       Country__c = USA,
-      Industry = 'Communications'
-      //Overwrite_Classification__c = false
+      BillingCountry = USA,
+      Industry = 'Communications',
+      Overwrite_Classification__c = true
     );
     List<Account> insertAccounts = new List<Account>();
     insertAccounts.add(childparentAccount);
@@ -46,9 +48,7 @@ public with sharing class AccountClassificationGlobalQueueableTest {
 
   @isTest
   public static void setupClassification_UpdateTest() {
-    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Customer')
-      .getRecordTypeId();
+    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
 
     Account topParentAcc = new Account(
       Name = 'TopParentAccount',
@@ -56,6 +56,7 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       RecordTypeId = customerRT,
       Classification__c = 'General Business',
       Country__c = USA,
+      BillingCountry = USA,
       Industry = 'Communications'
     );
     insert topParentAcc;
@@ -66,7 +67,9 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       RecordTypeId = customerRT,
       Classification__c = 'Velocity',
       Country__c = 'France',
-      Industry = 'Communications'
+      BillingCountry = 'France',
+      Industry = 'Communications',
+      Overwrite_Classification__c = true
     );
     insert parentAccount1;
 
@@ -77,8 +80,9 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       RecordTypeId = customerRT,
       Classification__c = 'Velocity',
       Country__c = USA,
-      Industry = 'Communications'
-      //Overwrite_Classification__c = false
+      BillingCountry = USA,
+      Industry = 'Communications',
+      Overwrite_Classification__c = true
     );
     childrenAccounts.add(childparentAccount11);
 
@@ -88,8 +92,9 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       RecordTypeId = customerRT,
       Classification__c = 'Velocity',
       Country__c = 'Germany',
-      Industry = 'Communications'
-      //Overwrite_Classification__c = false
+      BillingCountry = 'Germany',
+      Industry = 'Communications',
+      Overwrite_Classification__c = true
     );
     childrenAccounts.add(childparentAccount12);
 
@@ -99,8 +104,9 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       RecordTypeId = customerRT,
       Classification__c = 'Velocity',
       Country__c = 'Italy',
-      Industry = 'Communications'
-      //Overwrite_Classification__c = false
+      BillingCountry = 'Italy',
+      Industry = 'Communications',
+      Overwrite_Classification__c = true
     );
     insert parentAccount2;
 
@@ -110,8 +116,9 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       RecordTypeId = customerRT,
       Classification__c = 'Velocity',
       Country__c = 'Peru',
-      Industry = 'Communications'
-      //Overwrite_Classification__c = false
+      BillingCountry = 'Peru',
+      Industry = 'Communications',
+      Overwrite_Classification__c = true
     );
     childrenAccounts.add(childparentAccount21);
 
@@ -121,8 +128,9 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       RecordTypeId = customerRT,
       Classification__c = 'Velocity',
       Country__c = USA,
-      Industry = 'Communications'
-      //Overwrite_Classification__c = false
+      BillingCountry = USA,
+      Industry = 'Communications',
+      Overwrite_Classification__c = true
     );
     childrenAccounts.add(childparentAccount22);
 
@@ -134,8 +142,9 @@ public with sharing class AccountClassificationGlobalQueueableTest {
       RecordTypeId = customerRT,
       Classification__c = 'Velocity',
       Country__c = 'Japan',
-      Industry = 'Communications'
-      //Overwrite_Classification__c = false
+      BillingCountry = 'Japan',
+      Industry = 'Communications',
+      Overwrite_Classification__c = true
     );
     insert childparentAccount23;
 
@@ -148,8 +157,9 @@ public with sharing class AccountClassificationGlobalQueueableTest {
         RecordTypeId = customerRT,
         Classification__c = 'Velocity',
         Country__c = 'Canada',
-        Industry = 'Communications'
-        //Overwrite_Classification__c = false
+        BillingCountry = 'Canada',
+        Industry = 'Communications',
+        Overwrite_Classification__c = true
       );
       childrenAccounts2.add(a);
     }
@@ -180,9 +190,7 @@ public with sharing class AccountClassificationGlobalQueueableTest {
 
   @IsTest
   public static void temp() {
-    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Customer')
-      .getRecordTypeId();
+    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
     Account topParentAcc = new Account(
       Name = 'TopParentAccount',
       Geo__c = 'APAC',

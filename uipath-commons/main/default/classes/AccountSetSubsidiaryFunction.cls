@@ -4,9 +4,7 @@
 public class AccountSetSubsidiaryFunction implements SObjectToSObjectFunction {
   private Map<String, String> countrySubsidiaryMap;
 
-  public AccountSetSubsidiaryFunction(
-    Map<String, String> countrySubsidiaryMap
-  ) {
+  public AccountSetSubsidiaryFunction(Map<String, String> countrySubsidiaryMap) {
     this.countrySubsidiaryMap = countrySubsidiaryMap;
   }
 
@@ -15,9 +13,7 @@ public class AccountSetSubsidiaryFunction implements SObjectToSObjectFunction {
     String accountCountryToFind = acc.Country__c.left(40).toLowerCase();
     String countrySubsidiary = countrySubsidiaryMap.get(accountCountryToFind);
     if (String.IsNotBlank(countrySubsidiary)) {
-      acc.Primary_Subsidiary__c = countrySubsidiaryMap.get(
-        accountCountryToFind
-      );
+      acc.Primary_Subsidiary__c = countrySubsidiaryMap.get(accountCountryToFind);
     }
     return acc;
   }
@@ -32,9 +28,6 @@ public class AccountSetSubsidiaryFunction implements SObjectToSObjectFunction {
   public static void deriveSubsidiaryOnInsert(List<Account> records) {
     Map<String, String> countrySubsidiaryMap = AccountMetadata.getCountrySubsidiaryMap();
     Collection.of(records)
-      .mapSome(
-        Match.field(Account.Country__c).hasValue(),
-        new AccountSetSubsidiaryFunction(countrySubsidiaryMap)
-      );
+      .mapSome(Match.field(Account.Country__c).hasValue(), new AccountSetSubsidiaryFunction(countrySubsidiaryMap));
   }
 }

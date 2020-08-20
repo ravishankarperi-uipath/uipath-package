@@ -24,15 +24,7 @@ private class AccountDNBCompanyQueueableTest {
     );
     accountDNBCompanyQueueable.execute(null);
 
-    List<Address__c> addList = [
-      SELECT Id
-      FROM Address__c
-      WHERE Account__c = :acc.Id
-    ];
-    System.assertEquals(
-      true,
-      addList.size() > 0,
-      'Address not created properly'
-    );
+    List<Address__c> addList = [SELECT Id FROM Address__c WHERE Account__c = :acc.Id];
+    System.assertEquals(true, addList.size() > 0, 'Address not created properly');
   }
 }

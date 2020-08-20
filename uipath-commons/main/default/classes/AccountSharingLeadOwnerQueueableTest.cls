@@ -2,24 +2,15 @@
 private class AccountSharingLeadOwnerQueueableTest {
   @TestSetup
   private static void makeData() {
-    List<Profile> p = [
-      SELECT Id
-      FROM Profile
-      WHERE Name = 'UiPath Japan Partner Community'
-      LIMIT 1
-    ];
+    List<Profile> p = [SELECT Id FROM Profile WHERE Name = 'UiPath Japan Partner Community' LIMIT 1];
     if (p.isEmpty()) {
       p = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
 
       User u1 = new User(
         LastName = 'TestCommunityUser1',
         Alias = 'user1',
-        Email = 'user1' +
-          Date.today().format() +
-          '@uipath.com.community.testuser',
-        UserName = 'user1' +
-          Date.today().format() +
-          '@uipath.com.community.testuser',
+        Email = 'user1' + Date.today().format() + '@uipath.com.community.testuser',
+        UserName = 'user1' + Date.today().format() + '@uipath.com.community.testuser',
         EmailEncodingKey = 'ISO-2022-JP',
         TimeZoneSidKey = 'Asia/Tokyo',
         LocaleSidKey = 'ja_JP',
@@ -51,12 +42,8 @@ private class AccountSharingLeadOwnerQueueableTest {
         User u1 = new User(
           LastName = 'TestCommunityUser1',
           Alias = 'user1',
-          Email = 'user1' +
-            Date.today().format() +
-            '@uipath.com.community.testuser',
-          UserName = 'user1' +
-            Date.today().format() +
-            '@uipath.com.community.testuser',
+          Email = 'user1' + Date.today().format() + '@uipath.com.community.testuser',
+          UserName = 'user1' + Date.today().format() + '@uipath.com.community.testuser',
           EmailEncodingKey = 'ISO-2022-JP',
           TimeZoneSidKey = 'Asia/Tokyo',
           LocaleSidKey = 'ja_JP',
@@ -71,12 +58,7 @@ private class AccountSharingLeadOwnerQueueableTest {
 
   @isTest
   private static void shareAccountWithLeadOwnerTest() {
-    User u1 = [
-      SELECT Id
-      FROM User
-      WHERE LastName = 'TestCommunityUser1'
-      LIMIT 1
-    ];
+    User u1 = [SELECT Id FROM User WHERE LastName = 'TestCommunityUser1' LIMIT 1];
     Account acc = new Account(
       Name = 'Test Acc',
       BillingCountry = 'United Kingdom',
@@ -95,8 +77,7 @@ private class AccountSharingLeadOwnerQueueableTest {
 
     system.assertEquals(
       true,
-      [SELECT Id, OwnerFromLead__c FROM Account WHERE Id = :acc.Id]
-      .OwnerFromLead__c == null,
+      [SELECT Id, OwnerFromLead__c FROM Account WHERE Id = :acc.Id].OwnerFromLead__c == null,
       'OwnerFromLead__c is not cleared'
     );
   }

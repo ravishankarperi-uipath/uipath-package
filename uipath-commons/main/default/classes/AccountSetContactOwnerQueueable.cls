@@ -7,10 +7,7 @@ public with sharing class AccountSetContactOwnerQueueable extends AbstractQueuea
   private final List<SObject> accountsLst;
   private final Map<Id, SObject> oldAccountsMap;
 
-  public AccountSetContactOwnerQueueable(
-    List<SObject> accountsLst,
-    Map<Id, SObject> oldAccountsMap
-  ) {
+  public AccountSetContactOwnerQueueable(List<SObject> accountsLst, Map<Id, SObject> oldAccountsMap) {
     super('AccountSetContactOwnerQueueable');
     this.accountsLst = accountsLst;
     this.oldAccountsMap = oldAccountsMap;
@@ -24,10 +21,7 @@ public with sharing class AccountSetContactOwnerQueueable extends AbstractQueuea
   // added by Mirela Chituc - 5/26/2020 ========================================
   // Set up Account Owner as Contact Owner to all Conatcts - after update
   // ============================================================================
-  private void setUpContactOwner(
-    List<Account> accountList,
-    Map<Id, SObject> oldAccountMap
-  ) {
+  private void setUpContactOwner(List<Account> accountList, Map<Id, SObject> oldAccountMap) {
     Set<Id> accIds = new Set<Id>();
     for (Account acc : accountList) {
       Account oldAcc = (Account) oldAccountMap.get(acc.Id);
@@ -37,12 +31,7 @@ public with sharing class AccountSetContactOwnerQueueable extends AbstractQueuea
 
     if (accIds.size() > 0) {
       List<Account> allAccounts = [
-        SELECT
-          Id,
-          OwnerId,
-          GAM_Id__c,
-          EDR__c,
-          (SELECT Id, OwnerId FROM Contacts)
+        SELECT Id, OwnerId, GAM_Id__c, EDR__c, (SELECT Id, OwnerId FROM Contacts)
         FROM Account
         WHERE Id IN :accIds AND PG_Legacy__c = false AND Country__c != 'Japan'
       ];
@@ -52,11 +41,7 @@ public with sharing class AccountSetContactOwnerQueueable extends AbstractQueuea
         for (contact cnt : acc.Contacts) {
           String cntOwner = String.valueOf(cnt.OwnerId);
           cntOwner = cntOwner.substring(0, 15);
-          if (
-            cntOwner != acc.GAM_Id__c &&
-            cnt.OwnerId != acc.EDR__c &&
-            cnt.OwnerId != acc.OwnerId
-          ) {
+          if (cntOwner != acc.GAM_Id__c && cnt.OwnerId != acc.EDR__c && cnt.OwnerId != acc.OwnerId) {
             cnt.OwnerId = acc.OwnerId;
             cntToUpdate.add(cnt);
           }
@@ -71,10 +56,7 @@ public with sharing class AccountSetContactOwnerQueueable extends AbstractQueuea
    * Loop and set Owner on all contacts to the owner of Account
    * @param existingRecords
    */
-  public static void setContactOwnerToAccountOwner(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void setContactOwnerToAccountOwner(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasChanged = new HasRecordChanged(
       new Set<SObjectField>{ Account.OwnerId },
       accounts,
@@ -86,9 +68,7 @@ public with sharing class AccountSetContactOwnerQueueable extends AbstractQueuea
       .asList();
 
     if (eligibleAccounts.size() > 0) {
-      AbstractQueueable.enqueue(
-        new AccountSetContactOwnerQueueable(eligibleAccounts, existingAccounts)
-      );
+      AbstractQueueable.enqueue(new AccountSetContactOwnerQueueable(eligibleAccounts, existingAccounts));
     }
   }
 }

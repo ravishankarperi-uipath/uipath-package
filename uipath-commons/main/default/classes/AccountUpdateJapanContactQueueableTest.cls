@@ -13,20 +13,11 @@ private class AccountUpdateJapanContactQueueableTest {
 
     Database.LeadConvert lc = new Database.LeadConvert();
     lc.setLeadId(lead.Id);
-    LeadStatus convertStatus = [
-      SELECT Id, MasterLabel
-      FROM LeadStatus
-      WHERE IsConverted = true
-      LIMIT 1
-    ];
+    LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
     lc.setConvertedStatus(convertStatus.MasterLabel);
     Database.convertLead(lc);
 
-    Account acc = [
-      SELECT Id, Country__c, Created_by_lead_convert__c
-      FROM Account
-      WHERE Name = 'Test Company'
-    ];
+    Account acc = [SELECT Id, Country__c, Created_by_lead_convert__c FROM Account WHERE Name = 'Test Company'];
 
     // TODO : remove it after moving it to Contact before Trigger as currently it's depend on org Lead Mapping
     acc.Created_by_lead_convert__c = true;
@@ -37,11 +28,7 @@ private class AccountUpdateJapanContactQueueableTest {
     );
     accountUpdateJapanContactQueueable.execute(null);
 
-    Contact con = [
-      SELECT Id, LeadSource
-      FROM Contact
-      WHERE AccountId = :acc.Id
-    ];
+    Contact con = [SELECT Id, LeadSource FROM Contact WHERE AccountId = :acc.Id];
     System.assertEquals('Partner', con.LeadSource);
   }
 }

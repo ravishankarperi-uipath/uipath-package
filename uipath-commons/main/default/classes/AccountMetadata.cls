@@ -6,14 +6,7 @@ public without sharing class AccountMetadata {
     get {
       if (States == null) {
         States = [
-          SELECT
-            Label,
-            DeveloperName,
-            Region__c,
-            Billing_State_Code__c,
-            Area__c,
-            Territory__c,
-            Country__c
+          SELECT Label, DeveloperName, Region__c, Billing_State_Code__c, Area__c, Territory__c, Country__c
           FROM USA_States__mdt
         ];
       }
@@ -25,10 +18,7 @@ public without sharing class AccountMetadata {
   public static List<ROW_Country__mdt> Countries {
     get {
       if (Countries == null) {
-        Countries = [
-          SELECT Country_Code__c, Region__c, Area__c, Territory__c
-          FROM ROW_Country__mdt
-        ];
+        Countries = [SELECT Country_Code__c, Region__c, Area__c, Territory__c FROM ROW_Country__mdt];
       }
       return Countries;
     }
@@ -38,10 +28,7 @@ public without sharing class AccountMetadata {
   public static List<USA_Industry__mdt> Industries {
     get {
       if (Industries == null) {
-        Industries = [
-          SELECT Region__c, Industry__c, Area__c, Territory__c
-          FROM USA_Industry__mdt
-        ];
+        Industries = [SELECT Region__c, Industry__c, Area__c, Territory__c FROM USA_Industry__mdt];
       }
       return Industries;
     }
@@ -130,136 +117,93 @@ public without sharing class AccountMetadata {
   }
 
   public static Id getAccountRecordTypeId(String recordTypeName) {
-    Id RTId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get(recordTypeName)
-      .getRecordTypeId();
+    Id RTId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(recordTypeName).getRecordTypeId();
     return RTId;
   }
 
   public static SObjectIndex getCountriesByCountryCode() {
-    SObjectIndex countriesByCountryCode = new SObjectIndex(
-        new List<String>{ 'Country_Code__c' }
-      )
+    SObjectIndex countriesByCountryCode = new SObjectIndex(new List<String>{ 'Country_Code__c' })
       .putAll(AccountMetadata.Countries);
     return countriesByCountryCode;
   }
 
   public static SObjectIndex getUsaZipCodesForAccounts(List<Account> accounts) {
-    List<String> zipCodes = Collection.of(accounts)
-      .pluckStrings(Account.BillingPostalCode);
+    List<String> zipCodes = Collection.of(accounts).pluckStrings(Account.BillingPostalCode);
 
     List<UsaZipCodes__mdt> usaZipCodes = [
       SELECT Postal_Code__c, Region__c, Area__c, Territory__c
       FROM UsaZipCodes__mdt
       WHERE Postal_Code__c IN :zipCodes
     ];
-    SObjectIndex usaZipCodesIndex = new SObjectIndex(
-        new List<String>{ 'Postal_Code__c' }
-      )
-      .putAll(usaZipCodes);
+    SObjectIndex usaZipCodesIndex = new SObjectIndex(new List<String>{ 'Postal_Code__c' }).putAll(usaZipCodes);
     return usaZipCodesIndex;
   }
 
   public static SObjectIndex getStatesByCodeAndCountry() {
-    SObjectIndex statesByCodeAndCountry = new SObjectIndex(
-        new List<String>{ 'Billing_State_Code__c', 'Country__c' }
-      )
+    SObjectIndex statesByCodeAndCountry = new SObjectIndex(new List<String>{ 'Billing_State_Code__c', 'Country__c' })
       .putAll(AccountMetadata.States);
     return statesByCodeAndCountry;
   }
 
   public static SObjectIndex getUsaIndustriesByName() {
-    SObjectIndex usaIndustriesByName = new SObjectIndex(
-        new List<String>{ 'Industry__c' }
-      )
+    SObjectIndex usaIndustriesByName = new SObjectIndex(new List<String>{ 'Industry__c' })
       .putAll(AccountMetadata.Industries);
     return usaIndustriesByName;
   }
 
-  public static ROW_Country__mdt getAccountCountry(
-    SObjectIndex countriesByCountryCode,
-    Account acc
-  ) {
+  public static ROW_Country__mdt getAccountCountry(SObjectIndex countriesByCountryCode, Account acc) {
     ROW_Country__mdt accountCountry = (ROW_Country__mdt) countriesByCountryCode.get(
       new ROW_Country__mdt(Country_Code__c = acc.BillingCountryCode)
     );
     return accountCountry;
   }
 
-  public static UsaZipCodes__mdt getAccountZipcode(
-    SObjectIndex usaZipCodesIndex,
-    Account acc
-  ) {
+  public static UsaZipCodes__mdt getAccountZipcode(SObjectIndex usaZipCodesIndex, Account acc) {
     UsaZipCodes__mdt accountZipcode = (UsaZipCodes__mdt) usaZipCodesIndex.get(
       new UsaZipCodes__mdt(Postal_Code__c = acc.BillingPostalCode)
     );
     return accountZipcode;
   }
 
-  public static USA_States__mdt getAccountState(
-    SObjectIndex usaStatesByCodeAndCountry,
-    Account acc
-  ) {
+  public static USA_States__mdt getAccountState(SObjectIndex usaStatesByCodeAndCountry, Account acc) {
     USA_States__mdt accountState = (USA_States__mdt) usaStatesByCodeAndCountry.get(
-      new USA_States__mdt(
-        Billing_State_Code__c = acc.BillingStateCode,
-        Country__c = acc.BillingCountryCode
-      )
+      new USA_States__mdt(Billing_State_Code__c = acc.BillingStateCode, Country__c = acc.BillingCountryCode)
     );
     return accountState;
   }
 
-  public static USA_Industry__mdt getAccountIndustry(
-    SObjectIndex usaIndustriesByName,
-    Account acc
-  ) {
-    USA_Industry__mdt accountIndustry = (USA_Industry__mdt) (usaIndustriesByName.get(
-      acc.Industry
-    ));
+  public static USA_Industry__mdt getAccountIndustry(SObjectIndex usaIndustriesByName, Account acc) {
+    USA_Industry__mdt accountIndustry = (USA_Industry__mdt) (usaIndustriesByName.get(acc.Industry));
     return accountIndustry;
   }
 
   public static Map<String, String> getCountrySubsidiaryMap() {
     Map<String, String> countrySubsidiaryMap = new Map<String, String>();
     Map<String, String> countryCodeSubsidiaryMap = new Map<String, String>();
-    for (
-      Country_Subsidiary_Mapping__mdt mapping : AccountMetadata.SubsidiaryCountryMap
-    ) {
-      countrySubsidiaryMap.put(
-        mapping.MasterLabel.toLowerCase(),
-        mapping.Subsidiary__c
-      );
-      countryCodeSubsidiaryMap.put(
-        mapping.Country_Code__c,
-        mapping.Subsidiary__c
-      );
+    for (Country_Subsidiary_Mapping__mdt mapping : AccountMetadata.SubsidiaryCountryMap) {
+      countrySubsidiaryMap.put(mapping.MasterLabel.toLowerCase(), mapping.Subsidiary__c);
+      countryCodeSubsidiaryMap.put(mapping.Country_Code__c, mapping.Subsidiary__c);
     }
     return countrySubsidiaryMap;
   }
 
   public static Id customerRecordType {
     get {
-      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-        .get('Customer')
-        .getRecordTypeId();
+      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
     }
     set;
   }
 
   public static Id customerProspectRecordType {
     get {
-      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-        .get('Customer_Prospect')
-        .getRecordTypeId();
+      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer_Prospect').getRecordTypeId();
     }
     set;
   }
 
   public static Id ProspectRecordType {
     get {
-      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-        .get('Prospect')
-        .getRecordTypeId();
+      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Prospect').getRecordTypeId();
     }
     set;
   }

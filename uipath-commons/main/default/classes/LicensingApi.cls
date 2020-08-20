@@ -7,9 +7,7 @@ public class LicensingApi {
   @future(callout=true)
   public static void onAccountUpdate(string callout, string accountId) {
     try {
-      System.debug(
-        'BOON: LicensingApi.onAccountUpdate started on accountId=' + accountId
-      );
+      System.debug('BOON: LicensingApi.onAccountUpdate started on accountId=' + accountId);
       HttpRequest request = new HttpRequest();
       String endpoint = 'callout:' + callout + '/account/' + accountId;
       request.setEndpoint(endpoint);
@@ -27,23 +25,11 @@ public class LicensingApi {
   }
 
   @future(callout=true)
-  public static void onAccountsMerged(
-    string callout,
-    string masterAccountId,
-    List<string> mergedAccountIds
-  ) {
+  public static void onAccountsMerged(string callout, string masterAccountId, List<string> mergedAccountIds) {
     try {
-      System.debug(
-        'BOON: LicensingApi.onAccountsMerged started on masterAccountId=' +
-        masterAccountId
-      );
+      System.debug('BOON: LicensingApi.onAccountsMerged started on masterAccountId=' + masterAccountId);
       HttpRequest request = new HttpRequest();
-      String endpoint =
-        'callout:' +
-        callout +
-        '/account/' +
-        masterAccountId +
-        '/merge';
+      String endpoint = 'callout:' + callout + '/account/' + masterAccountId + '/merge';
       request.setEndpoint(endpoint);
       request.setMethod('PUT');
       if (Test.isRunningTest()) {

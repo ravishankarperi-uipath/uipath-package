@@ -28,18 +28,11 @@ private class AccountDnBSyncQueueableTest {
     );
     insert account1;
 
-    AccountDnBSyncQueueable accSetAnnualRevenueQueueable = new AccountDnBSyncQueueable(
-      new List<SObject>{ account1 }
-    );
+    AccountDnBSyncQueueable accSetAnnualRevenueQueueable = new AccountDnBSyncQueueable(new List<SObject>{ account1 });
     accSetAnnualRevenueQueueable.execute(null);
 
     List<Account> updatedAccount = [
-      SELECT
-        Id,
-        AnnualRevenue,
-        Legal__c,
-        SIC4_Code_1_Description__c,
-        SIC4_Code_1__c
+      SELECT Id, AnnualRevenue, Legal__c, SIC4_Code_1_Description__c, SIC4_Code_1__c
       FROM Account
       WHERE Id = :account1.Id
       LIMIT 1
@@ -47,10 +40,7 @@ private class AccountDnBSyncQueueableTest {
 
     System.assertEquals(150000000.00, updatedAccount[0].AnnualRevenue);
     System.assertEquals('DnBTest1', updatedAccount[0].Legal__c);
-    System.assertEquals(
-      'This is just the description',
-      updatedAccount[0].SIC4_Code_1_Description__c
-    );
+    System.assertEquals('This is just the description', updatedAccount[0].SIC4_Code_1_Description__c);
     System.assertEquals('1243', updatedAccount[0].SIC4_Code_1__c);
   }
 }

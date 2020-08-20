@@ -14,48 +14,33 @@ public without sharing class AccountTerritoryService {
   public static void deriveTerritoryFields(List<Account> accounts) {
     SObjectIndex usaIndustriesByName = AccountMetadata.getUsaIndustriesByName();
     SObjectIndex statesByCodeAndCountry = AccountMetadata.getStatesByCodeAndCountry();
-    SObjectIndex usaZipCodesIndex = AccountMetadata.getUsaZipCodesForAccounts(
-      accounts
-    );
+    SObjectIndex usaZipCodesIndex = AccountMetadata.getUsaZipCodesForAccounts(accounts);
     SObjectIndex countriesByCountryCode = AccountMetadata.getCountriesByCountryCode();
 
     Collection.of(accounts)
       .filter(new IsAccountEligibleForTerritoryAllocation())
       .mapSome(
         isAccountCountryUnitedStates(),
-        new AssignTerritoryForUnitedStates(
-          usaIndustriesByName,
-          statesByCodeAndCountry,
-          usaZipCodesIndex
-        )
+        new AssignTerritoryForUnitedStates(usaIndustriesByName, statesByCodeAndCountry, usaZipCodesIndex)
       )
       .mapSome(
         isAccountCountryJapanIndia(),
-        new AssignTerritoryForIndiaJapan(
-          statesByCodeAndCountry,
-          countriesByCountryCode
-        )
+        new AssignTerritoryForIndiaJapan(statesByCodeAndCountry, countriesByCountryCode)
       )
-      .mapSome(
-        isAccountCountryRestOfWorld(),
-        new AssignTerritoryForRestOfWorld(countriesByCountryCode)
-      );
+      .mapSome(isAccountCountryRestOfWorld(), new AssignTerritoryForRestOfWorld(countriesByCountryCode));
   }
 
   private static FieldsMatch isAccountCountryJapanIndia() {
-    return Match.field(Account.BillingCountryCode)
-      .isIn(new Set<String>{ 'IN', 'JP' });
+    return Match.field(Account.BillingCountryCode).isIn(new Set<String>{ 'IN', 'JP' });
   }
 
   private static FieldsMatch isAccountCountryRestOfWorld() {
-    return Match.field(Account.BillingCountryCode)
-      .notIn(new Set<String>{ 'IN', 'JP', 'US' });
+    return Match.field(Account.BillingCountryCode).notIn(new Set<String>{ 'IN', 'JP', 'US' });
   }
 
   public class IsAccountEligibleForTerritoryAllocation implements SObjectPredicate {
     private Boolean apply(Account acc) {
-      return !acc.Ignore_Territory_Assignment__c &&
-        String.isNotBlank(acc.BillingCountryCode);
+      return !acc.Ignore_Territory_Assignment__c && String.isNotBlank(acc.BillingCountryCode);
     }
 
     public Boolean apply(SObject record) {
@@ -92,18 +77,9 @@ public without sharing class AccountTerritoryService {
     }
 
     private SObject apply(Account acc) {
-      USA_Industry__mdt accountIndustry = AccountMetadata.getAccountIndustry(
-        usaIndustriesByName,
-        acc
-      );
-      USA_States__mdt accountState = AccountMetadata.getAccountState(
-        statesByCodeAndCountry,
-        acc
-      );
-      UsaZipCodes__mdt accountZipcode = AccountMetadata.getAccountZipcode(
-        usaZipCodesIndex,
-        acc
-      );
+      USA_Industry__mdt accountIndustry = AccountMetadata.getAccountIndustry(usaIndustriesByName, acc);
+      USA_States__mdt accountState = AccountMetadata.getAccountState(statesByCodeAndCountry, acc);
+      UsaZipCodes__mdt accountZipcode = AccountMetadata.getAccountZipcode(usaZipCodesIndex, acc);
       acc.Geo__c = 'AMER';
 
       SObject territorySource = null;
@@ -128,23 +104,14 @@ public without sharing class AccountTerritoryService {
     SObjectIndex statesByCodeAndCountry;
     SObjectIndex countriesByCountryCode;
 
-    public AssignTerritoryForIndiaJapan(
-      SObjectIndex statesByCodeAndCountry,
-      SObjectIndex countriesByCountryCode
-    ) {
+    public AssignTerritoryForIndiaJapan(SObjectIndex statesByCodeAndCountry, SObjectIndex countriesByCountryCode) {
       this.statesByCodeAndCountry = statesByCodeAndCountry;
       this.countriesByCountryCode = countriesByCountryCode;
     }
 
     private SObject apply(Account acc) {
-      USA_States__mdt accountState = AccountMetadata.getAccountState(
-        statesByCodeAndCountry,
-        acc
-      );
-      ROW_Country__mdt accountCountry = AccountMetadata.getAccountCountry(
-        countriesByCountryCode,
-        acc
-      );
+      USA_States__mdt accountState = AccountMetadata.getAccountState(statesByCodeAndCountry, acc);
+      ROW_Country__mdt accountCountry = AccountMetadata.getAccountCountry(countriesByCountryCode, acc);
 
       SObject territorySource = null;
 
@@ -172,10 +139,7 @@ public without sharing class AccountTerritoryService {
     }
 
     private SObject apply(Account acc) {
-      ROW_Country__mdt accountCountry = AccountMetadata.getAccountCountry(
-        countriesByCountryCode,
-        acc
-      );
+      ROW_Country__mdt accountCountry = AccountMetadata.getAccountCountry(countriesByCountryCode, acc);
       if (accountCountry != null) {
         copyTerritoryFields(acc, accountCountry);
       }
@@ -194,10 +158,7 @@ public without sharing class AccountTerritoryService {
    * For India and Japan => State and Country are used to map  Territory
    * For Rest of the world => only country is used to map Territory
    */
-  public static void deriveTerritoryFieldsOnUpdate(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void deriveTerritoryFieldsOnUpdate(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasChanged = new HasRecordChanged(
       new Set<SObjectField>{
         Account.BillingCountryCode,
@@ -208,9 +169,7 @@ public without sharing class AccountTerritoryService {
       accounts,
       existingAccounts
     );
-    List<Account> changedAccounts = Collection.of(accounts)
-      .filter(hasChanged)
-      .asList();
+    List<Account> changedAccounts = Collection.of(accounts).filter(hasChanged).asList();
 
     if (!changedAccounts.isEmpty()) {
       AccountTerritoryService.deriveTerritoryFields(changedAccounts);

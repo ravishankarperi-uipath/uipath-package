@@ -6,12 +6,7 @@
 private class IntegrationHandlerTest {
   private static User getAdminUser() {
     User adminUser = new User();
-    adminUser.ProfileId = [
-      SELECT Id
-      FROM Profile
-      WHERE Name = 'System Administrator'
-    ]
-    .Id;
+    adminUser.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'].Id;
     adminUser.Username = 'test839734@uiath.com';
     adminUser.LastName = 'Test';
     adminUser.Email = 'test839734@uiath.com';
@@ -62,10 +57,7 @@ private class IntegrationHandlerTest {
       );
     }
 
-    System.assertEquals(
-      CommonsConstants.ACC_SYNC_STATUS_PENDING,
-      updatedAddress.Sync_Status__c
-    ); //Should be Pending
+    System.assertEquals(CommonsConstants.ACC_SYNC_STATUS_PENDING, updatedAddress.Sync_Status__c); //Should be Pending
 
     Test.stopTest();
   }
@@ -93,29 +85,13 @@ private class IntegrationHandlerTest {
 
     Test.startTest();
 
-    IntegrationHandler.updateAccountValidationStatusToReadyForReview(
-      new Set<Id>{ acc.Id }
-    );
+    IntegrationHandler.updateAccountValidationStatusToReadyForReview(new Set<Id>{ acc.Id });
 
-    Account updatedAccount = [
-      SELECT Id, Validation_Status__c
-      FROM Account
-      WHERE Id = :acc.Id
-    ];
-    System.assertEquals(
-      CommonsConstants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW,
-      updatedAccount.Validation_Status__c
-    );
+    Account updatedAccount = [SELECT Id, Validation_Status__c FROM Account WHERE Id = :acc.Id];
+    System.assertEquals(CommonsConstants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW, updatedAccount.Validation_Status__c);
 
-    Address__c updatedAddress = [
-      SELECT Id, Validation_Status__c
-      FROM Address__c
-      WHERE Id = :address.Id
-    ];
-    System.assertEquals(
-      CommonsConstants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW,
-      updatedAddress.Validation_Status__c
-    );
+    Address__c updatedAddress = [SELECT Id, Validation_Status__c FROM Address__c WHERE Id = :address.Id];
+    System.assertEquals(CommonsConstants.ACC_VALIDATION_STATUS_READY_FOR_REVIEW, updatedAddress.Validation_Status__c);
 
     Test.stopTest();
   }
@@ -197,11 +173,7 @@ private class IntegrationHandlerTest {
     update accRec;
     Test.stopTest();
 
-    Account acc = [
-      SELECT Id, Name, Sync_Status__c
-      FROM Account
-      WHERE Id = :accRec.Id
-    ];
+    Account acc = [SELECT Id, Name, Sync_Status__c FROM Account WHERE Id = :accRec.Id];
     System.assertEquals(
       CommonsConstants.ACC_SYNC_STATUS_NOT_VALID,
       acc.Sync_Status__c,
@@ -233,11 +205,7 @@ private class IntegrationHandlerTest {
     update accRec;
     Test.stopTest();
 
-    Account acc = [
-      SELECT Id, Name, Sync_Status__c
-      FROM Account
-      WHERE Id = :accRec.Id
-    ];
+    Account acc = [SELECT Id, Name, Sync_Status__c FROM Account WHERE Id = :accRec.Id];
     System.assertEquals(
       CommonsConstants.ACC_SYNC_STATUS_DO_NOT_SYNC,
       acc.Sync_Status__c,

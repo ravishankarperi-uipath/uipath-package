@@ -17,9 +17,7 @@ public with sharing class AccountSetGAMEmailQueueableTest {
 
     insert u1;
 
-    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Customer')
-      .getRecordTypeId();
+    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
 
     Account topParentAcc = new Account();
     System.runAs(u1) {
@@ -95,9 +93,7 @@ public with sharing class AccountSetGAMEmailQueueableTest {
 
     insert u1;
 
-    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Customer')
-      .getRecordTypeId();
+    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
 
     Account topParentAcc = new Account();
     System.runAs(u1) {
@@ -163,8 +159,7 @@ public with sharing class AccountSetGAMEmailQueueableTest {
 
   @isTest
   public static void setupGAMEmail_owner_Test() {
-    Id profileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator']
-    .Id;
+    Id profileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'].Id;
     User u1 = new User(
       ProfileId = profileId,
       Username = 'testgamemailacc@testgam.com',
@@ -193,9 +188,7 @@ public with sharing class AccountSetGAMEmailQueueableTest {
 
     insert u2;
 
-    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Customer')
-      .getRecordTypeId();
+    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
 
     Account topParentAcc = new Account();
     System.runAs(u1) {
@@ -256,9 +249,6 @@ public with sharing class AccountSetGAMEmailQueueableTest {
     ];
     System.assertEquals(2, childAccountIns.size());
     for (Account childacc : childAccountIns)
-      System.assertEquals(
-        'testgamemailacc2@testgam.com',
-        childacc.GAM_Email__c
-      );
+      System.assertEquals('testgamemailacc2@testgam.com', childacc.GAM_Email__c);
   }
 }

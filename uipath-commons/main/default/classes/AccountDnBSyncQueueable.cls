@@ -42,9 +42,7 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
     }
   }
 
-  private List<Account> reQueryAccountsWithRelevantFields(
-    List<SObject> accountsLst
-  ) {
+  private List<Account> reQueryAccountsWithRelevantFields(List<SObject> accountsLst) {
     List<Account> accounts = (List<Account>) accountsLst;
     accounts = [
       SELECT
@@ -83,19 +81,14 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
   /**
    * On Account Update, sync Account with DnB
    **/
-  public static void deriveDnBFieldsOnUpdate(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void deriveDnBFieldsOnUpdate(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasDnBObjectChanged = new HasRecordChanged(
       new Set<SObjectField>{ Account.DNBoptimizer__DnBCompanyRecord__c },
       accounts,
       existingAccounts
     );
 
-    List<Account> validatedAccounts = Collection.of(accounts)
-      .filter(hasDnBObjectChanged)
-      .asList();
+    List<Account> validatedAccounts = Collection.of(accounts).filter(hasDnBObjectChanged).asList();
 
     if (!validatedAccounts.isEmpty()) {
       AbstractQueueable.enqueue(new AccountDnBSyncQueueable(validatedAccounts));

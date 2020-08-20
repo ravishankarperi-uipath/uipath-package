@@ -29,8 +29,7 @@ public with sharing class AccountClassificationGlobalQueueable extends AbstractQ
         OR Parent.Id IN :accounts)
         AND RecordTypeId IN :recordTypesOfInterest
         AND Classification__c != 'Global'
-        AND Overwrite_Classification__c = false
-      /*OR (Id IN :accounts AND Parent.Classification__c = 'Global' AND Classification__c != 'Global' AND RecordTypeId IN :recordTypesOfInterest AND Overwrite_Classification__c = false)*/
+        AND Overwrite_Classification__c = true
     ];
 
     for (Account acc : children) {
@@ -44,16 +43,9 @@ public with sharing class AccountClassificationGlobalQueueable extends AbstractQ
    * @param accounts
    * @param existingAccounts
    */
-  public static void setClassificationToGlobal(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void setClassificationToGlobal(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasChanged = new HasRecordChanged(
-      new Set<SObjectField>{
-        Account.Classification__c,
-        Account.ParentId,
-        Account.Overwrite_Classification__c
-      },
+      new Set<SObjectField>{ Account.Classification__c, Account.ParentId, Account.Overwrite_Classification__c },
       accounts,
       existingAccounts
     );
@@ -66,21 +58,18 @@ public with sharing class AccountClassificationGlobalQueueable extends AbstractQ
             new Set<String>{
               AccountMetadata.customerRecordType,
               AccountMetadata.customerProspectRecordType,
-              AccountMetadata.ProspectRecordType,
-              null
+              AccountMetadata.ProspectRecordType
             }
           )
           .also(Account.Overwrite_Classification__c)
-          .equals(false)
+          .equals(true)
           .also(Account.Classification__c)
           .equals('Global')
       )
       .asList();
 
     if (!changedAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountClassificationGlobalQueueable(changedAccounts)
-      );
+      AbstractQueueable.enqueue(new AccountClassificationGlobalQueueable(changedAccounts));
     }
   }
 }

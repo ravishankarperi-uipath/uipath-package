@@ -7,10 +7,7 @@ public with sharing class AccountAddressQueueable extends AbstractQueueable {
   private final List<SObject> accountsLst;
   private final Map<Id, SObject> oldAccountsMap;
 
-  public AccountAddressQueueable(
-    List<SObject> accountsLst,
-    Map<Id, SObject> oldAccountsMap
-  ) {
+  public AccountAddressQueueable(List<SObject> accountsLst, Map<Id, SObject> oldAccountsMap) {
     super('AccountAddressQueueable');
     this.accountsLst = accountsLst;
     this.oldAccountsMap = oldAccountsMap;
@@ -51,10 +48,7 @@ public with sharing class AccountAddressQueueable extends AbstractQueueable {
         if (String.IsNotBlank(acc.DnB_Street__c)) {
           address.Street_Line_1__c = acc.DnB_Street__c.left(150);
           if (acc.DnB_Street__c.length() > 150) {
-            address.Street_Line_2__c = acc.DnB_Street__c.substring(
-              150,
-              acc.DnB_Street__c.length()
-            );
+            address.Street_Line_2__c = acc.DnB_Street__c.substring(150, acc.DnB_Street__c.length());
           }
         }
         address.City__c = acc.DnB_City__c;
@@ -90,10 +84,7 @@ public with sharing class AccountAddressQueueable extends AbstractQueueable {
           if (String.IsNotBlank(acc.BillingStreet)) {
             address.Street_Line_1__c = acc.BillingStreet.left(150);
             if (acc.BillingStreet.length() > 150) {
-              address.Street_Line_2__c = acc.BillingStreet.substring(
-                150,
-                acc.BillingStreet.length()
-              );
+              address.Street_Line_2__c = acc.BillingStreet.substring(150, acc.BillingStreet.length());
             }
           }
           address.City__c = acc.BillingCity;

@@ -14,10 +14,7 @@ public class LicensingApexTriggerAccountTest {
     update o;
     Test.stopTest();
 
-    System.assert(
-      LicensingApi.lastEndpoints.get(0).endsWith('/account/' + o.get('id')),
-      'LicensingApi test failed'
-    );
+    System.assert(LicensingApi.lastEndpoints.get(0).endsWith('/account/' + o.get('id')), 'LicensingApi test failed');
   }
 
   @isTest

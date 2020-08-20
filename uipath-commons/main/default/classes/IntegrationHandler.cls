@@ -11,10 +11,7 @@ public without sharing class IntegrationHandler {
    * @Description: Compare old and new object to see if certain fields have changed. If they have changed, then we set the Sync Status field on that object to pending.
    *               A workflow outbound message is created when the Sync Status field is pending and send to Dell Boomi.
    */
-  public static void syncStatusAutomationProcess(
-    Map<Id, SObject> oldObjects,
-    List<SObject> newObjects
-  ) {
+  public static void syncStatusAutomationProcess(Map<Id, SObject> oldObjects, List<SObject> newObjects) {
     // Don't check for changes if the user making the change is an  Integration Profile user.
     Boolean integrationUser = isIntegrationUser(UserInfo.getProfileId());
     if (!integrationUser) {
@@ -29,34 +26,20 @@ public without sharing class IntegrationHandler {
 
       //The unlocked package has no dependencies with DNBOptimizer Package so needs a separate fieldset for testing
       if (Test.isRunningTest() && sObjectName == 'Account') {
-        fields = readFieldSet(
-          CommonsConstants.INTEGRATION_FIELDSET_NAME_TEST,
-          sObjectName
-        );
+        fields = readFieldSet(CommonsConstants.INTEGRATION_FIELDSET_NAME_TEST, sObjectName);
       } else {
-        fields = readFieldSet(
-          CommonsConstants.INTEGRATION_FIELDSET_NAME,
-          sObjectName
-        );
+        fields = readFieldSet(CommonsConstants.INTEGRATION_FIELDSET_NAME, sObjectName);
       }
 
       for (SObject newObj : newObjects) {
-        String newObjectStatus = (String) newObj.get(
-          CommonsConstants.INTEGRATION_SYNC_STATUS_FIELD
-        );
+        String newObjectStatus = (String) newObj.get(CommonsConstants.INTEGRATION_SYNC_STATUS_FIELD);
 
-        if (
-          String.isNotEmpty(newObjectStatus) &&
-          !syncStatuses.contains(newObjectStatus)
-        ) {
+        if (String.isNotEmpty(newObjectStatus) && !syncStatuses.contains(newObjectStatus)) {
           SObject oldObj = oldObjects.get(newObj.Id);
 
           for (Schema.FieldSetMember field : fields) {
             if (oldObj.get(field.fieldPath) != newObj.get(field.fieldPath)) {
-              newObj.put(
-                CommonsConstants.INTEGRATION_SYNC_STATUS_FIELD,
-                CommonsConstants.ACC_SYNC_STATUS_PENDING
-              );
+              newObj.put(CommonsConstants.INTEGRATION_SYNC_STATUS_FIELD, CommonsConstants.ACC_SYNC_STATUS_PENDING);
               // No point carrying on, as a field has changed and we've already marked this object for Integration to pick up
               break;
             }
@@ -75,23 +58,17 @@ public without sharing class IntegrationHandler {
       FROM Integration_Setting__mdt
       LIMIT 1
     ];
-    return new Set<String>(
-      integrationSetting.Excluded_Sync_Statuses__c.split(',')
-    );
+    return new Set<String>(integrationSetting.Excluded_Sync_Statuses__c.split(','));
   }
 
   /**
    * @Description: Returns a list of fields that need to be checked for any changes
    */
-  private static List<Schema.FieldSetMember> readFieldSet(
-    String fieldSetName,
-    String ObjectName
-  ) {
+  private static List<Schema.FieldSetMember> readFieldSet(String fieldSetName, String ObjectName) {
     Map<String, Schema.SObjectType> GlobalDescribeMap = Schema.getGlobalDescribe();
     Schema.SObjectType SObjectTypeObj = GlobalDescribeMap.get(ObjectName);
     Schema.DescribeSObjectResult DescribeSObjectResultObj = SObjectTypeObj.getDescribe();
-    Schema.FieldSet fieldSetObj = DescribeSObjectResultObj.fieldSets.getMap()
-      .get(fieldSetName);
+    Schema.FieldSet fieldSetObj = DescribeSObjectResultObj.fieldSets.getMap().get(fieldSetName);
 
     return fieldSetObj.getFields();
   }
@@ -104,16 +81,8 @@ public without sharing class IntegrationHandler {
     Boolean isIntegrationProfilePresent = false;
 
     //Check if logged in user has "Integration User" profile
-    Profile currentUserProfile = [
-      SELECT Id, Name
-      FROM Profile
-      WHERE Id = :userProfileId
-      LIMIT 1
-    ];
-    if (
-      currentUserProfile != null &&
-      currentUserProfile.Name == CommonsConstants.INTEGRATION_PROFILE_NAME
-    ) {
+    Profile currentUserProfile = [SELECT Id, Name FROM Profile WHERE Id = :userProfileId LIMIT 1];
+    if (currentUserProfile != null && currentUserProfile.Name == CommonsConstants.INTEGRATION_PROFILE_NAME) {
       isIntegrationProfilePresent = true;
     }
 
@@ -124,31 +93,22 @@ public without sharing class IntegrationHandler {
       WHERE AssigneeId = :Userinfo.getUserId()
     ];
     for (PermissionSetAssignment psa : currentUserPermSetLst) {
-      if (
-        psa.PermissionSet.Name ==
-        CommonsConstants.BOOMI_INTEGRATION_PERMISSION_SET_NAME
-      ) {
+      if (psa.PermissionSet.Name == CommonsConstants.BOOMI_INTEGRATION_PERMISSION_SET_NAME) {
         isIntegrationPermSetPresent = true;
       }
     }
 
-    return (isIntegrationProfilePresent || isIntegrationPermSetPresent)
-      ? true
-      : false;
+    return (isIntegrationProfilePresent || isIntegrationPermSetPresent) ? true : false;
   }
 
   /**
    * @Description: Updates the given accounts Validation status if the exiting status is Pending
    */
-  public static void updateAccountValidationStatusToReadyForReview(
-    Set<Id> idsToRetrieve
-  ) {
+  public static void updateAccountValidationStatusToReadyForReview(Set<Id> idsToRetrieve) {
     List<Account> lstAccounts = [
       SELECT id, Validation_Status__c
       FROM Account
-      WHERE
-        Id IN :idsToRetrieve
-        AND Validation_Status__c = :CommonsConstants.ACC_SYNC_STATUS_PENDING
+      WHERE Id IN :idsToRetrieve AND Validation_Status__c = :CommonsConstants.ACC_SYNC_STATUS_PENDING
     ];
 
     for (Account acct : lstAccounts) {
@@ -158,9 +118,7 @@ public without sharing class IntegrationHandler {
     List<Address__c> addressesToUpdate = [
       SELECT id, Validation_Status__c, Account__c
       FROM Address__c
-      WHERE
-        Account__c IN :idsToRetrieve
-        AND Validation_Status__c = :CommonsConstants.ACC_SYNC_STATUS_PENDING
+      WHERE Account__c IN :idsToRetrieve AND Validation_Status__c = :CommonsConstants.ACC_SYNC_STATUS_PENDING
     ];
 
     for (Address__c a : addressesToUpdate) {
@@ -176,18 +134,12 @@ public without sharing class IntegrationHandler {
     Map<Id, SObject> existingAccounts
   ) {
     List<Account> validatedAccounts = Collection.of(accounts)
-      .filter(
-        Match.field(Account.Validation_Status__c)
-          .equals(CommonsConstants.ACC_VALIDATION_STATUS_VALIDATED)
-      )
+      .filter(Match.field(Account.Validation_Status__c).equals(CommonsConstants.ACC_VALIDATION_STATUS_VALIDATED))
       .asList();
 
     // Call the SyncStatusAutomation Process to check if the Account Updates can be flagged ready to sync to NetSuite
     if (!validatedAccounts.isEmpty()) {
-      IntegrationHandler.syncStatusAutomationProcess(
-        existingAccounts,
-        validatedAccounts
-      );
+      IntegrationHandler.syncStatusAutomationProcess(existingAccounts, validatedAccounts);
     }
   }
 }

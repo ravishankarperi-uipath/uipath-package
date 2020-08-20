@@ -19,12 +19,8 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountJapanConvertedLeadFunction.setGeoFields(Records);
     AccountBillingStateFromStateFunction.copyStateToBillingState(Records);
     AccountMapDnBAddressFunction.deriveAddressFieldsOnInsert(Records);
-    AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnInsert(
-      Records
-    );
-    AccountSetClassificationFunction.deriveClassificationFieldsOnInsert(
-      Records
-    );
+    AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnInsert(Records);
+    AccountSetClassificationFunction.deriveClassificationFieldsOnInsert(Records);
     AccountTerritoryService.deriveTerritoryFields(Records);
     AccountSetSubsidiaryFunction.deriveSubsidiaryOnInsert(Records);
     AccountSetRecordTypeFunction.deriveRecordTypeOnInsert(Records);
@@ -37,44 +33,17 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
-    AccountMapDnBAddressFunction.deriveAddressFieldsOnUpdate(
-      Records,
-      existingRecords
-    );
-    AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnUpdate(
-      Records,
-      existingRecords
-    );
-    AccountSetClassificationFunction.deriveClassificationFieldsOnUpdate(
-      Records,
-      existingRecords
-    );
-    AccountTerritoryService.deriveTerritoryFieldsOnUpdate(
-      Records,
-      existingRecords
-    );
-    AccountSetRecordTypeFunction.deriveRecordTypeForExistingAccount(
-      Records,
-      existingRecords
-    );
-    AccountConvertAcademic.convertAcademicAccountOnUpdate(
-      Records,
-      existingRecords
-    );
-    AccountSetDataStewardFunction.deriveDataStewardUserOnUpdate(
-      Records,
-      existingRecords
-    );
-    AccountSetSyncStatusFunction.deriveSyncStatusForValidatedAccount(
-      Records,
-      existingRecords
-    );
+    AccountMapDnBAddressFunction.deriveAddressFieldsOnUpdate(Records, existingRecords);
+    AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnUpdate(Records, existingRecords);
+    AccountSetClassificationFunction.deriveClassificationFieldsOnUpdate(Records, existingRecords);
+    AccountTerritoryService.deriveTerritoryFieldsOnUpdate(Records, existingRecords);
+    AccountSetRecordTypeFunction.deriveRecordTypeForExistingAccount(Records, existingRecords);
+    AccountConvertAcademic.convertAcademicAccountOnUpdate(Records, existingRecords);
+    AccountSetDataStewardFunction.deriveDataStewardUserOnUpdate(Records, existingRecords);
+    AccountSetSyncStatusFunction.deriveSyncStatusForValidatedAccount(Records, existingRecords);
     AccountSetStateFunction.deriveStateOnUpdate(Records, existingRecords);
     //Leave this as the last method in the execution of onBeforeUpdate
-    IntegrationHandler.callAccountSyncStatusIntegrationProcess(
-      Records,
-      existingRecords
-    );
+    IntegrationHandler.callAccountSyncStatusIntegrationProcess(Records, existingRecords);
   }
 
   public override void onAfterInsert() {
@@ -90,37 +59,15 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
-    AccountSharingRollupQueueable.shareAccountWithParentOwner(
-      Records,
-      existingRecords
-    );
-    AccountDNBCompanyQueueable.createAddressForDnBCompany(
-      Records,
-      existingRecords
-    );
-    AccountSetContactOwnerQueueable.setContactOwnerToAccountOwner(
-      Records,
-      existingRecords
-    );
-    AccountSetGAMEmailQueueable.setGAMEmailOnGlobalAccounts(
-      Records,
-      existingRecords
-    );
+    AccountSharingRollupQueueable.shareAccountWithParentOwner(Records, existingRecords);
+    AccountDNBCompanyQueueable.createAddressForDnBCompany(Records, existingRecords);
+    AccountSetContactOwnerQueueable.setContactOwnerToAccountOwner(Records, existingRecords);
+    AccountSetGAMEmailQueueable.setGAMEmailOnGlobalAccounts(Records, existingRecords);
     AccountDnBSyncQueueable.deriveDnBFieldsOnUpdate(Records, existingRecords);
     ZinfiSyncContactWithAccount.zinfiSyncAccountOnUpdate(existingRecords);
     LicensingApiDispatch.licensingApiSyncAccountOnUpdate(Records);
-    AccountClassificationGlobalQueueable.setClassificationToGlobal(
-      Records,
-      existingRecords
-    );
-    AccountSharingLeadOwnerQueueable.shareAccountOnUpdate(
-      Records,
-      existingRecords
-    );
-    AccountSetClassificationQueueable.setClassificationByGeoAndRevenue(
-      Records,
-      existingRecords
-    );
+    AccountClassificationGlobalQueueable.setClassificationToGlobal(Records, existingRecords);
+    AccountSharingLeadOwnerQueueable.shareAccountOnUpdate(Records, existingRecords);
   }
 
   public override void onAfterDelete() {
@@ -140,8 +87,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
    * @param existingRecords updated Records
    */
   public override void onValidate(Map<Id, SObject> existingRecords) {
-    Collection.of(Records)
-      .mapAll(new AccountValidationFunction(existingRecords, this));
+    Collection.of(Records).mapAll(new AccountValidationFunction(existingRecords, this));
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {

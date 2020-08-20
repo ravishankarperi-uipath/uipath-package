@@ -7,10 +7,7 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
   private final List<SObject> accountsLst;
   private final Map<Id, SObject> oldAccountsMap;
 
-  public AccountDNBCompanyQueueable(
-    List<SObject> accountsLst,
-    Map<Id, SObject> oldAccountsMap
-  ) {
+  public AccountDNBCompanyQueueable(List<SObject> accountsLst, Map<Id, SObject> oldAccountsMap) {
     super('AccountDNBCompanyQueueable');
     this.accountsLst = accountsLst;
     this.oldAccountsMap = oldAccountsMap;
@@ -25,10 +22,7 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
    * @DESCRIPTION: Process mapped D&B Company, create an address record for D&B address
    * @AUTHOR: SV - Slalom Consulting
    */
-  private void processDNBCompany(
-    List<SObject> accountList,
-    Map<Id, SObject> oldAccountsMap
-  ) {
+  private void processDNBCompany(List<SObject> accountList, Map<Id, SObject> oldAccountsMap) {
     List<Address__c> addressList = new List<Address__c>();
     Set<Id> addressHasBeenAddedFor = new Set<Id>();
 
@@ -44,10 +38,7 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
       Account oldAccount = (Account) oldAccountsMap.get(acc.Id);
 
       //Only run the first time the D&B account/address is set
-      if (
-        String.IsNotBlank(acc.DnB_Country__c) &&
-        String.IsBlank(oldAccount.DnB_Country__c)
-      ) {
+      if (String.IsNotBlank(acc.DnB_Country__c) && String.IsBlank(oldAccount.DnB_Country__c)) {
         if (addressHasBeenAddedFor.contains(acc.Id)) {
           //SFSL-827
           continue;
@@ -68,10 +59,7 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
         if (String.IsNotBlank(acc.DnB_Street__c)) {
           address.Street_Line_1__c = acc.DnB_Street__c.left(150);
           if (acc.DnB_Street__c.length() > 150) {
-            address.Street_Line_2__c = acc.DnB_Street__c.substring(
-              150,
-              acc.DnB_Street__c.length()
-            );
+            address.Street_Line_2__c = acc.DnB_Street__c.substring(150, acc.DnB_Street__c.length());
           }
         }
         address.City__c = acc.DnB_City__c;
@@ -96,10 +84,7 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
    * create an address record for when an account is updated using D&B address
    * @param existingRecords
    */
-  public static void createAddressForDnBCompany(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void createAddressForDnBCompany(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasChanged = new HasRecordChanged(
       new Set<SObjectField>{ Account.DnB_Country__c },
       accounts,
@@ -111,9 +96,7 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
       .asList();
 
     if (!eligibleAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountDNBCompanyQueueable(eligibleAccounts, existingAccounts)
-      );
+      AbstractQueueable.enqueue(new AccountDNBCompanyQueueable(eligibleAccounts, existingAccounts));
     }
   }
 }

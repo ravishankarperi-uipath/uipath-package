@@ -6,20 +6,14 @@ public class AccountsTest {
   @IsTest
   private static void validatesStateRequiredForChinaAustralia() {
     Accounts accounts = new Accounts(
-      new List<Account>{
-        new Account(Name = 'Test', Country__c = 'China', State__c = null)
-      }
+      new List<Account>{ new Account(Name = 'Test', Country__c = 'China', State__c = null) }
     );
     accounts.onValidate();
     System.assertEquals(1, fflib_SObjectDomain.Errors.getAll().size());
-    System.assertEquals(
-      'State is required if Country is China',
-      fflib_SObjectDomain.Errors.getAll()[0].message
-    );
+    System.assertEquals('State is required if Country is China', fflib_SObjectDomain.Errors.getAll()[0].message);
     System.assertEquals(
       Account.State__c,
-      ((fflib_SObjectDomain.FieldError) fflib_SObjectDomain.Errors.getAll()[0])
-        .field
+      ((fflib_SObjectDomain.FieldError) fflib_SObjectDomain.Errors.getAll()[0]).field
     );
   }
 
@@ -34,16 +28,8 @@ public class AccountsTest {
   @IsTest
   private static void setDnBFieldsAfterUpdateTest() {
     Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
-    Account oldAccount = new Account(
-      Id = accountId,
-      Name = 'Test',
-      Country__c = 'Romania'
-    );
-    Account updatedAccount = new Account(
-      Id = accountId,
-      Name = 'Test',
-      Country__c = 'Bulgaria'
-    );
+    Account oldAccount = new Account(Id = accountId, Name = 'Test', Country__c = 'Romania');
+    Account updatedAccount = new Account(Id = accountId, Name = 'Test', Country__c = 'Bulgaria');
     fflib_SObjectDomain.Test.Database.onUpdate(
       new List<Account>{ updatedAccount },
       new Map<Id, SObject>{ oldAccount.Id => oldAccount }
@@ -55,11 +41,7 @@ public class AccountsTest {
 
   @IsTest
   private static void copiesStateToBillingState() {
-    Account account = new Account(
-      Name = 'Test',
-      Country__c = 'India',
-      State__c = 'Kerala'
-    );
+    Account account = new Account(Name = 'Test', Country__c = 'India', State__c = 'Kerala');
     fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
     System.assertEquals('KL', account.BillingStateCode);
@@ -67,11 +49,7 @@ public class AccountsTest {
 
   @IsTest
   private static void testSetStateOnInsert() {
-    Account account = new Account(
-      Name = 'Test',
-      BillingCountryCode = 'US',
-      Billing_State_Text_D_B__c = NY
-    );
+    Account account = new Account(Name = 'Test', BillingCountryCode = 'US', Billing_State_Text_D_B__c = NY);
     fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
     System.assertEquals(NY, account.BillingState);
@@ -80,11 +58,7 @@ public class AccountsTest {
   @IsTest
   private static void testSetStateOnUpdate() {
     Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
-    Account oldAccount = new Account(
-      Id = accountId,
-      Name = 'Test',
-      BillingCountryCode = 'US'
-    );
+    Account oldAccount = new Account(Id = accountId, Name = 'Test', BillingCountryCode = 'US');
     Account updatedAccount = new Account(
       Id = accountId,
       Name = 'Test',
@@ -102,11 +76,7 @@ public class AccountsTest {
 
   @IsTest
   private static void copiesCountryToBillingCountryOnlyIfNotAlreadySet() {
-    Account accountA = new Account(
-      Name = 'Test',
-      Country__c = 'India',
-      State__c = 'Gujarat'
-    );
+    Account accountA = new Account(Name = 'Test', Country__c = 'India', State__c = 'Gujarat');
     fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ accountA });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
     System.assertEquals('India', accountA.BillingCountry);
@@ -131,11 +101,7 @@ public class AccountsTest {
     System.assertEquals('India', accountA.BillingCountry);
 
     // If already set, leave it as is
-    Account accountB = new Account(
-      Name = 'Test',
-      BillingCountryCode = 'IN',
-      BillingCountry = 'United Kingdom'
-    );
+    Account accountB = new Account(Name = 'Test', BillingCountryCode = 'IN', BillingCountry = 'United Kingdom');
     fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ accountB });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
     System.assertEquals('United Kingdom', accountB.BillingCountry);
@@ -172,16 +138,8 @@ public class AccountsTest {
   @IsTest
   private static void cannotSelectDandBCompaNYFromDifferentCountry() {
     Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
-    Account oldAccount = new Account(
-      Id = accountId,
-      Name = 'Test',
-      Country__c = 'United Kingdom'
-    );
-    Account updatedAccount = new Account(
-      Id = accountId,
-      Name = 'Test',
-      DnB_Country__c = 'India'
-    );
+    Account oldAccount = new Account(Id = accountId, Name = 'Test', Country__c = 'United Kingdom');
+    Account updatedAccount = new Account(Id = accountId, Name = 'Test', DnB_Country__c = 'India');
     fflib_SObjectDomain.Test.Database.onUpdate(
       new List<Account>{ updatedAccount },
       new Map<Id, SObject>{ oldAccount.Id => oldAccount }
@@ -198,11 +156,7 @@ public class AccountsTest {
   public static void derivesAccountRegionCorrectly() {
     List<Account> accounts = new List<Account>();
 
-    Account a0 = new Account(
-      Name = 'TestAcc349640',
-      BillingCountryCode = 'US',
-      Industry = 'Insurance'
-    );
+    Account a0 = new Account(Name = 'TestAcc349640', BillingCountryCode = 'US', Industry = 'Insurance');
 
     accounts.add(a0);
 
@@ -225,43 +179,23 @@ public class AccountsTest {
 
     accounts.add(a2);
 
-    Account a3 = new Account(
-      Name = 'TestAcc349643',
-      BillingCountryCode = 'US',
-      Industry = 'Others'
-    );
+    Account a3 = new Account(Name = 'TestAcc349643', BillingCountryCode = 'US', Industry = 'Others');
 
     accounts.add(a3);
 
-    Account a4 = new Account(
-      Name = 'TestAcc349644',
-      BillingCountryCode = 'PK',
-      Industry = 'Others'
-    );
+    Account a4 = new Account(Name = 'TestAcc349644', BillingCountryCode = 'PK', Industry = 'Others');
 
     accounts.add(a4);
 
-    Account a5 = new Account(
-      Name = 'TestAcc349645',
-      BillingCountryCode = 'PK',
-      Industry = 'Others'
-    );
+    Account a5 = new Account(Name = 'TestAcc349645', BillingCountryCode = 'PK', Industry = 'Others');
 
     accounts.add(a5);
 
-    Account a6 = new Account(
-      Name = 'TestAcc349646',
-      BillingCountryCode = 'US',
-      Industry = 'Insurance'
-    );
+    Account a6 = new Account(Name = 'TestAcc349646', BillingCountryCode = 'US', Industry = 'Insurance');
 
     accounts.add(a6);
 
-    Account a7 = new Account(
-      Name = 'TestAcc323232',
-      BillingCountryCode = 'JP',
-      Industry = 'Insurance'
-    );
+    Account a7 = new Account(Name = 'TestAcc323232', BillingCountryCode = 'JP', Industry = 'Insurance');
 
     accounts.add(a7);
 
@@ -290,12 +224,7 @@ public class AccountsTest {
       NumberOfEmployees = 5000,
       AnnualRevenue = 500000000.00
     );
-    Account oldAccount1 = new Account(
-      Id = account1.Id,
-      Name = 'Test1',
-      Country__c = USA,
-      BillingCountry = USA
-    );
+    Account oldAccount1 = new Account(Id = account1.Id, Name = 'Test1', Country__c = USA, BillingCountry = USA);
 
     Account account2 = new Account(
       Id = fflib_IDGenerator.generate(Account.SObjectType),
@@ -307,19 +236,11 @@ public class AccountsTest {
       NumberOfEmployees = 3000,
       AnnualRevenue = 1500000000.00
     );
-    Account oldAccount2 = new Account(
-      Id = account2.Id,
-      Name = 'Test2',
-      Country__c = USA,
-      BillingCountry = USA
-    );
+    Account oldAccount2 = new Account(Id = account2.Id, Name = 'Test2', Country__c = USA, BillingCountry = USA);
 
     fflib_SObjectDomain.Test.Database.onUpdate(
       new List<Account>{ account1, account2 },
-      new Map<Id, SObject>{
-        oldAccount1.Id => oldAccount1,
-        oldAccount2.Id => oldAccount2
-      }
+      new Map<Id, SObject>{ oldAccount1.Id => oldAccount1, oldAccount2.Id => oldAccount2 }
     );
     fflib_SObjectDomain.triggerHandler(Accounts.class);
 
@@ -344,15 +265,11 @@ public class AccountsTest {
 
   @isTest
   private static void convertAcademicToCustomProspectTest() {
-    Id academicRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Academic')
-      .getRecordTypeId();
+    Id academicRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Academic').getRecordTypeId();
     Id customerProspectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
       .get('Customer_Prospect')
       .getRecordTypeId();
-    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Customer')
-      .getRecordTypeId();
+    Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
 
     Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
     Account updatedAccount = new Account(
@@ -391,9 +308,7 @@ public class AccountsTest {
       RecordTypeId = partnerProspectRT
     );
 
-    fflib_SObjectDomain.Test.Database.onInsert(
-      new List<Account>{ partnerAccount }
-    );
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ partnerAccount });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
 
     System.assertEquals('Reseller', partnerAccount.Channel_Tier__c);
@@ -426,23 +341,12 @@ public class AccountsTest {
       RecordTypeId = AccountMetadata.getAccountRecordTypeId('Academic')
     );
 
-    fflib_SObjectDomain.Test.Database.onInsert(
-      new List<Account>{ partnerAccount, customerAccount, academicAccount }
-    );
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ partnerAccount, customerAccount, academicAccount });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
 
-    System.assertEquals(
-      'TestPartnerAccountLegalEntityName',
-      partnerAccount.Legal__c
-    );
-    System.assertEquals(
-      'TestCustomerAccountLegalEntityName',
-      customerAccount.Legal__c
-    );
-    System.assertEquals(
-      'TestAcademicAccountLegalEntityName',
-      academicAccount.Legal__c
-    );
+    System.assertEquals('TestPartnerAccountLegalEntityName', partnerAccount.Legal__c);
+    System.assertEquals('TestCustomerAccountLegalEntityName', customerAccount.Legal__c);
+    System.assertEquals('TestAcademicAccountLegalEntityName', academicAccount.Legal__c);
   }
 
   @isTest
@@ -484,9 +388,7 @@ public class AccountsTest {
       Account_Business_Type__c = 'Customer'
     );
 
-    fflib_SObjectDomain.Test.Database.onInsert(
-      new List<Account>{ partnerAccount, customerAccount }
-    );
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ partnerAccount, customerAccount });
     fflib_SObjectDomain.triggerHandler(Accounts.class);
 
     System.assertEquals(partnerProspectRT, partnerAccount.RecordTypeId);

@@ -33,27 +33,17 @@ public without sharing class AccountMapDnBAddressFunction implements SObjectToSO
 
   public static void deriveBillingCountryFromCode(Account account) {
     Map<String, String> codeAndCountryMap = AccountMetadata.CountryCodes;
-    if (
-      String.isBlank(account.BillingCountry) &&
-      String.isNotBlank(account.BillingCountryCode)
-    ) {
+    if (String.isBlank(account.BillingCountry) && String.isNotBlank(account.BillingCountryCode)) {
       //In case of lead conversion, country code is available on before insert, but country is not available until after insert
       //Fix that here, so that we can use country for address logic
-      account.BillingCountry = codeAndCountryMap.get(
-        account.BillingCountryCode
-      );
+      account.BillingCountry = codeAndCountryMap.get(account.BillingCountryCode);
     }
   }
 
   public static void copyCountryToBillingCountry(Account account) {
     Map<String, String> countryNameAndCodeMap = AccountMetadata.CountryNameAndCodes;
-    if (
-      String.isBlank(account.BillingCountry) &&
-      String.isNotBlank(account.Country__c)
-    ) {
-      account.BillingCountryCode = countryNameAndCodeMap.get(
-        account.Country__c
-      );
+    if (String.isBlank(account.BillingCountry) && String.isNotBlank(account.Country__c)) {
+      account.BillingCountryCode = countryNameAndCodeMap.get(account.Country__c);
     }
   }
 
@@ -67,9 +57,8 @@ public without sharing class AccountMapDnBAddressFunction implements SObjectToSO
     account.BillingPostalCode = account.DnB_Zip_Postal_Code__c;
 
     if (
-      AccountMetadata.AvailableCountryStates.Contains(
-        account.DnB_State_Province__c
-      ) && (isStateSupportedForCountry(account.BillingCountry))
+      AccountMetadata.AvailableCountryStates.Contains(account.DnB_State_Province__c) &&
+      (isStateSupportedForCountry(account.BillingCountry))
     ) {
       account.BillingState = account.DnB_State_Province__c;
     } else {
@@ -109,18 +98,13 @@ public without sharing class AccountMapDnBAddressFunction implements SObjectToSO
    * On Account Update, Copies D&B Address Fields into Standard Address Fields (Billing and Shipping).
    * For US, only first 5 characters of Postal code is derived Only some countries are allowed to have BillingState set
    */
-  public static void deriveAddressFieldsOnUpdate(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void deriveAddressFieldsOnUpdate(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasCountryChanged = new HasRecordChanged(
       new Set<SObjectField>{ Account.DnB_Country__c },
       accounts,
       existingAccounts
     );
 
-    Collection.of(accounts)
-      .filter(hasCountryChanged)
-      .mapAll(new AccountMapDnBAddressFunction(true));
+    Collection.of(accounts).filter(hasCountryChanged).mapAll(new AccountMapDnBAddressFunction(true));
   }
 }

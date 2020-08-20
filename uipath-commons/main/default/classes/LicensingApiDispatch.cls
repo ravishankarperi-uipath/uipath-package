@@ -8,16 +8,9 @@ public with sharing class LicensingApiDispatch {
     }
   }
 
-  public static void onAccountsMerged(
-    string masterAccountId,
-    List<string> mergedAccountIds
-  ) {
+  public static void onAccountsMerged(string masterAccountId, List<string> mergedAccountIds) {
     for (Licensing_Environment__mdt env : getEnvironments()) {
-      LicensingApi.onAccountsMerged(
-        env.Licensing_Server_Callout__c,
-        masterAccountId,
-        mergedAccountIds
-      );
+      LicensingApi.onAccountsMerged(env.Licensing_Server_Callout__c, masterAccountId, mergedAccountIds);
     }
   }
 
@@ -35,10 +28,7 @@ public with sharing class LicensingApiDispatch {
     //test setting
     if (Test.isRunningTest()) {
       return new List<Licensing_Environment__mdt>{
-        new Licensing_Environment__mdt(
-          Licensing_Server_Callout__c = 'test',
-          Enabled__c = true
-        )
+        new Licensing_Environment__mdt(Licensing_Server_Callout__c = 'test', Enabled__c = true)
       };
     }
 
@@ -70,16 +60,12 @@ public with sharing class LicensingApiDispatch {
         if (!masterRecordIdAccMap.containsKey(acc.MasterRecordId)) {
           masterRecordIdAccMap.put(acc.MasterRecordId, new List<String>());
         }
-        masterRecordIdAccMap.get(acc.MasterRecordId)
-          .add(acc.Account_ID_Long__c);
+        masterRecordIdAccMap.get(acc.MasterRecordId).add(acc.Account_ID_Long__c);
       }
     }
     for (String masterRecordId : masterRecordIdAccMap.keySet()) {
       if ((Limits.getLimitFutureCalls() - Limits.getFutureCalls()) > 0) {
-        LicensingApiDispatch.onAccountsMerged(
-          masterRecordId,
-          masterRecordIdAccMap.get(masterRecordId)
-        );
+        LicensingApiDispatch.onAccountsMerged(masterRecordId, masterRecordIdAccMap.get(masterRecordId));
       }
     }
   }

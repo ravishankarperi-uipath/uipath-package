@@ -2,9 +2,7 @@
 private class AccountSetClassificationFunctionTest {
   @isTest
   private static void setClassificationFieldTest() {
-    Id prospectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
-      .get('Prospect')
-      .getRecordTypeId();
+    Id prospectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Prospect').getRecordTypeId();
 
     Account account1 = new Account(
       Id = fflib_IDGenerator.generate(Account.SObjectType),
@@ -90,16 +88,7 @@ private class AccountSetClassificationFunctionTest {
     Account oldAccount8 = new Account(Id = account8.Id, Name = 'Test8');
 
     fflib_SObjectDomain.Test.Database.onUpdate(
-      new List<Account>{
-        account1,
-        account2,
-        account3,
-        account4,
-        account5,
-        account6,
-        account7,
-        account8
-      },
+      new List<Account>{ account1, account2, account3, account4, account5, account6, account7, account8 },
       new Map<Id, SObject>{
         oldAccount1.Id => oldAccount1,
         oldAccount2.Id => oldAccount2,

@@ -5,11 +5,7 @@ public with sharing class AccountSetRegionSpecificTierFunction implements SObjec
    */
 
   public SObject apply(Account acc) {
-    if (
-      acc.Geo__c == 'AMER' &&
-      acc.Region__c != 'Canada' &&
-      acc.Region__c != 'LATAM'
-    ) {
+    if (acc.Geo__c == 'AMER' && acc.Region__c != 'Canada' && acc.Region__c != 'LATAM') {
       // Enterprise Tier 3 - AMER
       if (
         acc.AnnualRevenue >= 1000000000.00 &&
@@ -129,23 +125,13 @@ public with sharing class AccountSetRegionSpecificTierFunction implements SObjec
    * Enterprise Tier 1/2/3
    * Velocity Tier 1/2/3
    */
-  public static void deriveRegionSpecificFieldsOnUpdate(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void deriveRegionSpecificFieldsOnUpdate(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate haveRegionSensitiveFieldsChanged = new HasRecordChanged(
-      new Set<SObjectField>{
-        Account.Geo__c,
-        Account.Region__c,
-        Account.AnnualRevenue,
-        Account.NumberOfEmployees
-      },
+      new Set<SObjectField>{ Account.Geo__c, Account.Region__c, Account.AnnualRevenue, Account.NumberOfEmployees },
       accounts,
       existingAccounts
     );
 
-    Collection.of(accounts)
-      .filter(haveRegionSensitiveFieldsChanged)
-      .mapAll(new AccountSetRegionSpecificTierFunction());
+    Collection.of(accounts).filter(haveRegionSensitiveFieldsChanged).mapAll(new AccountSetRegionSpecificTierFunction());
   }
 }

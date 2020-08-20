@@ -25,11 +25,7 @@ public with sharing class AccountUpdateJapanContactQueueable extends AbstractQue
     }
 
     if (!accIds.isEmpty()) {
-      List<Contact> conList = [
-        SELECT Id, LeadSource
-        FROM Contact
-        WHERE AccountId IN :accIds
-      ];
+      List<Contact> conList = [SELECT Id, LeadSource FROM Contact WHERE AccountId IN :accIds];
       for (Contact con : conList) {
         con.LeadSource = 'Partner';
       }

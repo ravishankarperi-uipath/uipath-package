@@ -10,11 +10,7 @@ public with sharing class AccountSetClassificationGlobalFunction implements SObj
       parentIds.add(acc.ParentId);
     }
     parentAccounts = new Map<Id, Account>(
-      [
-        SELECT Id, Classification__c
-        FROM Account
-        WHERE Id IN :parentIds AND Classification__c = 'Global'
-      ]
+      [SELECT Id, Classification__c FROM Account WHERE Id IN :parentIds AND Classification__c = 'Global']
     );
   }
 
@@ -31,9 +27,6 @@ public with sharing class AccountSetClassificationGlobalFunction implements SObj
 
   public static void deriveRecordTypeOnInsert(List<Account> records) {
     Collection.of(records)
-      .mapSome(
-        Match.field(Account.ParentId).hasValue(),
-        new AccountSetClassificationGlobalFunction(records)
-      );
+      .mapSome(Match.field(Account.ParentId).hasValue(), new AccountSetClassificationGlobalFunction(records));
   }
 }

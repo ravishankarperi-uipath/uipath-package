@@ -6,8 +6,7 @@ private class AccountSetContactOwnerQueueableTest {
   @isTest
   private static void setUpContactOwnerTest() {
     User u1 = new User();
-    u1.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator']
-    .Id;
+    u1.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'].Id;
     u1.Username = 'testtsettest1@uipath.com';
     u1.LastName = 'Test1';
     u1.Email = 'testtsettest1@uipath.com';
@@ -19,8 +18,7 @@ private class AccountSetContactOwnerQueueableTest {
     insert u1;
 
     User u2 = new User();
-    u2.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator']
-    .Id;
+    u2.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'].Id;
     u2.Username = 'testtsettest2@uipath.com';
     u2.LastName = 'Test2';
     u2.Email = 'testtsettest2@uipath.com';

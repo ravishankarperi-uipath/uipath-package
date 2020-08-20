@@ -29,8 +29,7 @@ public class AccountSetSyncStatusFunction implements SObjectToSObjectFunction {
   }
 
   private Boolean ValidationStatusSetToValidated(Account acc) {
-    return acc.Validation_Status__c ==
-      CommonsConstants.ACC_VALIDATION_STATUS_VALIDATED;
+    return acc.Validation_Status__c == CommonsConstants.ACC_VALIDATION_STATUS_VALIDATED;
   }
 
   private Boolean validationStatusChanged(Account oldAcc, Account acc) {
@@ -38,29 +37,20 @@ public class AccountSetSyncStatusFunction implements SObjectToSObjectFunction {
   }
 
   private Boolean accountStatusNotDoNotSync(Account oldAcc) {
-    return oldAcc.Sync_Status__c !=
-      CommonsConstants.ACC_SYNC_STATUS_DO_NOT_SYNC;
+    return oldAcc.Sync_Status__c != CommonsConstants.ACC_SYNC_STATUS_DO_NOT_SYNC;
   }
 
   public SObject apply(SObject record) {
     return apply((Account) record);
   }
 
-  public static void deriveSyncStatusForValidatedAccount(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void deriveSyncStatusForValidatedAccount(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate haveStatusesChanged = new HasRecordChanged(
-      new Set<SObjectField>{
-        Account.Sync_Status__c,
-        Account.Validation_Status__c
-      },
+      new Set<SObjectField>{ Account.Sync_Status__c, Account.Validation_Status__c },
       accounts,
       existingAccounts
     );
 
-    Collection.of(accounts)
-      .filter(haveStatusesChanged)
-      .mapAll(new AccountSetSyncStatusFunction(existingAccounts));
+    Collection.of(accounts).filter(haveStatusesChanged).mapAll(new AccountSetSyncStatusFunction(existingAccounts));
   }
 }

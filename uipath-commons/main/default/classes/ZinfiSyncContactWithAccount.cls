@@ -21,8 +21,7 @@ public class ZinfiSyncContactWithAccount {
     };
 
     // remove fields which are not present in the org
-    Map<String, Schema.SobjectField> fieldMap = Schema.Contact.sObjectType.getDescribe()
-      .fields.getMap();
+    Map<String, Schema.SobjectField> fieldMap = Schema.Contact.sObjectType.getDescribe().fields.getMap();
     for (String conField : contactFieldsToSync) {
       if (!fieldMap.containsKey(conField)) {
         contactFieldsToSync.remove(conField);
@@ -102,14 +101,10 @@ public class ZinfiSyncContactWithAccount {
    * TODO refactor code into Queueable
    * Sync data with Zinfi system
    */
-  public static void zinfiSyncAccountOnUpdate(
-    Map<Id, SObject> existingRecords
-  ) {
+  public static void zinfiSyncAccountOnUpdate(Map<Id, SObject> existingRecords) {
     ZinfiConfiguration__c zinfiSetting = ZinfiConfiguration__c.getInstance();
     if (zinfiSetting != null && zinfiSetting.IsSyncAccount__c) {
-      ZinfiSyncContactWithAccount.sendContactFutureCall(
-        existingRecords.keySet()
-      );
+      ZinfiSyncContactWithAccount.sendContactFutureCall(existingRecords.keySet());
     }
   }
 }

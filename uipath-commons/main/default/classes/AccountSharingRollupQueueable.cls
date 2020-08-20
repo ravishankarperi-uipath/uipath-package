@@ -9,10 +9,7 @@ public with sharing class AccountSharingRollupQueueable extends AbstractQueueabl
   private final List<SObject> accountsLst;
   private final Map<Id, SObject> oldAccountsMap;
 
-  public AccountSharingRollupQueueable(
-    List<SObject> accountsLst,
-    Map<Id, SObject> oldAccountsMap
-  ) {
+  public AccountSharingRollupQueueable(List<SObject> accountsLst, Map<Id, SObject> oldAccountsMap) {
     super('AccountSharingRollupQueueable');
     this.accountsLst = accountsLst;
     this.oldAccountsMap = oldAccountsMap;
@@ -28,10 +25,7 @@ public with sharing class AccountSharingRollupQueueable extends AbstractQueueabl
    * @param accountsLst
    * @param oldAccountsMap
    */
-  private void grantPermissionToParentOwner(
-    List<SObject> accountsLst,
-    Map<Id, SObject> oldAccountsMap
-  ) {
+  private void grantPermissionToParentOwner(List<SObject> accountsLst, Map<Id, SObject> oldAccountsMap) {
     System.debug('******grantPermissionToParentOwner*****');
 
     //Type casted to the Account list from SObject
@@ -48,9 +42,8 @@ public with sharing class AccountSharingRollupQueueable extends AbstractQueueabl
         }
         if (
           acc.Classification__c == 'Global' &&
-          (oldAccountsMap != null &&
-          (accOldObj.OwnerId != acc.OwnerId ||
-          accOldObj.ParentId != acc.ParentId) || oldAccountsMap == null)
+          (oldAccountsMap != null && (accOldObj.OwnerId != acc.OwnerId || accOldObj.ParentId != acc.ParentId) ||
+          oldAccountsMap == null)
         ) {
           if (acc.ParentId != null) {
             System.debug('******found parent*****');
@@ -64,11 +57,7 @@ public with sharing class AccountSharingRollupQueueable extends AbstractQueueabl
     if (accChildrenIds != null && accChildrenIds.size() > 0) {
       //get top hierarchy accounts
       do {
-        List<Account> parents = [
-          SELECT Id, ParentId, OwnerId
-          FROM Account
-          WHERE ID IN :accChildrenIds
-        ];
+        List<Account> parents = [SELECT Id, ParentId, OwnerId FROM Account WHERE ID IN :accChildrenIds];
         accChildrenIds = new Set<Id>(); //remove all ids from list to add new children
 
         for (Account acc : parents) {
@@ -99,11 +88,7 @@ public with sharing class AccountSharingRollupQueueable extends AbstractQueueabl
 
     System.debug('^^^^^^^^^^^^^^^^^^^^^^^^^^^' + accParentIdOwnerId.keySet());
     do {
-      children = [
-        SELECT Id, ParentId, OwnerId
-        FROM Account
-        WHERE ParentId IN :accParentIdOwnerId.keySet()
-      ];
+      children = [SELECT Id, ParentId, OwnerId FROM Account WHERE ParentId IN :accParentIdOwnerId.keySet()];
       Set<Id> usedIds = new Set<Id>();
       usedIds.addAll(accParentIdOwnerId.keySet());
 
@@ -120,10 +105,7 @@ public with sharing class AccountSharingRollupQueueable extends AbstractQueueabl
             accShareToInsert.add(accShare);
 
             //relate ownerId to children - keeping it through hirarchi
-            accParentIdOwnerId.put(
-              acc.Id,
-              accParentIdOwnerId.get(acc.ParentId)
-            );
+            accParentIdOwnerId.put(acc.Id, accParentIdOwnerId.get(acc.ParentId));
           }
         } //end for
       }
@@ -143,24 +125,17 @@ public with sharing class AccountSharingRollupQueueable extends AbstractQueueabl
    * For global accounts, grant Opp and Contact Edit access to Top level account owner
    * @param existingRecords
    */
-  public static void shareAccountWithParentOwner(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void shareAccountWithParentOwner(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasChanged = new HasRecordChanged(
       new Set<SObjectField>{ Account.ParentId, Account.OwnerId },
       accounts,
       existingAccounts
     );
 
-    List<Account> eligibleAccounts = (List<Account>) Collection.of(accounts)
-      .filter(hasChanged)
-      .asList();
+    List<Account> eligibleAccounts = (List<Account>) Collection.of(accounts).filter(hasChanged).asList();
 
     if (!eligibleAccounts.isEmpty()) {
-      AbstractQueueable.enqueue(
-        new AccountSharingRollupQueueable(eligibleAccounts, existingAccounts)
-      );
+      AbstractQueueable.enqueue(new AccountSharingRollupQueueable(eligibleAccounts, existingAccounts));
     }
   }
 }

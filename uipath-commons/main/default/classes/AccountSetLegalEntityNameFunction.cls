@@ -8,12 +8,10 @@ public class AccountSetLegalEntityNameFunction implements SObjectToSObjectFuncti
   public SObject apply(Account acc) {
     if (
       acc.Legal__c == null &&
-      (acc.RecordTypeId ==
-      AccountMetadata.getAccountRecordTypeId('Partner_Prospect') ||
+      (acc.RecordTypeId == AccountMetadata.getAccountRecordTypeId('Partner_Prospect') ||
       acc.RecordTypeId == AccountMetadata.getAccountRecordTypeId('Partner') ||
       acc.RecordTypeId == AccountMetadata.getAccountRecordTypeId('Academic') ||
-      acc.RecordTypeId ==
-      AccountMetadata.getAccountRecordTypeId('Customer_Prospect') ||
+      acc.RecordTypeId == AccountMetadata.getAccountRecordTypeId('Customer_Prospect') ||
       acc.RecordTypeId == AccountMetadata.getAccountRecordTypeId('Customer'))
     ) {
       acc.Legal__c = acc.Name;
@@ -32,9 +30,6 @@ public class AccountSetLegalEntityNameFunction implements SObjectToSObjectFuncti
    */
   public static void deriveLegalEntityNameOnInsert(List<Account> records) {
     Collection.of(records)
-      .mapSome(
-        Match.field(Account.RecordTypeId).hasValue(),
-        new AccountSetLegalEntityNameFunction()
-      );
+      .mapSome(Match.field(Account.RecordTypeId).hasValue(), new AccountSetLegalEntityNameFunction());
   }
 }

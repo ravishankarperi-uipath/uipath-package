@@ -16,8 +16,7 @@ public class AccountSetStateFunction implements SObjectToSObjectFunction {
       acc.BillingCountryCode == 'IE' ||
       acc.BillingCountryCode == 'IN' ||
       acc.BillingCountryCode == 'IT' ||
-      acc.BillingCountryCode == 'MX') &&
-      String.isNotBlank(acc.Billing_State_Text_D_B__c)
+      acc.BillingCountryCode == 'MX') && String.isNotBlank(acc.Billing_State_Text_D_B__c)
     ) {
       acc.BillingState = acc.Billing_State_Text_D_B__c;
     }
@@ -48,18 +47,13 @@ public class AccountSetStateFunction implements SObjectToSObjectFunction {
   /**
    * Updates BillingState if Billing_State_Text_D_B__c is changed
    */
-  public static void deriveStateOnUpdate(
-    List<Account> accounts,
-    Map<Id, SObject> existingAccounts
-  ) {
+  public static void deriveStateOnUpdate(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasDBStateChanged = new HasRecordChanged(
       new Set<SObjectField>{ Account.Billing_State_Text_D_B__c },
       accounts,
       existingAccounts
     );
 
-    Collection.of(accounts)
-      .filter(hasDBStateChanged)
-      .mapAll(new AccountSetStateFunction());
+    Collection.of(accounts).filter(hasDBStateChanged).mapAll(new AccountSetStateFunction());
   }
 }

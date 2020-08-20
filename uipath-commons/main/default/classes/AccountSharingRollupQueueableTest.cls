@@ -6,8 +6,7 @@ public class AccountSharingRollupQueueableTest {
   @isTest
   public static void canRunAccountSharingJobOnInsert() {
     User u1 = new User();
-    u1.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator']
-    .Id;
+    u1.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'].Id;
     u1.Username = 'canRunAccountSharingJob@uipath.com';
     u1.LastName = 'Test';
     u1.Email = 'canRunAccountSharingJob@uipath.com';
@@ -52,18 +51,13 @@ public class AccountSharingRollupQueueableTest {
         AND OpportunityAccessLevel = 'Edit'
         AND UserOrGroupId = :u1.Id
     ];
-    System.assertEquals(
-      1,
-      accountShares.size(),
-      'Parent Account owner should have edit access to Account and Opty'
-    );
+    System.assertEquals(1, accountShares.size(), 'Parent Account owner should have edit access to Account and Opty');
   }
 
   @isTest
   public static void canRunAccountSharingJobOnUpdateOfParentOwner() {
     User u1 = new User();
-    u1.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator']
-    .Id;
+    u1.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'].Id;
     u1.Username = 'canRunAccountSharingJob@uipath.com';
     u1.LastName = 'Test';
     u1.Email = 'canRunAccountSharingJob@uipath.com';
@@ -74,8 +68,7 @@ public class AccountSharingRollupQueueableTest {
     u1.LanguageLocaleKey = 'en_US';
 
     User u2 = new User();
-    u2.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator']
-    .Id;
+    u2.ProfileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator'].Id;
     u2.Username = '2canRunAccountSharingJob@uipath.com';
     u2.LastName = '2Test';
     u2.Email = '2canRunAccountSharingJob@uipath.com';
@@ -129,10 +122,6 @@ public class AccountSharingRollupQueueableTest {
         AND OpportunityAccessLevel = 'Edit'
         AND UserOrGroupId = :u2.Id
     ];
-    System.assertEquals(
-      1,
-      accountShares.size(),
-      'Parent Account owner should have edit access to Account and Opty'
-    );
+    System.assertEquals(1, accountShares.size(), 'Parent Account owner should have edit access to Account and Opty');
   }
 }
