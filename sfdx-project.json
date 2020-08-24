@@ -1,36 +1,53 @@
 {
-    "packageDirectories": [
+  "packageDirectories": [
+    {
+      "path": "uipath-core",
+      "package": "uipath-core",
+      "default": false,
+      "versionName": "Version 1.0",
+      "versionNumber": "1.0.0.NEXT"
+    },
+    {
+      "path": "uipath-commons",
+      "package": "uipath-commons",
+      "default": true,
+      "versionName": "Version 1.0",
+      "versionNumber": "1.0.0.NEXT",
+      "dependencies": [
         {
-            "path": "uipath-core",
-            "package": "uipath-core",
-            "default": false,
-            "versionName": "Version 1.0",
-            "versionNumber": "1.0.0.NEXT"
+          "package": "uipath-core",
+          "versionNumber": "1.0.0.LATEST"
         },
         {
-            "path": "uipath-commons",
-            "package": "uipath-commons",
-            "default": true,
-            "versionName": "Version 1.0",
-            "versionNumber": "1.0.0.NEXT",
-            "dependencies": [
-                {
-                    "package": "uipath-core",
-                    "versionNumber": "1.0.0.LATEST"
-                },
-                {
-                    "package": "DNBoptimizer-v1.6061"
-                }
-            ]
+          "package": "DNBoptimizer-v1.6061"
         }
-    ],
-    "namespace": "",
-    "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "48.0",
-    "packageAliases": {
-        "DNBoptimizer-v1.6061": "04t1I000003FJbZQAW",
-        "uipath-core": "0Ho1Q000000CaTDSA0",
-        "uipath-commons": "0Ho1Q000000CaTISA0",
-        "uipath-commons@1.0.0-65": "04t1Q0000010KO0QAM"
+      ]
+    },
+    {
+      "path": "uipath-service",
+      "package": "uipath-service",
+      "versionName": "Version 1.0",
+      "versionNumber": "1.0.0.NEXT",
+      "default": false,
+      "dependencies": [
+        {
+          "package": "uipath-core",
+          "versionNumber": "1.0.0.LATEST"
+        },
+        {
+          "package": "uipath-commons",
+          "versionNumber": "1.0.0.LATEST"
+        }
+      ]
     }
+  ],
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "48.0",
+  "packageAliases": {
+    "DNBoptimizer-v1.6061": "04t1I000003FJbZQAW",
+    "uipath-core": "0Ho1Q000000CaTDSA0",
+    "uipath-commons": "0Ho1Q000000CaTISA0",
+    "uipath-service": "0Ho1Q000000blJdSAI"
+  }
 }

@@ -21,6 +21,8 @@ jobs:
               - 'uipath-core/main/default/**/*'
             commons:
               - 'uipath-commons/main/default/**/*'
+            service:
+              - 'uipath-service/main/default/**/*'
 
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.4.1
@@ -58,6 +60,11 @@ jobs:
         if: steps.filter.outputs.commons == 'true'
         run: "sfdx force:package:version:create -p uipath-commons -d uipath-commons --wait 30 -f config/project-scratch-def.json -k unlockedclear"
 
+      #  new uipath-service version if contents changed
+      - name: "create uipath-service beta version"
+        if: steps.filter.outputs.service == 'true'
+        run: "sfdx force:package:version:create -p uipath-service -d uipath-service --wait 30 -f config/project-scratch-def.json -k unlockedclear"
+
       # Store secret for CI
       - name: "Populate auth file with CI_AUTH_URL secret"
         shell: bash
@@ -77,15 +84,20 @@ jobs:
         if: steps.filter.outputs.commons == 'true'
         run: "sfdx force:package:install --noprompt --package $(sfdx force:package:version:list -p 0Ho1Q000000CaTISA0 -v devhub -o CreatedDate --concise | tail -1 | awk '{print $3}') -u ci -w 60 -k unlockedclear --apexcompile package"
 
+      #  Install latest uipath-service version if contents changed
+      - name: "Install service Package in Sandbox"
+        if: steps.filter.outputs.service == 'true'
+        run: "sfdx force:package:install --noprompt --package $(sfdx force:package:version:list -p 0Ho1Q000000blJdSAI -v devhub -o CreatedDate --concise | tail -1 | awk '{print $3}') -u ci -w 60 -k unlockedclear --apexcompile package"
+
       # Update sfdx-project.json and README to use only latest package version
       - name: "Update sfdx-project.json and README"
-        if: (steps.filter.outputs.commons == 'true' ||  steps.filter.outputs.core == 'true') && steps.packaging-updater.outputs.isSuccess
+        if: (steps.filter.outputs.commons == 'true' ||  steps.filter.outputs.core == 'true' ||  steps.filter.outputs.service == 'true') && steps.packaging-updater.outputs.isSuccess
         id: packaging-updater
         uses: muenzpraeger/github-action-sfdx-packaging-updater@master
 
       # Re-add changes back to source
       - name: "Add new package version, updated sfdx-project.json and README to source"
-        if: (steps.filter.outputs.commons == 'true' ||  steps.filter.outputs.core == 'true') && steps.packaging-updater.outputs.isSuccess
+        if: (steps.filter.outputs.commons == 'true' ||  steps.filter.outputs.core == 'true' ||  steps.filter.outputs.service == 'true') && steps.packaging-updater.outputs.isSuccess
         uses: Automattic/action-commit-to-branch@master
         with:
           branch: ${{ github.head_ref }}

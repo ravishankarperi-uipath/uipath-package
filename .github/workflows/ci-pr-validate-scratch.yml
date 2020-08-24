@@ -36,9 +36,13 @@ jobs:
         if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
-      # Prettier formatting
+      # Prettier formatting for Commons
       - name: "UiPath Commons : Code formatting verification with Prettier"
         run: npm run prettier:verify:commons
+
+      # Prettier formatting for Service
+      - name: "UiPath Service : Code formatting verification with Prettier"
+        run: npm run prettier:verify:service
 
       #- name: "Lint Lightning Web Components"
       # run: npm run lint:lwc
@@ -86,6 +90,8 @@ jobs:
               - 'uipath-core/main/default/**/*'
             commons:
               - 'uipath-commons/main/default/**/*'
+            service:
+              - 'uipath-service/main/default/**/*'
 
       # Install Salesforce CLI
       - name: Install Salesforce CLI
