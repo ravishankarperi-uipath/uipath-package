@@ -12,8 +12,8 @@
     "test:unit:debug": "sfdx-lwc-jest --debug",
     "test:unit:coverage": "sfdx-lwc-jest --coverage",
     "prettier:commons": "prettier --write \"uipath-commons/main/default/classes/**\" \"uipath-commons/main/default/triggers/**\"",
-    "prettier:verify:commons": "prettier --list-different \"uipath-commons/main/default/classes/**\" \"uipath-commons/main/default/triggers/**\"",
-    "prettier:verify:service": "prettier --list-different \"uipath-service/main/default/classes/**\" \"uipath-service/main/default/triggers/**\""
+    "prettier:verify:commons": "prettier --no-error-on-unmatched-pattern --list-different \"uipath-commons/main/default/classes/**\" \"uipath-commons/main/default/triggers/**\"",
+    "prettier:verify:service": "prettier --no-error-on-unmatched-pattern --list-different \"uipath-service/main/default/classes/**\" \"uipath-service/main/default/triggers/**\""
   },
   "devDependencies": {
     "@prettier/plugin-xml": "^0.7.2",

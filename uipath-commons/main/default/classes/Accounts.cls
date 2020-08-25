@@ -13,6 +13,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
   public Accounts(List<Account> sObjectList) {
     super(sObjectList);
+    this.Configuration.disableTriggerCRUDSecurity();
   }
 
   public override void onBeforeInsert() {
