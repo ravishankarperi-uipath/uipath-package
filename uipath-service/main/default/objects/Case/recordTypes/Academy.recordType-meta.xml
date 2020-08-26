@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Academy</fullName>
+    <active>true</active>
+    <businessProcess>Academy</businessProcess>
+    <compactLayoutAssignment>Academy</compactLayoutAssignment>
+    <label>Academy</label>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Community</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contact center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>ACME downtime</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Academy Account Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Academy Bug</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Academy Trainings Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assignment still pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certification Account Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certification Bug</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certification Exam Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Docebo App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Docebo problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Feedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General Info</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Feature Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Question</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opp_VR_Inside_Sales_cannot_edit_booked_o__c</fullName>
+    <defaultValue>true</defaultValue>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Opp-VR-Inside_Sales_cannot_edit_booked_o</label>
+    <type>Checkbox</type>
+</CustomField>

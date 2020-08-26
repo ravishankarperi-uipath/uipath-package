@@ -1,7 +1,7 @@
 /**
  * Wrapper class to overcome asynchronous transaction limits (for example, from a batch Apex job), where you can add only one job to the queue with System.enqueueJob
  * We use this to have control over the flow and make sure that System.enqueueJob() is executed on our QueueableChain only once at the end of the transaction
- *
+ *.
  */
 public abstract class AbstractQueueable implements Queueable {
     private static Integer counter = 0;

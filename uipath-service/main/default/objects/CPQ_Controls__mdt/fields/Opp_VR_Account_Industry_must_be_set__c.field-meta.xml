@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opp_VR_Account_Industry_must_be_set__c</fullName>
+    <defaultValue>true</defaultValue>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Should &apos;Account_Industry_must_be_set&apos; apply to CPQ opportunities</inlineHelpText>
+    <label>Opp-VR-Account_Industry_must_be_set</label>
+    <type>Checkbox</type>
+</CustomField>

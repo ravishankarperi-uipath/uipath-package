@@ -35,8 +35,11 @@
                     "versionNumber": "1.0.0.LATEST"
                 },
                 {
+                    "package": "DNBoptimizer-v1.6061"
+                },
+                {
                     "package": "uipath-commons",
-                    "versionNumber": "1.0.0.LATEST"
+                    "versionNumber": "1.0.1.LATEST"
                 }
             ]
         }

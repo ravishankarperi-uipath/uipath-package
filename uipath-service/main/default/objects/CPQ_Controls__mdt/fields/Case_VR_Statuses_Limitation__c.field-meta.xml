@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_VR_Statuses_Limitation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>SFSL-855</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Case-VR-Statuses_Limitation</label>
+    <type>Checkbox</type>
+</CustomField>

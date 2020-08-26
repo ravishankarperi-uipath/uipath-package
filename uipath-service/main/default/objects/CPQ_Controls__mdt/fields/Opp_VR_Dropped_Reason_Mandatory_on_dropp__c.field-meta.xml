@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opp_VR_Dropped_Reason_Mandatory_on_dropp__c</fullName>
+    <defaultValue>true</defaultValue>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Opp-VR-Dropped_Reason_Mandatory_on_dropp</label>
+    <type>Checkbox</type>
+</CustomField>

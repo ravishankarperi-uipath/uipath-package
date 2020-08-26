@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Default</label>
+    <protected>false</protected>
+    <values>
+        <field>Case_C_CaseTriggerHandler__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Case_VR_CVR01_Finance_Opp_Fields__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Case_VR_Statuses_Limitation__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>EN_CPQ_Email_Template__c</field>
+        <value xsi:type="xsd:string">EN CPQ Email Template</value>
+    </values>
+    <values>
+        <field>EN_CPQ_Template__c</field>
+        <value xsi:type="xsd:string">EN CPQ Quote Template</value>
+    </values>
+    <values>
+        <field>JA_CPQ_Email_Template__c</field>
+        <value xsi:type="xsd:string">EN CPQ Email Template</value>
+    </values>
+    <values>
+        <field>JA_CPQ_Template__c</field>
+        <value xsi:type="xsd:string">JA CPQ Quote Template</value>
+    </values>
+    <values>
+        <field>OLI_C_OpportunityLineItemAssetAssociatio__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OLI_C_OpportunityLineItemHelper__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_BPO_MS_End_Customer_mandatory__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Deal_Reg_Partner_Sales_Email_mand__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Demo_POC_restriction__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Do_We_Know_End_Customer_mandatory__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Invoicing_Contacts_needed_before__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_JP_Campaign_before_CW_Pending__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_JP_Campaign_for_Japan_Only__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Lead_Source_Mandatory__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Led_by_needs_to_be_completed__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OPP_VR_Mandatory_Partner_Involvement__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Multiple_Implementation_Partners__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Multiple_preferred_partners__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_No_Opps_on_COE__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_OVR01_Closed_Won_Booked_Contract__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OPP_VR_OVR02_Update_Product_Version__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OPP_VR_OVR03_Update_End_Date__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OPP_VR_Opportunity_Creation_Limitation__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OPP_VR_Partner_Account_no_Direct_sale__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Prevent_drop_in_advanced_stage__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Prevent_moving_to_higher_than_Pro__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Prevent_opps_without_products__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OPP_VR_Resale_Sold_To_Partner__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Restrict_ClosedLost_Opportunities__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Restrict_Edit_for_Japan_opps_only__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Restrict_Suspect_Opportunities__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OPP_VR_Restrict_deal_type_for_customer_a__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_SGD_currency_for_Government_only__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Sales_cannot_move_back_from_close__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Sales_cannot_select_Closed_Won_Bo__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Single_Preferred_Partner_Opportun__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OPP_VR_Type_cannot_be_New_Business_for_e__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OPP_VR_Type_must_be_set_when_no_longer_S__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>OPP_VR_Value_Drivers_Other_1__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Value_Drivers_Other_2__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Win_Loss_Reason1_Mandatory_on_clo__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Win_Loss_Reason2_Mandatory_on_clo__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Win_Loss_Reason3_Mandatory_on_clo__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Win_Loss_Reason_1_should_be_diffe__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Win_Loss_Reason_2_should_be_diffe__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Win_Loss_Reason_3_should_be_diffe__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Win_Loss_Reason_details_1__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Win_Loss_Reason_details_2__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OPP_VR_Won_opportunities_require_amount__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Opp_CPQ_Record_Type_Developer_Name__c</field>
+        <value xsi:type="xsd:string">CPQ_Default</value>
+    </values>
+    <values>
+        <field>Opp_C_BatchAutoCloseRenewalOpportunities__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Opp_C_CreateAssetOnClosedWonHandler__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Opp_C_OpportunityListController__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Opp_C_OpportunityTriggerHandler__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Opp_C_SetPrimaryContactSchedulable__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Opp_VR_Account_Industry_must_be_set__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Opp_VR_At_Least_1_Preferred_Partner_Need__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Opp_VR_CannotCloseBeforeFinanceReviewRea__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Opp_VR_Check_CompanyId_Value__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Opp_VR_Closed_Lost_Forecast_Category__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Opp_VR_Closed_Won_on_opp_creation__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Opp_VR_Competition_for_Closed_Deals__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Opp_VR_Deal_Reg_Approved_without_account__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Opp_VR_Dropped_Reason_Mandatory_on_dropp__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Opp_VR_Dropped_Reason_restricted_nondrop__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Opp_VR_Inside_Sales_Closed_Pending_Stage__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Opp_VR_Inside_Sales_cannot_edit_booked_o__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Opp_VR_Invoicing_contacts_must_have_emai__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Product_Premium_Care_Name__c</field>
+        <value xsi:type="xsd:string">UiPath Premium Care</value>
+    </values>
+</CustomMetadata>

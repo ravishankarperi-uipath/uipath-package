@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proactive_Care</fullName>
+    <active>true</active>
+    <businessProcess>Service Request%2FIncident</businessProcess>
+    <compactLayoutAssignment>Case_Default_Compact_Layout</compactLayoutAssignment>
+    <description>For Proactive Support Portal Users</description>
+    <label>Proactive Care</label>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Community</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Urgent</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>By Design</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Code Defect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Compatibility</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enhancements Requests%2FFeedback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Feature Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Question</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
