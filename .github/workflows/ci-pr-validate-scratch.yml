@@ -11,6 +11,19 @@ jobs:
   formatting-and-linting:
     runs-on: ubuntu-latest
     steps:
+      # This 3rdparty filter is used so that some steps can be run only on the relevant changed package
+      - uses: dorny/paths-filter@v2.2.0
+        id: filter
+        with:
+          filters: |
+            core:
+              - 'uipath-core/main/default/**/*'
+            commons:
+              - 'uipath-commons/main/default/**/*'
+            service:
+              - 'uipath-service/main/default/**/*'
+
+
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.4.1
         with:
@@ -38,10 +51,12 @@ jobs:
 
       # Prettier formatting for Commons
       - name: "UiPath Commons : Code formatting verification with Prettier"
+        if: steps.filter.outputs.commons == 'true'
         run: npm run prettier:verify:commons
 
       # Prettier formatting for Service
       - name: "UiPath Service : Code formatting verification with Prettier"
+        if: steps.filter.outputs.service == 'true'
         run: npm run prettier:verify:service
 
       #- name: "Lint Lightning Web Components"
