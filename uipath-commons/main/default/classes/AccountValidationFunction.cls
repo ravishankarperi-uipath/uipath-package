@@ -8,13 +8,14 @@ public with sharing class AccountValidationFunction implements SObjectToSObjectF
   }
 
   public SObject apply(Account modifiedAccount) {
-    validateStatePopulatedForChinaAustralia(modifiedAccount);
-
+    //only on insert
+    if (existingRecords == null) {
+      validateStatePopulatedForChinaAustralia(modifiedAccount);
+    }
     //Validate during updates
     if (existingRecords != null && !existingRecords.isEmpty()) {
       validateIfDnBCountryChanged(modifiedAccount);
     }
-
     return modifiedAccount;
   }
 
