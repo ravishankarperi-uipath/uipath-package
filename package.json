@@ -12,6 +12,7 @@
     "test:unit:debug": "sfdx-lwc-jest --debug",
     "test:unit:coverage": "sfdx-lwc-jest --coverage",
     "prettier:commons": "prettier --write \"uipath-commons/main/default/classes/**\" \"uipath-commons/main/default/triggers/**\"",
+    "prettier:service": "prettier --write \"uipath-service/main/default/classes/**\" \"uipath-service/main/default/triggers/**\"",
     "prettier:verify:commons": "prettier --ignore-unknown --list-different \"uipath-commons/main/default/classes/**\" \"uipath-commons/main/default/triggers/**\"",
     "prettier:verify:service": "prettier --ignore-unknown --list-different \"uipath-service/main/default/classes/**\" \"uipath-service/main/default/triggers/**\""
   },
