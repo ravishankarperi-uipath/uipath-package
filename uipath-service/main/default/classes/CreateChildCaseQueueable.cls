@@ -17,19 +17,19 @@ public with sharing class CreateChildCaseQueueable extends AbstractQueueable {
 
     Group productSuportQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'Product_Support_Queue'];
 
-    for (Case case : cases) {
+    for (Case cs : cases) {
       Case child = new Case(
-        BusinessHoursId = case.BusinessHoursId,
+        BusinessHoursId = cs.BusinessHoursId,
         Case_Owner_is_Queue__c = true,
-        CurrencyIsoCode = case.CurrencyIsoCode,
-        Description = case.Description,
+        CurrencyIsoCode = cs.CurrencyIsoCode,
+        Description = cs.Description,
         OwnerId = productSuportQueue.Id,
-        ParentId = case.Id,
-        RecordTypeId = case.RecordTypeId,
-        Related_To__c = case.Related_To__c,
+        ParentId = cs.Id,
+        RecordTypeId = cs.RecordTypeId,
+        Related_To__c = cs.Related_To__c,
         Status = 'New',
-        Sub_Component__c = case.Sub_Component__c,
-        Subject = 'DSAT FollowUp: ' + Case.Subject
+        Sub_Component__c = cs.Sub_Component__c,
+        Subject = 'DSAT FollowUp: ' + cs.Subject
       );
       children.add(child);
     }
@@ -55,7 +55,7 @@ public with sharing class CreateChildCaseQueueable extends AbstractQueueable {
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new CreateChildCaseQueueable(eligibleCases, null));
+      AbstractQueueable.enqueue(new CreateChildCaseQueueable(eligibleCases));
     }
   }
 }
