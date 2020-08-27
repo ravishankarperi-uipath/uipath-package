@@ -41,7 +41,11 @@ public with sharing class CreateChildCaseQueueable extends AbstractQueueable {
   }
 
   public static void createChildCases(List<SObject> cases, Map<Id, SObject> existingCases) {
-    SObjectPredicate hasChanged = new HasRecordChanged(new Set<SObjectField>{ Case.Status, Case.CSAT__c }, cases, existingCases);
+    SObjectPredicate hasChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Case.Status, Case.CSAT__c },
+      cases,
+      existingCases
+    );
 
     List<Account> eligibleCases = Collection.of(cases)
       .filter(hasChanged)
