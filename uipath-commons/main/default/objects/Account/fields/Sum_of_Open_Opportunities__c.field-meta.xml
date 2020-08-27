@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Sum_of_Open_Opportunities__c</fullName>
-        <description>exclude renewals;only uipath licenses</description>
-        <externalId>false</externalId>
-        <inlineHelpText>exclude renewals;only uipath licenses</inlineHelpText>
-        <label>Sum of Open Opportunities</label>
-        <precision>12</precision>
-        <required>false</required>
-        <scale>2</scale>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Currency</type>
-    </CustomField>
+    <fullName>Sum_of_Open_Opportunities__c</fullName>
+    <description>exclude renewals;only uipath licenses</description>
+    <externalId>false</externalId>
+    <inlineHelpText>exclude renewals;only uipath licenses</inlineHelpText>
+    <label>Sum of Open Opportunities</label>
+    <precision>12</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

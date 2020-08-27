@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Employees_Score__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(NumberOfEmployees &lt; 10000, 2, IF(AND(NumberOfEmployees &lt; 20000,NumberOfEmployees &gt; 10000), 4, IF(AND(NumberOfEmployees &lt; 50000,NumberOfEmployees &gt; 20000), 7, 10)))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Employees Score</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <type>Number</type>
-        <unique>false</unique>
-    </CustomField>
+    <fullName>Employees_Score__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(NumberOfEmployees &lt; 10000, 2, IF(AND(NumberOfEmployees &lt; 20000,NumberOfEmployees &gt; 10000), 4, IF(AND(NumberOfEmployees &lt; 50000,NumberOfEmployees &gt; 20000), 7, 10)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Employees Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

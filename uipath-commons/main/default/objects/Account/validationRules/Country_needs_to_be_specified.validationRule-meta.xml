@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Country_needs_to_be_specified</fullName>
-        <active>true</active>
-        <description>Requires Billing Country specification to drive regional country and opportunity reporting</description>
-        <errorConditionFormula>ISBLANK(BillingCountry)</errorConditionFormula>
-        <errorDisplayField>BillingCountry</errorDisplayField>
-        <errorMessage>You need to specify a Country when saving an account.  Select the appropriate country from the drop down menu.  If your country is not available, please contact your system administrator.  Are you selling on the right planet (Earth)?</errorMessage>
-    </ValidationRule>
+    <fullName>Country_needs_to_be_specified</fullName>
+    <active>true</active>
+    <description>Requires Billing Country specification to drive regional country and opportunity reporting</description>
+    <errorConditionFormula>ISBLANK(BillingCountry)</errorConditionFormula>
+    <errorDisplayField>BillingCountry</errorDisplayField>
+    <errorMessage>You need to specify a Country when saving an account.  Select the appropriate country from the drop down menu.  If your country is not available, please contact your system administrator.  Are you selling on the right planet (Earth)?</errorMessage>
+</ValidationRule>

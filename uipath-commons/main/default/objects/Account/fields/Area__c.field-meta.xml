@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Area__c</fullName>
-        <externalId>false</externalId>
-        <label>Area</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>AMER South &amp; Gov</fullName>
-                    <default>false</default>
-                    <label>AMER South &amp; Gov</label>
-                </value>
-                <value>
-                    <fullName>AMER North &amp; BFS</fullName>
-                    <default>false</default>
-                    <label>AMER North &amp; BFS</label>
-                </value>
-                <value>
-                    <fullName>AMER West</fullName>
-                    <default>false</default>
-                    <label>AMER West</label>
-                </value>
-                <value>
-                    <fullName>MEA</fullName>
-                    <default>false</default>
-                    <label>MEA</label>
-                </value>
-                <value>
-                    <fullName>Central Europe</fullName>
-                    <default>false</default>
-                    <label>Central Europe</label>
-                </value>
-                <value>
-                    <fullName>EECIS</fullName>
-                    <default>false</default>
-                    <label>EECIS</label>
-                </value>
-                <value>
-                    <fullName>Southern Europe</fullName>
-                    <default>false</default>
-                    <label>Southern Europe</label>
-                </value>
-                <value>
-                    <fullName>Northern Europe</fullName>
-                    <default>false</default>
-                    <label>Northern Europe</label>
-                </value>
-                <value>
-                    <fullName>Western Europe</fullName>
-                    <default>false</default>
-                    <label>Western Europe</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </CustomField>
+    <fullName>Area__c</fullName>
+    <externalId>false</externalId>
+    <label>Area</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AMER South &amp; Gov</fullName>
+                <default>false</default>
+                <label>AMER South &amp; Gov</label>
+            </value>
+            <value>
+                <fullName>AMER North &amp; BFS</fullName>
+                <default>false</default>
+                <label>AMER North &amp; BFS</label>
+            </value>
+            <value>
+                <fullName>AMER West</fullName>
+                <default>false</default>
+                <label>AMER West</label>
+            </value>
+            <value>
+                <fullName>MEA</fullName>
+                <default>false</default>
+                <label>MEA</label>
+            </value>
+            <value>
+                <fullName>Central Europe</fullName>
+                <default>false</default>
+                <label>Central Europe</label>
+            </value>
+            <value>
+                <fullName>EECIS</fullName>
+                <default>false</default>
+                <label>EECIS</label>
+            </value>
+            <value>
+                <fullName>Southern Europe</fullName>
+                <default>false</default>
+                <label>Southern Europe</label>
+            </value>
+            <value>
+                <fullName>Northern Europe</fullName>
+                <default>false</default>
+                <label>Northern Europe</label>
+            </value>
+            <value>
+                <fullName>Western Europe</fullName>
+                <default>false</default>
+                <label>Western Europe</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

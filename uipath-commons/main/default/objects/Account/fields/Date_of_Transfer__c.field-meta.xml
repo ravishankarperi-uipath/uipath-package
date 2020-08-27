@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Date_of_Transfer__c</fullName>
-        <description>The date when the account has been transferred from previous account owner</description>
-        <externalId>false</externalId>
-        <label>Date of Transfer</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Date</type>
-    </CustomField>
+    <fullName>Date_of_Transfer__c</fullName>
+    <description>The date when the account has been transferred from previous account owner</description>
+    <externalId>false</externalId>
+    <label>Date of Transfer</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Date</type>
+</CustomField>

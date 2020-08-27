@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>DnB_Street__c</fullName>
-        <description>D&amp;B address will be synced to custom D&amp;B address fields on account. From there, they can be synced to the address object. These fields are hidden and used in the background for syncing logic.</description>
-        <externalId>false</externalId>
-        <label>DnB Street</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>TextArea</type>
-    </CustomField>
+    <fullName>DnB_Street__c</fullName>
+    <description>D&amp;B address will be synced to custom D&amp;B address fields on account. From there, they can be synced to the address object. These fields are hidden and used in the background for syncing logic.</description>
+    <externalId>false</externalId>
+    <label>DnB Street</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>TextArea</type>
+</CustomField>

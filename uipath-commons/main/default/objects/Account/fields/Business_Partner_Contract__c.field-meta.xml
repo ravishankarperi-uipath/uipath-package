@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Business_Partner_Contract__c</fullName>
-        <externalId>false</externalId>
-        <label>Business Partner Contract</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Resale</fullName>
-                    <default>false</default>
-                    <label>Resale</label>
-                </value>
-                <value>
-                    <fullName>BPO</fullName>
-                    <default>false</default>
-                    <label>BPO</label>
-                </value>
-                <value>
-                    <fullName>Resale + BPO</fullName>
-                    <default>false</default>
-                    <label>Resale + BPO</label>
-                </value>
-                <value>
-                    <fullName>Distribution</fullName>
-                    <default>false</default>
-                    <label>Distribution</label>
-                </value>
-                <value>
-                    <fullName>Fed MPA (Delivery Only)</fullName>
-                    <default>false</default>
-                    <label>Fed MPA (Delivery Only)</label>
-                </value>
-                <value>
-                    <fullName>Sales Agent</fullName>
-                    <default>false</default>
-                    <label>Sales Agent</label>
-                </value>
-                <value>
-                    <fullName>Software License Broker</fullName>
-                    <default>false</default>
-                    <label>Software License Broker</label>
-                </value>
-                <value>
-                    <fullName>Non-Standard</fullName>
-                    <default>false</default>
-                    <label>Non-Standard</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </CustomField>
+    <fullName>Business_Partner_Contract__c</fullName>
+    <externalId>false</externalId>
+    <label>Business Partner Contract</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Resale</fullName>
+                <default>false</default>
+                <label>Resale</label>
+            </value>
+            <value>
+                <fullName>BPO</fullName>
+                <default>false</default>
+                <label>BPO</label>
+            </value>
+            <value>
+                <fullName>Resale + BPO</fullName>
+                <default>false</default>
+                <label>Resale + BPO</label>
+            </value>
+            <value>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+                <label>Distribution</label>
+            </value>
+            <value>
+                <fullName>Fed MPA (Delivery Only)</fullName>
+                <default>false</default>
+                <label>Fed MPA (Delivery Only)</label>
+            </value>
+            <value>
+                <fullName>Sales Agent</fullName>
+                <default>false</default>
+                <label>Sales Agent</label>
+            </value>
+            <value>
+                <fullName>Software License Broker</fullName>
+                <default>false</default>
+                <label>Software License Broker</label>
+            </value>
+            <value>
+                <fullName>Non-Standard</fullName>
+                <default>false</default>
+                <label>Non-Standard</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

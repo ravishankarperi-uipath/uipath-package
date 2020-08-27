@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Customer_Notifications_requirements__c</fullName>
-        <externalId>false</externalId>
-        <label>Customer Notification Requirements</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>A SUSPECTED data breach or security incident (non confirmed breaches)</fullName>
-                    <default>false</default>
-                    <label>A SUSPECTED data breach or security incident (non confirmed breaches)</label>
-                </value>
-                <value>
-                    <fullName>A possible/future sub-processor (in procurement phase)</fullName>
-                    <default>false</default>
-                    <label>A possible/future sub-processor (in procurement phase)</label>
-                </value>
-                <value>
-                    <fullName>Automatic deletion of customer data</fullName>
-                    <default>false</default>
-                    <label>Automatic deletion of customer data</label>
-                </value>
-                <value>
-                    <fullName>Critical product vulnerabilities</fullName>
-                    <default>false</default>
-                    <label>Critical product vulnerabilities</label>
-                </value>
-                <value>
-                    <fullName>High product vulnerabilities</fullName>
-                    <default>false</default>
-                    <label>High product vulnerabilities</label>
-                </value>
-                <value>
-                    <fullName>Medium product vulnerabilities</fullName>
-                    <default>false</default>
-                    <label>Medium product vulnerabilities</label>
-                </value>
-                <value>
-                    <fullName>Other</fullName>
-                    <default>false</default>
-                    <label>Other</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </CustomField>
+    <fullName>Customer_Notifications_requirements__c</fullName>
+    <externalId>false</externalId>
+    <label>Customer Notification Requirements</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>A SUSPECTED data breach or security incident (non confirmed breaches)</fullName>
+                <default>false</default>
+                <label>A SUSPECTED data breach or security incident (non confirmed breaches)</label>
+            </value>
+            <value>
+                <fullName>A possible/future sub-processor (in procurement phase)</fullName>
+                <default>false</default>
+                <label>A possible/future sub-processor (in procurement phase)</label>
+            </value>
+            <value>
+                <fullName>Automatic deletion of customer data</fullName>
+                <default>false</default>
+                <label>Automatic deletion of customer data</label>
+            </value>
+            <value>
+                <fullName>Critical product vulnerabilities</fullName>
+                <default>false</default>
+                <label>Critical product vulnerabilities</label>
+            </value>
+            <value>
+                <fullName>High product vulnerabilities</fullName>
+                <default>false</default>
+                <label>High product vulnerabilities</label>
+            </value>
+            <value>
+                <fullName>Medium product vulnerabilities</fullName>
+                <default>false</default>
+                <label>Medium product vulnerabilities</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

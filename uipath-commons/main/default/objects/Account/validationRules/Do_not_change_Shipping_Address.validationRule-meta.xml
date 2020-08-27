@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Do_not_change_Shipping_Address</fullName>
-        <active>false</active>
-        <errorConditionFormula>ISCHANGED(ShippingAddress) &amp;&amp; TEXT(Verified_by_Data_Steward__c) = &quot;Verified&quot; &amp;&amp;  $Profile.Name &lt;&gt; &quot;Super Admin&quot; &amp;&amp;  $User.Id &lt;&gt; &quot;0051Q00000Fx9UF&quot; &amp;&amp; $User.Id &lt;&gt; &quot;00536000008iVVG&quot; &amp;&amp; $User.Id &lt;&gt; &quot;0053600000FwRZk&quot;</errorConditionFormula>
-        <errorMessage>Please reach out to salesforce.dataquality@uipath.com to change the shipping address</errorMessage>
-    </ValidationRule>
+    <fullName>Do_not_change_Shipping_Address</fullName>
+    <active>false</active>
+    <errorConditionFormula>ISCHANGED(ShippingAddress) &amp;&amp; TEXT(Verified_by_Data_Steward__c) = &quot;Verified&quot; &amp;&amp;  $Profile.Name &lt;&gt; &quot;Super Admin&quot; &amp;&amp;  $User.Id &lt;&gt; &quot;0051Q00000Fx9UF&quot; &amp;&amp; $User.Id &lt;&gt; &quot;00536000008iVVG&quot; &amp;&amp; $User.Id &lt;&gt; &quot;0053600000FwRZk&quot;</errorConditionFormula>
+    <errorMessage>Please reach out to salesforce.dataquality@uipath.com to change the shipping address</errorMessage>
+</ValidationRule>

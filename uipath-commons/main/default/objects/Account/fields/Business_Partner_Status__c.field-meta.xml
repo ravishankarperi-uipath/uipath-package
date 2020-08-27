@@ -1,46 +1,46 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Business_Partner_Status__c</fullName>
-        <externalId>false</externalId>
-        <label>Business Partner Status</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        
+    <fullName>Business_Partner_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Business Partner Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    
         <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Good Standing</fullName>
-                    <default>false</default>
-                    <label>Good Standing</label>
-                </value>
-                <value>
-                    <fullName>Not in Program</fullName>
-                    <default>false</default>
-                    <label>Not in Program</label>
-                </value>
-                <value>
-                    <fullName>Pending Contract</fullName>
-                    <default>false</default>
-                    <label>Pending Contract</label>
-                </value>
-                <value>
-                    <fullName>Pending Termination</fullName>
-                    <default>false</default>
-                    <label>Pending Termination</label>
-                </value>
-                <value>
-                    <fullName>Terminated</fullName>
-                    <default>false</default>
-                    <label>Terminated</label>
-                </value>
-                <value>
-                    <fullName>Not Yet Signed</fullName>
-                    <default>false</default>
-                    <label>Not Yet Signed</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </CustomField>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Good Standing</fullName>
+                <default>false</default>
+                <label>Good Standing</label>
+            </value>
+            <value>
+                <fullName>Not in Program</fullName>
+                <default>false</default>
+                <label>Not in Program</label>
+            </value>
+            <value>
+                <fullName>Pending Contract</fullName>
+                <default>false</default>
+                <label>Pending Contract</label>
+            </value>
+            <value>
+                <fullName>Pending Termination</fullName>
+                <default>false</default>
+                <label>Pending Termination</label>
+            </value>
+            <value>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+                <label>Terminated</label>
+            </value>
+            <value>
+                <fullName>Not Yet Signed</fullName>
+                <default>false</default>
+                <label>Not Yet Signed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

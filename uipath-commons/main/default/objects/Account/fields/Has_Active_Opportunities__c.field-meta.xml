@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Has_Active_Opportunities__c</fullName>
-        <externalId>false</externalId>
-        <formula>if( latest_product_end_date__c &gt;= today(), true, false)</formula>
-        <label>Has Active Opportunities</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </CustomField>
+    <fullName>Has_Active_Opportunities__c</fullName>
+    <externalId>false</externalId>
+    <formula>if( latest_product_end_date__c &gt;= today(), true, false)</formula>
+    <label>Has Active Opportunities</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>
