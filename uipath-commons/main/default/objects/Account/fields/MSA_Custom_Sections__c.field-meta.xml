@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>MSA_Custom_Sections__c</fullName>
-        <description>Select one or more sections where the MSA has custom stipulations.</description>
-        <externalId>false</externalId>
-        <label>MSA Custom Sections</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>MultiselectPicklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>MSA Travel Policy</fullName>
-                    <default>false</default>
-                    <label>MSA Travel Policy</label>
-                </value>
-                <value>
-                    <fullName>MSA Background Check</fullName>
-                    <default>false</default>
-                    <label>MSA Background Check</label>
-                </value>
-                <value>
-                    <fullName>MSA Security Clearance</fullName>
-                    <default>false</default>
-                    <label>MSA Security Clearance</label>
-                </value>
-                <value>
-                    <fullName>MSA Payment Terms</fullName>
-                    <default>false</default>
-                    <label>MSA Payment Terms</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-        <visibleLines>4</visibleLines>
-    </CustomField>
+    <fullName>MSA_Custom_Sections__c</fullName>
+    <description>Select one or more sections where the MSA has custom stipulations.</description>
+    <externalId>false</externalId>
+    <label>MSA Custom Sections</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>MSA Travel Policy</fullName>
+                <default>false</default>
+                <label>MSA Travel Policy</label>
+            </value>
+            <value>
+                <fullName>MSA Background Check</fullName>
+                <default>false</default>
+                <label>MSA Background Check</label>
+            </value>
+            <value>
+                <fullName>MSA Security Clearance</fullName>
+                <default>false</default>
+                <label>MSA Security Clearance</label>
+            </value>
+            <value>
+                <fullName>MSA Payment Terms</fullName>
+                <default>false</default>
+                <label>MSA Payment Terms</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

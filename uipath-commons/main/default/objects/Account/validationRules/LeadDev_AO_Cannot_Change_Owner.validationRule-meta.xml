@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>LeadDev_AO_Cannot_Change_Owner</fullName>
-        <active>true</active>
-        <description>Lead Development / Owner shouldn&#39;t change the Account Owner unless the Account was created today</description>
-        <errorConditionFormula>ISCHANGED(OwnerId) &amp;&amp; OR($User.Id =  PRIORVALUE(OwnerId) &amp;&amp;  $UserRole.Name &lt;&gt; &quot;Operations&quot;, $Profile.Name = &#39;Lead Development&#39;) &amp;&amp; CreatedDate &lt;&gt; Now()</errorConditionFormula>
-        <errorMessage>Account Owner cannot be changed. Please reach out to Sales Ops</errorMessage>
-    </ValidationRule>
+    <fullName>LeadDev_AO_Cannot_Change_Owner</fullName>
+    <active>true</active>
+    <description>Lead Development AMER / Owner shouldn&#39;t change the Account Owner unless the Account is being created</description>
+    <errorConditionFormula>ISCHANGED(OwnerId) &amp;&amp; OR($User.Id =  PRIORVALUE(OwnerId) &amp;&amp; $UserRole.Name &lt;&gt; &quot;Operations&quot; &amp;&amp; $Profile.Name &lt;&gt; &quot;Sales Manager CPQ&quot; &amp;&amp; $Profile.Name &lt;&gt; &quot;Sales Manager Japan&quot;&amp;&amp; $Profile.Name &lt;&gt; &quot;Lead Development Manager&quot; &amp;&amp; $Profile.Name &lt;&gt; &quot;Lead Development&quot;, $Profile.Name = &quot;Lead Development&quot; &amp;&amp;  $User.Country = &#39;United States&#39;) &amp;&amp; CreatedDate &lt;&gt; Now()</errorConditionFormula>
+    <errorMessage>Account Owner cannot be changed. Please reach out to Geo Ops</errorMessage>
+</ValidationRule>

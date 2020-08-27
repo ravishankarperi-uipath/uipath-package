@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Vertical__c</fullName>
-        <externalId>false</externalId>
-        <formula>CASE( Industry , &quot;Engineering&quot;, &quot;Manufacturing&quot;, 
+    <fullName>Vertical__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE( Industry , &quot;Engineering&quot;, &quot;Manufacturing&quot;, 
 &quot;Construction&quot;, &quot;Manufacturing&quot;,
 &quot;Manufacturing&quot;, &quot;Manufacturing&quot;,
 &quot;Automotive&quot;, &quot;Manufacturing&quot;,
@@ -52,9 +52,9 @@
 &quot;Electronics,&quot;, &quot;CPG&quot;,
 &quot;Apparel,&quot;, &quot;CPG&quot;,
 &quot;Others&quot;)</formula>
-        <label>Vertical</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </CustomField>
+    <label>Vertical</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

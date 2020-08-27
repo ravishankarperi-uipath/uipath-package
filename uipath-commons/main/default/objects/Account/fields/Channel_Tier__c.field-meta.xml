@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Channel_Tier__c</fullName>
-        <description>Channel Tier for Accounts, this is required in NetSuite Customer and will be set based on below logic - 
+    <fullName>Channel_Tier__c</fullName>
+    <description>Channel Tier for Accounts, this is required in NetSuite Customer and will be set based on below logic - 
 End User - if Account record type is Customer
 Reseller -  if Account record type is Partner</description>
-        <externalId>false</externalId>
-        <inlineHelpText>End User - if Account record type is Customer
+    <externalId>false</externalId>
+    <inlineHelpText>End User - if Account record type is Customer
 Reseller -  if Account record type is Partner</inlineHelpText>
-        <label>Channel Tier</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>End User</fullName>
-                    <default>true</default>
-                    <label>End User</label>
-                </value>
-                <value>
-                    <fullName>Reseller</fullName>
-                    <default>false</default>
-                    <label>Reseller</label>
-                </value>
-                <value>
-                    <fullName>Distributor</fullName>
-                    <default>false</default>
-                    <label>Distributor</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </CustomField>
+    <label>Channel Tier</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>End User</fullName>
+                <default>true</default>
+                <label>End User</label>
+            </value>
+            <value>
+                <fullName>Reseller</fullName>
+                <default>false</default>
+                <label>Reseller</label>
+            </value>
+            <value>
+                <fullName>Distributor</fullName>
+                <default>false</default>
+                <label>Distributor</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

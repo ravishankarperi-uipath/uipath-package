@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Region_merged__c</fullName>
-        <description>Region for reporting</description>
-        <externalId>false</externalId>
-        <formula>if(CONTAINS(&#39;#AF#AM#AZ#BD#BH#BN#BT#CC#CK#CN#CX#FJ#ID#IO#IQ#IR#JO#KG#KH#KI#KP#KR#KW#KZ#LA#LB#LK#MM#MN#MO#MV#MY#NC#NF#NP#NR#NU#NZ#PF#PG#PH#PK#PN#PS#SB#SG#SY#TH#TJ#TK#TL#TM#TO#TV#TW#UZ#VN#VU#WF#WS#YE##JP##IN##AU#&#39;, &#39;#&#39;+ TEXT(BillingCountryCode) + &#39;#&#39;), &quot;APAC&quot;,
+    <fullName>Region_merged__c</fullName>
+    <description>Region for reporting</description>
+    <externalId>false</externalId>
+    <formula>if(CONTAINS(&#39;#AF#AM#AZ#BD#BH#BN#BT#CC#CK#CN#CX#FJ#ID#IO#IQ#IR#JO#KG#KH#KI#KP#KR#KW#KZ#LA#LB#LK#MM#MN#MO#MV#MY#NC#NF#NP#NR#NU#NZ#PF#PG#PH#PK#PN#PS#SB#SG#SY#TH#TJ#TK#TL#TM#TO#TV#TW#UZ#VN#VU#WF#WS#YE##JP##IN##AU#&#39;, &#39;#&#39;+ TEXT(BillingCountryCode) + &#39;#&#39;), &quot;APAC&quot;,
 if(CONTAINS(&#39;#AD#AL#AO#AT#AX#BA#BE#BF#BG#BI#BJ#BW#BY#CD#CF#CG#CH#CI#CM#CV#CW#CZ#DE#DJ#DK#DZ#EE#EG#EH#ER#ES#ET#FI#FO#FR#GA#GB#GG#GH#GI#GM#GN#GQ#GR#GW#HR#HU#IE#IM#IS#IT#JE#KE#KM#LI#LR#LS#LT#LU#LV#LY#MA#MC#MD#ME#MG#MK#ML#MR#MT#MU#MW#MZ#NA#NE#NG#NL#NO#PL#PT#RE#RO#RS#RU#RW#SC#SD#SE#SH#SI#SJ#SK#SL#SM#SN#SO#ST#SZ#TD#TG#TN#TR#TZ#UA#UG#VA#YT#ZA#ZM#ZW#SA#IL#AE#OM#QA#CY#GE#&#39;, &#39;#&#39;+ TEXT(BillingCountryCode) + &#39;#&#39;), &quot;EMEA&quot;, if(CONTAINS(&#39;#AG#AI#AW#BB#BL#BM#BS#BZ#CA#CR#CU#DM#DO#GD#GL#GP#GT#HN#HT#JM#KN#KY#LC#MF#MQ#MS#MX#NI#PA#PM#SV#SX#TC#TT#US#VC#VG##AQ#AR#BO#BQ#BR#BV#CL#CO#EC#FK#GF#GS#GY#HM#PE#PY#SR#SS#TF#UY#VE#&#39;, &#39;#&#39;+ TEXT(BillingCountryCode) + &#39;#&#39;), &quot;NAMER&quot;, &quot;Unknown&quot;)))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Region merged (deprecated)</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </CustomField>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Region merged (deprecated)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

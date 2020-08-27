@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>UiPath_Billing_Entity__c</fullName>
-        <description>Specifies the contracting/billing entity for this custumer</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Specify the contracting/billing entity for this custumer</inlineHelpText>
-        <label>UiPath Billing Entity</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>UiPath, Inc. (US)</fullName>
-                    <default>false</default>
-                    <label>UiPath, Inc. (US)</label>
-                </value>
-                <value>
-                    <fullName>UiPath, SRL (RO)</fullName>
-                    <default>false</default>
-                    <label>UiPath, SRL (RO)</label>
-                </value>
-                <value>
-                    <fullName>UiPath, Llc (GB)</fullName>
-                    <default>false</default>
-                    <label>UiPath, Llc (GB)</label>
-                </value>
-                <value>
-                    <fullName>BlueSnap (SMB)</fullName>
-                    <default>false</default>
-                    <label>BlueSnap (SMB)</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </CustomField>
+    <fullName>UiPath_Billing_Entity__c</fullName>
+    <description>Specifies the contracting/billing entity for this custumer</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Specify the contracting/billing entity for this custumer</inlineHelpText>
+    <label>UiPath Billing Entity</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>UiPath, Inc. (US)</fullName>
+                <default>false</default>
+                <label>UiPath, Inc. (US)</label>
+            </value>
+            <value>
+                <fullName>UiPath, SRL (RO)</fullName>
+                <default>false</default>
+                <label>UiPath, SRL (RO)</label>
+            </value>
+            <value>
+                <fullName>UiPath, Llc (GB)</fullName>
+                <default>false</default>
+                <label>UiPath, Llc (GB)</label>
+            </value>
+            <value>
+                <fullName>BlueSnap (SMB)</fullName>
+                <default>false</default>
+                <label>BlueSnap (SMB)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
