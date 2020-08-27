@@ -1,4 +1,5 @@
 /**
+ * Creates Child Case when the parent Case is Closed and CSAT > 2
  */
 public with sharing class CreateChildCaseQueueable extends AbstractQueueable {
   private final List<SObject> cases;
@@ -40,7 +41,7 @@ public with sharing class CreateChildCaseQueueable extends AbstractQueueable {
   }
 
   public static void createChildCases(List<SObject> cases, Map<Id, SObject> existingCases) {
-    SObjectPredicate hasChanged = new HasRecordChanged(new Set<SObjectField>{ Case.CSAT__c }, cases, existingCases);
+    SObjectPredicate hasChanged = new HasRecordChanged(new Set<SObjectField>{ Case.Status, Case.CSAT__c }, cases, existingCases);
 
     List<Account> eligibleCases = Collection.of(cases)
       .filter(hasChanged)
