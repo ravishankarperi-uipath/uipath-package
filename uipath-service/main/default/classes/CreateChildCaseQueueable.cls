@@ -12,7 +12,7 @@ public with sharing class CreateChildCaseQueueable extends AbstractQueueable {
     this.createChildCase(this.cases);
   }
 
-  private void createChildCase(List<SObject> cases) {
+  private void createChildCase(List<Case> cases) {
     List<Case> children = new List<Case>();
 
     Group productSuportQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'Product_Support_Queue'];
