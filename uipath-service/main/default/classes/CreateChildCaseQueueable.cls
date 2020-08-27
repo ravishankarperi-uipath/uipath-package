@@ -16,7 +16,7 @@ public with sharing class CreateChildCaseQueueable extends AbstractQueueable {
   private void createChildCase(List<Case> cases) {
     List<Case> children = new List<Case>();
 
-    Group productSuportQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'Product_Support_Queue'];
+    Group productSuportQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND NAME = 'Product_Support_Queue' LIMIT 1];
 
     for (Case cs : cases) {
       Case child = new Case(

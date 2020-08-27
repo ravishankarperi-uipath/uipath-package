@@ -4,6 +4,14 @@ private class CreateChildCaseQueueableTest {
   private static void createChildCaseQueueableTest() {
     Id incidentRecordTypeID = CaseMetadata.IncidentRecordType;
 
+    User testUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+    System.runAs(testUser) {
+      Group grp = new Group(Name = 'Product_Support_Queue', type = 'Queue');
+      insert grp;
+      QueuesObject queue = new QueueSObject(QueueID = grp.id, SobjectType = 'Case');
+      insert queue;
+    }
+
     Case cs = new Case(Subject = 'Test', RecordTypeId = incidentRecordTypeID, Status = 'New', CSAT__c = 1.00);
     insert cs;
     cs.Status = 'Closed';
