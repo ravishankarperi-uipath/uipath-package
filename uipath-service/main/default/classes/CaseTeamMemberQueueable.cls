@@ -82,8 +82,8 @@ public with sharing class CaseTeamMemberQueueable extends AbstractQueueable {
       )
       .asList();
 
-      if (!eligibleCases.isEmpty()) {
-        AbstractQueueable.enqueue(new CaseTeamMemberQueueable(eligibleCases));
-      }
+    if (!eligibleCases.isEmpty()) {
+      AbstractQueueable.enqueue(new CaseTeamMemberQueueable(eligibleCases));
+    }
   }
 }
