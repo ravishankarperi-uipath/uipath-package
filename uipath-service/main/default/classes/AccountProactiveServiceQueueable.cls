@@ -5,7 +5,7 @@
  * Needs to be rewritten entirely
  * Updates the Proactive Request service count
  */
-public with sharing class AccountProactiveServiceQueueable extends AbstractQueueable {
+public without sharing class AccountProactiveServiceQueueable extends AbstractQueueable {
   private final List<SObject> cases;
 
   public AccountProactiveServiceQueueable(List<SObject> cases) {
