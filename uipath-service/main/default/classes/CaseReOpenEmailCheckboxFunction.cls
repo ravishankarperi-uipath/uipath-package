@@ -38,7 +38,7 @@ public class CaseReOpenEmailCheckboxFunction implements SObjectToSObjectFunction
           )
           .also(Case.Status)
           .equals('Closed')
-          .also(Case.No_of_Emails_Received__c)
+          .also(Case.IsClosed_NotifyOnMail__c)
           .equals(false)
       )
       .mapAll(new CaseReOpenEmailCheckboxFunction(records));

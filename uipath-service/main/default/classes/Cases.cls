@@ -26,6 +26,7 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CaseSetEntitlementFunction.deriveEntitlement(Records);
     CaseMilestoneCompletionFunction.deriveTargetDate(Records);
     CaseQueueTransferFunction.deriveRelatedTo(Records, existingRecords);
+    CaseReOpenEmailCheckboxFunction.deriveCheckboxOnUpdate(Records, existingRecords);
   }
 
   public override void onAfterInsert() {
