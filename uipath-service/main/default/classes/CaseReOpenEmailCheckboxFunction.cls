@@ -14,15 +14,15 @@ public class CaseReOpenEmailCheckboxFunction implements SObjectToSObjectFunction
     return apply((Case) record);
   }
 
-  public static void deriveCheckboxOnUpdate(List<Case> records) {
+  public static void deriveCheckboxOnUpdate(List<SObject> cases, Map<Id, SObject> existingCases) {
     SObjectPredicate hasChanged = new HasRecordChanged(
       new Set<SObjectField>{ Case.No_of_Emails_Received__c },
       cases,
       existingCases
     );
 
-    Collection.of(records)
-      .filter(hasCountryChanged)
+    Collection.of(cases)
+      .filter(hasChanged)
       .filter(
         Match.field(Case.RecordTypeId)
           .isIn(
@@ -41,6 +41,6 @@ public class CaseReOpenEmailCheckboxFunction implements SObjectToSObjectFunction
           .also(Case.IsClosed_NotifyOnMail__c)
           .equals(false)
       )
-      .mapAll(new CaseReOpenEmailCheckboxFunction(records));
+      .mapAll(new CaseReOpenEmailCheckboxFunction(cases));
   }
 }
