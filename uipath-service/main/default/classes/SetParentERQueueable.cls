@@ -1,5 +1,5 @@
 /**
- * Set Parent Case's Has_ER__c field to true if the Case RecordType is Engagement
+ * Set Parent Case's Has_ER__c field to true if the Case RecordType is Engagement.
  */
 public with sharing class SetParentERQueueable extends AbstractQueueable {
   private final List<SObject> cases;
