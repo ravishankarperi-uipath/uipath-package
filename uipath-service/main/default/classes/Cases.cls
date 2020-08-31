@@ -31,7 +31,7 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
   public override void onAfterInsert() {
     AbstractQueueable.enqueue(new AccountProactiveServiceQueueable(Records));
     CaseTeamMemberQueueable.addDefaultTeamMembers(Records);
-    SetParentERQueueable.deriveParentEROnInsert(Records);
+    CaseSetParentERQueueable.deriveParentEROnInsert(Records);
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {

@@ -1,11 +1,11 @@
 /**
  * Set Parent Case's Has_ER__c field to true if the Case RecordType is Engagement.
  */
-public with sharing class SetParentERQueueable extends AbstractQueueable {
+public with sharing class CaseSetParentERQueueable extends AbstractQueueable {
   private final List<SObject> cases;
 
-  public SetParentERQueueable(List<SObject> cases) {
-    super('SetParentERQueueable');
+  public CaseSetParentERQueueable(List<SObject> cases) {
+    super('CaseSetParentERQueueable');
     this.cases = cases;
   }
 
@@ -44,7 +44,7 @@ public with sharing class SetParentERQueueable extends AbstractQueueable {
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new SetParentERQueueable(eligibleCases));
+      AbstractQueueable.enqueue(new CaseSetParentERQueueable(eligibleCases));
     }
   }
 }

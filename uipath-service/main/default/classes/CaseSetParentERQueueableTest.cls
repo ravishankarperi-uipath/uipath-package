@@ -1,5 +1,5 @@
 @isTest
-private class SetParentERQueueableTest {
+private class CaseSetParentERQueueableTest {
   @isTest
   private static void setParentERQueueable() {
     Id engagementRecordTypeID = CaseMetadata.EngagementRequestRecordType;
@@ -20,7 +20,7 @@ private class SetParentERQueueableTest {
     );
     insert child;
 
-    SetParentERQueueable setParentERQueueable = new SetParentERQueueable(new List<Case>{ child });
+    CaseSetParentERQueueable setParentERQueueable = new CaseSetParentERQueueable(new List<Case>{ child });
     setParentERQueueable.execute(null);
 
     Case updatedParent = [SELECT Id, Has_ER__c FROM Case WHERE Id = :parent.Id LIMIT 1];
