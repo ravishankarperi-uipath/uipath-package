@@ -47,10 +47,10 @@ public with sharing class CreateChildCaseQueueable extends AbstractQueueable {
       existingCases
     );
 
-    List<Account> eligibleCases = Collection.of(cases)
+    List<Case> eligibleCases = Collection.of(cases)
       .filter(hasChanged)
       .filter(
-        Match.field(Account.RecordTypeId)
+        Match.field(Case.RecordTypeId)
           .isIn(new Set<String>{ CaseMetadata.IncidentRecordType })
           .also(Case.Status)
           .equals('Closed')
