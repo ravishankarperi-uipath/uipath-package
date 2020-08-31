@@ -1,11 +1,11 @@
 /**
  * Creates Child Case when the parent Case is Closed and CSAT > 2
  */
-public with sharing class CreateChildCaseQueueable extends AbstractQueueable {
+public with sharing class CaseCreateChildCaseQueueable extends AbstractQueueable {
   private final List<SObject> cases;
 
-  public CreateChildCaseQueueable(List<SObject> cases) {
-    super('CreateChildCaseQueueable');
+  public CaseCreateChildCaseQueueable(List<SObject> cases) {
+    super('CaseCreateChildCaseQueueable');
     this.cases = cases;
   }
 
@@ -60,7 +60,7 @@ public with sharing class CreateChildCaseQueueable extends AbstractQueueable {
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new CreateChildCaseQueueable(eligibleCases));
+      AbstractQueueable.enqueue(new CaseCreateChildCaseQueueable(eligibleCases));
     }
   }
 }
