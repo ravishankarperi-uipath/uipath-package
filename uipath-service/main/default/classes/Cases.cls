@@ -19,6 +19,7 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
   public override void onBeforeInsert() {
     CaseProactiveServiceFunction.assignToSupportTechnicalAdvisor(Records);
     CaseSetEntitlementFunction.deriveEntitlement(Records);
+    CaseSetAllMilestoneSuccessFunction.deriveMilestoneCompletedOnInsert(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
@@ -27,6 +28,7 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CaseMilestoneCompletionFunction.deriveTargetDate(Records);
     CaseQueueTransferFunction.deriveRelatedTo(Records, existingRecords);
     CaseReOpenEmailCheckboxFunction.deriveCheckboxOnUpdate(Records, existingRecords);
+    CaseSetAllMilestoneSuccessFunction.deriveMilestoneCompletedOnUpdate(Records, existingRecords);
   }
 
   public override void onAfterInsert() {
