@@ -51,6 +51,7 @@ public class CasesTest {
 
     fflib_SObjectDomain.triggerHandler(Cases.class);
     System.assertEquals(false, parent.Has_ER__c);
+  }
 
   @IsTest
   private static void testClosedCheckBoxOnUpdate() {
