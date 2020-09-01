@@ -20,7 +20,6 @@ public with sharing class CaseTeamMemberQueueable extends AbstractQueueable {
     for (Case caseRecord : cases) {
       for (Schema.SObjectField caseField : fieldToRoleMap.keySet()) {
         if (caseRecord.get(caseField) != null) {
-          System.debug('Not blank ' + caseField);
           newCaseTeamMembers.add(
             getCaseTeamMember(caseRecord, (Id) caseRecord.get(caseField), fieldToRoleMap.get(caseField))
           );
