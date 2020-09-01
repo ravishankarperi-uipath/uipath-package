@@ -32,7 +32,7 @@ public class AccountProactiveServiceQueueableTest {
     insert communityUser;
   }
 
-  static testMethod void validateAndUpdateCounter_newProaciveCaseIsCreated() {
+  static testMethod void validateAndUpdateCounter_newProactiveCaseIsCreated() {
     User communityUser = [SELECT Id FROM User WHERE Username = 'john.doe@uipathTest.com' LIMIT 1];
     System.runAs(communityUser) {
       Case proactiveCareCase = new Case();
