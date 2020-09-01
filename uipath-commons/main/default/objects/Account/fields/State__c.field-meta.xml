@@ -13,6 +13,10 @@
         <restricted>true</restricted>
         <valueSetName>States_Global_List</valueSetName>
         <valueSettings>
+            <controllingFieldValue>Italy</controllingFieldValue>
+            <valueName>Torino</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Japan</controllingFieldValue>
             <valueName>Aichi</valueName>
         </valueSettings>
@@ -255,6 +259,10 @@
         <valueSettings>
             <controllingFieldValue>United Kingdom</controllingFieldValue>
             <valueName>Clackmannanshire</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>United Kingdom</controllingFieldValue>
+            <valueName>Clwyd</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>United Kingdom</controllingFieldValue>
@@ -519,6 +527,10 @@
         <valueSettings>
             <controllingFieldValue>United Kingdom</controllingFieldValue>
             <valueName>Mid Lothian</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>United Kingdom</controllingFieldValue>
+            <valueName>Morayshire</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>United Kingdom</controllingFieldValue>
@@ -1329,6 +1341,10 @@
             <valueName>Zhejiang</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Hong Kong</controllingFieldValue>
+            <valueName>Kowloon</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>India</controllingFieldValue>
             <valueName>Andaman and Nicobar Islands</valueName>
         </valueSettings>
@@ -1411,6 +1427,10 @@
         <valueSettings>
             <controllingFieldValue>India</controllingFieldValue>
             <valueName>Maharashtra</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>India</controllingFieldValue>
+            <valueName>Manipur</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>India</controllingFieldValue>
