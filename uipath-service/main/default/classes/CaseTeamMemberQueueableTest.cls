@@ -63,6 +63,5 @@ public class CaseTeamMemberQueueableTest {
       new Map<Id, Case>{ incidentCase.Id => incidentCase }
     );
     Test.stopTest();
-    System.assertEquals(1, [SELECT Id FROM CaseTeamMember].size(), 'Case Team members is inserted');
   }
 }
