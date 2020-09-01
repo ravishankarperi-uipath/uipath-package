@@ -14,15 +14,50 @@ public with sharing class CaseSetAllMilestoneSuccessFunction implements SObjectT
     return apply((Case) record);
   }
 
-  public static void deriveMilestoneCompletedOnUpdate(List<Case> records, Map<Id, Case> existingCases) {
-    SObjectPredicate hasRecordChanged = new HasRecordChanged(
-      new Set<SObjectField>{ Case.Status, Case.No_of_Emails_Sent__c, Priority },
+  public class StatusORFieldsChanged implements SObjectPredicate {
+    Map<Id, SObject> changedRecords = new Map<Id, SObject>();
+
+    public StatusORFieldsChanged(
+      Set<Schema.SObjectField> fieldTokens,
+      List<SObject> records,
+      Map<Id, SObject> existingRecords
+    ) {
+      for (SObject newRecord : Records) {
+        Id recordId = (Id) newRecord.get('Id');
+        if (existingRecords == null || !existingRecords.containsKey(recordId)) {
+          continue;
+        }
+        SObject oldRecord = existingRecords.get(recordId);
+        for (Schema.SObjectField fieldToken : fieldTokens) {
+          if (
+            fieldToken != Case.Status ||
+            (fieldToken == Case.Status &&
+            (newRecord.get(fieldToken) == 'In Process' ||
+            newRecord.get(fieldToken) == 'Customer Action'))
+          ) {
+            if (oldRecord.get(fieldToken) != newRecord.get(fieldToken)) {
+              changedRecords.put(newRecord.Id, newRecord);
+              break; // prevents the records from being added multiple times
+            }
+          }
+        }
+      }
+    }
+
+    public Boolean apply(SObject record) {
+      return changedRecords.containsKey(record.Id);
+    }
+  }
+
+  public static void deriveMilestoneCompletedOnUpdate(List<SObject> cases, Map<Id, SObject> existingCases) {
+    StatusORFieldsChanged StatusORFieldsChanged = new StatusORFieldsChanged(
+      new Set<SObjectField>{ Case.Status, Case.No_of_Emails_Sent__c, Case.Priority },
       cases,
       existingCases
     );
 
-    Collection.of(records)
-      .filter(hasRecordChanged)
+    Collection.of(cases)
+      .filter(StatusORFieldsChanged)
       .filter(
         Match.field(Case.RecordTypeId)
           .isIn(
@@ -39,8 +74,28 @@ public with sharing class CaseSetAllMilestoneSuccessFunction implements SObjectT
             }
           )
       )
+      .mapAll(new CaseSetAllMilestoneSuccessFunction(cases));
+  }
+
+  public static void deriveMilestoneCompletedOnInsert(List<Case> records) {
+    Collection.of(records)
       .mapSome(
-        Match.field(Case.Status).isIn(new Set<String>{ 'Customer Action', 'In Process' }),
+        Match.field(Case.Status)
+          .equals('New')
+          .also(Case.RecordTypeId)
+          .isIn(
+            new Set<String>{
+              CaseMetadata.IncidentRecordType,
+              CaseMetadata.ServiceRequestRecordType,
+              CaseMetadata.EngagementRequestRecordType,
+              CaseMetadata.JapanEngagementRequestRecordType,
+              CaseMetadata.SalesOperationRecordType,
+              CaseMetadata.AcademyRecordType,
+              CaseMetadata.JapanAcademyRecordType,
+              CaseMetadata.JapanLicensingRecordType,
+              CaseMetadata.JapanIncidentRecordType
+            }
+          ),
         new CaseSetAllMilestoneSuccessFunction(records)
       );
   }
