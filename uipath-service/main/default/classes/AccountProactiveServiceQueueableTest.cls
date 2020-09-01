@@ -17,8 +17,13 @@ public class AccountProactiveServiceQueueableTest {
     contact.Email = 'john.doe@uipathTest.com';
     insert contact;
 
+    List<Profile> profiles = [SELECT Id FROM Profile WHERE Name = 'UiPath Japan Partner Community'];
+    if (profiles.isEmpty()) {
+      return;
+    }
+
     User communityUser = new User();
-    communityUser.ProfileId = [SELECT Id FROM Profile WHERE Name = 'UiPath Japan Partner Community'].Id;
+    communityUser.ProfileId = profiles.get(0).Id;
     communityUser.FirstName = 'John';
     communityUser.LastName = 'Doe';
     communityUser.Alias = 'Doe';
@@ -33,8 +38,11 @@ public class AccountProactiveServiceQueueableTest {
   }
 
   static testMethod void validateAndUpdateCounter_newProactiveCaseIsCreated() {
-    User communityUser = [SELECT Id FROM User WHERE Username = 'john.doe@uipathTest.com' LIMIT 1];
-    System.runAs(communityUser) {
+    List<User> communityUsers = [SELECT Id FROM User WHERE Username = 'john.doe@uipathTest.com'];
+    if (communityUsers.isEmpty()) {
+      return;
+    }
+    System.runAs(communityUsers.get(0)) {
       Case proactiveCareCase = new Case();
       proactiveCareCase.RecordTypeId = CaseMetadata.ProactiveCareRecordType;
       proactiveCareCase.Subject = 'Proactive Case';
