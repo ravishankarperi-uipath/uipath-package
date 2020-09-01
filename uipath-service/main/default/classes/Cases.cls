@@ -19,6 +19,7 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
   public override void onBeforeInsert() {
     CaseProactiveServiceFunction.assignToSupportTechnicalAdvisor(Records);
     CaseSetEntitlementFunction.deriveEntitlement(Records);
+    CaseSetAllMilestoneSuccessFunction.deriveMilestoneCompletedOnInsert(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
@@ -26,17 +27,20 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CaseSetEntitlementFunction.deriveEntitlement(Records);
     CaseMilestoneCompletionFunction.deriveTargetDate(Records);
     CaseQueueTransferFunction.deriveRelatedTo(Records, existingRecords);
+    CaseReOpenEmailCheckboxFunction.deriveCheckboxOnUpdate(Records, existingRecords);
+    CaseSetAllMilestoneSuccessFunction.deriveMilestoneCompletedOnUpdate(Records, existingRecords);
   }
 
   public override void onAfterInsert() {
     AbstractQueueable.enqueue(new AccountProactiveServiceQueueable(Records));
     CaseTeamMemberQueueable.addDefaultTeamMembers(Records);
+    CaseSetParentERQueueable.deriveParentEROnInsert(Records);
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     AbstractQueueable.enqueue(new CaseLivingSummaryQueueable(Records, existingRecords));
-    CaseTeamMemberQueueable.addDefaultTeamMembers(Records, existingRecords);
-    CreateChildCaseQueueable.createChildCases(Records, existingRecords);
+    CaseTeamMemberQueueable.addDefaultTeamMembers(Records);
+    CaseCreateChildCaseQueueable.createChildCases(Records, existingRecords);
     CaseFirstResponseQueueable.setCompletionDateOnMilestones(Records, existingRecords);
   }
 

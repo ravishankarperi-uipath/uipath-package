@@ -39,7 +39,12 @@ public with sharing class CaseMilestoneCompletionFunction implements SObjectToSO
           )
       )
       .mapSome(
-        Match.field(Case.Status).notEquals('Closed').also(Case.Milestone_Completed__c).equals(true),
+        Match.field(Case.Status)
+          .notEquals('Closed')
+          .also(Case.Milestone_Completed__c)
+          .hasValue()
+          .also(Case.Milestone_Completed__c)
+          .equals(true),
         new CaseMilestoneCompletionFunction(records)
       );
   }
