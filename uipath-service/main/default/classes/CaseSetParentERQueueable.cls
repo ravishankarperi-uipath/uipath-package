@@ -32,7 +32,7 @@ public with sharing class CaseSetParentERQueueable extends AbstractQueueable {
   }
 
   public static void deriveParentEROnInsert(List<SObject> cases) {
-    List<Account> eligibleCases = Collection.of(cases)
+    List<Case> eligibleCases = Collection.of(cases)
       .filter(
         Match.field(Case.RecordTypeId)
           .isIn(
