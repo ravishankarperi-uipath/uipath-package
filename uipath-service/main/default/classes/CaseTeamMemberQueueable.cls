@@ -1,11 +1,9 @@
 public with sharing class CaseTeamMemberQueueable extends AbstractQueueable {
   private final List<SObject> cases;
-  private final Map<Id, SObject> oldCasessMap;
 
-  public CaseTeamMemberQueueable(List<SObject> cases, Map<Id, SObject> oldCasessMap) {
+  public CaseTeamMemberQueueable(List<SObject> cases) {
     super('CaseTeamMemberQueueable');
     this.cases = cases;
-    this.oldCasessMap = oldCasessMap;
   }
 
   public override void work() {
@@ -22,7 +20,6 @@ public with sharing class CaseTeamMemberQueueable extends AbstractQueueable {
     for (Case caseRecord : cases) {
       for (Schema.SObjectField caseField : fieldToRoleMap.keySet()) {
         if (caseRecord.get(caseField) != null) {
-          System.debug('Not blank ' + caseField);
           newCaseTeamMembers.add(
             getCaseTeamMember(caseRecord, (Id) caseRecord.get(caseField), fieldToRoleMap.get(caseField))
           );
@@ -58,7 +55,34 @@ public with sharing class CaseTeamMemberQueueable extends AbstractQueueable {
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new CaseTeamMemberQueueable(eligibleCases, null));
+      AbstractQueueable.enqueue(new CaseTeamMemberQueueable(eligibleCases));
+    }
+  }
+
+  public static void addDefaultTeamMembers(List<SObject> cases, Map<Id, SObject> existingCases) {
+    SObjectPredicate hasChanged = new HasRecordChanged(
+      new Set<SObjectField>{ Case.Account_CSM__c, Case.Account_STA__c },
+      cases,
+      existingCases
+    );
+
+    List<Case> eligibleCases = Collection.of(cases)
+      .filter(hasChanged)
+      .filter(
+        Match.field(Case.RecordTypeId)
+          .isIn(
+            new Set<String>{
+              CaseMetadata.IncidentRecordType,
+              CaseMetadata.JapanIncidentRecordType,
+              CaseMetadata.EngagementRequestRecordType,
+              CaseMetadata.JapanEngagementRequestRecordType
+            }
+          )
+      )
+      .asList();
+
+    if (!eligibleCases.isEmpty()) {
+      AbstractQueueable.enqueue(new CaseTeamMemberQueueable(eligibleCases));
     }
   }
 }
