@@ -13,6 +13,7 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
 
   public Cases(List<Case> sObjectList) {
     super(sObjectList);
+    this.Configuration.disableTriggerCRUDSecurity();
     System.debug('Cases --- ' + Trigger.operationType);
   }
 
