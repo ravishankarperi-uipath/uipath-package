@@ -7,15 +7,14 @@
  */
 public with sharing class CaseMilestoneQueueable extends AbstractQueueable {
   private final List<SObject> cases;
-  private final Map<Id, SObject> oldCasessMap;
-  public CaseMilestoneQueueable(List<SObject> cases, Map<Id, SObject> oldCasessMap) {
+  private final Datetime currentDate;
+  public CaseMilestoneQueueable(List<SObject> cases, Datetime currentDate) {
     super('CaseMilestoneQueueable');
     this.cases = cases;
-    this.oldCasessMap = oldCasessMap;
+    this.currentDate = currentDate;
   }
 
   public override void work() {
-    System.debug('CaseMilestoneQueueable work');
     this.updateMilestones(cases);
   }
 
@@ -30,7 +29,7 @@ public with sharing class CaseMilestoneQueueable extends AbstractQueueable {
       WHERE CaseId IN :cases AND MilestoneType.Name = :Label.Communication_Milestone_Name AND IsCompleted = false
       FOR UPDATE
     ]) {
-      milestone.CompletionDate = System.today();
+      milestone.CompletionDate = currentDate;
       milestoneList.add(milestone);
     }
     update milestoneList;
@@ -64,7 +63,7 @@ public with sharing class CaseMilestoneQueueable extends AbstractQueueable {
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new CaseMilestoneQueueable(eligibleCases, null));
+      AbstractQueueable.enqueue(new CaseMilestoneQueueable(eligibleCases, System.now()));
     }
   }
 }

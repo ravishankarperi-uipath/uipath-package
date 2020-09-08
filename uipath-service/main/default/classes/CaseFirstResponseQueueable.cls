@@ -7,14 +7,15 @@
  */
 public with sharing class CaseFirstResponseQueueable extends AbstractQueueable {
   private final List<SObject> cases;
+  private final Datetime currentTime;
 
-  public CaseFirstResponseQueueable(List<SObject> cases) {
+  public CaseFirstResponseQueueable(List<SObject> cases, Datetime currentTime) {
     super('CaseFirstResponseQueueable');
     this.cases = cases;
+    this.currentTime = currentTime;
   }
 
   public override void work() {
-    System.debug('CaseFirstResponseQueueable work');
     this.updateMilestones(cases);
   }
 
@@ -26,7 +27,7 @@ public with sharing class CaseFirstResponseQueueable extends AbstractQueueable {
       WHERE CaseId IN :cases AND MilestoneType.Name = 'First Response' AND IsCompleted = false
       FOR UPDATE
     ]) {
-      milestone.CompletionDate = System.today();
+      milestone.CompletionDate = currentTime;
       milestoneList.add(milestone);
     }
     update milestoneList;
@@ -45,7 +46,7 @@ public with sharing class CaseFirstResponseQueueable extends AbstractQueueable {
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new CaseFirstResponseQueueable(eligibleCases));
+      AbstractQueueable.enqueue(new CaseFirstResponseQueueable(eligibleCases, System.now()));
     }
   }
 }
