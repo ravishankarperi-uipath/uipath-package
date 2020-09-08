@@ -26,7 +26,7 @@ public class CaseFirstResponseQueueableTest {
     Test.startTest();
     incidentCase.No_of_Emails_Sent__c = 2;
     update incidentCase;
-    new CaseFirstResponseQueueable(new List<Case>{ incidentCase }).execute(null);
+    new CaseFirstResponseQueueable(new List<Case>{ incidentCase }, System.now()).execute(null);
     Test.stopTest();
     List<CaseMilestone> milestones = [SELECT Id, CompletionDate FROM CaseMilestone];
   }
