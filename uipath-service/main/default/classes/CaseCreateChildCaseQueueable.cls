@@ -55,7 +55,7 @@ public with sharing class CaseCreateChildCaseQueueable extends AbstractQueueable
           .also(Case.Status)
           .equals('Closed')
           .also(Case.CSAT__c)
-          .greaterThanOrEquals(2)
+          .lessThanOrEquals(2)
       )
       .asList();
 
