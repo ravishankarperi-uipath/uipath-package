@@ -109,4 +109,16 @@ public without sharing class CaseMetadata {
     }
     set;
   }
+
+  public static Map<Schema.SObjectField, String> FieldToRoleMap {
+    get {
+      if (FieldToRoleMap == null) {
+        FieldToRoleMap = new Map<Schema.SObjectField, String>();
+        FieldToRoleMap.put(Case.Account_CSM__c, CSM_ROLE);
+        FieldToRoleMap.put(Case.Account_STA__c, CTM_ROLE);
+      }
+      return FieldToRoleMap;
+    }
+    set;
+  }
 }
