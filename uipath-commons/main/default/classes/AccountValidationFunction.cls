@@ -34,7 +34,7 @@ public with sharing class AccountValidationFunction implements SObjectToSObjectF
   }
 
   private void validateStatePopulatedForChinaAustralia(Account acc) {
-    if (isCountryChinaOrAustraliaOrIndia(acc) && acc.State__c == null) {
+    if (isCountryChinaOrAustraliaOrIndia(acc) && (acc.State__c == null && acc.BillingCountry == null)) {
       acc.State__c.addError(domain.error('State is required if Country is ' + acc.Country__c, acc, Account.State__c));
     }
   }

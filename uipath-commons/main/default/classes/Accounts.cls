@@ -31,6 +31,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountTerritoryService.deriveTerritoryFields(Records);
     AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnInsert(Records);
     AccountSetClassificationGlobalFunction.deriveRecordTypeOnInsert(Records);
+    AccountCopyCountryFunction.copyCountryOnInsert(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {

@@ -26,6 +26,14 @@ public class AccountsTest {
   }
 
   @IsTest
+  private static void copiesBillingCountryToCountry() {
+    Account account = new Account(Name = 'Test', BillingCountry = 'Romania');
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ account });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
+    System.assertEquals('Romania', account.Country__c);
+  }
+
+  @IsTest
   private static void setDnBFieldsAfterUpdateTest() {
     Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
     Account oldAccount = new Account(Id = accountId, Name = 'Test', Country__c = 'Romania');
