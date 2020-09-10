@@ -19,9 +19,6 @@ public with sharing class CaseMilestoneQueueable extends AbstractQueueable {
   }
 
   private void updateMilestones(List<Case> cases) {
-    for (Case caseRecord : cases) {
-      caseRecord.Comm_Update__c = false;
-    }
     List<CaseMilestone> milestoneList = new List<CaseMilestone>();
     for (CaseMilestone milestone : [
       SELECT Id, CompletionDate
@@ -63,6 +60,9 @@ public with sharing class CaseMilestoneQueueable extends AbstractQueueable {
       .asList();
 
     if (!eligibleCases.isEmpty()) {
+      for (Case caseRecord : eligibleCases) {
+        caseRecord.Comm_Update__c = false;
+      }
       AbstractQueueable.enqueue(new CaseMilestoneQueueable(eligibleCases, System.now()));
     }
   }
