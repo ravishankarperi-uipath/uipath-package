@@ -14,7 +14,6 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
   public Cases(List<Case> sObjectList) {
     super(sObjectList);
     this.Configuration.disableTriggerCRUDSecurity();
-    System.debug('Cases --- ' + Trigger.operationType);
   }
 
   public override void onBeforeInsert() {
@@ -34,7 +33,6 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
   }
 
   public override void onAfterInsert() {
-    AbstractQueueable.enqueue(new AccountProactiveServiceQueueable(Records));
     CaseTeamMemberQueueable.addDefaultTeamMembers(Records);
     CaseSetParentERQueueable.deriveParentEROnInsert(Records);
   }
@@ -46,15 +44,6 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CaseFirstResponseQueueable.setCompletionDateOnMilestones(Records, existingRecords);
   }
 
-  public override void onValidate() {
-    //Collection.of(Records).mapAll(new CaseValidationFunction(null, this));
-  }
-
-  /*public override void onValidate(Map<Id, SObject> existingRecords) {
-    Collection.of(Records)
-      .mapAll(new CaseValidationFunction(existingRecords, this));
-  }
-  */
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> sObjectList) {
       return new Cases(sObjectList);
