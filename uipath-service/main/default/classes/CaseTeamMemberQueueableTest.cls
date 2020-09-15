@@ -9,7 +9,7 @@ public class CaseTeamMemberQueueableTest {
     ctmTeamRole.Name = CaseMetadata.CTM_ROLE;
     ctmTeamRole.AccessLevel = 'Edit';
 
-    insert new List<CaseTeamRole>{ csmTeamRole, ctmTeamRole };
+    Database.insert(new List<CaseTeamRole>{ csmTeamRole, ctmTeamRole }, false);
   }
 
   static testMethod void addDefaultTeamMembers_onInsert() {
