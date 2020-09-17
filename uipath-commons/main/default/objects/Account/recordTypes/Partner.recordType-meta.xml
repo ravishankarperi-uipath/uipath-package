@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Partner</fullName>
     <active>true</active>
@@ -207,15 +207,7 @@
     <picklistValues>
         <picklist>Area__c</picklist>
         <values>
-            <fullName>AMER North %26 BFS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AMER South %26 Gov</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AMER West</fullName>
+            <fullName>Central</fullName>
             <default>false</default>
         </values>
         <values>
@@ -224,6 +216,14 @@
         </values>
         <values>
             <fullName>EECIS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>East</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gov %2F Fed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -236,6 +236,10 @@
         </values>
         <values>
             <fullName>Southern Europe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>West</fullName>
             <default>false</default>
         </values>
         <values>
@@ -289,6 +293,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Disty - Japan Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gold</fullName>
             <default>false</default>
         </values>
@@ -298,6 +306,10 @@
         </values>
         <values>
             <fullName>Silver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Silver %28Tier 2%29 - Japan Only</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1527,6 +1539,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Credit_Hold__c</picklist>
+        <values>
+            <fullName>Auto</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Off</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Customer_Notifications_requirements__c</picklist>
         <values>
             <fullName>A SUSPECTED data breach or security incident %28non confirmed breaches%29</fullName>
@@ -1611,8 +1638,7 @@
             <default>false</default>
         </values>
     </picklistValues>
- 
-        <picklistValues>
+    <picklistValues>
         <picklist>Export_Control_Status__c</picklist>
         <values>
             <fullName>Clean</fullName>
@@ -1646,8 +1672,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-   
-        <picklistValues>
+    <picklistValues>
         <picklist>Geo__c</picklist>
         <values>
             <fullName>AMER</fullName>
@@ -3242,7 +3267,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BFS</fullName>
+            <fullName>BFSI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3278,7 +3303,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>GOV</fullName>
+            <fullName>Gov %2F Fed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3330,6 +3355,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>New England</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New York</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Nordics</fullName>
             <default>false</default>
         </values>
@@ -3338,19 +3371,27 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>NorthCentral</fullName>
+            <fullName>NorthCentral East</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>NorthEast</fullName>
+            <fullName>NorthCentral West</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>NorthWest</fullName>
+            <fullName>Northern California</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northern Mid-Atlantic</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pacific Northwest</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3391,6 +3432,21 @@
         </values>
         <values>
             <fullName>West</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Regional_Business_Partner_Type__c</picklist>
+        <values>
+            <fullName>GSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSI</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3444,8 +3500,7 @@
             <default>false</default>
         </values>
     </picklistValues>
- 
-        <picklistValues>
+    <picklistValues>
         <picklist>Segmentation__c</picklist>
         <values>
             <fullName>CSM Pool</fullName>
@@ -5128,8 +5183,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-  
-        <picklistValues>
+    <picklistValues>
         <picklist>Type</picklist>
         <values>
             <fullName>Business Partner</fullName>
@@ -5258,5 +5312,4 @@
             <default>false</default>
         </values>
     </picklistValues>
-  
-    </RecordType>
+</RecordType>

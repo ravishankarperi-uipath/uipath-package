@@ -187,15 +187,7 @@
     <picklistValues>
         <picklist>Area__c</picklist>
         <values>
-            <fullName>AMER North %26 BFS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AMER South %26 Gov</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AMER West</fullName>
+            <fullName>East</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1395,6 +1387,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Credit_Hold__c</picklist>
+        <values>
+            <fullName>Auto</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Off</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Customer_Notifications_requirements__c</picklist>
         <values>
             <fullName>A SUSPECTED data breach or security incident %28non confirmed breaches%29</fullName>
@@ -1479,8 +1486,7 @@
             <default>false</default>
         </values>
     </picklistValues>
- 
-        <picklistValues>
+    <picklistValues>
         <picklist>Export_Control_Status__c</picklist>
         <values>
             <fullName>Clean</fullName>
@@ -1514,8 +1520,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    
-        <picklistValues>
+    <picklistValues>
         <picklist>Geo__c</picklist>
         <values>
             <fullName>AMER</fullName>
@@ -3066,19 +3071,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BFS</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Canada</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Chubu</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GOV</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3126,18 +3123,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>NorthCentral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NorthEast</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NorthWest</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Others</fullName>
             <default>false</default>
         </values>
@@ -3167,6 +3152,21 @@
         </values>
         <values>
             <fullName>UKI</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Regional_Business_Partner_Type__c</picklist>
+        <values>
+            <fullName>GSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSI</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3220,8 +3220,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-
-        <picklistValues>
+    <picklistValues>
         <picklist>Segmentation__c</picklist>
         <values>
             <fullName>CSM Pool</fullName>
@@ -4884,8 +4883,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-  
-        <picklistValues>
+    <picklistValues>
         <picklist>Type</picklist>
         <values>
             <fullName>Analyst</fullName>
@@ -5026,5 +5024,4 @@
             <default>false</default>
         </values>
     </picklistValues>
-  
-    </RecordType>
+</RecordType>

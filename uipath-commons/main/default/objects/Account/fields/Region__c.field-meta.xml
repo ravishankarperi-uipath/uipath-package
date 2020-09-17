@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Region__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Region</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    
-        <type>Picklist</type>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -14,11 +15,6 @@
                 <fullName>ANZ</fullName>
                 <default>false</default>
                 <label>ANZ</label>
-            </value>
-            <value>
-                <fullName>BFS</fullName>
-                <default>false</default>
-                <label>BFS</label>
             </value>
             <value>
                 <fullName>Canada</fullName>
@@ -29,11 +25,6 @@
                 <fullName>Greater China</fullName>
                 <default>false</default>
                 <label>Greater China</label>
-            </value>
-            <value>
-                <fullName>GOV</fullName>
-                <default>false</default>
-                <label>GOV</label>
             </value>
             <value>
                 <fullName>India</fullName>
@@ -59,21 +50,6 @@
                 <fullName>Nordics</fullName>
                 <default>false</default>
                 <label>Nordics</label>
-            </value>
-            <value>
-                <fullName>NorthCentral</fullName>
-                <default>false</default>
-                <label>NorthCentral</label>
-            </value>
-            <value>
-                <fullName>NorthEast</fullName>
-                <default>false</default>
-                <label>NorthEast</label>
-            </value>
-            <value>
-                <fullName>NorthWest</fullName>
-                <default>false</default>
-                <label>NorthWest</label>
             </value>
             <value>
                 <fullName>Others</fullName>
@@ -204,6 +180,51 @@
                 <fullName>West</fullName>
                 <default>false</default>
                 <label>West</label>
+            </value>
+            <value>
+                <fullName>BFSI</fullName>
+                <default>false</default>
+                <label>BFSI</label>
+            </value>
+            <value>
+                <fullName>Gov / Fed</fullName>
+                <default>false</default>
+                <label>Gov / Fed</label>
+            </value>
+            <value>
+                <fullName>New England</fullName>
+                <default>false</default>
+                <label>New England</label>
+            </value>
+            <value>
+                <fullName>New York</fullName>
+                <default>false</default>
+                <label>New York</label>
+            </value>
+            <value>
+                <fullName>NorthCentral East</fullName>
+                <default>false</default>
+                <label>NorthCentral East</label>
+            </value>
+            <value>
+                <fullName>NorthCentral West</fullName>
+                <default>false</default>
+                <label>NorthCentral West</label>
+            </value>
+            <value>
+                <fullName>Northern California</fullName>
+                <default>false</default>
+                <label>Northern California</label>
+            </value>
+            <value>
+                <fullName>Northern Mid-Atlantic</fullName>
+                <default>false</default>
+                <label>Northern Mid-Atlantic</label>
+            </value>
+            <value>
+                <fullName>Pacific Northwest</fullName>
+                <default>false</default>
+                <label>Pacific Northwest</label>
             </value>
         </valueSetDefinition>
     </valueSet>

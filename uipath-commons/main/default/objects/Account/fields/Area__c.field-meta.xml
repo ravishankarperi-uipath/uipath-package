@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Area__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Area</label>
     <required>false</required>
@@ -10,21 +11,6 @@
     <valueSet>
         <valueSetDefinition>
             <sorted>false</sorted>
-            <value>
-                <fullName>AMER South &amp; Gov</fullName>
-                <default>false</default>
-                <label>AMER South &amp; Gov</label>
-            </value>
-            <value>
-                <fullName>AMER North &amp; BFS</fullName>
-                <default>false</default>
-                <label>AMER North &amp; BFS</label>
-            </value>
-            <value>
-                <fullName>AMER West</fullName>
-                <default>false</default>
-                <label>AMER West</label>
-            </value>
             <value>
                 <fullName>MEA</fullName>
                 <default>false</default>
@@ -54,6 +40,26 @@
                 <fullName>Western Europe</fullName>
                 <default>false</default>
                 <label>Western Europe</label>
+            </value>
+            <value>
+                <fullName>East</fullName>
+                <default>false</default>
+                <label>East</label>
+            </value>
+            <value>
+                <fullName>Gov / Fed</fullName>
+                <default>false</default>
+                <label>Gov / Fed</label>
+            </value>
+            <value>
+                <fullName>Central</fullName>
+                <default>false</default>
+                <label>Central</label>
+            </value>
+            <value>
+                <fullName>West</fullName>
+                <default>false</default>
+                <label>West</label>
             </value>
         </valueSetDefinition>
     </valueSet>
