@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Partner</fullName>
     <active>true</active>
@@ -255,6 +255,18 @@
         </values>
         <values>
             <fullName>Fed MPA %28Delivery Only%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MPA via Distributor BPO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MPA via Distributor Resale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MPA via Distributor Resale %2B BPO</fullName>
             <default>false</default>
         </values>
         <values>
