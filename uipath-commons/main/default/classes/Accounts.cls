@@ -20,6 +20,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountJapanConvertedLeadFunction.setGeoFields(Records);
     AccountBillingStateFromStateFunction.copyStateToBillingState(Records);
     AccountMapDnBAddressFunction.deriveAddressFieldsOnInsert(Records);
+    AccountSetClassificationGlobalFunction.deriveRecordTypeOnInsert(Records);
     AccountSetClassificationFunction.deriveClassificationFieldsOnInsert(Records);
     AccountSetSubsidiaryFunction.deriveSubsidiaryOnInsert(Records);
     AccountSetRecordTypeFunction.deriveRecordTypeOnInsert(Records);
@@ -30,12 +31,12 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountSetStateFunction.deriveStateOnInsert(Records);
     AccountTerritoryService.deriveTerritoryFields(Records);
     AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnInsert(Records);
-    AccountSetClassificationGlobalFunction.deriveRecordTypeOnInsert(Records);
     AccountCopyCountryFunction.copyCountryOnInsert(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     AccountMapDnBAddressFunction.deriveAddressFieldsOnUpdate(Records, existingRecords);
+    AccountSetClassificationGlobalFunction.deriveRecordTypeOnUpdate(Records, existingRecords);
     AccountSetClassificationFunction.deriveClassificationFieldsOnUpdate(Records, existingRecords);
     AccountSetRecordTypeFunction.deriveRecordTypeForExistingAccount(Records, existingRecords);
     AccountConvertAcademic.convertAcademicAccountOnUpdate(Records, existingRecords);
