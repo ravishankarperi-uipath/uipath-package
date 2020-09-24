@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>State__c</fullName>
+    <deprecated>false</deprecated>
     <description>Used to sync with address object at account creation</description>
     <externalId>false</externalId>
     <label>State</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <controllingField>Country__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>States_Global_List</valueSetName>
-        <valueSettings>
-            <controllingFieldValue>Italy</controllingFieldValue>
-            <valueName>Torino</valueName>
-        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Japan</controllingFieldValue>
             <valueName>Aichi</valueName>
@@ -770,6 +767,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>United States</controllingFieldValue>
+            <valueName>Maryland</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>United States</controllingFieldValue>
             <valueName>Massachusetts</valueName>
         </valueSettings>
         <valueSettings>
@@ -1487,6 +1488,10 @@
         <valueSettings>
             <controllingFieldValue>India</controllingFieldValue>
             <valueName>West Bengal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Italy</controllingFieldValue>
+            <valueName>Torino</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

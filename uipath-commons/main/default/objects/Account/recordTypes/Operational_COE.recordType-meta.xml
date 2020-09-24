@@ -1460,6 +1460,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Customer_Onboarded__c</picklist>
+        <values>
+            <fullName>Not onboarded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding in progress</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Customer_Reference_Definitions__c</picklist>
         <values>
             <fullName>Agreed to filming testimonial</fullName>

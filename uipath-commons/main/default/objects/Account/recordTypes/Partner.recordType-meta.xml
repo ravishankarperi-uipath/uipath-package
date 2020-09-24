@@ -262,18 +262,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MPA via Distributor BPO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MPA via Distributor Resale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MPA via Distributor Resale %2B BPO</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Non-Standard</fullName>
             <default>false</default>
         </values>
@@ -1581,6 +1569,21 @@
         </values>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Customer_Onboarded__c</picklist>
+        <values>
+            <fullName>Not onboarded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Onboarding in progress</fullName>
             <default>false</default>
         </values>
     </picklistValues>
