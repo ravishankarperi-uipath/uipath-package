@@ -2,9 +2,17 @@ public with sharing class CaseMilestoneCompletionFunction implements SObjectToSO
   private Map<Id, CaseMilestone> caseMilestoneMap;
 
   public CaseMilestoneCompletionFunction(List<Case> cases) {
-    caseMilestoneMap = new Map<Id, CaseMilestone>(
-      [SELECT Id, TargetDate FROM CaseMilestone WHERE CaseId IN :cases AND IsCompleted = false ORDER BY TargetDate ASC]
-    );
+    caseMilestoneMap = new Map<Id, CaseMilestone>();
+    for (CaseMilestone milestone : [
+      SELECT Id, CaseId, TargetDate
+      FROM CaseMilestone
+      WHERE CaseId IN :cases AND IsCompleted = false
+      ORDER BY TargetDate ASC
+    ]) {
+      if (!caseMilestoneMap.containsKey(milestone.CaseId)) {
+        caseMilestoneMap.put(milestone.CaseId, milestone);
+      }
+    }
   }
 
   public SObject apply(Case caseRecord) {
