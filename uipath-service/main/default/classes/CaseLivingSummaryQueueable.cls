@@ -15,7 +15,6 @@ public with sharing class CaseLivingSummaryQueueable extends AbstractQueueable {
   }
 
   public override void work() {
-    System.debug('CaseLivingSummaryQueueable work');
     this.createLivingSummaryHistory(cases, oldCasessMap);
   }
 

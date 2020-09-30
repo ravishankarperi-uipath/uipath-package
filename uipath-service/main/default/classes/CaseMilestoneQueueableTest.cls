@@ -26,7 +26,6 @@ public class CaseMilestoneQueueableTest {
     incidentCase.Comm_Update__c = true;
     update incidentCase;
     Test.startTest();
-    System.debug('### Comm_Update__c ' + incidentCase);
     CaseMilestoneQueueable.setCompletionDateOnMilestones(new List<Case>{ incidentCase }, existingCases);
     Test.stopTest();
     List<CaseMilestone> milestones = [SELECT Id, CompletionDate FROM CaseMilestone];

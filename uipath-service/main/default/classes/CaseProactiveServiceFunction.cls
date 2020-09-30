@@ -10,7 +10,10 @@ public with sharing class CaseProactiveServiceFunction implements SObjectToSObje
       [
         SELECT Id, Support_Technical_Advisor__c
         FROM Account
-        WHERE Id IN :accountIds AND Support_Technical_Advisor__c != null
+        WHERE
+          Id IN :accountIds
+          AND Support_Technical_Advisor__c != null
+          AND Support_Technical_Advisor__r.IsActive = true
       ]
     );
   }

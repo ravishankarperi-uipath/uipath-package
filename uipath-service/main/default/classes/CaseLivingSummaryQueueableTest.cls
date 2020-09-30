@@ -31,7 +31,6 @@ public class CaseLivingSummaryQueueableTest {
     incidentCase.Cause__c = 'Updated Cause';
     update incidentCase;
     Test.startTest();
-    System.debug('### Comm_Update__c ' + incidentCase);
     new CaseLivingSummaryQueueable(new List<Case>{ incidentCase }, existingCases).work();
     Test.stopTest();
     List<Living_Summary_History__c> summaryHistory = [SELECT Id FROM Living_Summary_History__c];

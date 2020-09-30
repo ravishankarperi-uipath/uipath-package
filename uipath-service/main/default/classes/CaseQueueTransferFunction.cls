@@ -53,8 +53,6 @@ public with sharing class CaseQueueTransferFunction implements SObjectToSObjectF
       [SELECT Id, DeveloperName, Type FROM Group WHERE DeveloperName IN :QUEUE_NAMES]
     );
     for (Case caseRecord : casesToUpdate) {
-      System.debug('Contains: ' + queueMap.containsKey(caseRecord.OwnerId));
-      System.debug('Contains: ' + caseRecord.OwnerId);
       if (!queueMap.containsKey(caseRecord.OwnerId)) {
         continue;
       }
