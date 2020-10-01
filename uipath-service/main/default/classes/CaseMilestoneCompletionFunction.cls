@@ -16,10 +16,10 @@ public with sharing class CaseMilestoneCompletionFunction implements SObjectToSO
   }
 
   public SObject apply(Case caseRecord) {
-    caseRecord.Milestone_Completed__c = (caseMilestoneMap.get(caseRecord.Id) == null);
-    if (!caseRecord.Milestone_Completed__c) {
-      caseRecord.Milestone_Target_Date__c = caseMilestoneMap.get(caseRecord.Id).TargetDate;
-    }
+    caseRecord.Milestone_Completed__c = (caseMilestoneMap.containsKey(caseRecord.Id)) ? false : true;
+    caseRecord.Milestone_Target_Date__c = (caseMilestoneMap.containsKey(caseRecord.Id))
+      ? caseMilestoneMap.get(caseRecord.Id).TargetDate
+      : null;
     return caseRecord;
   }
 
@@ -35,7 +35,6 @@ public with sharing class CaseMilestoneCompletionFunction implements SObjectToSO
             new Set<String>{
               CaseMetadata.IncidentRecordType,
               CaseMetadata.ServiceRequestRecordType,
-              CaseMetadata.EngagementRequestRecordType,
               CaseMetadata.EngagementRequestRecordType,
               CaseMetadata.JapanEngagementRequestRecordType,
               CaseMetadata.SalesOperationRecordType,

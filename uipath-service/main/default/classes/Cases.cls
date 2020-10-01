@@ -26,10 +26,10 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     CaseMilestoneQueueable.setCompletionDateOnMilestones(Records, existingRecords);
     CaseSetEntitlementFunction.deriveEntitlement(Records);
-    CaseMilestoneCompletionFunction.deriveTargetDate(Records);
     CaseQueueTransferFunction.deriveRelatedTo(Records, existingRecords);
     CaseReOpenEmailCheckboxFunction.deriveCheckboxOnUpdate(Records, existingRecords);
     CaseSetAllMilestoneSuccessFunction.deriveMilestoneCompletedOnUpdate(Records, existingRecords);
+    CaseMilestoneCompletionFunction.deriveTargetDate(Records);
   }
 
   public override void onAfterInsert() {
