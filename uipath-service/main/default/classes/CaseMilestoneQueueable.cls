@@ -23,13 +23,19 @@ public with sharing class CaseMilestoneQueueable extends AbstractQueueable {
     for (CaseMilestone milestone : [
       SELECT Id, CompletionDate
       FROM CaseMilestone
-      WHERE CaseId IN :cases AND MilestoneType.Name = :Label.Communication_Milestone_Name AND IsCompleted = false
+      WHERE
+        CaseId IN :cases
+        AND MilestoneType.Name = :Label.Communication_Milestone_Name
+        AND IsCompleted = false
+        AND CompletionDate = null
       FOR UPDATE
     ]) {
       milestone.CompletionDate = currentDate;
       milestoneList.add(milestone);
     }
+    fflib_SObjectDomain.getTriggerEvent(Cases.class).disableAll();
     update milestoneList;
+    fflib_SObjectDomain.getTriggerEvent(Cases.class).enableAll();
   }
 
   public static void setCompletionDateOnMilestones(List<SObject> cases, Map<Id, SObject> existingCases) {

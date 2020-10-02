@@ -29,7 +29,6 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CaseQueueTransferFunction.deriveRelatedTo(Records, existingRecords);
     CaseReOpenEmailCheckboxFunction.deriveCheckboxOnUpdate(Records, existingRecords);
     CaseSetAllMilestoneSuccessFunction.deriveMilestoneCompletedOnUpdate(Records, existingRecords);
-    CaseMilestoneCompletionFunction.deriveTargetDate(Records);
   }
 
   public override void onAfterInsert() {
@@ -42,6 +41,7 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CaseTeamMemberQueueable.addDefaultTeamMembers(Records);
     CaseCreateChildCaseQueueable.createChildCases(Records, existingRecords);
     CaseFirstResponseQueueable.setCompletionDateOnMilestones(Records, existingRecords);
+    CaseMilestoneCompletionQueueable.setTargetDate(Records, existingRecords);
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {

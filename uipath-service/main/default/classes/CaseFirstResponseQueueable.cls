@@ -24,13 +24,15 @@ public with sharing class CaseFirstResponseQueueable extends AbstractQueueable {
     for (CaseMilestone milestone : [
       SELECT Id, CompletionDate
       FROM CaseMilestone
-      WHERE CaseId IN :cases AND MilestoneType.Name = 'First Response' AND IsCompleted = false
+      WHERE CaseId IN :cases AND MilestoneType.Name = 'First Response' AND IsCompleted = false AND CompletionDate = null
       FOR UPDATE
     ]) {
       milestone.CompletionDate = currentTime;
       milestoneList.add(milestone);
     }
+    fflib_SObjectDomain.getTriggerEvent(Cases.class).disableAll();
     update milestoneList;
+    fflib_SObjectDomain.getTriggerEvent(Cases.class).enableAll();
   }
 
   public static void setCompletionDateOnMilestones(List<SObject> cases, Map<Id, SObject> existingCases) {
