@@ -29,6 +29,11 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
           acc.AnnualRevenue = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c;
           acc.Revenue_Source__c = DNB;
         }
+        if (acc.Overwrite_Employee_Number__c == false) {
+          acc.NumberOfEmployees = Integer.valueOf(
+            acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__EmployeeCountTotal__c
+          );
+        }
 
         if (acc.Overwrite_Legal_Entity_Name__c == false) {
           acc.Legal__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c;
@@ -48,6 +53,7 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
       SELECT
         Id,
         Overwrite_Annual_Revenue__c,
+        Overwrite_Employee_Number__c,
         Overwrite_Legal_Entity_Name__c,
         Revenue_Source__c,
         AnnualRevenue,
@@ -58,7 +64,8 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
         DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c,
         Legal__c,
         DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c,
-        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c
+        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c,
+        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__EmployeeCountTotal__c
       FROM Account
       WHERE Id IN :accounts AND DNBoptimizer__DnBCompanyRecord__c != null
     ];

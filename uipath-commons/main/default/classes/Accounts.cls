@@ -35,17 +35,17 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
+    AccountSetStateFunction.deriveStateOnUpdate(Records, existingRecords);
     AccountMapDnBAddressFunction.deriveAddressFieldsOnUpdate(Records, existingRecords);
     AccountSetClassificationGlobalFunction.deriveRecordTypeOnUpdate(Records, existingRecords);
+    AccountOverwriteRevenueEmpFunction.deriveRecordTypeOnUpdate(Records, existingRecords);
     AccountSetClassificationFunction.deriveClassificationFieldsOnUpdate(Records, existingRecords);
     AccountSetRecordTypeFunction.deriveRecordTypeForExistingAccount(Records, existingRecords);
     AccountConvertAcademic.convertAcademicAccountOnUpdate(Records, existingRecords);
     AccountSetDataStewardFunction.deriveDataStewardUserOnUpdate(Records, existingRecords);
     AccountSetSyncStatusFunction.deriveSyncStatusForValidatedAccount(Records, existingRecords);
-    AccountSetStateFunction.deriveStateOnUpdate(Records, existingRecords);
     AccountTerritoryService.deriveTerritoryFieldsOnUpdate(Records, existingRecords);
     AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnUpdate(Records, existingRecords);
-
     //Leave this as the last method in the execution of onBeforeUpdate
     IntegrationHandler.callAccountSyncStatusIntegrationProcess(Records, existingRecords);
   }
@@ -64,6 +64,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     AccountSharingRollupQueueable.shareAccountWithParentOwner(Records, existingRecords);
+    AccountDNBPrimaryAddressQueueable.updateAddressForDnBCompany(Records, existingRecords);
     AccountDNBCompanyQueueable.createAddressForDnBCompany(Records, existingRecords);
     AccountSetContactOwnerQueueable.setContactOwnerToAccountOwner(Records, existingRecords);
     AccountSetGAMEmailQueueable.setGAMEmailOnGlobalAccounts(Records, existingRecords);
