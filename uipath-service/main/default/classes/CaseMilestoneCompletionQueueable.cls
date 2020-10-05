@@ -25,9 +25,7 @@ public without sharing class CaseMilestoneCompletionQueueable extends AbstractQu
       WHERE CaseId IN :cases AND IsCompleted = false
       ORDER BY TargetDate ASC
     ]) {
-      if (!caseMilestoneMap.containsKey(milestone.CaseId)) {
-        caseMilestoneMap.put(milestone.CaseId, milestone);
-      }
+      caseMilestoneMap.put(milestone.CaseId, milestone);
     }
     List<Case> casesToUpdate = new List<Case>();
     for (Case caseRecord : cases) {
