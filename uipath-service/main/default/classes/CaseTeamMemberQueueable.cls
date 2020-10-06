@@ -1,4 +1,4 @@
-public with sharing class CaseTeamMemberQueueable extends AbstractQueueable {
+public without sharing class CaseTeamMemberQueueable extends AbstractQueueable {
   private final List<SObject> cases;
 
   public CaseTeamMemberQueueable(List<SObject> cases) {
