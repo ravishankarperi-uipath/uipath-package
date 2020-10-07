@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>UiPath_Program__c</fullName>
+    <deprecated>false</deprecated>
     <description>GLAS Program - Account Identification Field</description>
     <externalId>false</externalId>
     <label>UiPath Program</label>
@@ -31,6 +32,11 @@
                 <fullName>Strategic APAC</fullName>
                 <default>false</default>
                 <label>Strategic APAC</label>
+            </value>
+            <value>
+                <fullName>India White Space Program</fullName>
+                <default>false</default>
+                <label>India White Space Program</label>
             </value>
             <value>
                 <fullName>FED</fullName>

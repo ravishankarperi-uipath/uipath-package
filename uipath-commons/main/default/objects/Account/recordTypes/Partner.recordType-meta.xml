@@ -262,6 +262,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MPA via Distributor BPO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MPA via Distributor Resale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MPA via Distributor Resale %2B BPO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Non-Standard</fullName>
             <default>false</default>
         </values>
@@ -5236,6 +5248,10 @@
         </values>
         <values>
             <fullName>GOV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>India White Space Program</fullName>
             <default>false</default>
         </values>
         <values>
