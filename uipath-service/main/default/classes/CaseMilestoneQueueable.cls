@@ -5,9 +5,10 @@
  * Needs to be rewritten entirely
  * Updates the Completion date on CaseMilestone for Comm Update cases
  */
-public with sharing class CaseMilestoneQueueable extends AbstractQueueable {
+public without sharing class CaseMilestoneQueueable extends AbstractQueueable {
   private final List<SObject> cases;
   private final Datetime currentDate;
+  private static Boolean isAlreadyRun = false;
   public CaseMilestoneQueueable(List<SObject> cases, Datetime currentDate) {
     super('CaseMilestoneQueueable');
     this.cases = cases;
@@ -33,7 +34,12 @@ public with sharing class CaseMilestoneQueueable extends AbstractQueueable {
       milestone.CompletionDate = currentDate;
       milestoneList.add(milestone);
     }
+    List<Case> casesToUpdate = new List<Case>();
+    for (Case caseRecord : cases) {
+      casesToUpdate.add(new Case(Id = caseRecord.Id, Comm_Update__c = false));
+    }
     fflib_SObjectDomain.getTriggerEvent(Cases.class).disableAll();
+    update casesToUpdate;
     update milestoneList;
     fflib_SObjectDomain.getTriggerEvent(Cases.class).enableAll();
   }
@@ -63,13 +69,14 @@ public with sharing class CaseMilestoneQueueable extends AbstractQueueable {
           .also(Case.Comm_Update__c)
           .equals(true)
       )
+      .filter(Match.field(Case.No_of_Emails_Sent__c).notEquals(2))
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      for (Case caseRecord : eligibleCases) {
-        caseRecord.Comm_Update__c = false;
+      if (!isAlreadyRun) {
+        AbstractQueueable.enqueue(new CaseMilestoneQueueable(eligibleCases, System.now()));
+        isAlreadyRun = true;
       }
-      AbstractQueueable.enqueue(new CaseMilestoneQueueable(eligibleCases, System.now()));
     }
   }
 }

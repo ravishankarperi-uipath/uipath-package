@@ -16,7 +16,7 @@ public class CaseFirstResponseQueueableTest {
     insert entitlement;
   }
 
-  static testMethod void updateMilestones_insertCase() {
+  static testMethod void updateMilestones_updateCase() {
     Case incidentCase = new Case();
     incidentCase.RecordTypeId = CaseMetadata.IncidentRecordType;
     incidentCase.Subject = 'Incident  Case';
@@ -26,8 +26,9 @@ public class CaseFirstResponseQueueableTest {
     Test.startTest();
     incidentCase.No_of_Emails_Sent__c = 2;
     update incidentCase;
-    new CaseFirstResponseQueueable(new List<Case>{ incidentCase }, System.now()).execute(null);
     Test.stopTest();
     List<CaseMilestone> milestones = [SELECT Id, CompletionDate FROM CaseMilestone];
+    System.debug('### milestones ' + milestones);
+    System.assertEquals(true, CaseFirstResponseQueueable.isAlreadyRun, 'The milestone is not executed');
   }
 }

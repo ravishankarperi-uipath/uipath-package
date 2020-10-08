@@ -24,10 +24,10 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
-    CaseMilestoneQueueable.setCompletionDateOnMilestones(Records, existingRecords);
     CaseSetEntitlementFunction.deriveEntitlement(Records);
     CaseQueueTransferFunction.deriveRelatedTo(Records, existingRecords);
     CaseReOpenEmailCheckboxFunction.deriveCheckboxOnUpdate(Records, existingRecords);
+
     CaseSetAllMilestoneSuccessFunction.deriveMilestoneCompletedOnUpdate(Records, existingRecords);
   }
 
@@ -40,8 +40,10 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     AbstractQueueable.enqueue(new CaseLivingSummaryQueueable(Records, existingRecords));
     CaseTeamMemberQueueable.addDefaultTeamMembers(Records);
     CaseCreateChildCaseQueueable.createChildCases(Records, existingRecords);
-    CaseFirstResponseQueueable.setCompletionDateOnMilestones(Records, existingRecords);
+
     CaseMilestoneCompletionQueueable.setTargetDate(Records, existingRecords);
+    CaseMilestoneQueueable.setCompletionDateOnMilestones(Records, existingRecords);
+    CaseFirstResponseQueueable.setCompletionDateOnMilestones(Records, existingRecords);
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
