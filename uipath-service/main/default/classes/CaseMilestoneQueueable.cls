@@ -5,42 +5,33 @@
  * Needs to be rewritten entirely
  * Updates the Completion date on CaseMilestone for Comm Update cases
  */
-public without sharing class CaseMilestoneQueueable extends AbstractQueueable {
+public without sharing class CaseMilestoneQueueable {
   private final List<SObject> cases;
   private final Datetime currentDate;
   private static Boolean isAlreadyRun = false;
-  public CaseMilestoneQueueable(List<SObject> cases, Datetime currentDate) {
-    super('CaseMilestoneQueueable');
-    this.cases = cases;
-    this.currentDate = currentDate;
-  }
 
-  public override void work() {
-    this.updateMilestones(cases);
-  }
-
-  private void updateMilestones(List<Case> cases) {
+  private static void updateMilestones(Set<Id> caseIds) {
     List<CaseMilestone> milestoneList = new List<CaseMilestone>();
     for (CaseMilestone milestone : [
       SELECT Id, CompletionDate
       FROM CaseMilestone
       WHERE
-        CaseId IN :cases
+        CaseId IN :caseIds
         AND MilestoneType.Name = :Label.Communication_Milestone_Name
         AND IsCompleted = false
         AND CompletionDate = null
       FOR UPDATE
     ]) {
-      milestone.CompletionDate = currentDate;
+      milestone.CompletionDate = System.now();
       milestoneList.add(milestone);
     }
     List<Case> casesToUpdate = new List<Case>();
-    for (Case caseRecord : cases) {
-      casesToUpdate.add(new Case(Id = caseRecord.Id, Comm_Update__c = false));
+    for (Id caseRecordId : caseIds) {
+      casesToUpdate.add(new Case(Id = caseRecordId, Comm_Update__c = false));
     }
     fflib_SObjectDomain.getTriggerEvent(Cases.class).disableAll();
-    update casesToUpdate;
     update milestoneList;
+    update casesToUpdate;
     fflib_SObjectDomain.getTriggerEvent(Cases.class).enableAll();
   }
 
@@ -74,7 +65,9 @@ public without sharing class CaseMilestoneQueueable extends AbstractQueueable {
 
     if (!eligibleCases.isEmpty()) {
       if (!isAlreadyRun) {
-        AbstractQueueable.enqueue(new CaseMilestoneQueueable(eligibleCases, System.now()));
+        //AbstractQueueable.enqueue(new CaseMilestoneQueueable(eligibleCases, System.now()));
+        List<Id> recordIds = Collection.of(cases).pluckIds();
+        updateMilestones(new Set<Id>(recordIds));
         isAlreadyRun = true;
       }
     }

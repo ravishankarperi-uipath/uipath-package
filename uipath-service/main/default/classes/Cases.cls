@@ -41,9 +41,9 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CaseTeamMemberQueueable.addDefaultTeamMembers(Records);
     CaseCreateChildCaseQueueable.createChildCases(Records, existingRecords);
 
-    CaseMilestoneCompletionQueueable.setTargetDate(Records, existingRecords);
     CaseMilestoneQueueable.setCompletionDateOnMilestones(Records, existingRecords);
     CaseFirstResponseQueueable.setCompletionDateOnMilestones(Records, existingRecords);
+    CaseMilestoneCompletionQueueable.setTargetDate(Records, existingRecords);
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {
