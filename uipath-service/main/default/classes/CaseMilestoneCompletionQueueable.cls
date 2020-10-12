@@ -23,7 +23,7 @@ public without sharing class CaseMilestoneCompletionQueueable extends AbstractQu
       SELECT Id, CaseId, TargetDate
       FROM CaseMilestone
       WHERE CaseId IN :cases AND IsCompleted = false
-      ORDER BY TargetDate ASC
+      ORDER BY TargetDate DESC
     ]) {
       caseMilestoneMap.put(milestone.CaseId, milestone);
     }
