@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Segmentation__c</fullName>
+    <deprecated>false</deprecated>
     <description>Classification owned by CS. Shows type of touch per account from CS</description>
     <externalId>false</externalId>
     <inlineHelpText>Classification owned by CS. Shows type of touch per account from CS</inlineHelpText>
     <label>Segmentation</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
