@@ -141,9 +141,10 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>true</allowInChatterGroups>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>Address_Compact_View</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Object to hold the Customer Address details</description>
+    <deprecated>false</deprecated>
+    <description>Custom Object to hold the Customer Address details</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -163,7 +164,17 @@
     </nameField>
     <pluralLabel>Addresses</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <searchLayouts />
+    <searchLayouts>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Street_Line_1__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Street_Line_2__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>City__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Zip_Postal_Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Country__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Primary_Shipping__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Primary_Billing__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>NS_Address_Internal_ID__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
