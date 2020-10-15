@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Service_Request</fullName>
     <active>true</active>
-    <businessProcess>Service Request%2FIncident</businessProcess>
+    <businessProcess>Service Request</businessProcess>
     <description>Ticket created for service enablement for customers.</description>
     <label>Service Request</label>
     <picklistValues>
