@@ -12,6 +12,9 @@ public class CommonsConstants {
   public static final String ACC_SYNC_STATUS_ERROR = 'Error';
   public static final String ACC_SYNC_STATUS_DO_NOT_SYNC = 'Do Not Sync';
 
+  public static final String ACC_UIPATH_SF_CONNECTOR_TEMPLATE = 'Account Integration';
+  public static final String ADD_UIPATH_SF_CONNECTOR_TEMPLATE = 'Address Integration';
+
   /********** Address Constants ***********/
   // Address Record Types
   public static final String ADDRESS_RECORD_TYPE_LOCKDOWN = 'Lockdown';

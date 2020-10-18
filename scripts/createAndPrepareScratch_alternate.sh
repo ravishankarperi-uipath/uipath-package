@@ -22,4 +22,7 @@ sfdx force:org:create -f config/project-scratch-def.json -d 7 -s -a $scratchOrgN
 echo Installing dnbOptimizer package
 sfdx force:package:install --package 04t1I000003FJbZQAW -u scratch1 --noprompt -w 10
 
+echo Installing uipath connector package
+sfdx force:package:install --package 04t1U000007TwtzQAC -u scratch1 --noprompt -w 10
+
 sfdx force:source:push -u $scratchOrgName;

@@ -23,7 +23,6 @@ jobs:
             service:
               - 'uipath-service/main/default/**/*'
 
-
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.4.1
         with:
@@ -142,6 +141,10 @@ jobs:
       # Install DnBOptimizer
       - name: " Install DnBOptimizer"
         run: "sfdx force:package:install --package 04t1I000003FJbZQAW -u scratch-org --noprompt -w 15"
+
+      # Install UiPath Connector
+      - name: " Install UiPath Connector"
+        run: "sfdx force:package:install --package 04t1U000007TwtzQAC -u scratch-org --noprompt -w 15"
 
       # Deploy source to scratch org
       - name: "Push source to scratch org"

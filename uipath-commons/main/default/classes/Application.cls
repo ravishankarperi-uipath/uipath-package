@@ -21,8 +21,8 @@ public class Application {
   public static final fflib_Application.DomainFactory Domain = new fflib_Application.DomainFactory(
     Application.Selector,
     new Map<SObjectType, Type>{
-      Account.SObjectType => Accounts.Constructor.class
-      //     Address__c.SObjectType => DeveloperWorkItems.class
+      Account.SObjectType => Accounts.Constructor.class,
+      Address__c.SObjectType => Addresses.Constructor.class
     }
   );
 }

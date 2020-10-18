@@ -20,6 +20,9 @@
         },
         {
           "package": "DNBoptimizer-v1.6061"
+        },
+        {
+          "package": "uipath-connector"
         }
       ]
     },
@@ -49,6 +52,7 @@
   "sourceApiVersion": "48.0",
   "packageAliases": {
     "DNBoptimizer-v1.6061": "04t1I000003FJbZQAW",
+    "uipath-connector": "04t1U000007TwtzQAC",
     "uipath-core": "0Ho1Q000000CaTDSA0",
     "uipath-commons": "0Ho1Q000000CaTISA0",
     "uipath-service": "0Ho1Q000000blJdSAI",

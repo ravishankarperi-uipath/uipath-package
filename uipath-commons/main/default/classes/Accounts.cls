@@ -60,6 +60,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AbstractQueueable.enqueue(new AccountSetGAMEmailQueueable(Records, null));
     AccountDnBSyncQueueable.deriveDnBFieldsOnInsert(Records);
     AccountSharingLeadOwnerQueueable.shareAccount(Records);
+    AccountOrchestratorNotificationQueueable.publishNewAccountsToNetsuite(Records);
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -73,6 +74,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     LicensingApiDispatch.licensingApiSyncAccountOnUpdate(Records);
     AccountClassificationGlobalQueueable.setClassificationToGlobal(Records, existingRecords);
     AccountSharingLeadOwnerQueueable.shareAccountOnUpdate(Records, existingRecords);
+    AccountOrchestratorNotificationQueueable.publishUpdatedAccountsToNetsuite(Records, existingRecords);
   }
 
   public override void onAfterDelete() {
