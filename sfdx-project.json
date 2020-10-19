@@ -11,12 +11,12 @@
       "path": "uipath-commons",
       "package": "uipath-commons",
       "default": true,
-      "versionName": "Version 1.0.2",
-      "versionNumber": "1.0.2.NEXT",
+      "versionName": "Version 1.0.3",
+      "versionNumber": "1.0.3.NEXT",
       "dependencies": [
         {
           "package": "uipath-core",
-          "versionNumber": "1.0.0.LATEST"
+          "versionNumber": "1.0.1.LATEST"
         },
         {
           "package": "DNBoptimizer-v1.6061"
