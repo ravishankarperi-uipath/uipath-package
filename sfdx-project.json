@@ -22,7 +22,7 @@
           "package": "DNBoptimizer-v1.6061"
         },
         {
-          "package": "uipath-connector"
+          "package": "uipath-connector-v1.8"
         }
       ]
     },
@@ -41,8 +41,11 @@
           "package": "DNBoptimizer-v1.6061"
         },
         {
+          "package": "uipath-connector-v1.8"
+        },
+        {
           "package": "uipath-commons",
-          "versionNumber": "1.0.2.LATEST"
+          "versionNumber": "1.0.3.LATEST"
         }
       ]
     }
@@ -52,12 +55,13 @@
   "sourceApiVersion": "48.0",
   "packageAliases": {
     "DNBoptimizer-v1.6061": "04t1I000003FJbZQAW",
-    "uipath-connector": "04t1U000007TwtzQAC",
+    "uipath-connector-v1.8": "04t1U000007TwtzQAC",
     "uipath-core": "0Ho1Q000000CaTDSA0",
     "uipath-commons": "0Ho1Q000000CaTISA0",
     "uipath-service": "0Ho1Q000000blJdSAI",
     "uipath-commons@1.0.1-1": "04t1Q000001QhEeQAK",
-    "uipath-commons@1.0.2-1": "04t1Q000001QhMTQA0",
-    "uipath-core@1.0.1-1": "04t1Q000001QhYKQA0"
+    "uipath-commons@1.0.3-1": "04t1Q000001QhZrQAK",
+    "uipath-core@1.0.1-1": "04t1Q000001QhYKQA0",
+    "uipath-commons@1.0.3-2": "04t1Q000001QhaBQAS"
   }
 }

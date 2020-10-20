@@ -15,6 +15,7 @@ private class CaseCreateChildCaseQueueableTest {
     Case cs = new Case(Subject = 'Test', RecordTypeId = incidentRecordTypeID, Status = 'New', CSAT__c = 1.00);
     insert cs;
     cs.Status = 'Closed';
+    cs.Closure_Classification__c = '3rd Party not under support scope';
     cs.CSAT__c = 4.00;
     update cs;
 
