@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Sub_Component__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Sub Component</label>
     <required>false</required>
@@ -12,7 +13,7 @@
         <controllingField>Related_To__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
             <value>
                 <fullName>Abby</fullName>
                 <default>false</default>
@@ -744,18 +745,6 @@
                 <label>Orchestrator_General Queries</label>
             </value>
             <value>
-                <fullName>Orchestrator_Infra</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Orchestrator_Infra</label>
-            </value>
-            <value>
-                <fullName>Orchestrator_Installation</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Orchestrator_Installation</label>
-            </value>
-            <value>
                 <fullName>Orchestrator_Library</fullName>
                 <default>false</default>
                 <label>Orchestrator_Library</label>
@@ -764,12 +753,6 @@
                 <fullName>Orchestrator_Mobile</fullName>
                 <default>false</default>
                 <label>Orchestrator_Mobile</label>
-            </value>
-            <value>
-                <fullName>Orchestrator_Upgrade</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Orchestrator_Upgrade</label>
             </value>
             <value>
                 <fullName>Orchestrator Connectivity/Settings</fullName>
@@ -1197,12 +1180,6 @@
                 <label>Training (Tech-Support)</label>
             </value>
             <value>
-                <fullName>Training and Courses</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Training and Courses</label>
-            </value>
-            <value>
                 <fullName>Training Diploma</fullName>
                 <default>false</default>
                 <label>Training Diploma</label>
@@ -1283,14 +1260,14 @@
                 <label>VMWare Actvities</label>
             </value>
             <value>
-                <fullName>Webhook</fullName>
-                <default>false</default>
-                <label>Webhook</label>
-            </value>
-            <value>
                 <fullName>Web_Services</fullName>
                 <default>false</default>
                 <label>Web Services</label>
+            </value>
+            <value>
+                <fullName>Webhook</fullName>
+                <default>false</default>
+                <label>Webhook</label>
             </value>
             <value>
                 <fullName>Word</fullName>
@@ -1311,6 +1288,30 @@
                 <fullName>X-Ray Integration</fullName>
                 <default>false</default>
                 <label>X-Ray Integration</label>
+            </value>
+            <value>
+                <fullName>Orchestrator_Infra</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Orchestrator_Infra</label>
+            </value>
+            <value>
+                <fullName>Orchestrator_Installation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Orchestrator_Installation</label>
+            </value>
+            <value>
+                <fullName>Orchestrator_Upgrade</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Orchestrator_Upgrade</label>
+            </value>
+            <value>
+                <fullName>Training and Courses</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Training and Courses</label>
             </value>
         </valueSetDefinition>
         <valueSettings>

@@ -73,6 +73,12 @@ sfdx force:package:install --package 04t***** -u scratch --noprompt  -w 15
 sfdx force:package:install --package 04t**** -k unlockedclear -u scratch  -w 15
 ```
 
+- uipath-service
+
+```bash
+sfdx force:package:install --package 04t**** -k unlockedclear -u scratch  -w 15
+```
+
 ## Work on Feature and Release
 
 1. Create a new feature branch
