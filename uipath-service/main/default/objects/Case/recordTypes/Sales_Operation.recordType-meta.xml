@@ -6,6 +6,13 @@
     <compactLayoutAssignment>Case_Compact_v2</compactLayoutAssignment>
     <label>Sales Operation</label>
     <picklistValues>
+        <picklist>Closure_Classification__c</picklist>
+        <values>
+            <fullName>Enhancement Request</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Country__c</picklist>
         <values>
             <fullName>Afghanistan</fullName>
