@@ -12,10 +12,35 @@ private class CaseCreateChildCaseQueueableTest {
       insert queue;
     }
 
+    Account a1 = new Account(
+      Name = 'NewAccountABC',
+      BillingCountry = 'United Kingdom',
+      Industry = 'Others',
+      LD_USE_DnB_Optimize__c = false
+    );
+    insert a1;
+
+    Contact con = new Contact(
+      FirstName = 'Testadasda',
+      LastName = 'Test',
+      Email = 'asdasdad.test@test.com',
+      AccountId = a1.Id,
+      MailingCountry = 'Australia',
+      MailingState = '',
+      Title = 'Test',
+      LeadSource = 'Webinar'
+    );
+    insert con;
+
     Case cs = new Case(Subject = 'Test', RecordTypeId = incidentRecordTypeID, Status = 'New', CSAT__c = 1.00);
     insert cs;
     cs.Status = 'Closed';
     cs.Closure_Classification__c = '3rd Party not under support scope';
+    cs.Related_To__c = 'AI Fabric';
+    cs.Sub_Component__c = 'Others';
+    cs.Solution__c = 'No solution. This is a test.';
+    cs.SuppliedEmail = 'asdasdad.test@test.com';
+    cs.ContactId = con.Id;
     cs.CSAT__c = 4.00;
     update cs;
 
