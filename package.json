@@ -13,8 +13,10 @@
     "test:unit:coverage": "sfdx-lwc-jest --coverage",
     "prettier:commons": "prettier --write \"uipath-commons/main/default/classes/**\" \"uipath-commons/main/default/triggers/**\"",
     "prettier:service": "prettier --write \"uipath-service/main/default/classes/**\" \"uipath-service/main/default/triggers/**\"",
+    "prettier:sales": "prettier --write \"uipath-sales/main/default/classes/**\" \"uipath-sales/main/default/triggers/**\"",
     "prettier:verify:commons": "prettier --ignore-unknown --list-different \"uipath-commons/main/default/classes/**\" \"uipath-commons/main/default/triggers/**\"",
-    "prettier:verify:service": "prettier --ignore-unknown --list-different \"uipath-service/main/default/classes/**\" \"uipath-service/main/default/triggers/**\""
+    "prettier:verify:service": "prettier --ignore-unknown --list-different \"uipath-service/main/default/classes/**\" \"uipath-service/main/default/triggers/**\"",
+    "prettier:verify:sales": "prettier --ignore-unknown --list-different \"uipath-sales/main/default/classes/**\" \"uipath-sales/main/default/triggers/**\""
   },
   "devDependencies": {
     "@prettier/plugin-xml": "^0.7.2",

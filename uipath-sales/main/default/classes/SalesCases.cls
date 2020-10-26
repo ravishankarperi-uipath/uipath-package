@@ -1,0 +1,27 @@
+/**
+ * Responsibility: Case Domain Class
+ * Mostly just delegates work to Mapped Functions or to Async Queueables
+ */
+public with sharing class SalesCases extends fflib_SObjectDomain implements ICases {
+  public static ICases newInstance(List<Case> recordList) {
+    return (ICases) Application.Domain.newInstance(recordList);
+  }
+
+  public static ICases newInstance(Set<Id> recordIdSet) {
+    return (ICases) Application.Domain.newInstance(recordIdSet);
+  }
+
+  public SalesCases(List<Case> sObjectList) {
+    super(sObjectList);
+    this.Configuration.disableTriggerCRUDSecurity();
+  }
+
+  public override void onBeforeInsert() {
+  }
+
+  public class Constructor implements fflib_SObjectDomain.IConstructable {
+    public fflib_SObjectDomain construct(List<SObject> sObjectList) {
+      return new SalesCases(sObjectList);
+    }
+  }
+}

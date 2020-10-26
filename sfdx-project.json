@@ -48,6 +48,29 @@
           "versionNumber": "1.0.3.LATEST"
         }
       ]
+    },
+    {
+      "path": "uipath-sales",
+      "package": "uipath-sales",
+      "versionName": "Version 1.0",
+      "versionNumber": "1.0.0.NEXT",
+      "default": false,
+      "dependencies": [
+        {
+          "package": "uipath-core",
+          "versionNumber": "1.0.0.LATEST"
+        },
+        {
+          "package": "DNBoptimizer-v1.6061"
+        },
+        {
+          "package": "uipath-connector-v1.8"
+        },
+        {
+          "package": "uipath-commons",
+          "versionNumber": "1.0.3.LATEST"
+        }
+      ]
     }
   ],
   "namespace": "",
