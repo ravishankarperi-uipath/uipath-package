@@ -7,6 +7,7 @@
  */
 public without sharing class CaseMilestoneCompletionQueueable extends AbstractQueueable {
   private final List<Case> cases;
+  private static Boolean isAlreadyRun = false;
 
   public CaseMilestoneCompletionQueueable(List<Case> cases) {
     super('CaseMilestoneCompletionQueueable');
@@ -75,7 +76,10 @@ public without sharing class CaseMilestoneCompletionQueueable extends AbstractQu
       )
       .asList();
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new CaseMilestoneCompletionQueueable(eligibleCases));
+      if (!isAlreadyRun) {
+        isAlreadyRun = true;
+        AbstractQueueable.enqueue(new CaseMilestoneCompletionQueueable(eligibleCases));
+      }
     }
   }
 }

@@ -3,6 +3,7 @@
  */
 public with sharing class CaseSetParentERQueueable extends AbstractQueueable {
   private final List<SObject> cases;
+  private static Boolean isAlreadyRun = false;
 
   public CaseSetParentERQueueable(List<SObject> cases) {
     super('CaseSetParentERQueueable');
@@ -44,7 +45,10 @@ public with sharing class CaseSetParentERQueueable extends AbstractQueueable {
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new CaseSetParentERQueueable(eligibleCases));
+      if (!isAlreadyRun) {
+        isAlreadyRun = true;
+        AbstractQueueable.enqueue(new CaseSetParentERQueueable(eligibleCases));
+      }
     }
   }
 }

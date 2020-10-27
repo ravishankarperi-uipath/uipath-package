@@ -1,5 +1,6 @@
 public without sharing class CaseTeamMemberQueueable extends AbstractQueueable {
   private final List<SObject> cases;
+  private static Boolean isAlreadyRun = false;
 
   public CaseTeamMemberQueueable(List<SObject> cases) {
     super('CaseTeamMemberQueueable');
@@ -78,7 +79,10 @@ public without sharing class CaseTeamMemberQueueable extends AbstractQueueable {
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new CaseTeamMemberQueueable(eligibleCases));
+      if (!isAlreadyRun) {
+        isAlreadyRun = true;
+        AbstractQueueable.enqueue(new CaseTeamMemberQueueable(eligibleCases));
+      }
     }
   }
 }

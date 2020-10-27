@@ -8,6 +8,8 @@
 public with sharing class CaseLivingSummaryQueueable extends AbstractQueueable {
   private final List<SObject> cases;
   private final Map<Id, SObject> oldCasessMap;
+  private static Boolean isAlreadyRun = false;
+
   public CaseLivingSummaryQueueable(List<SObject> cases, Map<Id, SObject> oldCasessMap) {
     super('CaseLivingSummaryQueueable');
     this.cases = cases;
@@ -42,12 +44,14 @@ public with sharing class CaseLivingSummaryQueueable extends AbstractQueueable {
             livingSummary.New_Value__c = (String) newCase.get(caseField);
             livingSummary.Old_Value__c = (String) oldCase.get(caseField);
             livingSummaryHistoryList.add(livingSummary);
-            //break;
           }
         }
       }
       if (!livingSummaryHistoryList.isEmpty()) {
-        insert livingSummaryHistoryList;
+        if (!isAlreadyRun) {
+          isAlreadyRun = true;
+          insert livingSummaryHistoryList;
+        }
       }
     }
   }
