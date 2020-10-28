@@ -58,4 +58,3 @@ uipath-commons/main/default/globalValueSets/SBQQ__PaymentTerm.globalValueSet-met
 uipath-commons/main/default/objects/Account/fields/Default_Payment_Terms__c.field-meta.xml
 uipath-commons/main/default/objects/Account/validationRules/Mandatory_Fields_for_NS_Cust_Creation.validationRule-meta.xml
 # removed  pckliist values for default_payment,SBQQ__CoTerminationEvent__c, SBQQ__ContractCoTermination__c,SBQQ__RenewalModel__c,SBQQ__RenewalPricingMethod__c from all Account record types
-uipath-sales

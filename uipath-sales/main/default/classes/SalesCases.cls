@@ -19,6 +19,10 @@ public with sharing class SalesCases extends fflib_SObjectDomain implements ICas
   public override void onBeforeInsert() {
   }
 
+  public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
+    CaseTechPartnerAgreementQueueable.deriveTechPartnershipDateOnAccount(Records, existingRecords);
+  }
+
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> sObjectList) {
       return new SalesCases(sObjectList);
