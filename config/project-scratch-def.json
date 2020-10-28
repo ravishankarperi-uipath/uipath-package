@@ -2,7 +2,7 @@
   "orgName": "UiPathScratchOrg",
   "edition": "Developer",
   "hasSampleData": false,
-  "features": ["StateAndCountryPicklist", "MultiCurrency"],
+  "features": ["StateAndCountryPicklist", "MultiCurrency", "CPQ"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": "true"
