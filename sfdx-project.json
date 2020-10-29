@@ -30,7 +30,7 @@
       "path": "uipath-service",
       "package": "uipath-service",
       "versionName": "Version 1.0",
-      "versionNumber": "1.0.2.NEXT",
+      "versionNumber": "1.0.3.NEXT",
       "default": false,
       "dependencies": [
         {
