@@ -5,11 +5,11 @@
  * Needs to be rewritten entirely
  * Updates Account on Signed/Declined Legal Document
  */
-public with sharing class CaseTechPartnerAgreementQueueable extends AbstractQueueable {
+public with sharing class SalesCaseTechPartnerAgreementQueueable extends AbstractQueueable {
   private final List<SObject> cases;
 
-  public CaseTechPartnerAgreementQueueable(List<SObject> cases) {
-    super('CaseTechPartnerAgreementQueueable');
+  public SalesCaseTechPartnerAgreementQueueable(List<SObject> cases) {
+    super('SalesCaseTechPartnerAgreementQueueable');
     this.cases = cases;
   }
 
@@ -60,7 +60,7 @@ public with sharing class CaseTechPartnerAgreementQueueable extends AbstractQueu
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new CaseTechPartnerAgreementQueueable(eligibleCases));
+      AbstractQueueable.enqueue(new SalesCaseTechPartnerAgreementQueueable(eligibleCases));
     }
   }
 }

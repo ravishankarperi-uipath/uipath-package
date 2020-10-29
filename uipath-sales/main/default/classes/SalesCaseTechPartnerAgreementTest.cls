@@ -1,5 +1,5 @@
 @isTest
-public class CaseTechPartnerAgreementQueueableTest {
+public class SalesCaseTechPartnerAgreementTest {
   @isTest
   private static void whenSigned_updateTechnologyPartnershipSignedDate() {
     Id caseId = fflib_IDGenerator.generate(Case.SObjectType);
@@ -29,7 +29,7 @@ public class CaseTechPartnerAgreementQueueableTest {
       Status = SalesCaseMetadata.SIGNED,
       Document_Type__c = SalesCaseMetadata.TECHNOLOGY_ALLIANCE_AGREEMENT
     );
-    new CaseTechPartnerAgreementQueueable(new List<Case>{ updatedCase }).work();
+    new SalesCaseTechPartnerAgreementQueueable(new List<Case>{ updatedCase }).work();
     accountRecord = [
       SELECT
         Id,
@@ -87,7 +87,7 @@ public class CaseTechPartnerAgreementQueueableTest {
       Status = SalesCaseMetadata.NOT_SIGNED,
       Document_Type__c = SalesCaseMetadata.TECHNOLOGY_ALLIANCE_AGREEMENT
     );
-    new CaseTechPartnerAgreementQueueable(new List<Case>{ updatedCase }).work();
+    new SalesCaseTechPartnerAgreementQueueable(new List<Case>{ updatedCase }).work();
     accountRecord = [
       SELECT
         Id,
