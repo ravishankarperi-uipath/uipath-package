@@ -14,6 +14,7 @@ public without sharing class SalesCaseMetadata {
   //RecordType API Names
   private static final String LEGAL_PRODUCT_REQUEST = 'Legal_Product_Request';
   private static final String LEGAL_REQUEST = 'Legal_Request';
+  private static final String UIPATH_JAPAN_PARTNER_STANDARD = 'UiPath_Japan_Partner_standard';
   private static final String FINANCE_REQUEST = 'Finance_Request';
 
   public static Id getRecordTypeId(String developerName) {
@@ -31,6 +32,13 @@ public without sharing class SalesCaseMetadata {
   public static Id LegalRequestRecordType {
     get {
       return getRecordTypeId(LEGAL_REQUEST);
+    }
+    set;
+  }
+
+  public static Id UiPathJapanPartnerStandardRecordType {
+    get {
+      return getRecordTypeId(UIPATH_JAPAN_PARTNER_STANDARD);
     }
     set;
   }

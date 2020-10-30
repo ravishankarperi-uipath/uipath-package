@@ -17,10 +17,14 @@ public with sharing class SalesCases extends fflib_SObjectDomain implements ICas
   }
 
   public override void onBeforeInsert() {
+    SalesCaseBillToWOOppFunction.updateBillToOnInsert(Records);
+    SalesCaseBillToWOppQueueable.updateBillToOnInsert(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
     SalesCaseOwnerAssignmentFunction.deriveOwnerOnUpdate(Records, existingRecords);
+    SalesCaseBillToWOOppFunction.updateBillToOnUpdate(Records, existingRecords);
+    SalesCaseBillToWOppQueueable.updateBillToOnUpdate(Records, existingRecords);
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
