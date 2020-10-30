@@ -6,6 +6,9 @@ private class AccountSetCompanyTierQueueableTest {
   private static final string AccountIndia = 'Test Account India';
   private static final string AccountJapan = 'Test Account Japan';
   private static final string NewZealand = 'New Zealand';
+  private static final string Canada = 'Canada';
+  private static final string India = 'India';
+  private static final string Japan = 'Japan';
 
   @isTest
   private static void setUpCompanyTierInsert1Test() {
@@ -20,7 +23,8 @@ private class AccountSetCompanyTierQueueableTest {
       Classification__c = 'SMB',
       AnnualRevenue = 100000,
       Industry = 'Energy',
-      Overwrite_Classification__c = true
+      Overwrite_Classification__c = true,
+      Top_Account__c = true
     );
     insert accEMEA;
 
@@ -45,7 +49,8 @@ private class AccountSetCompanyTierQueueableTest {
       Country__c = 'France',
       Industry = 'Energy',
       Classification__c = 'SMB',
-      Overwrite_Classification__c = true
+      Overwrite_Classification__c = true,
+      Top_Account__c = true
     );
     insert enterpriseParentAcc;
 
@@ -55,7 +60,8 @@ private class AccountSetCompanyTierQueueableTest {
       Country__c = 'Italy',
       Industry = 'Construction',
       Classification__c = 'Velocity',
-      Overwrite_Classification__c = true
+      Overwrite_Classification__c = true,
+      Top_Account__c = true
     );
     insert velocityParentAcc;
 
@@ -65,7 +71,8 @@ private class AccountSetCompanyTierQueueableTest {
       Country__c = 'Germany',
       Industry = 'Communications',
       Classification__c = 'SMB',
-      Overwrite_Classification__c = true
+      Overwrite_Classification__c = true,
+      Top_Account__c = true
     );
     insert sMBParentAcc;
 
@@ -87,10 +94,10 @@ private class AccountSetCompanyTierQueueableTest {
       Name = AccountAMER,
       RecordTypeId = prospectRT,
       ParentId = velocityParentAcc.Id,
-      Country__c = 'Canada',
+      Country__c = Canada,
       Geo__c = 'AMER',
-      BillingCountry = 'Canada',
-      Classification__c = 'Enterprise',
+      BillingCountry = Canada,
+      Classification__c = 'Velocity',
       AnnualRevenue = 300000000.00,
       Industry = 'Energy',
       Overwrite_Classification__c = true,
@@ -102,9 +109,9 @@ private class AccountSetCompanyTierQueueableTest {
       Name = AccountIndia,
       RecordTypeId = prospectRT,
       ParentId = velocityParentAcc.Id,
-      Country__c = 'India',
-      Geo__c = 'India',
-      BillingCountry = 'India',
+      Country__c = India,
+      Geo__c = India,
+      BillingCountry = India,
       Classification__c = 'Commercial',
       AnnualRevenue = 300000000.00,
       Industry = 'Energy',
@@ -116,9 +123,9 @@ private class AccountSetCompanyTierQueueableTest {
     Account accJapant1 = new Account(
       Name = AccountJapan,
       RecordTypeId = prospectRT,
-      Country__c = 'Japan',
-      Geo__c = 'Japan',
-      BillingCountry = 'Japan',
+      Country__c = Japan,
+      Geo__c = Japan,
+      BillingCountry = Japan,
       Classification__c = 'Commercial',
       AnnualRevenue = 100000.00,
       Industry = 'Energy',
@@ -164,7 +171,7 @@ private class AccountSetCompanyTierQueueableTest {
         System.assertEquals('C', acc.Company_Tier__c);
       }
       if (acc.Name == AccountJapan) {
-        System.assertEquals('A', acc.Company_Tier__c);
+        System.assertEquals('B', acc.Company_Tier__c);
       }
     }
   }
@@ -179,7 +186,8 @@ private class AccountSetCompanyTierQueueableTest {
       Country__c = 'France',
       Industry = 'Energy',
       Classification__c = 'Enterprise',
-      Overwrite_Classification__c = true
+      Overwrite_Classification__c = true,
+      Top_Account__c = true
     );
     insert parentAccEnterprise;
 
@@ -189,7 +197,8 @@ private class AccountSetCompanyTierQueueableTest {
       Country__c = 'France',
       Industry = 'Energy',
       Classification__c = 'Velocity',
-      Overwrite_Classification__c = true
+      Overwrite_Classification__c = true,
+      Top_Account__c = true
     );
     insert parentAccVelocity;
 
@@ -199,7 +208,8 @@ private class AccountSetCompanyTierQueueableTest {
       Country__c = 'France',
       Industry = 'Energy',
       Classification__c = 'SMB',
-      Overwrite_Classification__c = true
+      Overwrite_Classification__c = true,
+      Top_Account__c = true
     );
     insert parentAccSMB;
 
@@ -234,13 +244,13 @@ private class AccountSetCompanyTierQueueableTest {
       Name = AccountAMER,
       RecordTypeId = prospectRT,
       ParentId = parentAccVelocity.Id,
-      Country__c = 'Canada',
+      Country__c = Canada,
       Geo__c = 'AMER',
-      BillingCountry = 'Canada',
-      Classification__c = 'Enterprise',
+      BillingCountry = Canada,
+      Classification__c = 'Velocity',
       AnnualRevenue = 300000000.00,
+      Overwrite_Annual_Revenue__c = true,
       Industry = 'Energy',
-      Overwrite_Classification__c = true,
       Region_Specific__c = 'Velocity Tier 1'
     );
     oldaccToUpdate.add(oldaccAMER);
@@ -249,9 +259,9 @@ private class AccountSetCompanyTierQueueableTest {
       Name = AccountIndia,
       RecordTypeId = prospectRT,
       ParentId = parentAccVelocity.Id,
-      Country__c = 'India',
-      Geo__c = 'India',
-      BillingCountry = 'India',
+      Country__c = India,
+      Geo__c = India,
+      BillingCountry = India,
       Classification__c = 'Commercial',
       AnnualRevenue = 300000000.00,
       Industry = 'Energy',
@@ -264,9 +274,9 @@ private class AccountSetCompanyTierQueueableTest {
       Name = AccountJapan,
       RecordTypeId = prospectRT,
       ParentId = parentAccSMB.Id,
-      Country__c = 'Japan',
-      Geo__c = 'Japan',
-      BillingCountry = 'Japan',
+      Country__c = Japan,
+      Geo__c = Japan,
+      BillingCountry = Japan,
       Classification__c = 'Commercial',
       Overwrite_Classification__c = true,
       Industry = 'Communications'
@@ -352,7 +362,7 @@ private class AccountSetCompanyTierQueueableTest {
         System.assertEquals('B', acc.Company_Tier__c);
       }
       if (acc.Name == AccountAMER) {
-        System.assertEquals('A', acc.Company_Tier__c);
+        System.assertEquals('B', acc.Company_Tier__c);
       }
       if (acc.Name == AccountIndia) {
         System.assertEquals('A', acc.Company_Tier__c);

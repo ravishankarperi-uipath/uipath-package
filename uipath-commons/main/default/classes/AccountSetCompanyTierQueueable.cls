@@ -59,28 +59,24 @@ public with sharing class AccountSetCompanyTierQueueable extends AbstractQueueab
   // Set up Company Tier - after insert / after update
   // ============================================================================
   private void setCompanyTier(List<Account> accountsLst, List<Account> topAccountList, Map<Id, SObject> oldAccountMap) {
+    List<Account> accounts = new List<Account>();
     if (oldAccountMap == null) {
       Map<Id, Account> accountsMap = reQueryAccountsWithRelevantFields(accountsLst);
-      List<Account> accounts = accountsMap.values();
+      accounts = accountsMap.values();
+    } else {
+      accounts = getAllAccountsToUpdate(accountsLst, topAccountList);
+    }
+    if (accounts.size() > 0) {
       for (Account acc : accounts) {
-        if (acc.ParentId == null) {
+        if (
+          (acc.Has_Open_Opportunities__c != null && acc.Has_Open_Opportunities__c > 0) || acc.Top_Account__c == true
+        ) {
           acc.Company_Tier__c = 'A';
         } else {
           processAccountGeo(acc);
         }
       }
       update accounts;
-    } else {
-      List<Account> accountsToUpdate = getAllAccountsToUpdate(accountsLst, topAccountList);
-      Set<Id> accountsWithOpenOpps = reAccountsWithOpportunity(accountsToUpdate);
-      for (Account acc : accountsToUpdate) {
-        if (accountsWithOpenOpps.contains(acc.Id) || acc.ParentId == null) {
-          acc.Company_Tier__c = 'A';
-        } else {
-          processAccountGeo(acc);
-        }
-      }
-      update accountsToUpdate;
     }
   }
 
@@ -104,24 +100,13 @@ public with sharing class AccountSetCompanyTierQueueable extends AbstractQueueab
     return accountsToUpdate;
   }
 
-  private static Set<Id> reAccountsWithOpportunity(List<Account> accountsLst) {
-    List<Opportunity> relatedOpps = [
-      SELECT Id, AccountId
-      FROM Opportunity
-      WHERE AccountId IN :accountsLst AND StageName != 'Closed/Won' AND StageName != 'Closed/Lost'
-    ];
-    Set<Id> accountsWithOpenOpps = new Set<Id>();
-    for (Opportunity opp : relatedOpps) {
-      accountsWithOpenOpps.add(opp.AccountId);
-    }
-    return accountsWithOpenOpps;
-  }
-
   private static Map<Id, Account> reQueryAccountsWithRelevantFields(List<Account> accountsLst) {
     Map<Id, Account> accounts = new Map<Id, Account>(
       [
         SELECT
           Id,
+          Top_Account__c,
+          Has_Open_Opportunities__c,
           ParentId,
           Geo__c,
           Classification__c,
@@ -144,6 +129,8 @@ public with sharing class AccountSetCompanyTierQueueable extends AbstractQueueab
         SELECT
           Id,
           ParentId,
+          Top_Account__c,
+          Has_Open_Opportunities__c,
           Geo__c,
           Classification__c,
           UiPath_Program__c,
@@ -307,6 +294,7 @@ public with sharing class AccountSetCompanyTierQueueable extends AbstractQueueab
     SObjectPredicate hasChanged = new HasRecordChanged(
       new Set<SObjectField>{
         Account.ParentId,
+        Account.Top_Account__c,
         Account.Region_Specific__c,
         Account.UiPath_Program__c,
         Account.Industry,
@@ -318,7 +306,7 @@ public with sharing class AccountSetCompanyTierQueueable extends AbstractQueueab
       existingAccounts
     );
     List<Account> eligibleAccounts = (List<Account>) Collection.of(accounts)
-      .filter(Match.field(Account.ParentId).hasValue())
+      /*.filter(Match.field(Account.ParentId).hasValue())*/
       .filter(hasChanged)
       .asList();
 
