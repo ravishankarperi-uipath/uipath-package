@@ -58,6 +58,7 @@ jobs:
         if: steps.filter.outputs.service == 'true'
         run: npm run prettier:verify:service
 
+
       #- name: "Lint Lightning Web Components"
       # run: npm run lint:lwc
       # Unit tests
@@ -106,6 +107,8 @@ jobs:
               - 'uipath-commons/main/default/**/*'
             service:
               - 'uipath-service/main/default/**/*'
+            sales:
+              - 'uipath-sales/main/default/**/*'
 
       # Install Salesforce CLI
       - name: Install Salesforce CLI
