@@ -165,6 +165,10 @@ jobs:
       #- name: "Deploy Overrides"
       # run: "sfdx force:mdapi:deploy --deploydir mdapiDeploy/unpackaged -w 5"
 
+      # Import currencies
+      - name: "Import currencies"
+        run: "sfdx force:data:tree:import -f data/currencies.json"
+
       # Run Apex tests in scratch org
       - name: "Run Apex tests"
         run: "sfdx force:apex:test:run -c -r human -d ./tests/apex -w 20"
