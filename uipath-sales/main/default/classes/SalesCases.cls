@@ -2,13 +2,13 @@
  * Responsibility: Case Domain Class
  * Mostly just delegates work to Mapped Functions or to Async Queueables
  */
-public with sharing class SalesCases extends fflib_SObjectDomain implements ICases {
-  public static ICases newInstance(List<Case> recordList) {
-    return (ICases) Application.Domain.newInstance(recordList);
+public with sharing class SalesCases extends fflib_SObjectDomain implements ISalesCases {
+  public static ISalesCases newInstance(List<Case> recordList) {
+    return (ISalesCases) Application.Domain.newInstance(recordList);
   }
 
-  public static ICases newInstance(Set<Id> recordIdSet) {
-    return (ICases) Application.Domain.newInstance(recordIdSet);
+  public static ISalesCases newInstance(Set<Id> recordIdSet) {
+    return (ISalesCases) Application.Domain.newInstance(recordIdSet);
   }
 
   public SalesCases(List<Case> sObjectList) {
@@ -27,8 +27,16 @@ public with sharing class SalesCases extends fflib_SObjectDomain implements ICas
     SalesCaseBillToWOppQueueable.updateBillToOnUpdate(Records, existingRecords);
   }
 
+  public override void onAfterInsert() {
+    SalesCaseLegalOpportunityQueueable.deriveCaseCount(Records);
+  }
+
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     SalesCaseTechPartnerAgreementQueueable.deriveTechPartnershipDateOnAccount(Records, existingRecords);
+  }
+
+  public override void onAfterDelete() {
+    SalesCaseLegalOpportunityQueueable.deriveCaseCount(Records);
   }
 
   public class Constructor implements fflib_SObjectDomain.IConstructable {

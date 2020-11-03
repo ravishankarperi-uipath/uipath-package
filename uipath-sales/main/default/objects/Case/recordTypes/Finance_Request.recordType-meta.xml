@@ -3,7 +3,6 @@
     <fullName>Finance_Request</fullName>
     <active>true</active>
     <businessProcess>Finance Request</businessProcess>
-    <compactLayoutAssignment>Case_Default_Compact_Layout</compactLayoutAssignment>
     <label>Finance Request</label>
     <picklistValues>
         <picklist>Origin</picklist>

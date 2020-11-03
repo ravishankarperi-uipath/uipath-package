@@ -3,7 +3,6 @@
     <fullName>Legal_Request</fullName>
     <active>true</active>
     <businessProcess>Legal Request</businessProcess>
-    <compactLayoutAssignment>Case_Default_Compact_Layout</compactLayoutAssignment>
     <label>Legal Request</label>
     <picklistValues>
         <picklist>Origin</picklist>
