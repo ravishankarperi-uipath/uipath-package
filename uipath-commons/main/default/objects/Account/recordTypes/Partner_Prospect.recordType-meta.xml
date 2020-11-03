@@ -496,6 +496,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Company_Rankings__c</picklist>
+        <values>
+            <fullName>Forbes 2000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fortune 1000 Rank</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Global Fortune 500</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Country__c</picklist>
         <values>
             <fullName>Afghanistan</fullName>
