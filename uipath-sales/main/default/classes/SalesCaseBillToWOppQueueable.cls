@@ -2,6 +2,7 @@
  */
 public with sharing class SalesCaseBillToWOppQueueable extends AbstractQueueable {
   private final List<SObject> cases;
+  private static Boolean isAlreadyRun = false;
 
   public SalesCaseBillToWOppQueueable(List<SObject> cases) {
     super('SalesCaseBillToWOppQueueable');
@@ -52,7 +53,10 @@ public with sharing class SalesCaseBillToWOppQueueable extends AbstractQueueable
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new SalesCaseBillToWOppQueueable(eligibleCases));
+      if (!isAlreadyRun) {
+        isAlreadyRun = true;
+        AbstractQueueable.enqueue(new SalesCaseBillToWOppQueueable(eligibleCases));
+      }
     }
   }
 
@@ -72,7 +76,10 @@ public with sharing class SalesCaseBillToWOppQueueable extends AbstractQueueable
       .asList();
 
     if (!eligibleCases.isEmpty()) {
-      AbstractQueueable.enqueue(new SalesCaseBillToWOppQueueable(eligibleCases));
+      if (!isAlreadyRun) {
+        isAlreadyRun = true;
+        AbstractQueueable.enqueue(new SalesCaseBillToWOppQueueable(eligibleCases));
+      }
     }
   }
 }
