@@ -14,23 +14,21 @@ public without sharing class SalesCaseLegalOpportunityQueueable extends Abstract
   private void updateCaseCount(List<Case> cases) {
     List<Id> opportunityIds = Collection.of(cases).pluckIds(Case.Opportunity__c);
     List<Opportunity> opportunitiesToUpdate = new List<Opportunity>();
-    for (
-      Opportunity opp : [
-        SELECT
-          Id,
-          (
-            SELECT Id
-            FROM Cases__r
-            WHERE
-              RecordTypeId IN (
-                :SalesCaseMetadata.UiPathJapanPartnerStandardRecordType,
-                :SalesCaseMetadata.LegalRequestRecordType
-              )
-          )
-        FROM Opportunity
-        WHERE CurrencyISOCode = 'JPY' AND Id IN :opportunityIds
-      ]
-    ) {
+    for (Opportunity opp : [
+      SELECT
+        Id,
+        (
+          SELECT Id
+          FROM Cases__r
+          WHERE
+            RecordTypeId IN (
+              :SalesCaseMetadata.UiPathJapanPartnerStandardRecordType,
+              :SalesCaseMetadata.LegalRequestRecordType
+            )
+        )
+      FROM Opportunity
+      WHERE CurrencyISOCode = 'JPY' AND Id IN :opportunityIds
+    ]) {
       Opportunity oppToUpdate = new Opportunity(Id = opp.Id);
       oppToUpdate.Number_of_Legal_Cases__c = opp.Cases__r.size();
       opportunitiesToUpdate.add(oppToUpdate);

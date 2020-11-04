@@ -49,5 +49,4 @@ public without sharing class SalesCaseMetadata {
     }
     set;
   }
-
 }
