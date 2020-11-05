@@ -181,7 +181,7 @@ private class AccountSetCompanyTierQueueableTest {
     Id prospectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Prospect').getRecordTypeId();
 
     Account parentAccEnterprise = new Account(
-      Name = 'Parent Account Enterprise',
+      Name = 'Enterprise Parent Account',
       RecordTypeId = prospectRT,
       Country__c = 'France',
       Industry = 'Energy',
@@ -192,9 +192,9 @@ private class AccountSetCompanyTierQueueableTest {
     insert parentAccEnterprise;
 
     Account parentAccVelocity = new Account(
-      Name = 'Parent Account Velocity',
+      Name = 'Velocity Parent Account',
       RecordTypeId = prospectRT,
-      Country__c = 'France',
+      Country__c = 'Italy',
       Industry = 'Energy',
       Classification__c = 'Velocity',
       Overwrite_Classification__c = true,
@@ -203,9 +203,9 @@ private class AccountSetCompanyTierQueueableTest {
     insert parentAccVelocity;
 
     Account parentAccSMB = new Account(
-      Name = 'Parent Account SMB',
+      Name = 'SMB Parent Account',
       RecordTypeId = prospectRT,
-      Country__c = 'France',
+      Country__c = 'Germany',
       Industry = 'Energy',
       Classification__c = 'SMB',
       Overwrite_Classification__c = true,
@@ -216,7 +216,7 @@ private class AccountSetCompanyTierQueueableTest {
     Account parentAccGold = new Account(
       Name = 'Parent Account Gold',
       RecordTypeId = prospectRT,
-      Country__c = 'France',
+      Country__c = 'Austria',
       Industry = 'Energy',
       Classification__c = 'Gold',
       Overwrite_Classification__c = true
