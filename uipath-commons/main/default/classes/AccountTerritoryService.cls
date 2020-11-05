@@ -164,7 +164,10 @@ public without sharing class AccountTerritoryService {
         Account.BillingCountryCode,
         Account.BillingStateCode,
         Account.BillingPostalCode,
-        Account.Industry
+        Account.Industry,
+        Account.Geo__c,
+        Account.Region__c,
+        Account.Area__c
       },
       accounts,
       existingAccounts
