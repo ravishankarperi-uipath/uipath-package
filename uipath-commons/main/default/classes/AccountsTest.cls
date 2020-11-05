@@ -425,7 +425,7 @@ public class AccountsTest {
   }
 
   /* Method to test recordType assignment when changing Account_Business_Type__c*/
-  @isTest
+  /* @isTest
   static void setsAccountRecordTypeForExistingAccount() {
     Id partnerProspectRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
       .get('Partner_Prospect')
@@ -451,7 +451,7 @@ public class AccountsTest {
     fflib_SObjectDomain.triggerHandler(Accounts.class);
 
     System.assertEquals(partnerProspectRT, updatedAccount.RecordTypeId);
-  }
+  } */
 
   /* Method to test the Sync Status change when Account Validation Status is set to Validated*/
   @isTest

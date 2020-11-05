@@ -40,7 +40,9 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountSetClassificationGlobalFunction.deriveRecordTypeOnUpdate(Records, existingRecords);
     AccountOverwriteRevenueEmpFunction.deriveRecordTypeOnUpdate(Records, existingRecords);
     AccountSetClassificationFunction.deriveClassificationFieldsOnUpdate(Records, existingRecords);
-    AccountSetRecordTypeFunction.deriveRecordTypeForExistingAccount(Records, existingRecords);
+    // 11/4/2020 Roxana A. deactivated run of AccountSetRecordTypeFunction on before update
+    // It was causing lead conversion problems, and unnecessarily updated account record type
+    //AccountSetRecordTypeFunction.deriveRecordTypeForExistingAccount(Records, existingRecords);
     AccountConvertAcademic.convertAcademicAccountOnUpdate(Records, existingRecords);
     AccountSetDataStewardFunction.deriveDataStewardUserOnUpdate(Records, existingRecords);
     AccountSetSyncStatusFunction.deriveSyncStatusForValidatedAccount(Records, existingRecords);
