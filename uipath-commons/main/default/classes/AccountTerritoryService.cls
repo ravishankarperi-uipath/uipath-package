@@ -167,7 +167,8 @@ public without sharing class AccountTerritoryService {
         Account.Industry,
         Account.Geo__c,
         Account.Region__c,
-        Account.Area__c
+        Account.Area__c,
+        Account.Ignore_Territory_Assignment__c
       },
       accounts,
       existingAccounts
