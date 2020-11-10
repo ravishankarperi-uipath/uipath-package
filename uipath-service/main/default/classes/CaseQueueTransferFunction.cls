@@ -58,7 +58,10 @@ public with sharing class CaseQueueTransferFunction implements SObjectToSObjectF
       }
       String ownerQueueName = queueMap.get(caseRecord.OwnerId).DeveloperName;
       caseRecord.RecordTypeId = queueToRecordTypeIdMap.get(ownerQueueName);
-      if (caseRecord.RecordTypeId == CaseMetadata.IncidentRecordType && caseRecord.Subscription_Code__c == 'TRIAL') {
+      if (
+        caseRecord.RecordTypeId == CaseMetadata.IncidentRecordType &&
+        (caseRecord.Subscription_Code__c == 'TRIAL' || caseRecord.Is_Free_Mailer__c)
+      ) {
         caseRecord.RecordTypeId = CaseMetadata.ServiceRequestRecordType;
       }
 

@@ -1290,6 +1290,36 @@
                 <label>X-Ray Integration</label>
             </value>
             <value>
+                <fullName>Provisioning &amp; Licensing</fullName>
+                <default>false</default>
+                <label>Provisioning &amp; Licensing</label>
+            </value>
+            <value>
+                <fullName>User Management</fullName>
+                <default>false</default>
+                <label>User Management</label>
+            </value>
+            <value>
+                <fullName>Entity Details &amp; Data Views</fullName>
+                <default>false</default>
+                <label>Entity Details &amp; Data Views</label>
+            </value>
+            <value>
+                <fullName>Entity Create/Edit/Delete</fullName>
+                <default>false</default>
+                <label>Entity Create/Edit/Delete</label>
+            </value>
+            <value>
+                <fullName>Field Create/Edit/Delete</fullName>
+                <default>false</default>
+                <label>Field Create/Edit/Delete</label>
+            </value>
+            <value>
+                <fullName>Studio Activities</fullName>
+                <default>false</default>
+                <label>Studio Activities</label>
+            </value>
+            <value>
                 <fullName>Orchestrator_Infra</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -1766,6 +1796,30 @@
         <valueSettings>
             <controllingFieldValue>Automation Ready Programs</controllingFieldValue>
             <valueName>Automation Ready Youth</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Data Service</controllingFieldValue>
+            <valueName>Provisioning &amp; Licensing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Data Service</controllingFieldValue>
+            <valueName>User Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Data Service</controllingFieldValue>
+            <valueName>Entity Details &amp; Data Views</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Data Service</controllingFieldValue>
+            <valueName>Entity Create/Edit/Delete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Data Service</controllingFieldValue>
+            <valueName>Field Create/Edit/Delete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Data Service</controllingFieldValue>
+            <valueName>Studio Activities</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Partner Training</controllingFieldValue>

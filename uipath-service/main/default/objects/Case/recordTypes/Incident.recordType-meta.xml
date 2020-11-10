@@ -994,6 +994,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Data Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Document Understanding</fullName>
             <default>false</default>
         </values>
@@ -1421,6 +1425,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Entity Create%2FEdit%2FDelete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Entity Details %26 Data Views</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Environment</fullName>
             <default>false</default>
         </values>
@@ -1466,6 +1478,10 @@
         </values>
         <values>
             <fullName>FTP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Field Create%2FEdit%2FDelete</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1729,6 +1745,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Provisioning %26 Licensing</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Publishing</fullName>
             <default>false</default>
         </values>
@@ -1877,6 +1897,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Studio Activities</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Studio Pro Architecture%2FDesigner</fullName>
             <default>false</default>
         </values>
@@ -2018,6 +2042,10 @@
         </values>
         <values>
             <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User Management</fullName>
             <default>false</default>
         </values>
         <values>

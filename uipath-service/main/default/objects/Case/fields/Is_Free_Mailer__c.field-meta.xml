@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Free_Mailer__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used for Academy and Connect Support cases to identify whether the email address is official or personal</description>
+    <externalId>false</externalId>
+    <label>Is Free Mailer?</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
