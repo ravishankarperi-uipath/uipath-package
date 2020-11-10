@@ -3111,6 +3111,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Premium_with_SLA__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Primary_Subsidiary__c</picklist>
         <values>
             <fullName>MagnaView BV</fullName>
