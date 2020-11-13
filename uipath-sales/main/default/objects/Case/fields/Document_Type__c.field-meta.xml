@@ -183,6 +183,11 @@
                 <label>Federal Resale Addendum</label>
             </value>
             <value>
+                <fullName>USN Certificate</fullName>
+                <default>false</default>
+                <label>USN Certificate</label>
+            </value>
+            <value>
                 <fullName>再販_MSSA（ウェブ約款）</fullName>
                 <default>false</default>
                 <label>再販_MSSA（ウェブ約款）</label>

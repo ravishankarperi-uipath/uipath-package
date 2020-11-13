@@ -2,6 +2,10 @@ public without sharing class SalesCaseMetadata {
   public static final String TECHNOLOGY_ALLIANCE_AGREEMENT = 'Technology Alliance Agreement';
   public static final String SIGNED = 'Signed';
   public static final String NOT_SIGNED = 'Not Signed';
+
+  public static final String NON_EDITABLE_STANDARD = 'UiPath Template Non-Editable (Standard)';
+  public static final String EDITABLE_STANDARD = 'UiPath Template Editable';
+
   //Cases Status
   public static final String PENDING_SALES_INFORMATION = 'Pending Sales Information';
   public static final String IN_PROGRESS = 'In Progress';
@@ -46,6 +50,60 @@ public without sharing class SalesCaseMetadata {
   public static Id FinanceRequestRecordType {
     get {
       return getRecordTypeId(FINANCE_REQUEST);
+    }
+    set;
+  }
+
+  public static Map<String, String> DocumentTypeMapping {
+    get {
+      if (DocumentTypeMapping == null) {
+        DocumentTypeMapping = new Map<String, String>();
+        for (Template_Mapping__mdt templateMapping : [
+          SELECT Id, IsActive__c, CongaTemplateId__c, DocumentType__c
+          FROM Template_Mapping__mdt
+          WHERE IsActive__c = true AND DocumentLanguage__c = null
+        ]) {
+          DocumentTypeMapping.put(templateMapping.DocumentType__c, templateMapping.CongaTemplateId__c);
+        }
+      }
+      return DocumentTypeMapping;
+    }
+    set;
+  }
+
+  public static Set<String> DocumentTypesWithLanguages {
+    get {
+      if (DocumentTypesWithLanguages == null) {
+        DocumentTypesWithLanguages = new Set<String>();
+        for (Template_Mapping__mdt templateMapping : [
+          SELECT Id, IsActive__c, CongaTemplateId__c, DocumentType__c
+          FROM Template_Mapping__mdt
+          WHERE IsActive__c = true AND DocumentLanguage__c != null
+        ]) {
+          DocumentTypesWithLanguages.add(templateMapping.DocumentType__c);
+        }
+      }
+      return DocumentTypesWithLanguages;
+    }
+    set;
+  }
+
+  public static Map<String, String> DocumentTypeLanguageMapping {
+    get {
+      if (DocumentTypeLanguageMapping == null) {
+        DocumentTypeLanguageMapping = new Map<String, String>();
+        for (Template_Mapping__mdt templateMapping : [
+          SELECT Id, IsActive__c, CongaTemplateId__c, DocumentType__c, DocumentLanguage__c
+          FROM Template_Mapping__mdt
+          WHERE IsActive__c = true AND DocumentLanguage__c != null
+        ]) {
+          DocumentTypeLanguageMapping.put(
+            templateMapping.DocumentLanguage__c + templateMapping.DocumentType__c,
+            templateMapping.CongaTemplateId__c
+          );
+        }
+      }
+      return DocumentTypeLanguageMapping;
     }
     set;
   }

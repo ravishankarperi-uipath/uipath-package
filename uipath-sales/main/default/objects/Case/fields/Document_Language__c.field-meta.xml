@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Document_Language__c</fullName>
+    <externalId>false</externalId>
+    <label>Document Language</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Document_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>English</fullName>
+                <default>false</default>
+                <label>English</label>
+            </value>
+            <value>
+                <fullName>日本語</fullName>
+                <default>false</default>
+                <label>日本語</label>
+            </value>
+            <value>
+                <fullName>French</fullName>
+                <default>false</default>
+                <label>French</label>
+            </value>
+            <value>
+                <fullName>Russian</fullName>
+                <default>false</default>
+                <label>Russian</label>
+            </value>
+            <value>
+                <fullName>Polish</fullName>
+                <default>false</default>
+                <label>Polish</label>
+            </value>
+            <value>
+                <fullName>Spanish</fullName>
+                <default>false</default>
+                <label>Spanish</label>
+            </value>
+            <value>
+                <fullName>Portuguese</fullName>
+                <default>false</default>
+                <label>Portuguese</label>
+            </value>
+            <value>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+                <label>Chinese</label>
+            </value>
+            <value>
+                <fullName>German</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>German</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Undertaking by Original Software Developer (for Software) pre Signed</controllingFieldValue>
+            <controllingFieldValue>BAA</controllingFieldValue>
+            <controllingFieldValue>Technology Alliance Agreement Addendum</controllingFieldValue>
+            <controllingFieldValue>Technology Alliance Deal Referral Addendum</controllingFieldValue>
+            <controllingFieldValue>License Compliance Notice</controllingFieldValue>
+            <controllingFieldValue>Partner Confirmation Letter</controllingFieldValue>
+            <controllingFieldValue>EAAP Agreement for GSI</controllingFieldValue>
+            <controllingFieldValue>EAAP Agreement</controllingFieldValue>
+            <controllingFieldValue>DPA</controllingFieldValue>
+            <controllingFieldValue>MPA Indirect Resale + BPO Agreement (CN)</controllingFieldValue>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <controllingFieldValue>MPA Indirect Resale Only Agreement (CN)</controllingFieldValue>
+            <controllingFieldValue>MSSA</controllingFieldValue>
+            <controllingFieldValue>NDA</controllingFieldValue>
+            <controllingFieldValue>Teaming Agreement</controllingFieldValue>
+            <controllingFieldValue>EULA Addendum</controllingFieldValue>
+            <controllingFieldValue>Trial Terms</controllingFieldValue>
+            <controllingFieldValue>Partner Resale + BPO Agreement</controllingFieldValue>
+            <controllingFieldValue>Partner Resale Only Agreement</controllingFieldValue>
+            <controllingFieldValue>Partner BPO Only Agreement</controllingFieldValue>
+            <controllingFieldValue>Academic Alliance Agreement</controllingFieldValue>
+            <controllingFieldValue>MPA Addendum</controllingFieldValue>
+            <controllingFieldValue>NDA EAP</controllingFieldValue>
+            <controllingFieldValue>Contract assignment to UiPath affiliate</controllingFieldValue>
+            <controllingFieldValue>Termination</controllingFieldValue>
+            <controllingFieldValue>Reverse Reseller</controllingFieldValue>
+            <controllingFieldValue>Technology Alliance Agreement</controllingFieldValue>
+            <controllingFieldValue>Affiliate Adoption Agreement</controllingFieldValue>
+            <valueName>English</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>トレーニングアソシエイト契約</controllingFieldValue>
+            <controllingFieldValue>テクノロジーアライアンス契約</controllingFieldValue>
+            <controllingFieldValue>NDA（相互秘密保持契約）</controllingFieldValue>
+            <controllingFieldValue>リセラー向けベネフィットライセンスLA</controllingFieldValue>
+            <controllingFieldValue>（旧）直販_LA（ウェブ約款）</controllingFieldValue>
+            <controllingFieldValue>（旧）再販_LA（ウェブ約款）</controllingFieldValue>
+            <controllingFieldValue>DPA</controllingFieldValue>
+            <controllingFieldValue>旧タイプLO</controllingFieldValue>
+            <controllingFieldValue>プロフェッショナル・サービス申込書(EULA約款版)</controllingFieldValue>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <controllingFieldValue>プロフェッショナル・サービス申込書(MSSA or EULA MA版)</controllingFieldValue>
+            <controllingFieldValue>NDA</controllingFieldValue>
+            <controllingFieldValue>End Customer General Terms</controllingFieldValue>
+            <controllingFieldValue>プロフェッショナルサービス注文書</controllingFieldValue>
+            <controllingFieldValue>再販_LA（ウェブ約款）</controllingFieldValue>
+            <controllingFieldValue>再販_LA（MA締結済み）</controllingFieldValue>
+            <controllingFieldValue>直販_LA（ウェブ約款）</controllingFieldValue>
+            <controllingFieldValue>直販_LA（MA締結済み）</controllingFieldValue>
+            <controllingFieldValue>プロフェッショナル・サービス申込書(MSSA約款版)</controllingFieldValue>
+            <controllingFieldValue>ライセンス契約覚書（Cloud製品用EULA変更覚書）</controllingFieldValue>
+            <controllingFieldValue>リセラー契約変更契約（二次サブリセラー追加用）</controllingFieldValue>
+            <controllingFieldValue>再販_MSSA（ウェブ約款）</controllingFieldValue>
+            <controllingFieldValue>直販_MSSA（ウェブ約款）</controllingFieldValue>
+            <controllingFieldValue>Global Deal版MSSA</controllingFieldValue>
+            <controllingFieldValue>Global Deal版EULA（MA）</controllingFieldValue>
+            <controllingFieldValue>BPO版EULA（MA）</controllingFieldValue>
+            <controllingFieldValue>BPO版LO</controllingFieldValue>
+            <controllingFieldValue>共通部品注文書</controllingFieldValue>
+            <controllingFieldValue>Technology Alliance Agreement</controllingFieldValue>
+            <controllingFieldValue>共通部品注文書（改変可）</controllingFieldValue>
+            <controllingFieldValue>リセラー契約</controllingFieldValue>
+            <controllingFieldValue>リセラー契約変更契約（サブリセラー追加）</controllingFieldValue>
+            <valueName>日本語</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>French</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Russian</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Polish</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Spanish</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Portuguese</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Chinese</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

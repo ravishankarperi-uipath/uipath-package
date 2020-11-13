@@ -20,6 +20,8 @@ public with sharing class SalesCases extends fflib_SObjectDomain implements ISal
     SalesCaseBillToWOOppFunction.updateBillToOnInsert(Records);
     SalesCaseBillToWOppQueueable.updateBillToOnInsert(Records);
     SalesCaseStandardTemplateStampFunction.setStandardTemplateStampOnInsert(Records);
+    SalesCaseDocumentTypeFunction.deriveTemplateId(Records);
+    SalesCaseDocumentLanguageFunction.deriveTemplateId(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
@@ -27,6 +29,8 @@ public with sharing class SalesCases extends fflib_SObjectDomain implements ISal
     SalesCaseBillToWOOppFunction.updateBillToOnUpdate(Records, existingRecords);
     SalesCaseBillToWOppQueueable.updateBillToOnUpdate(Records, existingRecords);
     SalesCaseStandardTemplateStampFunction.setStandardTemplateStampOnUpdate(Records, existingRecords);
+    SalesCaseDocumentTypeFunction.deriveTemplateId(Records, existingRecords);
+    SalesCaseDocumentLanguageFunction.deriveTemplateId(Records, existingRecords);
   }
 
   public override void onAfterInsert() {

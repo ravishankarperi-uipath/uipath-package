@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Document Type to Conga template Id mappings.</description>
+    <label>Template Mapping</label>
+    <pluralLabel>Template Mappings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
