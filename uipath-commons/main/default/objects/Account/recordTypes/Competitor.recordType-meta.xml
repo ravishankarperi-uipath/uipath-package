@@ -921,10 +921,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Macedonia the former Yugoslav Republic of</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Madagascar</fullName>
             <default>false</default>
         </values>
@@ -1050,6 +1046,10 @@
         </values>
         <values>
             <fullName>Norfolk Island</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>North Macedonia</fullName>
             <default>false</default>
         </values>
         <values>
