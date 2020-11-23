@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Mandatory_Fields_for_NS_Cust_Creation</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(
+    <errorConditionFormula>OR(AND(
 				OR(
                     ISBlank(Legal__c),
                     ISPICKVAL(Default_Payment_Terms__c, &quot;&quot;),
@@ -11,7 +11,20 @@
                      ISPICKVAL(Industry, &quot;&quot;)
 			 ),
             ISCHANGED(Validation_Status__c),
-            TEXT(Validation_Status__c) = &quot;Validated&quot;
-)</errorConditionFormula>
-    <errorMessage>One or more of the following fields is blank, please add valid value before sending the Account to NetSuite - Legal Entity Name, Primary Subsidiary, Channel Tier, Industry, Default Payment Terms</errorMessage>
+            TEXT(Validation_Status__c) = &quot;Validated&quot;,
+            TEXT(Geo__c) &lt;&gt; &quot;Japan&quot;
+),
+AND(
+				OR(
+                    ISBlank(Legal__c),
+                     ISPICKVAL(Channel_Tier__c, &quot;&quot;),
+            (NOT(ISPICKVAL(Default_Payment_Terms__c, &quot;&quot;))),
+                     ISPICKVAL(Industry, &quot;&quot;)
+			 ),
+            ISCHANGED(Validation_Status__c),
+            TEXT(Validation_Status__c) = &quot;Validated&quot;,
+            ISPICKVAL(Primary_Subsidiary__c, &quot;UiPath KK&quot;)
+))</errorConditionFormula>
+    <errorMessage>One or more of the following fields is blank, please add valid value before sending the Account to NetSuite - Legal Entity Name, Primary Subsidiary, Channel Tier, Industry, Default Payment Terms.
+Default payment term for Japan Accounts must be blank.</errorMessage>
 </ValidationRule>
