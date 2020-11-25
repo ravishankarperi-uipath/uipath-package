@@ -1290,9 +1290,9 @@
                 <label>X-Ray Integration</label>
             </value>
             <value>
-                <fullName>Provisioning &amp; Licensing</fullName>
+                <fullName>Server Setting</fullName>
                 <default>false</default>
-                <label>Provisioning &amp; Licensing</label>
+                <label>Server Setting</label>
             </value>
             <value>
                 <fullName>User Management</fullName>
@@ -1300,24 +1300,54 @@
                 <label>User Management</label>
             </value>
             <value>
-                <fullName>Entity Details &amp; Data Views</fullName>
+                <fullName>Release/Generate Cache</fullName>
                 <default>false</default>
-                <label>Entity Details &amp; Data Views</label>
+                <label>Release/Generate Cache</label>
             </value>
             <value>
-                <fullName>Entity Create/Edit/Delete</fullName>
+                <fullName>Connectors</fullName>
                 <default>false</default>
-                <label>Entity Create/Edit/Delete</label>
+                <label>Connectors</label>
             </value>
             <value>
-                <fullName>Field Create/Edit/Delete</fullName>
+                <fullName>Apps</fullName>
                 <default>false</default>
-                <label>Field Create/Edit/Delete</label>
+                <label>Apps</label>
             </value>
             <value>
-                <fullName>Studio Activities</fullName>
+                <fullName>Integration with Automation Hub</fullName>
                 <default>false</default>
-                <label>Studio Activities</label>
+                <label>Integration with Automation Hub</label>
+            </value>
+            <value>
+                <fullName>Integration with Test Manager</fullName>
+                <default>false</default>
+                <label>Integration with Test Manager</label>
+            </value>
+            <value>
+                <fullName>Diagram Editor</fullName>
+                <default>false</default>
+                <label>Diagram Editor</label>
+            </value>
+            <value>
+                <fullName>Action Editor</fullName>
+                <default>false</default>
+                <label>Action Editor</label>
+            </value>
+            <value>
+                <fullName>Capturing</fullName>
+                <default>false</default>
+                <label>Capturing</label>
+            </value>
+            <value>
+                <fullName>Export to Word</fullName>
+                <default>false</default>
+                <label>Export to Word</label>
+            </value>
+            <value>
+                <fullName>Export to Studio</fullName>
+                <default>false</default>
+                <label>Export to Studio</label>
             </value>
             <value>
                 <fullName>Orchestrator_Infra</fullName>
@@ -1373,16 +1403,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Task Capture</controllingFieldValue>
-            <valueName>PDD &amp; Templates</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>UiPath Go</controllingFieldValue>
-            <controllingFieldValue>Process Gold</controllingFieldValue>
-            <controllingFieldValue>Learning Platform Inquiries</controllingFieldValue>
-            <controllingFieldValue>Licensing</controllingFieldValue>
-            <valueName>NA</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>UiPath Go</controllingFieldValue>
             <controllingFieldValue>Process Gold</controllingFieldValue>
             <controllingFieldValue>Agent Desktop</controllingFieldValue>
@@ -1406,12 +1426,67 @@
             <valueName>Others</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Task Capture</controllingFieldValue>
+            <valueName>Integration with Automation Hub</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Task Capture</controllingFieldValue>
+            <valueName>Integration with Test Manager</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Task Capture</controllingFieldValue>
+            <valueName>Diagram Editor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Task Capture</controllingFieldValue>
+            <valueName>Action Editor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Task Capture</controllingFieldValue>
+            <valueName>Capturing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Task Capture</controllingFieldValue>
+            <valueName>Export to Word</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Task Capture</controllingFieldValue>
+            <valueName>Export to Studio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>UiPath Go</controllingFieldValue>
+            <controllingFieldValue>Learning Platform Inquiries</controllingFieldValue>
+            <controllingFieldValue>Licensing</controllingFieldValue>
+            <valueName>NA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Gold</controllingFieldValue>
             <controllingFieldValue>Agent Desktop</controllingFieldValue>
             <controllingFieldValue>Apps</controllingFieldValue>
             <controllingFieldValue>Studio X</controllingFieldValue>
             <controllingFieldValue>UiPath Test Suite</controllingFieldValue>
             <controllingFieldValue>Connect Enterprise</controllingFieldValue>
             <valueName>Licensing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Gold</controllingFieldValue>
+            <valueName>Server Setting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Gold</controllingFieldValue>
+            <valueName>User Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Gold</controllingFieldValue>
+            <valueName>Release/Generate Cache</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Gold</controllingFieldValue>
+            <valueName>Connectors</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Process Gold</controllingFieldValue>
+            <valueName>Apps</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Agent Desktop</controllingFieldValue>
@@ -1796,30 +1871,6 @@
         <valueSettings>
             <controllingFieldValue>Automation Ready Programs</controllingFieldValue>
             <valueName>Automation Ready Youth</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Data Service</controllingFieldValue>
-            <valueName>Provisioning &amp; Licensing</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Data Service</controllingFieldValue>
-            <valueName>User Management</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Data Service</controllingFieldValue>
-            <valueName>Entity Details &amp; Data Views</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Data Service</controllingFieldValue>
-            <valueName>Entity Create/Edit/Delete</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Data Service</controllingFieldValue>
-            <valueName>Field Create/Edit/Delete</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Data Service</controllingFieldValue>
-            <valueName>Studio Activities</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Partner Training</controllingFieldValue>

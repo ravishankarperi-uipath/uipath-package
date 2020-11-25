@@ -990,10 +990,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Data Service</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Document Understanding</fullName>
             <default>false</default>
         </values>
@@ -1141,6 +1137,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Action Editor</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Activation</fullName>
             <default>false</default>
         </values>
@@ -1253,6 +1253,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Apps</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Architectural Queries</fullName>
             <default>false</default>
         </values>
@@ -1309,6 +1313,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Capturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Catalogue</fullName>
             <default>false</default>
         </values>
@@ -1357,6 +1365,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Connectors</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contracts</fullName>
             <default>false</default>
         </values>
@@ -1394,6 +1406,10 @@
         </values>
         <values>
             <fullName>Database</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diagram Editor</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1445,14 +1461,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Entity Create%2FEdit%2FDelete</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Entity Details %26 Data Views</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Environment</fullName>
             <default>false</default>
         </values>
@@ -1489,6 +1497,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Export to Studio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Export to Word</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Extension%2EText Projection</fullName>
             <default>false</default>
         </values>
@@ -1498,10 +1514,6 @@
         </values>
         <values>
             <fullName>FTP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Field Create%2FEdit%2FDelete</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1570,6 +1582,14 @@
         </values>
         <values>
             <fullName>Installation%2FUpgrades</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integration with Automation Hub</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integration with Test Manager</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1765,10 +1785,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Provisioning %26 Licensing</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Publishing</fullName>
             <default>false</default>
         </values>
@@ -1802,6 +1818,10 @@
         </values>
         <values>
             <fullName>Registrations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Release%2FGenerate Cache</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1901,6 +1921,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Server Setting</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Service Issue</fullName>
             <default>false</default>
         </values>
@@ -1914,10 +1938,6 @@
         </values>
         <values>
             <fullName>Source Control</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Studio Activities</fullName>
             <default>false</default>
         </values>
         <values>

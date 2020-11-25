@@ -64,11 +64,6 @@
                 <label>Automation Hub</label>
             </value>
             <value>
-                <fullName>Data Service</fullName>
-                <default>false</default>
-                <label>Data Service</label>
-            </value>
-            <value>
                 <fullName>Document Understanding</fullName>
                 <default>false</default>
                 <label>Document Understanding</label>
