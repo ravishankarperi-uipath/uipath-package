@@ -1,6 +1,25 @@
 public without sharing class CaseMetadata {
   public static final String CSM_ROLE = 'CSM';
   public static final String CTM_ROLE = 'Case Team Member';
+  public static final String CASE_NUMBER = '##CASE_NUMBER##';
+
+  public static final STRING PENDING_FROM_PRODUCT = 'Pending from Product';
+  public static final STRING PENDING_FROM_INFRA = 'Pending from Infra/MCS';
+  public static final STRING PENDING_FROM_SR_TECH = 'Pending from Sr. Tech Support';
+  public static final STRING PENDING_FROM_TECH = 'Pending from Tech Support';
+
+  //Service Record Types
+  private static final String ACADEMY = 'Academy';
+  private static final String ENGAGEMENT_REQUEST = 'Engagement_Request';
+  private static final String INCIDENT = 'Incident';
+  private static final String JAPAN_ACADEMY = 'Japan_Academy';
+  private static final String JAPAN_ENGAGEMENT_REQUEST = 'Japan_Engagement_Request';
+  private static final String JAPAN_INCIDENT = 'Japan_Incident';
+  private static final String JAPAN_LICENSING = 'Japan_Licensing';
+  private static final String PROACTIVE_CARE = 'Proactive_Care';
+  private static final String SALES_OPERATION = 'Sales_Operation';
+  private static final String SERVICE_INCIDENT = 'Service_Incident';
+  private static final String SERVICE_REQUEST = 'Service_Request';
 
   public static Id getRecordTypeId(String developerName) {
     Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
@@ -9,76 +28,76 @@ public without sharing class CaseMetadata {
 
   public static Id EngagementRequestRecordType {
     get {
-      return getRecordTypeId('Engagement_Request');
+      return getRecordTypeId(ENGAGEMENT_REQUEST);
     }
     set;
   }
 
   public static Id JapanEngagementRequestRecordType {
     get {
-      return getRecordTypeId('Japan_Engagement_Request');
+      return getRecordTypeId(JAPAN_ENGAGEMENT_REQUEST);
     }
     set;
   }
 
   public static Id AcademyRecordType {
     get {
-      return getRecordTypeId('Academy');
+      return getRecordTypeId(ACADEMY);
     }
     set;
   }
 
   public static Id ProactiveCareRecordType {
     get {
-      return getRecordTypeId('Proactive_Care');
+      return getRecordTypeId(PROACTIVE_CARE);
     }
     set;
   }
   public static Id IncidentRecordType {
     get {
-      return getRecordTypeId('Incident');
+      return getRecordTypeId(INCIDENT);
     }
     set;
   }
 
   public static Id JapanAcademyRecordType {
     get {
-      return getRecordTypeId('Japan_Academy');
+      return getRecordTypeId(JAPAN_ACADEMY);
     }
     set;
   }
 
   public static Id JapanIncidentRecordType {
     get {
-      return getRecordTypeId('Japan_Incident');
+      return getRecordTypeId(JAPAN_INCIDENT);
     }
     set;
   }
 
   public static Id JapanLicensingRecordType {
     get {
-      return getRecordTypeId('Japan_Licensing');
+      return getRecordTypeId(JAPAN_LICENSING);
     }
     set;
   }
 
   public static Id SalesOperationRecordType {
     get {
-      return getRecordTypeId('Sales_Operation');
+      return getRecordTypeId(SALES_OPERATION);
     }
     set;
   }
 
   public static Id ServiceRequestRecordType {
     get {
-      return getRecordTypeId('Service_Request');
+      return getRecordTypeId(SERVICE_REQUEST);
     }
     set;
   }
 
   public static Id ServiceIncidentRecordType {
     get {
-      return getRecordTypeId('Service_Incident');
+      return getRecordTypeId(SERVICE_INCIDENT);
     }
     set;
   }
