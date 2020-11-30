@@ -54,7 +54,9 @@ IF(ISPICKVAL(Country__c ,&quot;Slovenia&quot;),TRUE,FALSE)
 ||
 IF(ISPICKVAL(Country__c ,&quot;Spain&quot;),TRUE,FALSE)
 ||
-IF(ISPICKVAL(Country__c ,&quot;Sweden&quot;),TRUE,FALSE)</formula>
+IF(ISPICKVAL(Country__c ,&quot;Sweden&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;United Kingdom&quot;),TRUE,FALSE)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>EU Countries</label>
     <trackHistory>false</trackHistory>
