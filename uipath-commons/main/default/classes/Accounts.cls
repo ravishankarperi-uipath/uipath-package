@@ -63,7 +63,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountDnBSyncQueueable.deriveDnBFieldsOnInsert(Records);
     AccountSharingLeadOwnerQueueable.shareAccount(Records);
     AccountSetCompanyTierQueueable.setUpCompanyTierInsert(Records);
-    AccountOrchestratorNotificationQueueable.publishNewAccountsToNetsuite(Records);
+    AccountIntegrationService.publishInsertsToNetsuite(Records);
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
@@ -78,7 +78,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountClassificationGlobalQueueable.setClassificationToGlobal(Records, existingRecords);
     AccountSharingLeadOwnerQueueable.shareAccountOnUpdate(Records, existingRecords);
     AccountSetCompanyTierQueueable.setUpCompanyTierUpdate(Records, existingRecords);
-    AccountOrchestratorNotificationQueueable.publishUpdatedAccountsToNetsuite(Records, existingRecords);
+    AccountIntegrationService.publishUpdatesToNetsuite(Records, existingRecords);
   }
 
   public override void onAfterDelete() {
