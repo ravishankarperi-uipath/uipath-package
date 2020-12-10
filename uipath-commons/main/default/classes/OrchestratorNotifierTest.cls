@@ -26,6 +26,7 @@ public class OrchestratorNotifierTest {
     );
 
     System.assertEquals(2, notifier.numberOfRecordsPublished, 'There should be 2 records published');
+    System.assertEquals('add', notifier.getParams().get('action'), 'Should have set a add action');
   }
 
   @IsTest
@@ -52,6 +53,8 @@ public class OrchestratorNotifierTest {
       'There should only be 1 record publishing attempt'
     );
     System.assertEquals(2, notifier.numberOfRecordsPublished, 'There should be 2 records published');
+
+    System.assertEquals('add', notifier.getParams().get('action'), 'Should have set a add action');
   }
 
   @IsTest
@@ -81,6 +84,8 @@ public class OrchestratorNotifierTest {
       'There should be a failed attempt in the logs'
     );
     System.assertEquals(1, notifier.numberOfRecordsPublished, 'There should be 1 record published');
+
+    System.assertEquals('update', notifier.getParams().get('action'), 'Should have set a update actiomn');
   }
 
   @IsTest

@@ -37,6 +37,9 @@ public class OrchestratorNotifierQueueable extends AbstractQueueable {
   //To be used in contexts where the notifier instance is not acccessible but you still want to force a sync publish
   public static Boolean forceSyncMode = false;
 
+  //Custom name value pairs
+  private final Map<String, String> customParams;
+
   /**
    * Constructor is private.
    * Can only be constructed with the builder to ensure correct setup
@@ -50,6 +53,7 @@ public class OrchestratorNotifierQueueable extends AbstractQueueable {
     this.fieldsToCheckForChange = builder.fieldsToCheckForChange;
     this.filterConditions = builder.filterConditions;
     this.syncMode = builder.syncMode;
+    this.customParams = builder.customParams;
   }
 
   /**
@@ -69,6 +73,7 @@ public class OrchestratorNotifierQueueable extends AbstractQueueable {
       UiPath.QueueNotificationRequest recordQueueReq = new UiPath.QueueNotificationRequest();
       recordQueueReq.templateName = this.templateName;
       recordQueueReq.recordId = recordId;
+      recordQueueReq.validCustomValues = this.customParams;
       queueRequestsLst.add(recordQueueReq);
     }
 
@@ -91,14 +96,17 @@ public class OrchestratorNotifierQueueable extends AbstractQueueable {
       }
     }
 
-    //Enqueue job if sync mode is not enabled
-    if (!eligibleRecords.isEmpty() && syncMode == false) {
-      AbstractQueueable.enqueue(this);
-    }
+    if (!eligibleRecords.isEmpty()) {
+      this.customParams.put('action', 'add');
+      //Enqueue job if sync mode is not enabled
+      if (syncMode == false) {
+        AbstractQueueable.enqueue(this);
+      }
 
-    //Publish immediately if sync mode is enabled
-    if (!eligibleRecords.isEmpty() && (syncMode == true || forceSyncMode == true)) {
-      notifyOrchestrator();
+      //Publish immediately if sync mode is enabled
+      if ((syncMode == true || forceSyncMode == true)) {
+        notifyOrchestrator();
+      }
     }
   }
 
@@ -127,15 +135,22 @@ public class OrchestratorNotifierQueueable extends AbstractQueueable {
       }
     }
 
-    //Enqueue job if sync mode is not enabled
-    if (!eligibleRecords.isEmpty() && syncMode == false) {
-      AbstractQueueable.enqueue(this);
+    if (!eligibleRecords.isEmpty()) {
+      //set Action. This can be used by the Robot to branch logic on new/update/delete
+      this.customParams.put('action', 'update');
+      //Enqueue job if sync mode is not enabled
+      if (syncMode == false) {
+        AbstractQueueable.enqueue(this);
+      }
+      //Publish immediately if sync mode is enabled
+      if ((syncMode == true || forceSyncMode == true)) {
+        notifyOrchestrator();
+      }
     }
+  }
 
-    //Publish immediately if sync mode is enabled
-    if (!eligibleRecords.isEmpty() && (syncMode == true || forceSyncMode == true)) {
-      notifyOrchestrator();
-    }
+  public Map<String, String> getParams() {
+    return this.customParams;
   }
 
   /**
@@ -148,6 +163,7 @@ public class OrchestratorNotifierQueueable extends AbstractQueueable {
     private Set<SObjectField> fieldsToCheckForChange;
     private SObjectPredicate filterConditions;
     private Boolean syncMode = false;
+    private Map<String, String> customParams = new Map<String, String>();
 
     /**
      * No Args constructor is disallowed so make private
@@ -206,6 +222,31 @@ public class OrchestratorNotifierQueueable extends AbstractQueueable {
      */
     public Builder withOldRecords(Map<Id, SObject> oldRecords) {
       this.oldRecords = oldRecords;
+      return this;
+    }
+
+    /**
+     * @param customParams name value pairs sent to orchestrator
+     *
+     * @return wip builder instance
+     */
+    public Builder withCustomParams(Map<String, String> customParams) {
+      if (customParams != null) {
+        this.customParams = customParams;
+      }
+      return this;
+    }
+
+    /**
+     * @param paramName Name of Custom param
+     * @param value  Value
+     *
+     * @return
+     */
+    public Builder withParam(String paramName, String value) {
+      if (paramName != null) {
+        this.customParams.put(paramName, value);
+      }
       return this;
     }
 
