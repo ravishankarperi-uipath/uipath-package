@@ -73,7 +73,12 @@ public class OrchestratorNotifierQueueable extends AbstractQueueable {
       UiPath.QueueNotificationRequest recordQueueReq = new UiPath.QueueNotificationRequest();
       recordQueueReq.templateName = this.templateName;
       recordQueueReq.recordId = recordId;
-      recordQueueReq.validCustomValues = this.customParams;
+      if (this.customParams.size() == 1) {
+        recordQueueReq.customVar1Name = new List<String>(this.customParams.keySet()).get(0);
+        recordQueueReq.customVar1Value = this.customParams.get(recordQueueReq.customVar1Name);
+      } else {
+        recordQueueReq.validCustomValues = this.customParams;
+      }
       queueRequestsLst.add(recordQueueReq);
     }
 
