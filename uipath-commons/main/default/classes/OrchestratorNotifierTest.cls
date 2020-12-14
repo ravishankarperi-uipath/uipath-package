@@ -26,7 +26,7 @@ public class OrchestratorNotifierTest {
     );
 
     System.assertEquals(2, notifier.numberOfRecordsPublished, 'There should be 2 records published');
-    System.assertEquals('add', notifier.getParams().get('action'), 'Should have set a add action');
+    System.assertEquals('add', notifier.getParams().get('Action'), 'Should have set a add action');
   }
 
   @IsTest
@@ -54,7 +54,7 @@ public class OrchestratorNotifierTest {
     );
     System.assertEquals(2, notifier.numberOfRecordsPublished, 'There should be 2 records published');
 
-    System.assertEquals('add', notifier.getParams().get('action'), 'Should have set a add action');
+    System.assertEquals('add', notifier.getParams().get('Action'), 'Should have set a add action');
   }
 
   @IsTest
@@ -85,7 +85,7 @@ public class OrchestratorNotifierTest {
     );
     System.assertEquals(1, notifier.numberOfRecordsPublished, 'There should be 1 record published');
 
-    System.assertEquals('update', notifier.getParams().get('action'), 'Should have set a update actiomn');
+    System.assertEquals('update', notifier.getParams().get('Action'), 'Should have set a update actiomn');
   }
 
   @IsTest

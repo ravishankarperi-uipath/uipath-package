@@ -102,7 +102,7 @@ public class OrchestratorNotifierQueueable extends AbstractQueueable {
     }
 
     if (!eligibleRecords.isEmpty()) {
-      this.customParams.put('action', 'add');
+      this.customParams.put('Action', 'add');
       //Enqueue job if sync mode is not enabled
       if (syncMode == false) {
         AbstractQueueable.enqueue(this);
@@ -142,7 +142,7 @@ public class OrchestratorNotifierQueueable extends AbstractQueueable {
 
     if (!eligibleRecords.isEmpty()) {
       //set Action. This can be used by the Robot to branch logic on new/update/delete
-      this.customParams.put('action', 'update');
+      this.customParams.put('Action', 'update');
       //Enqueue job if sync mode is not enabled
       if (syncMode == false) {
         AbstractQueueable.enqueue(this);
