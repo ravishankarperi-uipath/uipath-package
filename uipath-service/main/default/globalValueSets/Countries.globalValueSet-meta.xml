@@ -111,11 +111,6 @@
         <label>Bolivia</label>
     </customValue>
     <customValue>
-        <fullName>Bosnia Herzegovina</fullName>
-        <default>false</default>
-        <label>Bosnia Herzegovina</label>
-    </customValue>
-    <customValue>
         <fullName>Botswana</fullName>
         <default>false</default>
         <label>Botswana</label>
@@ -409,6 +404,11 @@
         <fullName>Ireland</fullName>
         <default>false</default>
         <label>Ireland</label>
+    </customValue>
+    <customValue>
+        <fullName>Ireland {Republic}</fullName>
+        <default>false</default>
+        <label>Ireland {Republic}</label>
     </customValue>
     <customValue>
         <fullName>Israel</fullName>
@@ -1006,10 +1006,37 @@
         <label>Zimbabwe</label>
     </customValue>
     <customValue>
-        <fullName>Ireland {Republic}</fullName>
+        <fullName>Puerto Rico</fullName>
         <default>false</default>
-        <label>Ireland {Republic}</label>
+        <label>Puerto Rico</label>
+    </customValue>
+    <customValue>
+        <fullName>Brunei Darussalam</fullName>
+        <default>false</default>
+        <label>Brunei Darussalam</label>
+    </customValue>
+    <customValue>
+        <fullName>Bosnia and Herzegovina</fullName>
+        <default>false</default>
+        <label>Bosnia and Herzegovina</label>
+    </customValue>
+    <customValue>
+        <fullName>Moldova Republic of</fullName>
+        <default>false</default>
+        <label>Moldova Republic of</label>
+    </customValue>
+    <customValue>
+        <fullName>Bosnia Herzegovina</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Bosnia Herzegovina</label>
+    </customValue>
+    <customValue>
+        <fullName>Moldova, Republic of</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Moldova, Republic of</label>
     </customValue>
     <masterLabel>Countries</masterLabel>
-    <sorted>true</sorted>
+    <sorted>false</sorted>
 </GlobalValueSet>

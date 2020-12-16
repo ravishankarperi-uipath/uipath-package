@@ -103,7 +103,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bosnia Herzegovina</fullName>
+            <fullName>Bosnia and Herzegovina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -116,6 +116,10 @@
         </values>
         <values>
             <fullName>Brunei</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brunei Darussalam</fullName>
             <default>false</default>
         </values>
         <values>
@@ -495,7 +499,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Moldova</fullName>
+            <fullName>Moldova Republic of</fullName>
             <default>false</default>
         </values>
         <values>
@@ -596,6 +600,10 @@
         </values>
         <values>
             <fullName>Portugal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Puerto Rico</fullName>
             <default>false</default>
         </values>
         <values>

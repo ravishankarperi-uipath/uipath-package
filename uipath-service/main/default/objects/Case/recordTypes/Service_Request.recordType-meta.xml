@@ -48,6 +48,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Aland Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Albania</fullName>
             <default>false</default>
         </values>
@@ -128,7 +132,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bosnia Herzegovina</fullName>
+            <fullName>Bosnia and Herzegovina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -361,6 +365,10 @@
         </values>
         <values>
             <fullName>Iraq</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ireland</fullName>
             <default>false</default>
         </values>
         <values>
@@ -661,6 +669,10 @@
         </values>
         <values>
             <fullName>Serbia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Serbia and Montenegro</fullName>
             <default>false</default>
         </values>
         <values>

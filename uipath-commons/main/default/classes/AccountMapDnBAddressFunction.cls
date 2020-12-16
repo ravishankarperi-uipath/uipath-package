@@ -85,7 +85,7 @@ public without sharing class AccountMapDnBAddressFunction implements SObjectToSO
       country == 'United Kingdom' ||
       country == 'Ireland' ||
       country == 'India' ||
-      country == 'Italy' ||
+      /* country == 'Italy' || */
       country == 'Mexico';
   }
 

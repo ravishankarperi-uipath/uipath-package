@@ -42,6 +42,9 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
         acc.SIC4_Code_1__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1__c;
 
         acc.SIC4_Code_1_Description__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SIC4Code1Description__c;
+
+        acc.Fortune_1000_Rank__c = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__Fortune1000Rank__c;
+        acc.Website = acc.DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__WebAddress__c;
       }
       update accounts;
     }
@@ -65,7 +68,9 @@ public with sharing class AccountDnBSyncQueueable extends AbstractQueueable {
         Legal__c,
         DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__BusinessName__c,
         DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__SalesVolumeUSDollars__c,
-        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__EmployeeCountTotal__c
+        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__EmployeeCountTotal__c,
+        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__Fortune1000Rank__c,
+        DNBoptimizer__DnBCompanyRecord__r.DNBoptimizer__WebAddress__c
       FROM Account
       WHERE Id IN :accounts AND DNBoptimizer__DnBCompanyRecord__c != null
     ];
