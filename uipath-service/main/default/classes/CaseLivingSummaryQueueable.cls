@@ -21,6 +21,7 @@ public with sharing class CaseLivingSummaryQueueable extends AbstractQueueable {
   }
 
   public void createLivingSummaryHistory(List<Case> cases, Map<Id, SObject> existingCases) {
+    // DUPLICATE check : can be removed : TODO
     Set<SObjectField> caseFields = new Set<SObjectField>{
       Case.Problem__c,
       Case.Cause__c,
@@ -53,6 +54,22 @@ public with sharing class CaseLivingSummaryQueueable extends AbstractQueueable {
           insert livingSummaryHistoryList;
         }
       }
+    }
+  }
+
+  public static void processLivingSummaryHistory(List<Case> cases, Map<Id, SObject> existingCases) {
+    Set<SObjectField> caseFields = new Set<SObjectField>{
+      Case.Problem__c,
+      Case.Cause__c,
+      Case.Validation__c,
+      Case.Solution__c,
+      Case.Solution_Instructions__c
+    };
+    SObjectPredicate hasChanged = new HasRecordChanged(caseFields, cases, existingCases);
+    List<Case> eligibleCases = (List<Case>) Collection.of(cases).filter(hasChanged).asList();
+
+    if (!eligibleCases.isEmpty()) {
+      AbstractQueueable.enqueue(new CaseLivingSummaryQueueable(eligibleCases, existingCases));
     }
   }
 }

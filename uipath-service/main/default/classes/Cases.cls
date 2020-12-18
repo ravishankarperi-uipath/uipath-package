@@ -45,7 +45,9 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
-    AbstractQueueable.enqueue(new CaseLivingSummaryQueueable(Records, existingRecords));
+    // QUICK FIX
+    //AbstractQueueable.enqueue(new CaseLivingSummaryQueueable(Records, existingRecords));
+    CaseLivingSummaryQueueable.processLivingSummaryHistory(Records, existingRecords);
     CaseTeamMemberQueueable.addDefaultTeamMembers(Records);
     CaseCreateChildCaseQueueable.createChildCases(Records, existingRecords);
     CaseMilestoneQueueable.setCompletionDateOnMilestones(Records, existingRecords);
