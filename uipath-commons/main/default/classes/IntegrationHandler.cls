@@ -162,4 +162,25 @@ public without sharing class IntegrationHandler {
     //call the SF Connector integration service
     Uipath.QueueNotificationService.createNotifications(queueRequestsLst);
   }
+
+  public static void callUipathSFConnectorTemplateWithCustomVar(
+    Set<Id> recordsToSyncSet,
+    String connectorTemplateName,
+    String fieldName,
+    String fieldValue
+  ) {
+    List<UiPath.QueueNotificationRequest> queueRequestsLst = new List<UiPath.QueueNotificationRequest>();
+
+    for (Id recId : recordsToSyncSet) {
+      UiPath.QueueNotificationRequest recordQueueReq = new UiPath.QueueNotificationRequest();
+      recordQueueReq.templateName = connectorTemplateName;
+      recordQueueReq.recordId = recId;
+      recordQueueReq.customVar1Name = fieldName;
+      recordQueueReq.customVar1Value = fieldValue;
+      queueRequestsLst.add(recordQueueReq);
+    }
+
+    //call the SF Connector integration service
+    Uipath.QueueNotificationService.createNotifications(queueRequestsLst);
+  }
 }

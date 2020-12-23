@@ -11,8 +11,8 @@
       "path": "uipath-commons",
       "package": "uipath-commons",
       "default": true,
-      "versionName": "Version 1.0.3",
-      "versionNumber": "1.0.3.NEXT",
+      "versionName": "Version 1.0.4",
+      "versionNumber": "1.0.4.NEXT",
       "dependencies": [
         {
           "package": "uipath-core",
@@ -45,7 +45,7 @@
         },
         {
           "package": "uipath-commons",
-          "versionNumber": "1.0.3.LATEST"
+          "versionNumber": "1.0.4.LATEST"
         }
       ]
     },
@@ -68,7 +68,7 @@
         },
         {
           "package": "uipath-commons",
-          "versionNumber": "1.0.3.LATEST"
+          "versionNumber": "1.0.4.LATEST"
         }
       ]
     }
