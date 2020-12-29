@@ -24,6 +24,7 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CaseCopyFromParentERFunction.deriveChildCaseFromParent(Records);
     CaseSetAutocloseStepsFunction.deriveAutocloseSteps(Records);
     CaseCaptureFRFunction.deriveCaptureFR(Records);
+    CaseCaptureTimeForStatusChangeFunction.deriveCaptureTimeForStatusChangeOnInsert(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
@@ -36,6 +37,7 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CasePendingReasonChangeFunction.derivePendingTimestamps(Records, existingRecords);
     CaseCopyFromParentERFunction.deriveChildCaseFromParent(Records, existingRecords);
     CaseFirstResponseOnERQueueable.setChildCaseUpdateNotification(Records, existingRecords);
+    CaseCaptureTimeForStatusChangeFunction.deriveCaptureTimeForStatusChangeOnUpdate(Records, existingRecords);
   }
 
   public override void onAfterInsert() {
