@@ -192,6 +192,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>BPO_Discount_Tier__c</picklist>
+        <values>
+            <fullName>15%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>25%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>35%25</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Business_Partner_Contract__c</picklist>
         <values>
             <fullName>BPO</fullName>
@@ -2750,6 +2765,33 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Legal_Compliance_Status__c</picklist>
+        <values>
+            <fullName>Clean</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Excepted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Restricted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suspect</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>License_Agreement_Status__c</picklist>
         <values>
             <fullName>External%2C provided</fullName>
@@ -3022,6 +3064,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Premium_with_SLA__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Primary_Subsidiary__c</picklist>
         <values>
             <fullName>UiPath INC</fullName>
@@ -3239,6 +3292,25 @@
         </values>
         <values>
             <fullName>SAMER</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Resale_Discount_Tier__c</picklist>
+        <values>
+            <fullName>0%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>15%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>25%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>35%25</fullName>
             <default>false</default>
         </values>
     </picklistValues>
