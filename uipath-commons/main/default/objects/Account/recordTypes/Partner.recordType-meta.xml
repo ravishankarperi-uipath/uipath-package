@@ -324,6 +324,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Distributor</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Silver %28Tier 2%29 - Japan Only</fullName>
             <default>false</default>
         </values>
