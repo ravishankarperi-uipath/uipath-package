@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>What_is_your_request_related_to__c</fullName>
-    <deprecated>false</deprecated>
+    <fullName>Comm_Value__c</fullName>
     <externalId>false</externalId>
-    <label>What is your request related to?</label>
+    <label>Comm Value</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Academic Alliance</fullName>
+                <fullName>FR Sent</fullName>
                 <default>false</default>
-                <label>Academic Alliance</label>
+                <label>FR Sent</label>
             </value>
             <value>
-                <fullName>Academy</fullName>
+                <fullName>Comm Violated</fullName>
                 <default>false</default>
-                <label>Academy</label>
+                <label>Comm Violated</label>
             </value>
             <value>
-                <fullName>Academy Incident</fullName>
+                <fullName>Comm Completed</fullName>
                 <default>false</default>
-                <label>Academy Incident</label>
+                <label>Comm Completed</label>
             </value>
             <value>
-                <fullName>Certification</fullName>
+                <fullName>Comm Success</fullName>
                 <default>false</default>
-                <label>Certification</label>
+                <label>Comm Success</label>
             </value>
             <value>
-                <fullName>Partner Training</fullName>
+                <fullName>FR Voilated</fullName>
                 <default>false</default>
-                <label>Partner Training</label>
+                <label>FR Voilated</label>
             </value>
             <value>
-                <fullName>Other</fullName>
+                <fullName>Comm Running</fullName>
                 <default>false</default>
-                <label>Other</label>
+                <label>Comm Running</label>
             </value>
         </valueSetDefinition>
     </valueSet>

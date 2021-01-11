@@ -21,6 +21,8 @@ public without sharing class CaseMetadata {
   private static final String SERVICE_INCIDENT = 'Service_Incident';
   private static final String SERVICE_REQUEST = 'Service_Request';
 
+  public static Boolean isAutoCloseBatch = false;
+
   public static Id getRecordTypeId(String developerName) {
     Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
     return recordTypeId;

@@ -25,6 +25,7 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CaseSetAutocloseStepsFunction.deriveAutocloseSteps(Records);
     CaseCaptureFRFunction.deriveCaptureFR(Records);
     CaseCaptureTimeForStatusChangeFunction.deriveCaptureTimeForStatusChangeOnInsert(Records);
+    CaseUpdateCommValueFunction.deriveCommValue(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
@@ -38,6 +39,10 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
     CaseCopyFromParentERFunction.deriveChildCaseFromParent(Records, existingRecords);
     CaseFirstResponseOnERQueueable.setChildCaseUpdateNotification(Records, existingRecords);
     CaseCaptureTimeForStatusChangeFunction.deriveCaptureTimeForStatusChangeOnUpdate(Records, existingRecords);
+    CaseEmailReceivedFunction.deriveCustomerContact(Records, existingRecords);
+    CaseEmailSentFunction.deriveCustomerContact(Records, existingRecords);
+    CaseReOpenFunction.deriveCaseReOpen(Records, existingRecords);
+    CaseUpdateCommValueFunction.deriveCommValue(Records);
   }
 
   public override void onAfterInsert() {
@@ -49,6 +54,9 @@ public with sharing class Cases extends fflib_SObjectDomain implements ICases {
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     // QUICK FIX
     //AbstractQueueable.enqueue(new CaseLivingSummaryQueueable(Records, existingRecords));
+    if (CaseMetadata.isAutoCloseBatch) {
+      return;
+    }
     CaseLivingSummaryQueueable.processLivingSummaryHistory(Records, existingRecords);
     CaseTeamMemberQueueable.addDefaultTeamMembers(Records);
     CaseCreateChildCaseQueueable.createChildCases(Records, existingRecords);

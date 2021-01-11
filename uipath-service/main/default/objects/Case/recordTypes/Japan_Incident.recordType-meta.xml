@@ -2157,14 +2157,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Feedback</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Learning Platform Issues</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
