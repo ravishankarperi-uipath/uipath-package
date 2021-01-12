@@ -74,10 +74,25 @@ public with sharing class LicensingApiDispatch {
    * TODO refactor code into Queueable
    * Sync data using licensing Api
    */
-  public static void licensingApiSyncAccountOnUpdate(List<Account> records) {
-    for (Account acc : (List<Account>) records) {
-      if ((Limits.getLimitFutureCalls() - Limits.getFutureCalls()) > 0) {
-        LicensingApiDispatch.onAccountUpdate(acc.Account_ID_Long__c);
+  public static void licensingApiSyncAccountOnUpdate(List<Account> records, Map<Id, SObject> oldMap) {
+    for (Account acc : records) {
+      Account oldAcc = (Account) oldMap.get(acc.Id);
+      if (
+        acc.Account_ID_Long__c != oldAcc.Account_ID_Long__c ||
+        acc.Name != oldAcc.Name ||
+        acc.ParentId != oldAcc.ParentId ||
+        acc.Type != oldAcc.Type ||
+        acc.Industry != oldAcc.Industry ||
+        acc.BillingCountryCode != oldAcc.BillingCountryCode ||
+        acc.Geo__c != oldAcc.Geo__c ||
+        acc.Area__c != oldAcc.Area__c ||
+        acc.Region__c != oldAcc.Region__c ||
+        acc.Vertical__c != oldAcc.Vertical__c ||
+        acc.recordTypeId != oldAcc.recordTypeId
+      ) {
+        if ((Limits.getLimitFutureCalls() - Limits.getFutureCalls()) > 0) {
+          LicensingApiDispatch.onAccountUpdate(acc.Account_ID_Long__c);
+        }
       }
     }
   }

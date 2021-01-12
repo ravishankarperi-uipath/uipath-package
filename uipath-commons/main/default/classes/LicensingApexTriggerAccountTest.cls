@@ -6,11 +6,14 @@ public class LicensingApexTriggerAccountTest {
   @isTest
   static void testUpdate() {
     Account o = newAccount();
+    o.Name = 'Licensing Api Test';
     Test.setMock(HttpCalloutMock.class, new LicensingMockHttpResponse());
 
     LicensingApi.lastEndpoints.clear();
     Test.startTest();
     insert o;
+
+    o.Name = 'Licensing Api Test Update';
     update o;
     Test.stopTest();
 

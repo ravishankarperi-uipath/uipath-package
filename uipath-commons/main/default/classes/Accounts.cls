@@ -75,7 +75,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountSetGAMEmailQueueable.setGAMEmailOnGlobalAccounts(Records, existingRecords);
     AccountDnBSyncQueueable.deriveDnBFieldsOnUpdate(Records, existingRecords);
     ZinfiSyncContactWithAccount.zinfiSyncAccountOnUpdate(existingRecords);
-    LicensingApiDispatch.licensingApiSyncAccountOnUpdate(Records);
+    LicensingApiDispatch.licensingApiSyncAccountOnUpdate(Records, existingRecords);
     AccountClassificationGlobalQueueable.setClassificationToGlobal(Records, existingRecords);
     AccountSharingLeadOwnerQueueable.shareAccountOnUpdate(Records, existingRecords);
     AccountSetCompanyTierQueueable.setUpCompanyTierUpdate(Records, existingRecords);
