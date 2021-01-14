@@ -64,7 +64,7 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountSharingLeadOwnerQueueable.shareAccount(Records);
     AccountSetCompanyTierQueueable.setUpCompanyTierInsert(Records);
     AccountIntegrationService.publishInsertsToNetsuite(Records);
-    AccRdcOrchestratorNotificationQueueable.publishInsertsToRDC(Records);
+    AccountIntegrationService.publishInsertsToRDC(Records);
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {

@@ -33,4 +33,26 @@ public with sharing class AccountIntegrationService {
       .endSetup()
       .publishUpdatedRecords();
   }
+
+  /**
+   * Sends new Accounts to RDC for processing
+   * @param records inserted objects
+   * @author Roxana Anghel
+   */
+
+  public static void publishInsertsToRDC(List<SObject> records) {
+    OrchestratorNotifierQueueable.beginSetup(records, CommonsConstants.ACC_RDC_UIPATH_SF_CONNECTOR_TEMPLATE)
+      .withFilterConditions(
+        Match.field(Account.RecordTypeId)
+          .isIn(
+            new Set<String>{
+              AccountMetadata.partnerProspectRecordType,
+              AccountMetadata.partnerRecordType,
+              AccountMetadata.technologyAllianceRecordType
+            }
+          )
+      )
+      .endSetup()
+      .publishNewRecords();
+  }
 }

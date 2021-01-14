@@ -20,7 +20,7 @@ public class CommonsConstants {
 
   public static final String ACC_UIPATH_SF_CONNECTOR_TEMPLATE = 'Account Integration';
   public static final String ADD_UIPATH_SF_CONNECTOR_TEMPLATE = 'Address Integration';
-  public static final String ACC_RDC_UIPATH_SF_CONNECTOR_TEMPLATE = 'COE5101_Account_CustomersScreening';
+  public static final String ACC_RDC_UIPATH_SF_CONNECTOR_TEMPLATE = 'COE5101_Acc_CustomersScreening';
 
   /********** Address Constants ***********/
   // Address Record Types
