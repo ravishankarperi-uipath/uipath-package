@@ -4,6 +4,12 @@ public class CommonsConstants {
   public static final String ACC_VALIDATION_STATUS_PENDING = 'Pending';
   public static final String ACC_VALIDATION_STATUS_READY_FOR_REVIEW = 'Ready For Review';
 
+  //Account Record Types
+  public static final String ACCOUNT_RECORD_TYPE_1 = 'Customer';
+  public static final String ACCOUNT_RECORD_TYPE_2 = 'Partner';
+  public static final String ACCOUNT_RECORD_TYPE_3 = 'Partner Prospect';
+  public static final String ACCOUNT_RECORD_TYPE_4 = 'Technology Alliance';
+
   //Account Sync Status
   public static final String ACC_SYNC_STATUS_VALID = 'Valid';
   public static final String ACC_SYNC_STATUS_NOT_VALID = 'Not Valid';
@@ -11,6 +17,10 @@ public class CommonsConstants {
   public static final String ACC_SYNC_STATUS_SYNCED = 'Synced';
   public static final String ACC_SYNC_STATUS_ERROR = 'Error';
   public static final String ACC_SYNC_STATUS_DO_NOT_SYNC = 'Do Not Sync';
+
+  public static final String ACC_UIPATH_SF_CONNECTOR_TEMPLATE = 'Account Integration';
+  public static final String ADD_UIPATH_SF_CONNECTOR_TEMPLATE = 'Address Integration';
+  public static final String ACC_RDC_UIPATH_SF_CONNECTOR_TEMPLATE = 'COE5101_Acc_CustomersScreening';
 
   /********** Address Constants ***********/
   // Address Record Types
@@ -21,7 +31,7 @@ public class CommonsConstants {
   public static final String ADD_VALIDATION_STATUS_PENDING = 'Pending';
   public static final String ADD_VALIDATION_STATUS_READ_YFOR_REVIEW = 'Ready For Review';
 
-  //Address Sync Status
+  // Address Sync Status
   public static final String ADD_SYNC_STATUS_VALID = 'Valid';
   public static final String ADD_SYNC_STATUS_NOT_VALID = 'Not Valid';
   public static final String ADD_SYNC_STATUS_PENDING = 'Pending';

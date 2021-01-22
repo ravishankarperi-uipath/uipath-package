@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Industry_needs_to_be_specified</fullName>
-        <active>true</active>
-        <description>Requires Industry specification to drive Industry and Vertical reporting</description>
-        <errorConditionFormula>ISBLANK(TEXT(Industry))</errorConditionFormula>
-        <errorDisplayField>Industry</errorDisplayField>
-        <errorMessage>You need to specify an Industry when saving an account. Select the appropriate Industry from the drop down menu.</errorMessage>
-    </ValidationRule>
+    <fullName>Industry_needs_to_be_specified</fullName>
+    <active>true</active>
+    <description>Requires Industry specification to drive Industry and Vertical reporting</description>
+    <errorConditionFormula>ISBLANK(TEXT(Industry))</errorConditionFormula>
+    <errorDisplayField>Industry</errorDisplayField>
+    <errorMessage>You need to specify an Industry when saving an account. Select the appropriate Industry from the drop down menu.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>India_White_Space_Uipath_Program</fullName>
+    <active>true</active>
+    <description>India White Space Program value for the Uipath Program field can only be selected if Account Geo  is India</description>
+    <errorConditionFormula>AND(
+ISCHANGED(  UiPath_Program__c ),
+TEXT(UiPath_Program__c) = &#39;India White Space Program&#39;,
+  NOT( ISPICKVAL(Geo__c,  &#39;India&#39;))
+)</errorConditionFormula>
+    <errorMessage>India White Space Program can be selected only if Account Geo is India</errorMessage>
+</ValidationRule>

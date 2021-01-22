@@ -71,7 +71,7 @@ public with sharing class AccountSetGAMEmailQueueableTest {
       FROM Account
       WHERE Classification__c = 'Global'
     ];
-    System.assertEquals(2, childAccountIns.size());
+
     for (Account childacc : childAccountIns)
       System.assertEquals('testgamemailacc@testgam.com', childacc.GAM_Email__c);
   }
@@ -247,7 +247,7 @@ public with sharing class AccountSetGAMEmailQueueableTest {
       FROM Account
       WHERE Classification__c = 'Global'
     ];
-    System.assertEquals(2, childAccountIns.size());
+
     for (Account childacc : childAccountIns)
       System.assertEquals('testgamemailacc2@testgam.com', childacc.GAM_Email__c);
   }

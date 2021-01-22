@@ -13,12 +13,14 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
 
   public Accounts(List<Account> sObjectList) {
     super(sObjectList);
+    this.Configuration.disableTriggerCRUDSecurity();
   }
 
   public override void onBeforeInsert() {
     AccountJapanConvertedLeadFunction.setGeoFields(Records);
     AccountBillingStateFromStateFunction.copyStateToBillingState(Records);
     AccountMapDnBAddressFunction.deriveAddressFieldsOnInsert(Records);
+    AccountSetClassificationGlobalFunction.deriveRecordTypeOnInsert(Records);
     AccountSetClassificationFunction.deriveClassificationFieldsOnInsert(Records);
     AccountSetSubsidiaryFunction.deriveSubsidiaryOnInsert(Records);
     AccountSetRecordTypeFunction.deriveRecordTypeOnInsert(Records);
@@ -29,20 +31,23 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AccountSetStateFunction.deriveStateOnInsert(Records);
     AccountTerritoryService.deriveTerritoryFields(Records);
     AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnInsert(Records);
-    AccountSetClassificationGlobalFunction.deriveRecordTypeOnInsert(Records);
+    AccountCopyCountryFunction.copyCountryOnInsert(Records);
   }
 
   public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
+    AccountSetStateFunction.deriveStateOnUpdate(Records, existingRecords);
     AccountMapDnBAddressFunction.deriveAddressFieldsOnUpdate(Records, existingRecords);
+    AccountSetClassificationGlobalFunction.deriveRecordTypeOnUpdate(Records, existingRecords);
+    AccountOverwriteRevenueEmpFunction.deriveRecordTypeOnUpdate(Records, existingRecords);
     AccountSetClassificationFunction.deriveClassificationFieldsOnUpdate(Records, existingRecords);
-    AccountSetRecordTypeFunction.deriveRecordTypeForExistingAccount(Records, existingRecords);
+    // 11/4/2020 Roxana A. deactivated run of AccountSetRecordTypeFunction on before update
+    // It was causing lead conversion problems, and unnecessarily updated account record type
+    //AccountSetRecordTypeFunction.deriveRecordTypeForExistingAccount(Records, existingRecords);
     AccountConvertAcademic.convertAcademicAccountOnUpdate(Records, existingRecords);
     AccountSetDataStewardFunction.deriveDataStewardUserOnUpdate(Records, existingRecords);
     AccountSetSyncStatusFunction.deriveSyncStatusForValidatedAccount(Records, existingRecords);
-    AccountSetStateFunction.deriveStateOnUpdate(Records, existingRecords);
     AccountTerritoryService.deriveTerritoryFieldsOnUpdate(Records, existingRecords);
     AccountSetRegionSpecificTierFunction.deriveRegionSpecificFieldsOnUpdate(Records, existingRecords);
-
     //Leave this as the last method in the execution of onBeforeUpdate
     IntegrationHandler.callAccountSyncStatusIntegrationProcess(Records, existingRecords);
   }
@@ -57,18 +62,24 @@ public with sharing class Accounts extends fflib_SObjectDomain implements IAccou
     AbstractQueueable.enqueue(new AccountSetGAMEmailQueueable(Records, null));
     AccountDnBSyncQueueable.deriveDnBFieldsOnInsert(Records);
     AccountSharingLeadOwnerQueueable.shareAccount(Records);
+    AccountSetCompanyTierQueueable.setUpCompanyTierInsert(Records);
+    AccountIntegrationService.publishInsertsToNetsuite(Records);
+    AccountIntegrationService.publishInsertsToRDC(Records);
   }
 
   public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
     AccountSharingRollupQueueable.shareAccountWithParentOwner(Records, existingRecords);
+    AccountDNBPrimaryAddressQueueable.updateAddressForDnBCompany(Records, existingRecords);
     AccountDNBCompanyQueueable.createAddressForDnBCompany(Records, existingRecords);
     AccountSetContactOwnerQueueable.setContactOwnerToAccountOwner(Records, existingRecords);
     AccountSetGAMEmailQueueable.setGAMEmailOnGlobalAccounts(Records, existingRecords);
     AccountDnBSyncQueueable.deriveDnBFieldsOnUpdate(Records, existingRecords);
     ZinfiSyncContactWithAccount.zinfiSyncAccountOnUpdate(existingRecords);
-    LicensingApiDispatch.licensingApiSyncAccountOnUpdate(Records);
+    LicensingApiDispatch.licensingApiSyncAccountOnUpdate(Records, existingRecords);
     AccountClassificationGlobalQueueable.setClassificationToGlobal(Records, existingRecords);
     AccountSharingLeadOwnerQueueable.shareAccountOnUpdate(Records, existingRecords);
+    AccountSetCompanyTierQueueable.setUpCompanyTierUpdate(Records, existingRecords);
+    AccountIntegrationService.publishUpdatesToNetsuite(Records, existingRecords);
   }
 
   public override void onAfterDelete() {

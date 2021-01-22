@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsClosed_NotifyOnMail__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This flag is used in reopen notification process builder to avoid looping</description>
+    <externalId>false</externalId>
+    <label>IsClosed_NotifyOnMail</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

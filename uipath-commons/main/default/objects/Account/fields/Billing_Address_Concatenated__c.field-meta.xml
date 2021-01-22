@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Billing_Address_Concatenated__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(LEN(BillingStreet) &gt; 0, BillingStreet, &quot;&quot;) &amp; 
+    <fullName>Billing_Address_Concatenated__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(LEN(BillingStreet) &gt; 0, BillingStreet, &quot;&quot;) &amp; 
 IF(LEN(BillingCity) &gt; 0, &quot;, &quot; &amp; BillingCity, &quot;&quot;) &amp;
 IF(LEN(BillingState) &gt; 0, &quot;, &quot; &amp; BillingState, &quot;&quot;) &amp;
 IF(LEN(BillingPostalCode) &gt; 0, &quot;, &quot; &amp; BillingPostalCode, &quot;&quot;) &amp; 
 IF(LEN(BillingCountry) &gt; 0, &quot;, &quot; &amp; BillingCountry, &quot;&quot;)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Billing Address Concatenated</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </CustomField>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Billing Address Concatenated</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

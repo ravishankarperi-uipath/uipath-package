@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Active_Customer__c</fullName>
-        <externalId>false</externalId>
-        <formula>if(Has_Active_Opportunities__c = true,true,
+    <fullName>Active_Customer__c</fullName>
+    <externalId>false</externalId>
+    <formula>if(Has_Active_Opportunities__c = true,true,
    if( CSM__c &lt;&gt; null,true,false) )</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Active Customer</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </CustomField>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Active Customer</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

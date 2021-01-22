@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opp_C_SetPrimaryContactSchedulable__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <inlineHelpText>Should &apos;SetPrimaryContactSchedulable&apos; process CPQ opportunities</inlineHelpText>
+    <label>Opp-C-SetPrimaryContactSchedulable</label>
+    <type>Checkbox</type>
+</CustomField>

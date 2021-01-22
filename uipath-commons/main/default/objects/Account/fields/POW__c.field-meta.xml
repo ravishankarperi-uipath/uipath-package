@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>POW__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Used in order to mark if an account has a related partner contact</description>
-        <externalId>false</externalId>
-        <inlineHelpText>This Account has a partner contact associated to it.</inlineHelpText>
-        <label>POW</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </CustomField>
+    <fullName>POW__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used in order to mark if an account has a related partner contact</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This Account has a partner contact associated to it.</inlineHelpText>
+    <label>POW</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

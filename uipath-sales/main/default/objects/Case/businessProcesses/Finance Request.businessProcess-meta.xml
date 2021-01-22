@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Finance Request</fullName>
+    <isActive>true</isActive>
+    <values>
+        <fullName>Closed Cancelled</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Deal Hub Review</fullName>
+        <default>true</default>
+    </values>
+    <values>
+        <fullName>Finance Review</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Invoiced and batch delivery</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Invoiced and delivered</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Master Data Review</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>On Hold Finance</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Pending 3rd party</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Pending Invoice Date</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Pending Legal Review</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Pending Process</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Pending Sales Information</fullName>
+        <default>false</default>
+    </values>
+</BusinessProcess>

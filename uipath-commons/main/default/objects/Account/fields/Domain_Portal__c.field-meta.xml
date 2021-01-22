@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Domain_Portal__c</fullName>
-        <externalId>false</externalId>
-        <inlineHelpText>This domain field is used for partner portal access verification. Separate multiple domains with comma.</inlineHelpText>
-        <label>Domain (Portal)</label>
-        <length>150</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </CustomField>
+    <fullName>Domain_Portal__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>This domain field is used for partner portal access verification. Separate multiple domains with comma.</inlineHelpText>
+    <label>Domain (Portal)</label>
+    <length>150</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

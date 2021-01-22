@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Date_Joined_Program__c</fullName>
-        <description
-  >Date the business partner signed UiPath&#39;s partner program agreement</description>
-        <externalId>false</externalId>
-        <inlineHelpText
-  >Date the business partner signed UiPath&#39;s partner program agreement</inlineHelpText>
-        <label>Date Joined Program</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        
+    <fullName>Date_Joined_Program__c</fullName>
+    <description>Date the business partner signed UiPath&#39;s partner program agreement</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Date the business partner signed UiPath&#39;s partner program agreement</inlineHelpText>
+    <label>Date Joined Program</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    
         <type>Date</type>
-    </CustomField>
+</CustomField>

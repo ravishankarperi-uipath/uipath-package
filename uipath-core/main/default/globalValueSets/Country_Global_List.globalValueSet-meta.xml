@@ -656,11 +656,6 @@
         <label>Macau</label>
     </customValue>
     <customValue>
-        <fullName>Macedonia the former Yugoslav Republic of</fullName>
-        <default>false</default>
-        <label>Macedonia, the former Yugoslav Republic of</label>
-    </customValue>
-    <customValue>
         <fullName>Madagascar</fullName>
         <default>false</default>
         <label>Madagascar</label>
@@ -809,6 +804,11 @@
         <fullName>Norfolk Island</fullName>
         <default>false</default>
         <label>Norfolk Island</label>
+    </customValue>
+    <customValue>
+        <fullName>North Macedonia</fullName>
+        <default>false</default>
+        <label>North Macedonia</label>
     </customValue>
     <customValue>
         <fullName>Norway</fullName>
@@ -1010,6 +1010,7 @@
         <default>false</default>
         <label>Somalia</label>
     </customValue>
+    
     <customValue>
         <fullName>South Africa</fullName>
         <default>false</default>
@@ -1274,6 +1275,12 @@
         <fullName>Macao</fullName>
         <default>false</default>
         <label>Macao</label>
+    </customValue>
+    <customValue>
+        <fullName>Macedonia the former Yugoslav Republic of</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Macedonia, the former Yugoslav Republic of</label>
     </customValue>
     <customValue>
         <fullName>Netherlands Antilles (Deprecated)</fullName>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Related_To__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <label>Product Component</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Academic Alliance</fullName>
+                <default>false</default>
+                <label>Academic Alliance</label>
+            </value>
+            <value>
+                <fullName>Academy</fullName>
+                <default>false</default>
+                <label>Academy</label>
+            </value>
+            <value>
+                <fullName>Agent Desktop</fullName>
+                <default>false</default>
+                <label>UiPath Assistant</label>
+            </value>
+            <value>
+                <fullName>AI Fabric</fullName>
+                <default>false</default>
+                <label>AI Fabric</label>
+            </value>
+            <value>
+                <fullName>Apps</fullName>
+                <default>false</default>
+                <label>Action Center</label>
+            </value>
+            <value>
+                <fullName>Attended browser embedding SDK</fullName>
+                <default>false</default>
+                <label>Attended browser embedding SDK</label>
+            </value>
+            <value>
+                <fullName>Automation Ready Programs</fullName>
+                <default>false</default>
+                <label>Automation Ready Programs</label>
+            </value>
+            <value>
+                <fullName>Certification</fullName>
+                <default>false</default>
+                <label>Certification</label>
+            </value>
+            <value>
+                <fullName>Cloud Platform</fullName>
+                <default>false</default>
+                <label>Automation Cloud</label>
+            </value>
+            <value>
+                <fullName>Connect Enterprise</fullName>
+                <default>false</default>
+                <label>Automation Hub</label>
+            </value>
+            <value>
+                <fullName>Document Understanding</fullName>
+                <default>false</default>
+                <label>Document Understanding</label>
+            </value>
+            <value>
+                <fullName>Feedback</fullName>
+                <default>false</default>
+                <label>Feedback</label>
+            </value>
+            <value>
+                <fullName>IT Automation</fullName>
+                <default>false</default>
+                <label>IT Automation</label>
+            </value>
+            <value>
+                <fullName>Learning Platform Inquiries</fullName>
+                <default>false</default>
+                <label>Learning Platform Inquiries</label>
+            </value>
+            <value>
+                <fullName>Licensing</fullName>
+                <default>false</default>
+                <label>License</label>
+            </value>
+            <value>
+                <fullName>Orchestrator</fullName>
+                <default>false</default>
+                <label>Orchestrator</label>
+            </value>
+            <value>
+                <fullName>Orchestrator Mobile</fullName>
+                <default>false</default>
+                <label>Orchestrator Mobile</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Partner Product</fullName>
+                <default>false</default>
+                <label>Partner Product</label>
+            </value>
+            <value>
+                <fullName>Partner Training</fullName>
+                <default>false</default>
+                <label>Partner Training</label>
+            </value>
+            <value>
+                <fullName>Portal</fullName>
+                <default>false</default>
+                <label>Portal</label>
+            </value>
+            <value>
+                <fullName>Process Gold</fullName>
+                <default>false</default>
+                <label>Process Mining</label>
+            </value>
+            <value>
+                <fullName>Robot</fullName>
+                <default>false</default>
+                <label>Robot</label>
+            </value>
+            <value>
+                <fullName>Studio</fullName>
+                <default>false</default>
+                <label>Studio</label>
+            </value>
+            <value>
+                <fullName>Studio X</fullName>
+                <default>false</default>
+                <label>Studio X</label>
+            </value>
+            <value>
+                <fullName>Task Capture</fullName>
+                <default>false</default>
+                <label>Task Capture</label>
+            </value>
+            <value>
+                <fullName>Task Mining</fullName>
+                <default>false</default>
+                <label>Task Mining</label>
+            </value>
+            <value>
+                <fullName>Test Manager</fullName>
+                <default>false</default>
+                <label>Test Manager</label>
+            </value>
+            <value>
+                <fullName>UiPath Go</fullName>
+                <default>false</default>
+                <label>UiPath Connect</label>
+            </value>
+            <value>
+                <fullName>UiPath Insights</fullName>
+                <default>false</default>
+                <label>UiPath Insights</label>
+            </value>
+            <value>
+                <fullName>UiPath Test Suite</fullName>
+                <default>false</default>
+                <label>UiPath Test Suite</label>
+            </value>
+            <value>
+                <fullName>Upgrades and License Migration</fullName>
+                <default>false</default>
+                <label>Upgrades and License Migration</label>
+            </value>
+            <value>
+                <fullName>AI Capabilities</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>AI Capabilities</label>
+            </value>
+            <value>
+                <fullName>Activation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Activation</label>
+            </value>
+            <value>
+                <fullName>Activities</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Activities</label>
+            </value>
+            <value>
+                <fullName>Kibana</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Kibana</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Others</label>
+            </value>
+            <value>
+                <fullName>Reporting</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Reporting</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

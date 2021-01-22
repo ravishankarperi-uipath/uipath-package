@@ -42,4 +42,4 @@ jobs:
 
       # Run Apex tests in CI Sandbox
       - name: "Run Apex tests"
-        run: "sfdx force:apex:test:run -l RunLocalTests -u ci -c -r human -d ./tests/apex -w 120 --codecoverage"
+        run: "sfdx force:apex:test:run -l RunLocalTests -u ci -c -r human -d ./tests/apex -w 240 --codecoverage"

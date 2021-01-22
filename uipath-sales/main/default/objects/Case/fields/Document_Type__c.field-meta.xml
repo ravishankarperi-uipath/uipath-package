@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Document_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Document Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Academic Alliance Agreement</fullName>
+                <default>false</default>
+                <label>Academic Alliance Agreement</label>
+            </value>
+            <value>
+                <fullName>Affiliate Adoption Agreement</fullName>
+                <default>false</default>
+                <label>Affiliate Adoption Agreement</label>
+            </value>
+            <value>
+                <fullName>BAA</fullName>
+                <default>false</default>
+                <label>BAA</label>
+            </value>
+            <value>
+                <fullName>DPA</fullName>
+                <default>false</default>
+                <label>DPA</label>
+            </value>
+            <value>
+                <fullName>End Customer General Terms</fullName>
+                <default>false</default>
+                <label>End Customer General Terms</label>
+            </value>
+            <value>
+                <fullName>EULA Addendum</fullName>
+                <default>false</default>
+                <label>EULA Addendum</label>
+            </value>
+            <value>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+                <label>Invoice</label>
+            </value>
+            <value>
+                <fullName>Legal Inquiry</fullName>
+                <default>false</default>
+                <label>Legal Inquiry</label>
+            </value>
+            <value>
+                <fullName>MPA Addendum</fullName>
+                <default>false</default>
+                <label>MPA Addendum</label>
+            </value>
+            <value>
+                <fullName>MPA Indirect Resale + BPO Agreement (CN)</fullName>
+                <default>false</default>
+                <label>MPA Indirect Resale + BPO Agreement (CN)</label>
+            </value>
+            <value>
+                <fullName>MPA Indirect Resale Only Agreement (CN)</fullName>
+                <default>false</default>
+                <label>MPA Indirect Resale Only Agreement (CN)</label>
+            </value>
+            <value>
+                <fullName>MSSA</fullName>
+                <default>false</default>
+                <label>MSSA</label>
+            </value>
+            <value>
+                <fullName>NDA</fullName>
+                <default>false</default>
+                <label>NDA</label>
+            </value>
+            <value>
+                <fullName>NDA EAP</fullName>
+                <default>false</default>
+                <label>NDA EAP</label>
+            </value>
+            <value>
+                <fullName>Partner BPO Only Agreement</fullName>
+                <default>false</default>
+                <label>Partner BPO Only Agreement</label>
+            </value>
+            <value>
+                <fullName>Partner Resale + BPO Agreement</fullName>
+                <default>false</default>
+                <label>Partner Resale + BPO Agreement</label>
+            </value>
+            <value>
+                <fullName>Partner Resale Only Agreement</fullName>
+                <default>false</default>
+                <label>Partner Resale Only Agreement</label>
+            </value>
+            <value>
+                <fullName>Software License Broker</fullName>
+                <default>false</default>
+                <label>Software License Broker</label>
+            </value>
+            <value>
+                <fullName>Teaming Agreement</fullName>
+                <default>false</default>
+                <label>Teaming Agreement</label>
+            </value>
+            <value>
+                <fullName>Technology Alliance Agreement</fullName>
+                <default>false</default>
+                <label>Technology Alliance Agreement</label>
+            </value>
+            <value>
+                <fullName>Trial Terms</fullName>
+                <default>false</default>
+                <label>Trial Terms</label>
+            </value>
+            <value>
+                <fullName>Undertaking by Original Software Developer (for Software) pre Signed</fullName>
+                <default>false</default>
+                <label>Undertaking by Original Software Developer (for Software) pre Signed</label>
+            </value>
+            <value>
+                <fullName>USN Addendum</fullName>
+                <default>false</default>
+                <label>USN Addendum</label>
+            </value>
+            <value>
+                <fullName>Contract assignment to UiPath affiliate</fullName>
+                <default>false</default>
+                <label>Contract assignment to UiPath affiliate</label>
+            </value>
+            <value>
+                <fullName>Termination</fullName>
+                <default>false</default>
+                <label>Termination</label>
+            </value>
+            <value>
+                <fullName>Reverse Reseller</fullName>
+                <default>false</default>
+                <label>Reverse Reseller</label>
+            </value>
+            <value>
+                <fullName>Technology Alliance Agreement Addendum</fullName>
+                <default>false</default>
+                <label>Technology Alliance Agreement Addendum</label>
+            </value>
+            <value>
+                <fullName>Technology Alliance Deal Referral Addendum</fullName>
+                <default>false</default>
+                <label>Technology Alliance Deal Referral Addendum</label>
+            </value>
+            <value>
+                <fullName>License Compliance Notice</fullName>
+                <default>false</default>
+                <label>License Compliance Notice</label>
+            </value>
+            <value>
+                <fullName>Partner Confirmation Letter</fullName>
+                <default>false</default>
+                <label>Partner Confirmation Letter</label>
+            </value>
+            <value>
+                <fullName>EAAP Agreement for GSI</fullName>
+                <default>false</default>
+                <label>EAAP Agreement for GSI</label>
+            </value>
+            <value>
+                <fullName>EAAP Agreement</fullName>
+                <default>false</default>
+                <label>EAAP Agreement</label>
+            </value>
+            <value>
+                <fullName>Federal System Integrator Partner Agreement</fullName>
+                <default>false</default>
+                <label>Federal System Integrator Partner Agreement</label>
+            </value>
+            <value>
+                <fullName>Federal Resale Addendum</fullName>
+                <default>false</default>
+                <label>Federal Resale Addendum</label>
+            </value>
+            <value>
+                <fullName>USN Certificate</fullName>
+                <default>false</default>
+                <label>USN Certificate</label>
+            </value>
+            <value>
+                <fullName>再販_MSSA（ウェブ約款）</fullName>
+                <default>false</default>
+                <label>再販_MSSA（ウェブ約款）</label>
+            </value>
+            <value>
+                <fullName>再販_LA（ウェブ約款）</fullName>
+                <default>false</default>
+                <label>再販_LA（ウェブ約款）</label>
+            </value>
+            <value>
+                <fullName>再販_LA（MA締結済み）</fullName>
+                <default>false</default>
+                <label>再販_LA（MA締結済み）</label>
+            </value>
+            <value>
+                <fullName>直販_MSSA（ウェブ約款）</fullName>
+                <default>false</default>
+                <label>直販_MSSA（ウェブ約款）</label>
+            </value>
+            <value>
+                <fullName>直販_LA（MA締結済み）</fullName>
+                <default>false</default>
+                <label>直販_LA（MA締結済み）</label>
+            </value>
+            <value>
+                <fullName>直販_LA（ウェブ約款）</fullName>
+                <default>false</default>
+                <label>直販_LA（ウェブ約款）</label>
+            </value>
+            <value>
+                <fullName>Global Deal版MSSA</fullName>
+                <default>false</default>
+                <label>Global Deal版MSSA</label>
+            </value>
+            <value>
+                <fullName>Global Deal版EULA（MA）</fullName>
+                <default>false</default>
+                <label>Global Deal版EULA（MA）</label>
+            </value>
+            <value>
+                <fullName>BPO版MSSA</fullName>
+                <default>false</default>
+                <label>BPO版MSSA</label>
+            </value>
+            <value>
+                <fullName>BPO版EULA（MA）</fullName>
+                <default>false</default>
+                <label>BPO版EULA（MA）</label>
+            </value>
+            <value>
+                <fullName>BPO版LO</fullName>
+                <default>false</default>
+                <label>BPO版LO</label>
+            </value>
+            <value>
+                <fullName>ライセンス契約覚書（Cloud製品用EULA変更覚書）</fullName>
+                <default>false</default>
+                <label>ライセンス契約覚書（Cloud製品用EULA変更覚書）</label>
+            </value>
+            <value>
+                <fullName>（旧）再販_LA（ウェブ約款）</fullName>
+                <default>false</default>
+                <label>（旧）再販_LA（ウェブ約款）</label>
+            </value>
+            <value>
+                <fullName>（旧）直販_LA（ウェブ約款）</fullName>
+                <default>false</default>
+                <label>（旧）直販_LA（ウェブ約款）</label>
+            </value>
+            <value>
+                <fullName>旧タイプLO</fullName>
+                <default>false</default>
+                <label>旧タイプLO</label>
+            </value>
+            <value>
+                <fullName>リセラー向けベネフィットライセンスLA</fullName>
+                <default>false</default>
+                <label>リセラー向けベネフィットライセンスLA</label>
+            </value>
+            <value>
+                <fullName>リセラー契約</fullName>
+                <default>false</default>
+                <label>リセラー契約</label>
+            </value>
+            <value>
+                <fullName>リセラー契約変更契約（サブリセラー追加）</fullName>
+                <default>false</default>
+                <label>リセラー契約変更契約（サブリセラー追加）</label>
+            </value>
+            <value>
+                <fullName>UiPath製品の販売に関する必要情報提供の申込書（サブリセラー）</fullName>
+                <default>false</default>
+                <label>UiPath製品の販売に関する必要情報提供の申込書（サブリセラー）</label>
+            </value>
+            <value>
+                <fullName>秘密保持誓約書への同意書（サブリセラー）</fullName>
+                <default>false</default>
+                <label>秘密保持誓約書への同意書（サブリセラー）</label>
+            </value>
+            <value>
+                <fullName>リセラー契約変更契約（二次サブリセラー追加用）</fullName>
+                <default>false</default>
+                <label>リセラー契約変更契約（二次サブリセラー追加用）</label>
+            </value>
+            <value>
+                <fullName>リセラー契約終了合意書</fullName>
+                <default>false</default>
+                <label>リセラー契約終了合意書</label>
+            </value>
+            <value>
+                <fullName>UiPathサービスパートナー契約</fullName>
+                <default>false</default>
+                <label>UiPathサービスパートナー契約</label>
+            </value>
+            <value>
+                <fullName>テクノロジーアライアンス契約</fullName>
+                <default>false</default>
+                <label>テクノロジーアライアンス契約</label>
+            </value>
+            <value>
+                <fullName>共通部品注文書</fullName>
+                <default>false</default>
+                <label>共通部品注文書</label>
+            </value>
+            <value>
+                <fullName>共通部品注文書（改変可）</fullName>
+                <default>false</default>
+                <label>共通部品注文書（改変可）</label>
+            </value>
+            <value>
+                <fullName>NDA（相互秘密保持契約）</fullName>
+                <default>false</default>
+                <label>NDA（相互秘密保持契約）</label>
+            </value>
+            <value>
+                <fullName>トレーニングアソシエイト契約</fullName>
+                <default>false</default>
+                <label>トレーニングアソシエイト契約</label>
+            </value>
+            <value>
+                <fullName>プロフェッショナルサービス注文書</fullName>
+                <default>false</default>
+                <label>プロフェッショナルサービス注文書</label>
+            </value>
+            <value>
+                <fullName>プロフェッショナル・サービス申込書(EULA約款版)</fullName>
+                <default>false</default>
+                <label>プロフェッショナル・サービス申込書(EULA約款版)</label>
+            </value>
+            <value>
+                <fullName>プロフェッショナル・サービス申込書(MSSA or EULA MA版)</fullName>
+                <default>false</default>
+                <label>プロフェッショナル・サービス申込書(MSSA or EULA MA版)</label>
+            </value>
+            <value>
+                <fullName>プロフェッショナル・サービス申込書(MSSA約款版)</fullName>
+                <default>false</default>
+                <label>プロフェッショナル・サービス申込書(MSSA約款版)</label>
+            </value>
+            <value>
+                <fullName>アーリー・アクセス・アダプター・プログラムに関する契約</fullName>
+                <default>false</default>
+                <label>アーリー・アクセス・アダプター・プログラムに関する契約</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Amendment to Technology Alliance Agreement</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Amendment to Technology Alliance Agreement</label>
+            </value>
+            <value>
+                <fullName>BPO General Terms</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BPO General Terms</label>
+            </value>
+            <value>
+                <fullName>BPO General Terms Japan</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BPO General Terms Japan</label>
+            </value>
+            <value>
+                <fullName>BPO版ライセンス注文書</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BPO版ライセンス注文書</label>
+            </value>
+            <value>
+                <fullName>Data Sharing Agreement</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Data Sharing Agreement</label>
+            </value>
+            <value>
+                <fullName>Framework Agreement</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Framework Agreement</label>
+            </value>
+            <value>
+                <fullName>Japan EULA Additional Order</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Japan EULA Additional Order</label>
+            </value>
+            <value>
+                <fullName>Japan EULA Affiliate Use</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Japan EULA Affiliate Use</label>
+            </value>
+            <value>
+                <fullName>Japan EULA Global Deal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Japan EULA Global Deal</label>
+            </value>
+            <value>
+                <fullName>LO for Distribution</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>LO for Distribution</label>
+            </value>
+            <value>
+                <fullName>LO(標準版)_リセラー</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>LO(標準版)_リセラー</label>
+            </value>
+            <value>
+                <fullName>LO(標準版)_直販</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>LO(標準版)_直販</label>
+            </value>
+            <value>
+                <fullName>LO(関係＋Global版)_リセラー</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>LO(関係＋Global版)_リセラー</label>
+            </value>
+            <value>
+                <fullName>LO(関係＋Global版)_直販</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>LO(関係＋Global版)_直販</label>
+            </value>
+            <value>
+                <fullName>Learning Partner Agreement</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Learning Partner Agreement</label>
+            </value>
+            <value>
+                <fullName>Learning Partner Guidelines</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Learning Partner Guidelines</label>
+            </value>
+            <value>
+                <fullName>License Order</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order</label>
+            </value>
+            <value>
+                <fullName>License Order BPO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order BPO</label>
+            </value>
+            <value>
+                <fullName>License Order BPO Computer Vision</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order BPO Computer Vision</label>
+            </value>
+            <value>
+                <fullName>License Order BPO Orchestrator Basic</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order BPO Orchestrator Basic</label>
+            </value>
+            <value>
+                <fullName>License Order EULA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order EULA</label>
+            </value>
+            <value>
+                <fullName>License Order EULA Computer Vision</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order EULA Computer Vision</label>
+            </value>
+            <value>
+                <fullName>License Order EULA Orchestrator Basic</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order EULA Orchestrator Basic</label>
+            </value>
+            <value>
+                <fullName>License Order MSSA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order MSSA</label>
+            </value>
+            <value>
+                <fullName>License Order MSSA Computer Vision</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order MSSA Computer Vision</label>
+            </value>
+            <value>
+                <fullName>License Order MSSA Orchestrator Basic</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order MSSA Orchestrator Basic</label>
+            </value>
+            <value>
+                <fullName>License Order Orchestrator Basic</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order Orchestrator Basic</label>
+            </value>
+            <value>
+                <fullName>License Order Reseller</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order Reseller</label>
+            </value>
+            <value>
+                <fullName>License Order Reseller Computer Vision</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order Reseller Computer Vision</label>
+            </value>
+            <value>
+                <fullName>License Order Reseller Orchestrator Basic</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order Reseller Orchestrator Basic</label>
+            </value>
+            <value>
+                <fullName>License Order for Computer Vision</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>License Order for Computer Vision</label>
+            </value>
+            <value>
+                <fullName>MA(Global Deal版)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MA(Global Deal版)</label>
+            </value>
+            <value>
+                <fullName>MA(国内関係会社版)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MA(国内関係会社版)</label>
+            </value>
+            <value>
+                <fullName>MA(標準版)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MA(標準版)</label>
+            </value>
+            <value>
+                <fullName>MPA Addendum DRA (CN)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MPA Addendum DRA (CN)</label>
+            </value>
+            <value>
+                <fullName>MPA Addendum IRA (CN)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MPA Addendum IRA (CN)</label>
+            </value>
+            <value>
+                <fullName>MPA BPO Addendum</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MPA BPO Addendum</label>
+            </value>
+            <value>
+                <fullName>NDA Tech Alliances</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>NDA Tech Alliances</label>
+            </value>
+            <value>
+                <fullName>Professional Services Order</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Professional Services Order</label>
+            </value>
+            <value>
+                <fullName>Professional Services Terms</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Professional Services Terms</label>
+            </value>
+            <value>
+                <fullName>Reseller Agreement</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Reseller Agreement</label>
+            </value>
+            <value>
+                <fullName>Reseller Agreement Japan</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Reseller Agreement Japan</label>
+            </value>
+            <value>
+                <fullName>Sales Agent Agreement</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sales Agent Agreement</label>
+            </value>
+            <value>
+                <fullName>Tech Alliance Deal Referral Addendum</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tech Alliance Deal Referral Addendum</label>
+            </value>
+            <value>
+                <fullName>Technology  Partner</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Technology  Partner</label>
+            </value>
+            <value>
+                <fullName>Technology Partner</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Technology Partner</label>
+            </value>
+            <value>
+                <fullName>Training Partner Agreement</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Training Partner Agreement</label>
+            </value>
+            <value>
+                <fullName>ライセンス申込書_MA締結済み_Direct</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ライセンス申込書_MA締結済み_Direct</label>
+            </value>
+            <value>
+                <fullName>ライセンス申込書_MA締結済み_Reseller</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ライセンス申込書_MA締結済み_Reseller</label>
+            </value>
+            <value>
+                <fullName>ライセンス申込書_ウェブ約款_Direct</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ライセンス申込書_ウェブ約款_Direct</label>
+            </value>
+            <value>
+                <fullName>ライセンス申込書_ウェブ約款_Reseller</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ライセンス申込書_ウェブ約款_Reseller</label>
+            </value>
+            <value>
+                <fullName>開発リソースパートナー契約</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>開発リソースパートナー契約</label>
+            </value>
+            <value>
+                <fullName>（旧）ライセンス申込書_ウェブ約款_Direct</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>（旧）ライセンス申込書_ウェブ約款_Direct</label>
+            </value>
+            <value>
+                <fullName>（旧）ライセンス申込書_ウェブ約款_Reseller</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>（旧）ライセンス申込書_ウェブ約款_Reseller</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

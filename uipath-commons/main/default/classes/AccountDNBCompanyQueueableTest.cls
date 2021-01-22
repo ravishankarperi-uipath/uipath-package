@@ -3,19 +3,28 @@
  */
 @isTest
 private class AccountDNBCompanyQueueableTest {
+  private static final string USA = 'United States';
+  private static final string State_CA = 'California';
+
   @isTest
   private static void processDNBCompanyTest() {
     Account acc = new Account(
       Name = 'TestAccountUK',
-      Country__c = 'United Kingdom',
-      BillingCountry = 'United Kingdom',
+      Country__c = USA,
+      State__c = State_CA,
+      BillingCountryCode = 'US',
+      BillingCountry = USA,
+      BillingStateCode = 'CA',
+      BillingState = State_CA,
+      DnB_State_Province__c = State_CA,
       Industry = 'Others'
     );
     insert acc;
 
     Account newAcc = acc.clone();
     newAcc.Id = acc.Id;
-    newAcc.DnB_Country__c = 'United Kingdom';
+    newAcc.DnB_Country__c = USA;
+    newAcc.DnB_State_Province__c = 'New York';
     update newAcc;
 
     AccountDNBCompanyQueueable accountDNBCompanyQueueable = new AccountDNBCompanyQueueable(

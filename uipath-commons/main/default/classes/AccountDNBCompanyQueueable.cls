@@ -24,7 +24,7 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
    */
   private void processDNBCompany(List<SObject> accountList, Map<Id, SObject> oldAccountsMap) {
     List<Address__c> addressList = new List<Address__c>();
-    Set<Id> addressHasBeenAddedFor = new Set<Id>();
+    Set<Id> addressBeenAddedFor = new Set<Id>();
 
     List<String> AvailableCountryStates = new List<String>();
 
@@ -34,12 +34,25 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
       AvailableCountryStates.add(entry.getValue());
     }
 
+    Set<Id> accounthasprimaryaddress = new Set<Id>();
+    List<Address__c> primaryAddresses = [
+      SELECT Id, Account__c
+      FROM Address__c
+      WHERE Account__c IN :accountList AND Primary_Billing__c = true
+    ];
+    for (Address__c addr : primaryAddresses)
+      accounthasprimaryaddress.add(addr.Account__c);
+
     for (Account acc : (List<Account>) accountList) {
       Account oldAccount = (Account) oldAccountsMap.get(acc.Id);
 
       //Only run the first time the D&B account/address is set
-      if (String.IsNotBlank(acc.DnB_Country__c) && String.IsBlank(oldAccount.DnB_Country__c)) {
-        if (addressHasBeenAddedFor.contains(acc.Id)) {
+      if (
+        String.IsNotBlank(acc.DnB_State_Province__c) &&
+        acc.DnB_State_Province__c != oldAccount.DnB_State_Province__c &&
+        String.IsNotBlank(oldAccount.DnB_State_Province__c)
+      ) {
+        if (addressBeenAddedFor.contains(acc.Id)) {
           //SFSL-827
           continue;
         }
@@ -47,8 +60,10 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
         //Mapped D&B Company has changed. Create an address record based on D&B details and mark it as primary billing
         Address__c address = new Address__c();
         address.Account__c = acc.Id;
-        address.Primary_Billing__c = true;
-        address.Primary_Shipping__c = true;
+        if (!accounthasprimaryaddress.contains(acc.Id)) {
+          address.Primary_Billing__c = true;
+          address.Primary_Shipping__c = true;
+        }
 
         address.D_B_Address__c = true;
 
@@ -62,8 +77,16 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
             address.Street_Line_2__c = acc.DnB_Street__c.substring(150, acc.DnB_Street__c.length());
           }
         }
+
         address.City__c = acc.DnB_City__c;
-        address.Zip_Postal_Code__c = acc.DnB_Zip_Postal_Code__c;
+
+        if (String.IsNotBlank(acc.DnB_Zip_Postal_Code__c)) {
+          if (acc.DnB_Country__c == 'United States') {
+            address.Zip_Postal_Code__c = (acc.DnB_Zip_Postal_Code__c).left(5);
+          } else {
+            address.Zip_Postal_Code__c = acc.DnB_Zip_Postal_Code__c;
+          }
+        }
 
         if (AvailableCountryStates.Contains(acc.DnB_State_Province__c)) {
           address.State__c = acc.DnB_State_Province__c;
@@ -74,7 +97,7 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
           .getRecordTypeId();
 
         addressList.add(address);
-        addressHasBeenAddedFor.add(acc.Id);
+        addressBeenAddedFor.add(acc.Id);
       }
     }
     insert addressList;
@@ -86,12 +109,12 @@ public with sharing class AccountDNBCompanyQueueable extends AbstractQueueable {
    */
   public static void createAddressForDnBCompany(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasChanged = new HasRecordChanged(
-      new Set<SObjectField>{ Account.DnB_Country__c },
+      new Set<SObjectField>{ Account.DnB_State_Province__c },
       accounts,
       existingAccounts
     );
     List<Account> eligibleAccounts = (List<Account>) Collection.of(accounts)
-      .filter(Match.field(Account.DnB_Country__c).hasValue())
+      .filter(Match.field(Account.DnB_State_Province__c).hasValue())
       .filter(hasChanged)
       .asList();
 

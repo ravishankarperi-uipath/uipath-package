@@ -48,13 +48,16 @@ public without sharing class AccountMapDnBAddressFunction implements SObjectToSO
   }
 
   public static void copyDnBAddressToStandardAddress(Account account) {
+    account.BillingCountry = account.DnB_Country__c;
     account.BillingStreet = account.DnB_Street__c;
     account.BillingCity = account.DnB_City__c;
-
-    if (account.BillingCountry == 'United States') {
-      account.DnB_Zip_Postal_Code__c = account.DnB_Zip_Postal_Code__c.left(5);
+    if (String.isNotBlank(account.DnB_Zip_Postal_Code__c)) {
+      if (account.BillingCountry == 'United States') {
+        account.BillingPostalCode = account.DnB_Zip_Postal_Code__c.left(5);
+      } else {
+        account.BillingPostalCode = account.DnB_Zip_Postal_Code__c;
+      }
     }
-    account.BillingPostalCode = account.DnB_Zip_Postal_Code__c;
 
     if (
       AccountMetadata.AvailableCountryStates.Contains(account.DnB_State_Province__c) &&
@@ -82,7 +85,7 @@ public without sharing class AccountMapDnBAddressFunction implements SObjectToSO
       country == 'United Kingdom' ||
       country == 'Ireland' ||
       country == 'India' ||
-      country == 'Italy' ||
+      /* country == 'Italy' || */
       country == 'Mexico';
   }
 
@@ -100,7 +103,7 @@ public without sharing class AccountMapDnBAddressFunction implements SObjectToSO
    */
   public static void deriveAddressFieldsOnUpdate(List<Account> accounts, Map<Id, SObject> existingAccounts) {
     SObjectPredicate hasCountryChanged = new HasRecordChanged(
-      new Set<SObjectField>{ Account.DnB_Country__c },
+      new Set<SObjectField>{ Account.DnB_Country__c, Account.DnB_State_Province__c },
       accounts,
       existingAccounts
     );

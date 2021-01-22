@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Sum_of_Won_Opportunities__c</fullName>
-        <description>Created by Rollup Helper</description>
-        <externalId>false</externalId>
-        <label>Sum of Won Opportunities</label>
-        <precision>14</precision>
-        <required>false</required>
-        <scale>2</scale>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Currency</type>
-    </CustomField>
+    <fullName>Sum_of_Won_Opportunities__c</fullName>
+    <description>Created by Rollup Helper</description>
+    <externalId>false</externalId>
+    <label>Sum of Won Opportunities</label>
+    <precision>14</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

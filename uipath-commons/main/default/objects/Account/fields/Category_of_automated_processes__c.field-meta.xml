@@ -1,117 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Category_of_automated_processes__c</fullName>
-        <externalId>false</externalId>
-        <label>Category of automated processes</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>MultiselectPicklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Order to cash</fullName>
-                    <default>false</default>
-                    <label>Order to cash</label>
-                </value>
-                <value>
-                    <fullName>Customer onboarding</fullName>
-                    <default>false</default>
-                    <label>Customer onboarding</label>
-                </value>
-                <value>
-                    <fullName>Data migration and entry</fullName>
-                    <default>false</default>
-                    <label>Data migration and entry</label>
-                </value>
-                <value>
-                    <fullName>Scanning documents</fullName>
-                    <default>false</default>
-                    <label>Scanning documents</label>
-                </value>
-                <value>
-                    <fullName>Data reporting</fullName>
-                    <default>false</default>
-                    <label>Data reporting</label>
-                </value>
-                <value>
-                    <fullName>Mass Emailing</fullName>
-                    <default>false</default>
-                    <label>Mass Emailing</label>
-                </value>
-                <value>
-                    <fullName>Customer service - call center</fullName>
-                    <default>false</default>
-                    <label>Customer service - call center</label>
-                </value>
-                <value>
-                    <fullName>L1 Tech support</fullName>
-                    <default>false</default>
-                    <label>L1 Tech support</label>
-                </value>
-                <value>
-                    <fullName>Core Business Operations</fullName>
-                    <default>false</default>
-                    <label>Core Business Operations</label>
-                </value>
-                <value>
-                    <fullName>Self Service Operations</fullName>
-                    <default>false</default>
-                    <label>Self Service Operations</label>
-                </value>
-                <value>
-                    <fullName>Human Resources</fullName>
-                    <default>false</default>
-                    <label>Human Resources</label>
-                </value>
-                <value>
-                    <fullName>Training and Development</fullName>
-                    <default>false</default>
-                    <label>Training and Development</label>
-                </value>
-                <value>
-                    <fullName>Financial Operations</fullName>
-                    <default>false</default>
-                    <label>Financial Operations</label>
-                </value>
-                <value>
-                    <fullName>Procurement</fullName>
-                    <default>false</default>
-                    <label>Procurement</label>
-                </value>
-                <value>
-                    <fullName>Banking</fullName>
-                    <default>false</default>
-                    <label>Banking</label>
-                </value>
-                <value>
-                    <fullName>Logistics</fullName>
-                    <default>false</default>
-                    <label>Logistics</label>
-                </value>
-                <value>
-                    <fullName>Insurance</fullName>
-                    <default>false</default>
-                    <label>Insurance</label>
-                </value>
-                <value>
-                    <fullName>Appeals processing</fullName>
-                    <default>false</default>
-                    <label>Appeals processing</label>
-                </value>
-                <value>
-                    <fullName>Retail</fullName>
-                    <default>false</default>
-                    <label>Retail</label>
-                </value>
-                <value>
-                    <fullName>Others</fullName>
-                    <default>false</default>
-                    <label>Others</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-        <visibleLines>4</visibleLines>
-    </CustomField>
+    <fullName>Category_of_automated_processes__c</fullName>
+    <externalId>false</externalId>
+    <label>Category of automated processes</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Order to cash</fullName>
+                <default>false</default>
+                <label>Order to cash</label>
+            </value>
+            <value>
+                <fullName>Customer onboarding</fullName>
+                <default>false</default>
+                <label>Customer onboarding</label>
+            </value>
+            <value>
+                <fullName>Data migration and entry</fullName>
+                <default>false</default>
+                <label>Data migration and entry</label>
+            </value>
+            <value>
+                <fullName>Scanning documents</fullName>
+                <default>false</default>
+                <label>Scanning documents</label>
+            </value>
+            <value>
+                <fullName>Data reporting</fullName>
+                <default>false</default>
+                <label>Data reporting</label>
+            </value>
+            <value>
+                <fullName>Mass Emailing</fullName>
+                <default>false</default>
+                <label>Mass Emailing</label>
+            </value>
+            <value>
+                <fullName>Customer service - call center</fullName>
+                <default>false</default>
+                <label>Customer service - call center</label>
+            </value>
+            <value>
+                <fullName>L1 Tech support</fullName>
+                <default>false</default>
+                <label>L1 Tech support</label>
+            </value>
+            <value>
+                <fullName>Core Business Operations</fullName>
+                <default>false</default>
+                <label>Core Business Operations</label>
+            </value>
+            <value>
+                <fullName>Self Service Operations</fullName>
+                <default>false</default>
+                <label>Self Service Operations</label>
+            </value>
+            <value>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+                <label>Human Resources</label>
+            </value>
+            <value>
+                <fullName>Training and Development</fullName>
+                <default>false</default>
+                <label>Training and Development</label>
+            </value>
+            <value>
+                <fullName>Financial Operations</fullName>
+                <default>false</default>
+                <label>Financial Operations</label>
+            </value>
+            <value>
+                <fullName>Procurement</fullName>
+                <default>false</default>
+                <label>Procurement</label>
+            </value>
+            <value>
+                <fullName>Banking</fullName>
+                <default>false</default>
+                <label>Banking</label>
+            </value>
+            <value>
+                <fullName>Logistics</fullName>
+                <default>false</default>
+                <label>Logistics</label>
+            </value>
+            <value>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+                <label>Insurance</label>
+            </value>
+            <value>
+                <fullName>Appeals processing</fullName>
+                <default>false</default>
+                <label>Appeals processing</label>
+            </value>
+            <value>
+                <fullName>Retail</fullName>
+                <default>false</default>
+                <label>Retail</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

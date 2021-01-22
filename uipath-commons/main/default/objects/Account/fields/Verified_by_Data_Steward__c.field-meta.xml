@@ -1,35 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Verified_by_Data_Steward__c</fullName>
-        <externalId>false</externalId>
-        <label>Data Steward</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        
+    <fullName>Verified_by_Data_Steward__c</fullName>
+    <externalId>false</externalId>
+    <label>Data Steward</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    
         <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Verified</fullName>
-                    <default>false</default>
-                    <label>Verified</label>
-                </value>
-                <value>
-                    <fullName>Incomplete</fullName>
-                    <default>false</default>
-                    <label>Incomplete</label>
-                </value>
-                <value>
-                    <fullName>On hold</fullName>
-                    <default>false</default>
-                    <label>On hold</label>
-                </value>
-                <value>
-                    <fullName>Owner&#39;s input requested</fullName>
-                    <default>false</default>
-                    <label>Owner&#39;s input requested</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </CustomField>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Verified</fullName>
+                <default>false</default>
+                <label>Verified</label>
+            </value>
+            <value>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+                <label>Incomplete</label>
+            </value>
+            <value>
+                <fullName>On hold</fullName>
+                <default>false</default>
+                <label>On hold</label>
+            </value>
+            <value>
+                <fullName>Owner&#39;s input requested</fullName>
+                <default>false</default>
+                <label>Owner&#39;s input requested</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

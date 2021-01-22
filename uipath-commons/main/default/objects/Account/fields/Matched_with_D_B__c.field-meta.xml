@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Matched_with_D_B__c</fullName>
-        <externalId>false</externalId>
-        <label>Matched with D&amp;B</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Matched</fullName>
-                    <default>false</default>
-                    <label>Matched</label>
-                </value>
-                <value>
-                    <fullName>Partially Matched</fullName>
-                    <default>false</default>
-                    <label>Partially Matched</label>
-                </value>
-                <value>
-                    <fullName>Not in D&amp;B</fullName>
-                    <default>false</default>
-                    <label>Not in D&amp;B</label>
-                </value>
-                <value>
-                    <fullName>No</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>No</label>
-                </value>
-                <value>
-                    <fullName>Yes</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Yes</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </CustomField>
+    <fullName>Matched_with_D_B__c</fullName>
+    <externalId>false</externalId>
+    <label>Matched with D&amp;B</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Matched</fullName>
+                <default>false</default>
+                <label>Matched</label>
+            </value>
+            <value>
+                <fullName>Partially Matched</fullName>
+                <default>false</default>
+                <label>Partially Matched</label>
+            </value>
+            <value>
+                <fullName>Not in D&amp;B</fullName>
+                <default>false</default>
+                <label>Not in D&amp;B</label>
+            </value>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>No</label>
+            </value>
+            <value>
+                <fullName>Yes</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Yes</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

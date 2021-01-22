@@ -207,4 +207,34 @@ public without sharing class AccountMetadata {
     }
     set;
   }
+
+  public static Id partnerRecordType {
+    get {
+      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner').getRecordTypeId();
+    }
+    set;
+  }
+
+  public static Id partnerProspectRecordType {
+    get {
+      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner_Prospect').getRecordTypeId();
+    }
+    set;
+  }
+
+  public static Id technologyAllianceRecordType {
+    get {
+      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
+        .get('Technology_Alliance')
+        .getRecordTypeId();
+    }
+    set;
+  }
+
+  public static Id academicRecordType {
+    get {
+      return Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Academic').getRecordTypeId();
+    }
+    set;
+  }
 }

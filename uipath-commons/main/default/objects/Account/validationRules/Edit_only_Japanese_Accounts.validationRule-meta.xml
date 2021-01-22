@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Edit_only_Japanese_Accounts</fullName>
-        <active>true</active>
-        <errorConditionFormula>$Profile.Name =&quot;Restricted Sales Operations&quot; &amp;&amp;  BillingCountry  &lt;&gt; &quot;Japan&quot;</errorConditionFormula>
-        <errorMessage>You can only Edit Japan Accounts</errorMessage>
-    </ValidationRule>
+    <fullName>Edit_only_Japanese_Accounts</fullName>
+    <active>true</active>
+    <errorConditionFormula>$Profile.Name =&quot;Restricted Sales Operations&quot; &amp;&amp;  BillingCountry  &lt;&gt; &quot;Japan&quot;</errorConditionFormula>
+    <errorMessage>You can only Edit Japan Accounts</errorMessage>
+</ValidationRule>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Revenue_Score__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF( AnnualRevenue &lt; 500000000, 2, IF(AND( AnnualRevenue &lt; 1000000000, AnnualRevenue &gt; 500000000),4, IF(AND( AnnualRevenue &lt; 10000000000, AnnualRevenue &gt; 1000000000),8,10)))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Revenue Score</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <type>Number</type>
-        <unique>false</unique>
-    </CustomField>
+    <fullName>Revenue_Score__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( AnnualRevenue &lt; 500000000, 2, IF(AND( AnnualRevenue &lt; 1000000000, AnnualRevenue &gt; 500000000),4, IF(AND( AnnualRevenue &lt; 10000000000, AnnualRevenue &gt; 1000000000),8,10)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Revenue Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

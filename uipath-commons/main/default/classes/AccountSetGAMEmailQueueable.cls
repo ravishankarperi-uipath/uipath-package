@@ -29,7 +29,12 @@ public with sharing class AccountSetGAMEmailQueueable extends AbstractQueueable 
       if (null != oldAccountsMap)
         oldAcc = (Account) oldAccountsMap.get(acc.Id);
 
-      if (acc.Classification__c == 'Global' || acc.ParentId == null || oldAcc.Classification__c == 'Global') {
+      if (
+        acc.Classification__c == 'Global' ||
+        acc.ParentId == null ||
+        (oldAcc != null &&
+        oldAcc.Classification__c == 'Global')
+      ) {
         /**
          * initialize a map with Key = Ultimate parent Id and value = new List<Account> to add all children Accounts
          **/

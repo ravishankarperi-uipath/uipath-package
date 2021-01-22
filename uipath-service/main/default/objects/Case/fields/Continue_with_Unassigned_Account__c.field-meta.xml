@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Continue_with_Unassigned_Account__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Display  warning message if account=&apos;Unassigned Account&apos; at the time case closure if it is checked</description>
+    <externalId>false</externalId>
+    <label>Continue with Unassigned Account?</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

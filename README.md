@@ -1,5 +1,5 @@
 # UiPath Salesforce Unlocked Packages
-
+ 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=uipathdevops_uipath-package&token=c036e8931663806b31c430623309298e88974a9a)](https://sonarcloud.io/dashboard?id=uipathdevops_uipath-package)
 
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=uipathdevops_uipath-package&metric=code_smells&token=c036e8931663806b31c430623309298e88974a9a)](https://sonarcloud.io/dashboard?id=uipathdevops_uipath-package)
@@ -49,11 +49,15 @@ sfdx force:org:create -s -f config/project-scratch-def.json --durationdays 30 --
 
 #### Obtain the 04t Ids for unlocked packages by running:
 
+```bash
 sfdx force:package:version:list -v DevHub
+```
 
 #### Obtain the 04t Ids for managed packages by running:
 
+```bash
 sfdx force:package:installed:list -u DevHub
+```
 
 - uipath-core
 
@@ -68,6 +72,12 @@ sfdx force:package:install --package 04t***** -u scratch --noprompt  -w 15
 ```
 
 - uipath-commons
+
+```bash
+sfdx force:package:install --package 04t**** -k unlockedclear -u scratch  -w 15
+```
+
+- uipath-service
 
 ```bash
 sfdx force:package:install --package 04t**** -k unlockedclear -u scratch  -w 15

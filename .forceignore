@@ -30,6 +30,8 @@ uipath-commons/main/default/objects/Account/fields/Nb_of_Prod_ST__c.field-meta.x
 uipath-commons/main/default/objects/Account/fields/Nb_of_Prod_UR__c.field-meta.xml
 uipath-commons/main/default/objects/Account/fields/Total_Licenses_Qty__c.field-meta.xml
 uipath-commons/main/default/objects/Account/fields/Bombora_Topic_Count__c.field-meta.xml
+uipath-commons/main/default/objects/Account/fields/Country__c.field-meta.xml
+
 
 # Exclude formula Fields referencing summaries or relationships
 uipath-commons/main/default/objects/Account/fields/Not_used_ST__c.field-meta.xml
@@ -55,4 +57,4 @@ uipath-commons/main/default/classes/Utilities_Test
 uipath-commons/main/default/globalValueSets/SBQQ__PaymentTerm.globalValueSet-meta.xml
 uipath-commons/main/default/objects/Account/fields/Default_Payment_Terms__c.field-meta.xml
 uipath-commons/main/default/objects/Account/validationRules/Mandatory_Fields_for_NS_Cust_Creation.validationRule-meta.xml
-# removed  pckliist values for default_payment,SBQQ__CoTerminationEvent__c, SBQQ__ContractCoTermination__c,SBQQ__RenewalModel__c,SBQQ__RenewalPricingMethod__c from all Account record ttyoes
+# removed  pckliist values for default_payment,SBQQ__CoTerminationEvent__c, SBQQ__ContractCoTermination__c,SBQQ__RenewalModel__c,SBQQ__RenewalPricingMethod__c from all Account record types

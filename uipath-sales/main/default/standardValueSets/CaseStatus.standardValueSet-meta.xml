@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>On Hold</fullName>
+        <default>false</default>
+        <label>On Hold</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Escalated</fullName>
+        <default>false</default>
+        <label>Escalated</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>New</fullName>
+        <default>true</default>
+        <label>New</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>In Progress</fullName>
+        <default>false</default>
+        <label>In Progress</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Legal Review</fullName>
+        <default>false</default>
+        <label>Legal Review</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Finance Review</fullName>
+        <default>false</default>
+        <label>Finance Review</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Approval</fullName>
+        <default>false</default>
+        <label>Pending Approval</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Approved</fullName>
+        <default>false</default>
+        <label>Approved</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Signed</fullName>
+        <default>false</default>
+        <label>Signed</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Signed</fullName>
+        <default>false</default>
+        <label>Not Signed</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+        <label>Cancelled</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>DocuSign Review</fullName>
+        <default>false</default>
+        <label>DocuSign Review</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Sales Information</fullName>
+        <default>false</default>
+        <label>Pending Sales Information</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Deal Hub Review</fullName>
+        <default>false</default>
+        <label>Deal Hub Review</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>In Process</fullName>
+        <default>false</default>
+        <label>In Process</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending from Engineering</fullName>
+        <default>false</default>
+        <label>Pending</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Customer Action</fullName>
+        <default>false</default>
+        <label>Customer Action</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Resolved</fullName>
+        <default>false</default>
+        <label>Resolved</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed</fullName>
+        <default>false</default>
+        <label>Closed</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed Cancelled</fullName>
+        <default>false</default>
+        <label>Closed Cancelled</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Ready for signature</fullName>
+        <default>false</default>
+        <label>Ready for signature</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Out for Signature</fullName>
+        <default>false</default>
+        <label>Out for Signature</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Legal Review</fullName>
+        <default>false</default>
+        <label>Pending Legal Review</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending 3rd party</fullName>
+        <default>false</default>
+        <label>Pending 3rd party</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Invoice Date</fullName>
+        <default>false</default>
+        <label>Pending Invoice Date</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Process</fullName>
+        <default>false</default>
+        <label>Pending Process</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Invoiced and delivered</fullName>
+        <default>false</default>
+        <label>Invoiced and delivered</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Invoiced and batch delivery</fullName>
+        <default>false</default>
+        <label>Invoiced and batch delivery</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Master Data Review</fullName>
+        <default>false</default>
+        <label>Master Data Review</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed (Quote Submitted)</fullName>
+        <default>false</default>
+        <label>Closed (Quote Submitted)</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed (Quote Cancelled)</fullName>
+        <default>false</default>
+        <label>Closed (Quote Cancelled)</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>On Hold - Dev</fullName>
+        <default>false</default>
+        <label>On Hold - Dev</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>On Hold Finance</fullName>
+        <default>false</default>
+        <label>On Hold Finance</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Merged Closed</fullName>
+        <default>false</default>
+        <label>Merged Closed</label>
+        <closed>true</closed>
+    </standardValue>
+</StandardValueSet>

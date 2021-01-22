@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Primary_Subsidiary__c</fullName>
-        <description>UiPath Subsidiaries that will be set on Account creation based on the Country-Subsidiary mapping</description>
-        <externalId>false</externalId>
-        <inlineHelpText>UiPath Subsidiary that is working with this Customer</inlineHelpText>
-        <label>Primary Subsidiary</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>UiPath SRL</fullName>
-                    <default>false</default>
-                    <label>UiPath SRL</label>
-                </value>
-                <value>
-                    <fullName>UiPath INC</fullName>
-                    <default>false</default>
-                    <label>UiPath INC</label>
-                </value>
-                <value>
-                    <fullName>UiPath KK</fullName>
-                    <default>false</default>
-                    <label>UiPath KK</label>
-                </value>
-                <value>
-                    <fullName>UiPath Netherlands BV</fullName>
-                    <default>false</default>
-                    <label>UiPath Netherlands BV</label>
-                </value>
-                <value>
-                    <fullName>ProcessGold International BV</fullName>
-                    <default>false</default>
-                    <label>ProcessGold International BV</label>
-                </value>
-                <value>
-                    <fullName>MagnaView BV</fullName>
-                    <default>false</default>
-                    <label>MagnaView BV</label>
-                </value>
-                <value>
-                    <fullName>ProcessGold AG</fullName>
-                    <default>false</default>
-                    <label>ProcessGold AG</label>
-                </value>
-                <value>
-                    <fullName>ProcessGold BV</fullName>
-                    <default>false</default>
-                    <label>ProcessGold BV</label>
-                </value>
-                <value>
-                    <fullName>UiPath Ltd. (India)</fullName>
-                    <default>false</default>
-                    <label>UiPath Ltd. (India)</label>
-                </value>
-                <value>
-                    <fullName>UiPath GMBH</fullName>
-                    <default>false</default>
-                    <label>UiPath GMBH</label>
-                </value>
-                <value>
-                    <fullName>Process Gold BV</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Process Gold BV</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </CustomField>
+    <fullName>Primary_Subsidiary__c</fullName>
+    <description>UiPath Subsidiaries that will be set on Account creation based on the Country-Subsidiary mapping</description>
+    <externalId>false</externalId>
+    <inlineHelpText>UiPath Subsidiary that is working with this Customer</inlineHelpText>
+    <label>Primary Subsidiary</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>UiPath SRL</fullName>
+                <default>false</default>
+                <label>UiPath SRL</label>
+            </value>
+            <value>
+                <fullName>UiPath INC</fullName>
+                <default>false</default>
+                <label>UiPath INC</label>
+            </value>
+            <value>
+                <fullName>UiPath KK</fullName>
+                <default>false</default>
+                <label>UiPath KK</label>
+            </value>
+            <value>
+                <fullName>UiPath Netherlands BV</fullName>
+                <default>false</default>
+                <label>UiPath Netherlands BV</label>
+            </value>
+            <value>
+                <fullName>ProcessGold International BV</fullName>
+                <default>false</default>
+                <label>ProcessGold International BV</label>
+            </value>
+            <value>
+                <fullName>MagnaView BV</fullName>
+                <default>false</default>
+                <label>MagnaView BV</label>
+            </value>
+            <value>
+                <fullName>ProcessGold AG</fullName>
+                <default>false</default>
+                <label>ProcessGold AG</label>
+            </value>
+            <value>
+                <fullName>ProcessGold BV</fullName>
+                <default>false</default>
+                <label>ProcessGold BV</label>
+            </value>
+            <value>
+                <fullName>UiPath Ltd. (India)</fullName>
+                <default>false</default>
+                <label>UiPath Ltd. (India)</label>
+            </value>
+            <value>
+                <fullName>UiPath GMBH</fullName>
+                <default>false</default>
+                <label>UiPath GMBH</label>
+            </value>
+            <value>
+                <fullName>Process Gold BV</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Process Gold BV</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Not_Used_AR__c</fullName>
-        <externalId>false</externalId>
-        <formula>Nb_of_Prod_AR__c -  Used_AR__c</formula>
-        <label>Not Used AR</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <type>Number</type>
-        <unique>false</unique>
-    </CustomField>
+    <fullName>Not_Used_AR__c</fullName>
+    <externalId>false</externalId>
+    <formula>Nb_of_Prod_AR__c -  Used_AR__c</formula>
+    <label>Not Used AR</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>Bombora_Avg_Composite_Score__c</fullName>
-        <description>Average Composite Score of the active Bombora records</description>
-        <externalId>false</externalId>
-        <formula>IF((Bombora_Composite_Score_Sum__c &lt; 1 ||  Bombora_Topic_Count__c &lt;1),NULL,(Bombora_Composite_Score_Sum__c/Bombora_Topic_Count__c))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Bombora Avg Composite Score</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <type>Number</type>
-        <unique>false</unique>
-    </CustomField>
+    <fullName>Bombora_Avg_Composite_Score__c</fullName>
+    <description>Average Composite Score of the active Bombora records</description>
+    <externalId>false</externalId>
+    <formula>IF((Bombora_Composite_Score_Sum__c &lt; 1 ||  Bombora_Topic_Count__c &lt;1),NULL,(Bombora_Composite_Score_Sum__c/Bombora_Topic_Count__c))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Bombora Avg Composite Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

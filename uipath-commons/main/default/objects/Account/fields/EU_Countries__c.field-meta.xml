@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EU_Countries__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(Country__c ,&quot;Austria&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Belgium&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Bulgaria&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Croatia&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Cyprus&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Czech Republic&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Denmark&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Estonia&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Finland&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;France&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Germany&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Greece&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Hungary&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Ireland&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Italy&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Latvia&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Lithuania&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Luxembourg&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Malta&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Netherlands&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Poland&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Portugal&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Romania&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Slovakia&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Slovenia&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Spain&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;Sweden&quot;),TRUE,FALSE)
+||
+IF(ISPICKVAL(Country__c ,&quot;United Kingdom&quot;),TRUE,FALSE)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>EU Countries</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

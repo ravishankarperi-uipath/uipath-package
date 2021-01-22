@@ -29,25 +29,59 @@ public with sharing class AccountClassificationGlobalQueueableTest {
     );
     insert parentAccount;
 
+    Account parentAccount1 = [
+      SELECT Id, Classification__c, Overwrite_Classification__c
+      FROM Account
+      WHERE Id = :parentAccount.Id
+      LIMIT 1
+    ];
+    parentAccount1.Classification__c = 'Global';
+    parentAccount1.Overwrite_Classification__c = true;
+    update parentAccount1;
+
     Account childparentAccount = new Account(
       Name = 'ChildrenAccount11',
-      ParentId = parentAccount.Id,
+      ParentId = parentAccount1.Id,
       RecordTypeId = customerRT,
       Country__c = USA,
       BillingCountry = USA,
       Industry = 'Communications',
-      Overwrite_Classification__c = true
+      Overwrite_Classification__c = false
     );
-    List<Account> insertAccounts = new List<Account>();
-    insertAccounts.add(childparentAccount);
-    fflib_SObjectDomain.Test.Database.onInsert(insertAccounts);
-    fflib_SObjectDomain.triggerHandler(Accounts.class);
 
+    fflib_SObjectDomain.Test.Database.onInsert(new List<Account>{ childparentAccount });
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
     System.assertEquals('Global', childparentAccount.Classification__c);
+
+    Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
+    Account childAccount = new Account(
+      Id = accountId,
+      Name = 'ChildrenAccount11',
+      RecordTypeId = customerRT,
+      Country__c = USA,
+      BillingCountry = USA,
+      Industry = 'Communications',
+      ParentId = childparentAccount.Id
+    );
+
+    Account childAccountOld = new Account(
+      Id = accountId,
+      Name = 'ChildrenAccount11',
+      RecordTypeId = customerRT,
+      Country__c = USA,
+      BillingCountry = USA,
+      Industry = 'Communications'
+    );
+
+    fflib_SObjectDomain.Test.Database.onUpdate(
+      new List<Account>{ childAccount },
+      new Map<Id, SObject>{ childAccountOld.Id => childAccountOld }
+    );
+    fflib_SObjectDomain.triggerHandler(Accounts.class);
   }
 
   @isTest
-  public static void setupClassification_UpdateTest() {
+  public static void setupClassification_Update2Test() {
     Id customerRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
 
     Account topParentAcc = new Account(

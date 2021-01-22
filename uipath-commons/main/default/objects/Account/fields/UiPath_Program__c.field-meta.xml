@@ -1,55 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>UiPath_Program__c</fullName>
-        <description>GLAS Program - Account Identification Field</description>
-        <externalId>false</externalId>
-        <label>UiPath Program</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>GOV</fullName>
-                    <default>false</default>
-                    <label>GOV</label>
-                </value>
-                <value>
-                    <fullName>EAP</fullName>
-                    <default>false</default>
-                    <label>EAP</label>
-                </value>
-                <value>
-                    <fullName>Strategic AMER</fullName>
-                    <default>false</default>
-                    <label>Strategic AMER</label>
-                </value>
-                <value>
-                    <fullName>Strategic APAC</fullName>
-                    <default>false</default>
-                    <label>Strategic APAC</label>
-                </value>
-                <value>
-                    <fullName>FED</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>FED</label>
-                </value>
-                <value>
-                    <fullName>None</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>None</label>
-                </value>
-                <value>
-                    <fullName>Strategic</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Strategic</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </CustomField>
+    <fullName>UiPath_Program__c</fullName>
+    <deprecated>false</deprecated>
+    <description>GLAS Program - Account Identification Field</description>
+    <externalId>false</externalId>
+    <label>UiPath Program</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>GOV</fullName>
+                <default>false</default>
+                <label>GOV</label>
+            </value>
+            <value>
+                <fullName>EAP</fullName>
+                <default>false</default>
+                <label>EAP</label>
+            </value>
+            <value>
+                <fullName>Strategic AMER</fullName>
+                <default>false</default>
+                <label>Strategic AMER</label>
+            </value>
+            <value>
+                <fullName>Strategic APAC</fullName>
+                <default>false</default>
+                <label>Strategic APAC</label>
+            </value>
+            <value>
+                <fullName>India White Space Program</fullName>
+                <default>false</default>
+                <label>India White Space Program</label>
+            </value>
+            <value>
+                <fullName>FED</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>FED</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Strategic</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Strategic</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

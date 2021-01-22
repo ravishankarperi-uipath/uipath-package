@@ -10,6 +10,7 @@ private class AccountSetClassificationFunctionTest {
       Geo__c = 'APAC',
       RecordTypeId = prospectRT,
       AnnualRevenue = 150000000.00,
+      Overwrite_Annual_Revenue__c = true,
       Overwrite_Classification__c = false
     );
     Account oldAccount1 = new Account(Id = account1.Id, Name = 'Test1');
@@ -21,6 +22,7 @@ private class AccountSetClassificationFunctionTest {
       Region__c = 'LATAM',
       RecordTypeId = prospectRT,
       AnnualRevenue = 150000000.00,
+      Overwrite_Annual_Revenue__c = true,
       Overwrite_Classification__c = false
     );
     Account oldAccount2 = new Account(Id = account2.Id, Name = 'Test2');
@@ -31,6 +33,7 @@ private class AccountSetClassificationFunctionTest {
       Geo__c = 'EMEA',
       RecordTypeId = prospectRT,
       AnnualRevenue = 250000000.00,
+      Overwrite_Annual_Revenue__c = true,
       Overwrite_Classification__c = false
     );
     Account oldAccount3 = new Account(Id = account3.Id, Name = 'Test3');
@@ -42,6 +45,7 @@ private class AccountSetClassificationFunctionTest {
       Region__c = 'LATAM',
       RecordTypeId = prospectRT,
       AnnualRevenue = 140000000.00,
+      Overwrite_Annual_Revenue__c = true,
       Overwrite_Classification__c = false
     );
     Account oldAccount4 = new Account(Id = account4.Id, Name = 'Test4');
@@ -52,6 +56,7 @@ private class AccountSetClassificationFunctionTest {
       Geo__c = 'India',
       RecordTypeId = prospectRT,
       AnnualRevenue = 10.00,
+      Overwrite_Annual_Revenue__c = true,
       Overwrite_Classification__c = false
     );
     Account oldAccount5 = new Account(Id = account5.Id, Name = 'Test5');
@@ -62,6 +67,7 @@ private class AccountSetClassificationFunctionTest {
       Geo__c = 'APAC',
       RecordTypeId = prospectRT,
       AnnualRevenue = 250000000.00,
+      Overwrite_Annual_Revenue__c = true,
       Overwrite_Classification__c = false
     );
     Account oldAccount6 = new Account(Id = account6.Id, Name = 'Test6');
@@ -72,6 +78,7 @@ private class AccountSetClassificationFunctionTest {
       Geo__c = 'EMEA',
       RecordTypeId = prospectRT,
       AnnualRevenue = 240000000.00,
+      Overwrite_Annual_Revenue__c = true,
       Overwrite_Classification__c = false
     );
     Account oldAccount7 = new Account(Id = account7.Id, Name = 'Test7');
@@ -83,6 +90,7 @@ private class AccountSetClassificationFunctionTest {
       Region__c = 'Canada',
       RecordTypeId = prospectRT,
       AnnualRevenue = 200000000.00,
+      Overwrite_Annual_Revenue__c = true,
       Overwrite_Classification__c = false
     );
     Account oldAccount8 = new Account(Id = account8.Id, Name = 'Test8');

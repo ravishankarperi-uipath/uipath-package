@@ -10,7 +10,9 @@ private class AccountDnBSyncQueueableTest {
       Name = '1234',
       DNBoptimizer__SIC4Code1__c = '1243',
       DNBoptimizer__SIC4Code1Description__c = 'This is just the description',
-      DNBoptimizer__SalesVolumeUSDollars__c = 150000000.00
+      DNBoptimizer__SalesVolumeUSDollars__c = 150000000.00,
+      DNBoptimizer__Fortune1000Rank__c = '2',
+      DNBoptimizer__WebAddress__c = 'www.testwebsite.com'
     );
 
     insert dnbCompanyRecord;
@@ -32,7 +34,7 @@ private class AccountDnBSyncQueueableTest {
     accSetAnnualRevenueQueueable.execute(null);
 
     List<Account> updatedAccount = [
-      SELECT Id, AnnualRevenue, Legal__c, SIC4_Code_1_Description__c, SIC4_Code_1__c
+      SELECT Id, AnnualRevenue, Legal__c, SIC4_Code_1_Description__c, SIC4_Code_1__c, Fortune_1000_Rank__c, Website
       FROM Account
       WHERE Id = :account1.Id
       LIMIT 1
@@ -42,5 +44,7 @@ private class AccountDnBSyncQueueableTest {
     System.assertEquals('DnBTest1', updatedAccount[0].Legal__c);
     System.assertEquals('This is just the description', updatedAccount[0].SIC4_Code_1_Description__c);
     System.assertEquals('1243', updatedAccount[0].SIC4_Code_1__c);
+    System.assertEquals('2', updatedAccount[0].Fortune_1000_Rank__c);
+    System.assertEquals('www.testwebsite.com', updatedAccount[0].Website);
   }
 }

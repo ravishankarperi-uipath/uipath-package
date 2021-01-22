@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-        <fullName>NetSuite_Customer__c</fullName>
-        <description>URL to access the NetSuite Customer Record</description>
-        <externalId>false</externalId>
-        <inlineHelpText>URL/link to access the NetSuite Customer record. On click of the link you will be navigated to NetSuite Customer and you may need to login (provided you have NetSuite access)</inlineHelpText>
-        <label>NetSuite Customer</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Url</type>
-    </CustomField>
+    <fullName>NetSuite_Customer__c</fullName>
+    <description>URL to access the NetSuite Customer Record</description>
+    <externalId>false</externalId>
+    <inlineHelpText>URL/link to access the NetSuite Customer record. On click of the link you will be navigated to NetSuite Customer and you may need to login (provided you have NetSuite access)</inlineHelpText>
+    <label>NetSuite Customer</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Url</type>
+</CustomField>
